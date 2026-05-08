@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block body %}
+<div class="bg-surface-container-low min-h-screen flex items-center justify-center p-container-padding">
+    {% if messages %}
+    <div class="fixed top-4 right-4 z-[100] flex flex-col gap-2 max-w-sm">
+        {% for message in messages %}
+        <div class="px-4 py-3 rounded-lg border shadow-sm flex items-start gap-2
+            {% if message.tags == 'success' %}bg-primary-container text-on-primary-container border-primary{% elif message.tags == 'error' %}bg-error-container text-on-error-container border-error{% else %}bg-secondary-container text-on-secondary-container border-secondary{% endif %}">
+            <span class="material-symbols-outlined text-[20px]">
+                {% if message.tags == 'success' %}check_circle{% elif message.tags == 'error' %}error{% else %}info{% endif %}
+            </span>
+            <span class="font-body-sm text-body-sm">{{ message }}</span>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <main class="w-full max-w-[440px] bg-surface-container-lowest border border-outline-variant rounded-xl shadow-sm p-stack-lg flex flex-col gap-stack-md">
+        <header class="text-center flex flex-col gap-stack-sm items-center mb-2">
+            <div class="w-12 h-12 bg-primary rounded-lg flex items-center justify-center shadow-sm mb-1">
+                <span class="material-symbols-outlined text-on-primary text-[28px] fill">view_kanban</span>
+            </div>
+            <span class="font-h2 text-h2 font-black text-primary tracking-tight">PropoTrack</span>
+            <h1 class="font-h1 text-h1 text-on-surface mt-2">{% block auth_title %}Welcome{% endblock %}</h1>
+            <p class="font-body-sm text-body-sm text-on-surface-variant max-w-[85%] mx-auto">
+                {% block auth_subtitle %}{% endblock %}
+            </p>
+        </header>
+
+        {% block auth_content %}{% endblock %}
+    </main>
+</div>
+{% endblock %}
+
+{% block content %}{% endblock %}

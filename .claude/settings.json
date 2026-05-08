@@ -2,10 +2,31 @@
   "permissions": {
     "allow": [
       "Bash(git -C /home/nakajito/proyectos/freelancer_tracker log --oneline --all)",
-      "Bash(mkdir -p /home/nakajito/proyectos/freelancer_tracker/plans)"
+      "Bash(mkdir -p /home/nakajito/proyectos/freelancer_tracker/plans)",
+      "Bash(cat /home/nakajito/.claude/settings.json 2>/dev/null || echo \"NO FILE\")",
+      "Read(//home/nakajito/.claude/**)",
+      "WebFetch(domain:stitch.withgoogle.com)",
+      "WebSearch",
+      "WebFetch(domain:github.com)",
+      "Bash(gcloud config *)",
+      "Bash(claude mcp *)",
+      "mcp__stitch__list_projects",
+      "mcp__stitch__list_screens",
+      "Bash(mkdir -p /tmp/stitch_html)",
+      "Read(//tmp/**)",
+      "Bash(curl -sL \"https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ7Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpaCiVodG1sXzkwMWJkYWZiNjIzNzRjMzQ5MTdiNTU2NTdiZTQwMWJlEgsSBxCxgKK9_gcYAZIBIwoKcHJvamVjdF9pZBIVQhM2MTc4MDIzNDQ5MTI4NTE2Mzgy&filename=&opi=89354086\" -o create_proposal.html)",
+      "Bash(curl -sL \"https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ7Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpaCiVodG1sX2JkNTc0ZDUzMzNkZDQyMTdhYjg0YzBlYmYyN2UxZGM1EgsSBxCxgKK9_gcYAZIBIwoKcHJvamVjdF9pZBIVQhM2MTc4MDIzNDQ5MTI4NTE2Mzgy&filename=&opi=89354086\" -o landing.html)",
+      "Bash(curl -sL \"https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ7Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpaCiVodG1sXzU3NDI3ZmNjOTg5ZDQ5NjhhMzQzNjI0ZWJiZjY4MmUxEgsSBxCxgKK9_gcYAZIBIwoKcHJvamVjdF9pZBIVQhM2MTc4MDIzNDQ5MTI4NTE2Mzgy&filename=&opi=89354086\" -o create_template.html)",
+      "mcp__stitch__get_screen",
+      "Bash(curl -sL \"https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ7Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpaCiVodG1sXzQ4MDFjZGY4MDViNzQ4ZDE5YTI1ODRiYWJlNmRjYjcyEgsSBxCxgKK9_gcYAZIBIwoKcHJvamVjdF9pZBIVQhM2MTc4MDIzNDQ5MTI4NTE2Mzgy&filename=&opi=89354086\" -o proposals_list.html)",
+      "Bash(curl -sL \"https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ7Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpaCiVodG1sXzVkOTA1MjgxNzJkZjRhNzY5N2ZjYmMyMjFjMzNkYTZmEgsSBxCxgKK9_gcYAZIBIwoKcHJvamVjdF9pZBIVQhM2MTc4MDIzNDQ5MTI4NTE2Mzgy&filename=&opi=89354086\" -o create_client.html)",
+      "Bash(curl -sL \"https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ7Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpaCiVodG1sX2M2ZjMzOTk3MGQ2MTQzYTU4MzdjY2ZjMjQzODRkYWUwEgsSBxCxgKK9_gcYAZIBIwoKcHJvamVjdF9pZBIVQhM2MTc4MDIzNDQ5MTI4NTE2Mzgy&filename=&opi=89354086\" -o create_followup.html)",
+      "Bash(uv run *)",
+      "Bash(rm -rf /tmp/stitch_html)"
     ],
     "additionalDirectories": [
-      "/home/nakajito/proyectos/freelancer_tracker"
+      "/home/nakajito/proyectos/freelancer_tracker",
+      "/tmp/stitch_html"
     ]
   }
 }

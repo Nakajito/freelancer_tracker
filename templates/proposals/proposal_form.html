@@ -1,100 +1,142 @@
-{% extends "base.html" %}
+{% extends "app_base.html" %}
 
 {% block title %}{% if object %}Edit Proposal{% else %}Create New Proposal{% endif %} - PropoTrack{% endblock %}
+{% block active_nav %}proposals{% endblock %}
 
-{% block content %}
-<div class="mb-6">
-    <h1 class="text-h1 text-slate-900 mb-1">{% if object %}Edit{% else %}Create New{% endif %} Proposal</h1>
-    <p class="text-slate-500 text-sm">Fill in the details for your project pitch.</p>
-</div>
-
-<form method="post">
-{% csrf_token %}
-<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-    <!-- Left Column -->
-    <div class="bg-white rounded-lg border border-slate-200 p-6 shadow-soft">
-        <h3 class="text-h3 text-slate-900 mb-4">Basic Info</h3>
-        
-        <div class="mb-4">
-            <label class="block text-sm font-medium text-slate-700 mb-1">Title</label>
-            {{ form.title }}
-            {% if form.title.errors %}
-            <p class="text-red-600 text-sm mt-1">{{ form.title.errors.0 }}</p>
-            {% endif %}
-        </div>
-        
-        <div class="mb-4">
-            <label class="block text-sm font-medium text-slate-700 mb-1">Client</label>
-            {{ form.client }}
-            {% if form.client.errors %}
-            <p class="text-red-600 text-sm mt-1">{{ form.client.errors.0 }}</p>
-            {% endif %}
-        </div>
-        
-        <div class="mb-4">
-            <label class="block text-sm font-medium text-slate-700 mb-1">Platform</label>
-            {{ form.platform }}
-        </div>
-        
-        <div class="mb-4">
-            <label class="block text-sm font-medium text-slate-700 mb-1">Status</label>
-            {{ form.status }}
-        </div>
+{% block app_content %}
+<div class="max-w-[1000px] mx-auto">
+    <div class="mb-stack-lg">
+        <a href="{% url 'proposal-list' %}" class="inline-flex items-center gap-1 text-on-surface-variant hover:text-primary transition-colors font-label-sm text-label-sm mb-2">
+            <span class="material-symbols-outlined text-[16px]">arrow_back</span>
+            Back to Proposals
+        </a>
+        <h1 class="font-h1 text-h1 text-on-surface">{% if object %}Edit{% else %}Create New{% endif %} Proposal</h1>
+        <p class="font-body-md text-body-md text-on-surface-variant mt-1">Draft and finalize the details of your pitch before sending.</p>
     </div>
-    
-    <!-- Right Column -->
-    <div class="bg-white rounded-lg border border-slate-200 p-6 shadow-soft">
-        <h3 class="text-h3 text-slate-900 mb-4">Details</h3>
-        
-        <div class="mb-4">
-            <label class="block text-sm font-medium text-slate-700 mb-1">Amount</label>
-            <div class="relative">
-                <span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500">$</span>
-                {{ form.amount }}
+
+    <div class="bg-surface-container-lowest border border-outline-variant shadow-sm rounded-xl p-container-padding md:p-stack-lg">
+        <form method="post" class="grid grid-cols-1 md:grid-cols-12 gap-y-stack-lg gap-x-gutter">
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+            <div class="col-span-12 px-4 py-3 rounded-lg bg-error-container text-on-error-container border border-error/30">
+                {% for e in form.non_field_errors %}<p class="font-body-sm text-body-sm">{{ e }}</p>{% endfor %}
             </div>
-        </div>
-        
-        <div class="mb-4">
-            <label class="block text-sm font-medium text-slate-700 mb-1">Sent Date</label>
-            {{ form.sent_date }}
-        </div>
-        
-        <div class="mb-4">
-            <label class="block text-sm font-medium text-slate-700 mb-1">Expected Response</label>
-            {{ form.expected_response_date }}
-        </div>
-        
-        <div class="mb-0">
-            <label class="block text-sm font-medium text-slate-700 mb-1">Job URL</label>
-            {{ form.job_url }}
-        </div>
-    </div>
-</div>
+            {% endif %}
 
-<!-- Cover Letter -->
-<div class="bg-white rounded-lg border border-slate-200 p-6 shadow-soft mb-6">
-    <h3 class="text-h3 text-slate-900 mb-4">Cover Letter</h3>
-    
-    <div class="mb-4">
-        <label class="block text-sm font-medium text-slate-700 mb-1">Proposal Text</label>
-        {{ form.proposal_text }}
-        <p class="text-slate-500 text-xs mt-1">Write a compelling proposal text. Be specific about deliverables and timeline.</p>
-    </div>
-    
-    <div class="mb-0">
-        <label class="block text-sm font-medium text-slate-700 mb-1">Proposal URL</label>
-        {{ form.proposal_url }}
-    </div>
-</div>
+            <!-- Title -->
+            <div class="col-span-12 md:col-span-8 flex flex-col gap-2">
+                <label class="font-label-md text-label-md text-on-surface-variant flex items-center gap-1" for="id_title">
+                    Proposal Title <span class="text-error">*</span>
+                </label>
+                {{ form.title }}
+                {% if form.title.errors %}<p class="font-body-sm text-body-sm text-error">{{ form.title.errors.0 }}</p>{% endif %}
+            </div>
 
-<!-- Actions -->
-<div class="flex items-center gap-3">
-    <button type="submit" class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg font-medium text-sm hover:bg-primary-hover transition-colors">
-        <i class="bi bi-check-lg"></i> Save Proposal
-    </button>
-    <a href="{% url 'proposal-list' %}" class="px-4 py-2 text-slate-600 hover:text-slate-900 font-medium text-sm">
-        Cancel
-    </a>
+            <!-- Amount -->
+            <div class="col-span-12 md:col-span-4 flex flex-col gap-2">
+                <label class="font-label-md text-label-md text-on-surface-variant flex items-center gap-1" for="id_amount">
+                    Amount (USD) <span class="text-error">*</span>
+                </label>
+                <div class="relative">
+                    <span class="absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant font-label-md z-10">$</span>
+                    {{ form.amount }}
+                </div>
+                {% if form.amount.errors %}<p class="font-body-sm text-body-sm text-error">{{ form.amount.errors.0 }}</p>{% endif %}
+            </div>
+
+            <div class="col-span-12 border-b border-outline-variant/50"></div>
+
+            <!-- Platform -->
+            <div class="col-span-12 md:col-span-6 flex flex-col gap-2">
+                <label class="font-label-md text-label-md text-on-surface-variant" for="id_platform">Platform Source</label>
+                {{ form.platform }}
+            </div>
+
+            <!-- Client -->
+            <div class="col-span-12 md:col-span-6 flex flex-col gap-2">
+                <label class="font-label-md text-label-md text-on-surface-variant" for="id_client">Client</label>
+                {{ form.client }}
+                {% if form.client.errors %}<p class="font-body-sm text-body-sm text-error">{{ form.client.errors.0 }}</p>{% endif %}
+            </div>
+
+            <!-- Status -->
+            <div class="col-span-12 md:col-span-4 flex flex-col gap-2">
+                <label class="font-label-md text-label-md text-on-surface-variant" for="id_status">Status</label>
+                {{ form.status }}
+            </div>
+
+            <!-- Sent date -->
+            <div class="col-span-12 md:col-span-4 flex flex-col gap-2">
+                <label class="font-label-md text-label-md text-on-surface-variant" for="id_sent_date">Sent Date</label>
+                {{ form.sent_date }}
+            </div>
+
+            <!-- Expected response -->
+            <div class="col-span-12 md:col-span-4 flex flex-col gap-2">
+                <label class="font-label-md text-label-md text-on-surface-variant" for="id_expected_response_date">Expected Response</label>
+                {{ form.expected_response_date }}
+            </div>
+
+            <!-- Job URL -->
+            <div class="col-span-12 md:col-span-6 flex flex-col gap-2">
+                <label class="font-label-md text-label-md text-on-surface-variant" for="id_job_url">Job Posting Link</label>
+                {{ form.job_url }}
+            </div>
+
+            <!-- Proposal URL -->
+            <div class="col-span-12 md:col-span-6 flex flex-col gap-2">
+                <label class="font-label-md text-label-md text-on-surface-variant" for="id_proposal_url">Proposal URL</label>
+                {{ form.proposal_url }}
+            </div>
+
+            <!-- Proposal text -->
+            <div class="col-span-12 flex flex-col gap-2">
+                <label class="font-label-md text-label-md text-on-surface-variant flex items-center justify-between" for="id_proposal_text">
+                    <span>Proposal Pitch <span class="text-error">*</span></span>
+                </label>
+                {{ form.proposal_text }}
+                <p class="font-body-sm text-body-sm text-on-surface-variant">Be specific about deliverables and timeline.</p>
+                {% if form.proposal_text.errors %}<p class="font-body-sm text-body-sm text-error">{{ form.proposal_text.errors.0 }}</p>{% endif %}
+            </div>
+
+            <!-- Actions -->
+            <div class="col-span-12 border-t border-outline-variant mt-stack-sm pt-stack-md flex flex-col-reverse sm:flex-row items-center justify-end gap-3">
+                <a href="{% url 'proposal-list' %}" class="w-full sm:w-auto px-6 py-3 rounded-lg border border-outline bg-transparent text-secondary hover:bg-surface-container transition-colors font-label-md text-label-md flex items-center justify-center gap-2">
+                    Cancel
+                </a>
+                <button type="submit" class="w-full sm:w-auto px-6 py-3 rounded-lg bg-primary text-on-primary hover:bg-on-primary-fixed-variant transition-colors font-label-md text-label-md shadow-sm flex items-center justify-center gap-2">
+                    <span class="material-symbols-outlined text-[18px]">save</span>
+                    Save Proposal
+                </button>
+            </div>
+        </form>
+    </div>
 </div>
-</form>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    input[type=text], input[type=number], input[type=url], input[type=date], input[type=email], select, textarea {
+        width: 100%;
+        background-color: #f0f5f2;
+        border: 1px solid #bcc9c6;
+        border-radius: 0.5rem;
+        padding: 0.75rem 1rem;
+        font-family: 'Inter', sans-serif;
+        font-size: 16px;
+        line-height: 1.6;
+        color: #171d1c;
+        transition: all 0.2s;
+        outline: none;
+    }
+    input[type=number] { padding-left: 2rem; }
+    input:focus, select:focus, textarea:focus {
+        background-color: #ffffff;
+        border-color: #00685f;
+        box-shadow: 0 0 0 2px rgba(0,104,95,0.2);
+    }
+    textarea { min-height: 180px; resize: vertical; }
+    select { appearance: none; background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%233d4947'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e"); background-repeat: no-repeat; background-position: right 0.75rem center; background-size: 20px; padding-right: 2.5rem; }
+</style>
 {% endblock %}

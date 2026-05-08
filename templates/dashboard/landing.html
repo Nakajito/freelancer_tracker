@@ -1,91 +1,106 @@
 {% extends "base.html" %}
 
-{% block container_class %}{% endblock %}
-
 {% block title %}PropoTrack - Professional Proposal Tracking{% endblock %}
 
 {% block content %}
-<!-- Hero Section -->
-<section class="relative overflow-hidden bg-gradient-to-b from-surface to-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
-        <div class="text-center">
-            <h1 class="text-display text-slate-900 mb-6">
-                Professional Freelance Management
-            </h1>
-            <p class="text-xl text-slate-600 max-w-2xl mx-auto mb-8">
-                Win More Work with Professional Proposal Tracking.<br>
-                PropoTrack helps freelancers manage pitches, log hours, and analyze performance in one sleek dashboard.
-            </p>
-            <div class="flex items-center justify-center gap-4">
-                <a href="{% url 'account_signup' %}" class="inline-flex items-center gap-2 px-6 py-3 bg-primary text-white rounded-lg font-semibold text-lg hover:bg-primary-hover transition-colors">
-                    Get Started for Free
-                </a>
-                <a href="{% url 'dashboard' %}" class="inline-flex items-center gap-2 px-6 py-3 bg-white text-slate-700 border border-slate-300 rounded-lg font-semibold text-lg hover:bg-slate-50 transition-colors">
-                    View Demo
-                </a>
-            </div>
+<!-- TopNavBar -->
+<nav class="bg-surface/80 backdrop-blur-md sticky top-0 z-50 border-b border-outline-variant/30">
+    <div class="flex justify-between items-center px-container-padding py-4 max-w-[1440px] mx-auto w-full">
+        <a href="{% url 'landing' %}" class="font-display text-h2 font-bold text-primary tracking-tight">PropoTrack</a>
+        <div class="hidden md:flex items-center gap-gutter">
+            <a href="#features" class="text-on-secondary-fixed-variant hover:text-primary transition-colors font-label-md text-label-md">Features</a>
+            <a href="#advantages" class="text-on-secondary-fixed-variant hover:text-primary transition-colors font-label-md text-label-md">Advantages</a>
+            <a href="#solutions" class="text-on-secondary-fixed-variant hover:text-primary transition-colors font-label-md text-label-md">Solutions</a>
+            <a href="#pricing" class="text-on-secondary-fixed-variant hover:text-primary transition-colors font-label-md text-label-md">Pricing</a>
         </div>
+        <div class="flex items-center gap-unit">
+            {% if user.is_authenticated %}
+            <a href="{% url 'dashboard' %}" class="px-4 py-2 font-label-md text-label-md bg-primary text-on-primary rounded hover:bg-primary-container transition-colors shadow-sm">Dashboard</a>
+            {% else %}
+            <a href="{% url 'account_login' %}" class="hidden sm:block px-4 py-2 font-label-md text-label-md text-secondary border border-outline-variant rounded hover:bg-surface-container-highest transition-colors">Log In</a>
+            <a href="{% url 'account_signup' %}" class="px-4 py-2 font-label-md text-label-md bg-primary text-on-primary rounded hover:bg-primary-container transition-colors shadow-sm">Get Started</a>
+            {% endif %}
+        </div>
+    </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="px-container-padding py-24 md:py-32 max-w-[1440px] mx-auto grid md:grid-cols-2 gap-12 items-center">
+    <div class="space-y-stack-lg">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface-container-low border border-outline-variant/50 text-secondary font-label-sm text-label-sm">
+            <span class="w-2 h-2 rounded-full bg-primary"></span> Professional Freelance Management
+        </div>
+        <h1 class="font-display text-[48px] md:text-[64px] leading-[1.1] font-bold tracking-tight text-on-background">
+            Win More Work with Professional Proposal Tracking.
+        </h1>
+        <p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl">
+            PropoTrack helps freelancers manage pitches, log hours, and analyze performance in one sleek dashboard.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 pt-4">
+            <a href="{% url 'account_signup' %}" class="px-8 py-4 bg-primary text-on-primary rounded font-label-md text-label-md hover:bg-primary-container transition-colors shadow-sm text-center">Get Started for Free</a>
+            <a href="#features" class="px-8 py-4 border border-outline-variant text-on-surface rounded font-label-md text-label-md hover:bg-surface-container-low transition-colors text-center">View Demo</a>
+        </div>
+    </div>
+    <div class="relative h-[400px] md:h-[600px] w-full rounded-xl overflow-hidden border border-outline-variant shadow-[0_10px_20px_rgba(15,23,42,0.1)] bg-surface-container-low flex items-center justify-center">
+        <span class="material-symbols-outlined text-primary/30" style="font-size: 200px;">dashboard</span>
     </div>
 </section>
 
 <!-- Features Section -->
-<section class="py-20 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 class="text-h1 text-center text-slate-900 mb-12">Features</h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div class="text-center p-8">
-                <div class="w-16 h-16 bg-primary/10 rounded-xl flex items-center justify-center mx-auto mb-4">
-                    <i class="bi bi-file-earmark-text text-2xl text-primary"></i>
-                </div>
-                <h3 class="text-h3 text-slate-900 mb-2">Proposal Tracking</h3>
-                <p class="text-slate-600">Track all your proposals in one place</p>
+<section id="features" class="px-container-padding py-24 max-w-[1440px] mx-auto">
+    <div class="text-center mb-stack-lg">
+        <h2 class="font-display text-display text-on-background mb-4">Everything to manage your pipeline</h2>
+        <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">From sent proposal to won deal, PropoTrack keeps every step measurable.</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+        <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-container-padding shadow-sm">
+            <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-stack-md">
+                <span class="material-symbols-outlined text-primary text-[28px]">description</span>
             </div>
-            <div class="text-center p-8">
-                <div class="w-16 h-16 bg-primary/10 rounded-xl flex items-center justify-center mx-auto mb-4">
-                    <i class="bi bi-clock text-2xl text-primary"></i>
-                </div>
-                <h3 class="text-h3 text-slate-900 mb-2">Time Logging</h3>
-                <p class="text-slate-600">Log hours and monitor billable time</p>
+            <h3 class="font-h3 text-h3 text-on-surface mb-2">Proposal Tracking</h3>
+            <p class="font-body-md text-body-md text-on-surface-variant">Funnel view from Sent to Accepted with conversion metrics built in.</p>
+        </div>
+        <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-container-padding shadow-sm">
+            <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-stack-md">
+                <span class="material-symbols-outlined text-primary text-[28px]">schedule</span>
             </div>
-            <div class="text-center p-8">
-                <div class="w-16 h-16 bg-primary/10 rounded-xl flex items-center justify-center mx-auto mb-4">
-                    <i class="bi bi-graph-up text-2xl text-primary"></i>
-                </div>
-                <h3 class="text-h3 text-slate-900 mb-2">Analytics</h3>
-                <p class="text-slate-600">Analyze your conversion and earnings</p>
+            <h3 class="font-h3 text-h3 text-on-surface mb-2">Time Logging</h3>
+            <p class="font-body-md text-body-md text-on-surface-variant">Track billable hours, retainers, and effective hourly rate per project.</p>
+        </div>
+        <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-container-padding shadow-sm">
+            <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-stack-md">
+                <span class="material-symbols-outlined text-primary text-[28px]">analytics</span>
             </div>
+            <h3 class="font-h3 text-h3 text-on-surface mb-2">Analytics & Forecast</h3>
+            <p class="font-body-md text-body-md text-on-surface-variant">Win-rate, expected revenue, and platform-level insights at a glance.</p>
         </div>
     </div>
 </section>
 
 <!-- CTA Section -->
-<section class="py-20 bg-surface">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 class="text-h1 text-slate-900 mb-4">Ready to get started?</h2>
-        <p class="text-slate-600 mb-8">Join thousands of freelancers tracking their proposals.</p>
-        <a href="{% url 'account_signup' %}" class="inline-flex items-center gap-2 px-6 py-3 bg-primary text-white rounded-lg font-semibold text-lg hover:bg-primary-hover transition-colors">
+<section class="px-container-padding py-24 bg-surface-container-low">
+    <div class="max-w-3xl mx-auto text-center">
+        <h2 class="font-display text-display text-on-background mb-4">Ready to get started?</h2>
+        <p class="font-body-lg text-body-lg text-on-surface-variant mb-stack-lg">Join independent professionals streamlining their freelance business.</p>
+        <a href="{% url 'account_signup' %}" class="inline-flex items-center gap-2 px-8 py-4 bg-primary text-on-primary rounded font-label-md text-label-md hover:bg-primary-container transition-colors shadow-sm">
             Get Started for Free
+            <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
         </a>
     </div>
 </section>
 
 <!-- Footer -->
-<footer class="py-12 bg-slate-900 text-slate-400">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
-            <div>
-                <h4 class="text-white font-semibold mb-4">PropoTrack</h4>
-                <ul class="space-y-2 text-sm">
-                    <li><a href="#" class="hover:text-white">Privacy Policy</a></li>
-                    <li><a href="#" class="hover:text-white">Terms of Service</a></li>
-                    <li><a href="#" class="hover:text-white">Security</a></li>
-                    <li><a href="#" class="hover:text-white">API Docs</a></li>
-                </ul>
-            </div>
+<footer class="bg-surface-container-low border-t border-outline-variant/50">
+    <div class="w-full px-container-padding py-stack-lg max-w-[1440px] mx-auto flex flex-col md:flex-row justify-between items-center gap-gutter">
+        <div class="font-h3 text-h3 font-bold text-on-surface">PropoTrack</div>
+        <div class="flex flex-wrap justify-center gap-6">
+            <a href="#" class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-all">Privacy Policy</a>
+            <a href="#" class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-all">Terms of Service</a>
+            <a href="#" class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-all">Security</a>
+            <a href="#" class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-all">Status</a>
+            <a href="#" class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-all">API Docs</a>
         </div>
-        <div class="pt-8 border-t border-slate-800 text-center text-sm">
-            © 2024 PropoTrack. Precision tracking for professional growth.
-        </div>
+        <div class="font-body-sm text-body-sm text-on-surface-variant">© 2024 PropoTrack.</div>
     </div>
 </footer>
 {% endblock %}

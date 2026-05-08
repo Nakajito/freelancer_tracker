@@ -1,147 +1,161 @@
-{% extends "base.html" %}
+{% extends "app_base.html" %}
 
-{% block title %}{{ proposal.title }} - Freelancer Tracker{% endblock %}
+{% block title %}{{ proposal.title }} - PropoTrack{% endblock %}
+{% block active_nav %}proposals{% endblock %}
 
-{% block content %}
-<div class="page-header">
-    <div class="flex items-center gap-md">
-        <a href="{% url 'proposal-list' %}" class="btn btn-ghost btn-icon">
-            <i class="bi bi-arrow-left"></i>
-        </a>
+{% block app_content %}
+<div class="mb-stack-lg">
+    <a href="{% url 'proposal-list' %}" class="inline-flex items-center gap-1 text-on-surface-variant hover:text-primary transition-colors font-label-sm text-label-sm mb-2">
+        <span class="material-symbols-outlined text-[16px]">arrow_back</span>
+        Back to Proposals
+    </a>
+    <div class="flex flex-col sm:flex-row justify-between items-start gap-4">
         <div>
-            <h1 class="page-title">{{ proposal.title }}</h1>
-            <p class="page-subtitle">
-                {{ proposal.client.name }} &bull; {{ proposal.get_platform_display }}
+            <div class="flex items-center gap-3 mb-unit flex-wrap">
+                <h1 class="font-h1 text-h1 text-on-surface">{{ proposal.title }}</h1>
+                {% with s=proposal.status %}
+                <span class="inline-flex items-center px-3 py-1 rounded-full font-label-sm text-label-sm border
+                    {% if s == 'accepted' %}bg-primary/10 text-primary border-primary/20
+                    {% elif s == 'negotiating' %}bg-tertiary-container/10 text-tertiary-container border-tertiary-container/20
+                    {% elif s == 'sent' or s == 'viewed' %}bg-secondary/10 text-secondary border-secondary/20
+                    {% elif s == 'rejected' %}bg-error/10 text-error border-error/20
+                    {% else %}bg-surface-container-high text-on-surface-variant border-outline-variant{% endif %}">
+                    {{ proposal.get_status_display }}
+                </span>
+                {% endwith %}
+            </div>
+            <p class="font-body-md text-body-md text-on-surface-variant">
+                {{ proposal.client.name|default:"No client" }} • Sent {{ proposal.sent_date|date:"M d, Y"|default:"—" }}
             </p>
         </div>
-    </div>
-    <div class="flex gap-sm">
-        <button class="btn btn-ghost btn-icon" title="Duplicate">
-            <i class="bi bi-copy"></i>
-        </button>
-        <a href="{% url 'proposal-update' proposal.pk %}" class="btn btn-secondary">
-            <i class="bi bi-pencil"></i> Edit
-        </a>
-    </div>
-</div>
-
-<div class="badge badge-{{ proposal.status }} mb-lg">
-    {{ proposal.get_status_display }}
-</div>
-
-<div class="grid grid-cols-3 mb-lg">
-    <div class="card">
-        <span class="card-muted">CLIENT</span>
-        <p class="fw-semibold mt-sm">{{ proposal.client.name }}</p>
-    </div>
-    <div class="card">
-        <span class="card-muted">PLATFORM</span>
-        <p class="fw-semibold mt-sm">
-            <i class="bi bi-globe"></i> {{ proposal.get_platform_display }}
-        </p>
-    </div>
-    <div class="card">
-        <span class="card-muted">AMOUNT</span>
-        <p class="fw-semibold mt-sm">${{ proposal.amount }}</p>
-    </div>
-</div>
-
-<div class="card mb-lg">
-    <div class="card-header">
-        <h3 class="card-title">Cover Letter</h3>
-    </div>
-    <div class="p-lg">
-        {{ proposal.proposal_text|linebreaks|default:"No proposal text provided." }}
-    </div>
-</div>
-
-<div class="tabs">
-    <button class="tab active">Details</button>
-    <button class="tab">Follow-ups</button>
-    <button class="tab">Time Entries</button>
-    <button class="tab">Activity Log</button>
-</div>
-
-<div class="card mb-lg">
-    <div class="card-header">
-        <h3 class="card-title">Proposal Insights</h3>
-    </div>
-    <div class="grid grid-cols-3 p-lg">
-        <div>
-            <span class="card-muted">Days since sent</span>
-            <p class="stat-value">{{ proposal.sent_date|timesince }}</p>
-        </div>
-        <div>
-            <span class="card-muted">Expected Response</span>
-            <p class="stat-value">
-                {% if proposal.actual_response_date %}
-                <span class="text-success">Received</span>
-                {% else %}
-                <span class="text-warning">Pending</span>
-                {% endif %}
-            </p>
-        </div>
-        <div>
-            <span class="card-muted">Paid</span>
-            <p class="stat-value">
-                {% if proposal.paid %}<span class="text-success">Yes</span>{% else %}<span class="text-muted">No</span>{% endif %}
-            </p>
+        <div class="flex gap-3">
+            <a href="{% url 'proposal-delete' proposal.pk %}" class="flex items-center gap-2 px-4 py-2 border border-outline-variant rounded-lg font-label-md text-label-md text-error hover:bg-error-container/30 transition-colors">
+                <span class="material-symbols-outlined text-[18px]">delete</span>
+                Delete
+            </a>
+            <a href="{% url 'proposal-update' proposal.pk %}" class="flex items-center gap-2 px-4 py-2 bg-primary text-on-primary rounded-lg font-label-md text-label-md hover:bg-on-primary-fixed-variant transition-colors shadow-sm">
+                <span class="material-symbols-outlined text-[18px]">edit</span>
+                Edit
+            </a>
         </div>
     </div>
 </div>
 
-<div class="card mb-lg">
-    <div class="card-header">
-        <h3 class="card-title">Key Dates</h3>
-    </div>
-    <div class="p-lg">
-        <div class="flex justify-between items-center mb-md">
-            <span class="text-secondary">Sent Date</span>
-            <span class="fw-semibold">{{ proposal.sent_date|default:"-" }}</span>
+<div class="grid grid-cols-12 gap-gutter">
+    <!-- Left: Main Content -->
+    <div class="col-span-12 lg:col-span-8 flex flex-col gap-stack-md">
+        <!-- Summary Strip -->
+        <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-container-padding shadow-sm grid grid-cols-1 sm:grid-cols-3 gap-6">
+            <div>
+                <p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-1">Client</p>
+                <p class="font-body-md text-body-md font-medium text-on-surface">{{ proposal.client.name|default:"—" }}</p>
+            </div>
+            <div>
+                <p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-1">Platform</p>
+                <p class="font-body-md text-body-md font-medium text-on-surface flex items-center gap-1">
+                    <span class="material-symbols-outlined text-[16px] text-on-surface-variant">work</span>
+                    {{ proposal.get_platform_display }}
+                </p>
+            </div>
+            <div>
+                <p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-1">Amount</p>
+                <p class="font-h3 text-h3 text-on-surface">${{ proposal.amount|default:"—" }}</p>
+            </div>
         </div>
-        <div class="flex justify-between items-center mb-md">
-            <span class="text-secondary">Expected Response</span>
-            <span class="fw-semibold">{{ proposal.expected_response_date|default:"-" }}</span>
+
+        <!-- Cover Letter -->
+        <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-container-padding shadow-sm">
+            <h3 class="font-h3 text-h3 text-on-surface mb-stack-md">Cover Letter</h3>
+            <div class="prose max-w-none font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                {{ proposal.proposal_text|linebreaks|default:"No proposal text provided." }}
+            </div>
         </div>
-        <div class="flex justify-between items-center">
-            <span class="text-secondary">Actual Response</span>
-            <span class="fw-semibold">{{ proposal.actual_response_date|default:"-" }}</span>
+
+        <!-- Links -->
+        {% if proposal.job_url or proposal.proposal_url %}
+        <div class="flex gap-3 flex-wrap">
+            {% if proposal.job_url %}
+            <a href="{{ proposal.job_url }}" target="_blank" rel="noopener" class="flex items-center gap-2 px-4 py-2 border border-outline-variant rounded-lg font-label-md text-label-md text-on-surface hover:bg-surface-container-low transition-colors">
+                <span class="material-symbols-outlined text-[18px]">link</span>
+                Job Posting
+            </a>
+            {% endif %}
+            {% if proposal.proposal_url %}
+            <a href="{{ proposal.proposal_url }}" target="_blank" rel="noopener" class="flex items-center gap-2 px-4 py-2 border border-outline-variant rounded-lg font-label-md text-label-md text-on-surface hover:bg-surface-container-low transition-colors">
+                <span class="material-symbols-outlined text-[18px]">description</span>
+                Proposal Document
+            </a>
+            {% endif %}
         </div>
+        {% endif %}
     </div>
-</div>
 
-{% if proposal.tags.all %}
-<div class="card mb-lg">
-    <span class="card-muted">TAGS</span>
-    <div class="flex gap-sm mt-sm">
-        {% for tag in proposal.tags.all %}
-        <span class="badge badge-draft">{{ tag.name }}</span>
-        {% endfor %}
+    <!-- Right: Widgets -->
+    <div class="col-span-12 lg:col-span-4 flex flex-col gap-stack-md">
+        <!-- Insights -->
+        <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-container-padding shadow-sm">
+            <h3 class="font-h3 text-h3 text-on-surface mb-stack-md">Proposal Insights</h3>
+            <div class="flex flex-col gap-4">
+                <div class="flex justify-between items-center">
+                    <span class="font-body-md text-body-md text-on-surface-variant">Days since sent</span>
+                    <span class="font-h3 text-h3 text-on-surface">{% if proposal.sent_date %}{{ proposal.sent_date|timesince }}{% else %}—{% endif %}</span>
+                </div>
+                <div class="w-full h-px bg-outline-variant"></div>
+                <div class="flex justify-between items-center">
+                    <span class="font-body-md text-body-md text-on-surface-variant">Response</span>
+                    <span class="font-body-md text-body-md font-medium {% if proposal.actual_response_date %}text-primary{% else %}text-tertiary-container{% endif %}">
+                        {% if proposal.actual_response_date %}Received{% else %}Pending{% endif %}
+                    </span>
+                </div>
+                <div class="w-full h-px bg-outline-variant"></div>
+                <div class="flex justify-between items-center">
+                    <span class="font-body-md text-body-md text-on-surface-variant">Paid</span>
+                    <span class="font-body-md text-body-md font-medium {% if proposal.paid %}text-primary{% else %}text-on-surface-variant{% endif %}">
+                        {% if proposal.paid %}Yes{% else %}No{% endif %}
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Key Dates -->
+        <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-container-padding shadow-sm">
+            <h3 class="font-h3 text-h3 text-on-surface mb-stack-md">Key Dates</h3>
+            <div class="flex flex-col gap-3">
+                <div class="flex justify-between items-center">
+                    <span class="font-body-sm text-body-sm text-on-surface-variant">Sent</span>
+                    <span class="font-label-md text-label-md text-on-surface">{{ proposal.sent_date|date:"M d, Y"|default:"—" }}</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="font-body-sm text-body-sm text-on-surface-variant">Expected response</span>
+                    <span class="font-label-md text-label-md text-on-surface">{{ proposal.expected_response_date|date:"M d, Y"|default:"—" }}</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="font-body-sm text-body-sm text-on-surface-variant">Actual response</span>
+                    <span class="font-label-md text-label-md text-on-surface">{{ proposal.actual_response_date|date:"M d, Y"|default:"—" }}</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Next Action -->
+        <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-container-padding shadow-sm bg-gradient-to-br from-surface-container-lowest to-surface-container-low">
+            <h3 class="font-h3 text-h3 text-on-surface mb-unit">Next Action</h3>
+            <p class="font-body-sm text-body-sm text-on-surface-variant mb-stack-md">Schedule a follow-up to keep this proposal moving.</p>
+            <a href="{% url 'followup-create' %}?proposal={{ proposal.pk }}" class="w-full py-2 border border-outline-variant rounded-lg font-label-md text-label-md text-on-surface hover:bg-surface-container transition-colors flex items-center justify-center gap-2">
+                <span class="material-symbols-outlined text-[18px]">mail</span>
+                Draft Follow-up
+            </a>
+        </div>
+
+        {% if proposal.tags.all %}
+        <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-container-padding shadow-sm">
+            <h3 class="font-h3 text-h3 text-on-surface mb-stack-md">Tags</h3>
+            <div class="flex flex-wrap gap-2">
+                {% for tag in proposal.tags.all %}
+                <span class="inline-flex items-center bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full font-label-sm text-label-sm">{{ tag.name }}</span>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
     </div>
-</div>
-{% endif %}
-
-{% if proposal.job_url or proposal.proposal_url %}
-<div class="flex gap-md mb-lg">
-    {% if proposal.job_url %}
-    <a href="{{ proposal.job_url }}" target="_blank" class="btn btn-secondary">
-        <i class="bi bi-link-45deg"></i> Job URL
-    </a>
-    {% endif %}
-    {% if proposal.proposal_url %}
-    <a href="{{ proposal.proposal_url }}" target="_blank" class="btn btn-secondary">
-        <i class="bi bi-file-earmark-text"></i> Proposal URL
-    </a>
-    {% endif %}
-</div>
-{% endif %}
-
-<div class="flex gap-md">
-    <a href="{% url 'proposal-list' %}" class="btn btn-ghost">
-        <i class="bi bi-arrow-left"></i> Back to Proposals
-    </a>
-    <a href="{% url 'proposal-delete' proposal.pk %}" class="btn btn-ghost text-error">
-        <i class="bi bi-trash"></i> Delete
-    </a>
 </div>
 {% endblock %}

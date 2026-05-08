@@ -1,127 +1,174 @@
-{% extends "base.html" %}
+{% extends "app_base.html" %}
 
 {% block title %}Dashboard - PropoTrack{% endblock %}
+{% block active_nav %}dashboard{% endblock %}
 
-{% block content %}
-<div class="mb-6">
-    <h1 class="text-h1 text-slate-900 mb-1">Dashboard Overview</h1>
-    <p class="text-slate-500 text-sm">Here is what's happening with your freelance business today.</p>
+{% block app_content %}
+<div class="mb-stack-lg">
+    <h2 class="font-display text-display text-on-surface">Dashboard Overview</h2>
+    <p class="font-body-lg text-body-lg text-on-surface-variant mt-1">Here is what's happening with your freelance business today.</p>
 </div>
 
-<!-- Stats Grid -->
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-    <div class="bg-white rounded-lg border border-slate-200 p-6 shadow-soft">
-        <div class="flex items-center gap-3 mb-2">
-            <i class="bi bi-file-earmark-text text-primary text-xl"></i>
-            <span class="text-sm text-slate-500">Active Proposals</span>
-        </div>
-        <div class="text-2xl font-bold text-slate-900">{{ funnel.total }}</div>
-        <div class="flex items-center gap-1 text-xs text-green-600 mt-1">
-            <i class="bi bi-arrow-up"></i>
-            <span>+2 from last week</span>
-        </div>
-    </div>
-    
-    <div class="bg-white rounded-lg border border-slate-200 p-6 shadow-soft">
-        <div class="flex items-center gap-3 mb-2">
-            <i class="bi bi-arrow-left-right text-primary text-xl"></i>
-            <span class="text-sm text-slate-500">Conversion Rate</span>
-        </div>
-        <div class="text-2xl font-bold text-slate-900">{{ funnel.conversion_rate }}%</div>
-        <div class="flex items-center gap-1 text-xs text-green-600 mt-1">
-            <i class="bi bi-arrow-up"></i>
-            <span>+4% this month</span>
-        </div>
-    </div>
-    
-    <div class="bg-white rounded-lg border border-slate-200 p-6 shadow-soft">
-        <div class="flex items-center gap-3 mb-2">
-            <i class="bi bi-cash-stack text-primary text-xl"></i>
-            <span class="text-sm text-slate-500">Total Earned</span>
-        </div>
-        <div class="text-2xl font-bold text-slate-900">${{ funnel.accepted_amount|default:"0" }}</div>
-        <div class="flex items-center gap-1 text-xs text-green-600 mt-1">
-            <i class="bi bi-arrow-up"></i>
-            <span>+$1,200 expected</span>
-        </div>
-    </div>
-    
-    <div class="bg-white rounded-lg border border-slate-200 p-6 shadow-soft">
-        <div class="flex items-center gap-3 mb-2">
-            <i class="bi bi-clock-history text-primary text-xl"></i>
-            <span class="text-sm text-slate-500">Logged Hours</span>
-        </div>
-        <div class="text-2xl font-bold text-slate-900">{{ hourly_rate.total_hours|default:"0" }}h</div>
-        <div class="flex items-center gap-1 text-xs text-red-600 mt-1">
-            <i class="bi bi-arrow-down"></i>
-            <span>-12h vs last month</span>
-        </div>
-    </div>
-</div>
-
-<!-- Charts Row -->
-<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-    <div class="bg-white rounded-lg border border-slate-200 p-6 shadow-soft">
+<!-- Metrics Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter mb-stack-lg">
+    <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-container-padding shadow-sm flex flex-col justify-between">
         <div class="flex items-center justify-between mb-4">
-            <h3 class="text-h3 text-slate-900">Proposal Funnel</h3>
-            <a href="{% url 'proposal-list' %}" class="text-sm text-primary hover:text-primary-hover">View Detailed</a>
+            <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Active Proposals</span>
+            <div class="p-2 bg-secondary-container rounded-lg text-on-secondary-container">
+                <span class="material-symbols-outlined text-[20px]">description</span>
+            </div>
         </div>
-        <div class="space-y-3">
-            <div class="flex items-center justify-between">
-                <span class="text-sm text-slate-600">Sent</span>
-                <span class="font-medium text-slate-900">{{ funnel.sent }}</span>
-            </div>
-            <div class="flex items-center justify-between">
-                <span class="text-sm text-slate-600">Viewed</span>
-                <span class="font-medium text-slate-900">{{ funnel.viewed }}</span>
-            </div>
-            <div class="flex items-center justify-between">
-                <span class="text-sm text-slate-600">Responded</span>
-                <span class="font-medium text-slate-900">{{ funnel.responded }}</span>
-            </div>
-            <div class="flex items-center justify-between pt-2 border-t border-slate-100">
-                <span class="text-sm font-medium text-slate-900">Accepted</span>
-                <span class="font-bold text-green-600">{{ funnel.accepted }}</span>
+        <div>
+            <div class="font-h1 text-h1 text-on-surface">{{ funnel.total|default:0 }}</div>
+            <div class="flex items-center gap-1 mt-2 font-body-sm text-body-sm text-on-surface-variant">
+                <span class="material-symbols-outlined text-[16px] text-primary">trending_up</span>
+                <span class="text-primary font-medium">{{ funnel.sent|default:0 }}</span> sent
             </div>
         </div>
     </div>
-    
-    <div class="bg-white rounded-lg border border-slate-200 p-6 shadow-soft">
-        <h3 class="text-h3 text-slate-900 mb-4">Conversion</h3>
-        <div class="flex items-center justify-center h-48">
-            <div class="text-center">
-                <div class="text-3xl font-bold text-slate-900 mb-1">{{ conversion.win_rate }}%</div>
-                <div class="text-sm text-slate-500">Win Rate</div>
+
+    <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-container-padding shadow-sm flex flex-col justify-between">
+        <div class="flex items-center justify-between mb-4">
+            <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Conversion Rate</span>
+            <div class="p-2 bg-secondary-container rounded-lg text-on-secondary-container">
+                <span class="material-symbols-outlined text-[20px]">swap_calls</span>
             </div>
         </div>
-        <div class="grid grid-cols-3 gap-4 mt-4 pt-4 border-t border-slate-100">
-            <div class="text-center">
-                <div class="text-lg font-bold text-green-600">{{ conversion.won }}</div>
-                <div class="text-xs text-slate-500">Won</div>
-            </div>
-            <div class="text-center">
-                <div class="text-lg font-bold text-red-600">{{ conversion.lost }}</div>
-                <div class="text-xs text-slate-500">Lost</div>
-            </div>
-            <div class="text-center">
-                <div class="text-lg font-bold text-yellow-600">{{ conversion.pending }}</div>
-                <div class="text-xs text-slate-500">Pending</div>
+        <div>
+            <div class="font-h1 text-h1 text-on-surface">{{ funnel.conversion_rate|default:0 }}%</div>
+            <div class="flex items-center gap-1 mt-2 font-body-sm text-body-sm text-on-surface-variant">
+                <span class="material-symbols-outlined text-[16px] text-primary">trending_up</span>
+                <span class="text-primary font-medium">{{ funnel.accepted|default:0 }}</span> accepted
             </div>
         </div>
+    </div>
+
+    <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-container-padding shadow-sm flex flex-col justify-between">
+        <div class="flex items-center justify-between mb-4">
+            <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Total Earned</span>
+            <div class="p-2 bg-secondary-container rounded-lg text-on-secondary-container">
+                <span class="material-symbols-outlined text-[20px]">payments</span>
+            </div>
+        </div>
+        <div>
+            <div class="font-h1 text-h1 text-on-surface">${{ funnel.accepted_amount|default:"0" }}</div>
+            <div class="flex items-center gap-1 mt-2 font-body-sm text-body-sm text-on-surface-variant">
+                <span class="material-symbols-outlined text-[16px] text-primary">trending_up</span>
+                <span class="text-primary font-medium">${{ forecast.expected_amount|default:0 }}</span> expected
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-container-padding shadow-sm flex flex-col justify-between">
+        <div class="flex items-center justify-between mb-4">
+            <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Logged Hours</span>
+            <div class="p-2 bg-secondary-container rounded-lg text-on-secondary-container">
+                <span class="material-symbols-outlined text-[20px]">schedule</span>
+            </div>
+        </div>
+        <div>
+            <div class="font-h1 text-h1 text-on-surface">{{ hourly_rate.total_hours|default:"0" }}h</div>
+            <div class="flex items-center gap-1 mt-2 font-body-sm text-body-sm text-on-surface-variant">
+                <span class="material-symbols-outlined text-[16px] text-on-surface-variant">paid</span>
+                <span class="font-medium">${{ hourly_rate.effective_rate|default:0 }}</span>/hr effective
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Content Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter">
+    <!-- Proposal Funnel -->
+    <div class="lg:col-span-2 bg-surface-container-lowest border border-outline-variant rounded-xl shadow-sm p-container-padding flex flex-col">
+        <div class="flex justify-between items-center mb-6">
+            <h3 class="font-h3 text-h3 text-on-surface">Proposal Funnel</h3>
+            <a href="{% url 'proposal-list' %}" class="text-primary hover:text-primary-container font-label-md text-label-md transition-colors">View Detailed Report</a>
+        </div>
+        <div class="flex-1 flex flex-col justify-center gap-4 py-4">
+            {% with sent=funnel.sent|default:0 viewed=funnel.viewed|default:0 responded=funnel.responded|default:0 accepted=funnel.accepted|default:0 %}
+            <div class="relative">
+                <div class="flex items-center justify-between mb-1">
+                    <span class="font-label-md text-label-md text-on-surface">Sent</span>
+                    <span class="font-body-sm text-body-sm text-on-surface-variant">{{ sent }}</span>
+                </div>
+                <div class="w-full bg-surface-container-high rounded-full h-3">
+                    <div class="bg-primary h-3 rounded-full" style="width: 100%"></div>
+                </div>
+            </div>
+            <div class="relative">
+                <div class="flex items-center justify-between mb-1">
+                    <span class="font-label-md text-label-md text-on-surface">Viewed</span>
+                    <span class="font-body-sm text-body-sm text-on-surface-variant">{{ viewed }}</span>
+                </div>
+                <div class="w-full bg-surface-container-high rounded-full h-3">
+                    <div class="bg-primary h-3 rounded-full opacity-80" style="width: {% if sent %}{% widthratio viewed sent 100 %}{% else %}0{% endif %}%"></div>
+                </div>
+            </div>
+            <div class="relative">
+                <div class="flex items-center justify-between mb-1">
+                    <span class="font-label-md text-label-md text-on-surface">Responded</span>
+                    <span class="font-body-sm text-body-sm text-on-surface-variant">{{ responded }}</span>
+                </div>
+                <div class="w-full bg-surface-container-high rounded-full h-3">
+                    <div class="bg-primary h-3 rounded-full opacity-60" style="width: {% if sent %}{% widthratio responded sent 100 %}{% else %}0{% endif %}%"></div>
+                </div>
+            </div>
+            <div class="relative">
+                <div class="flex items-center justify-between mb-1">
+                    <span class="font-label-md text-label-md text-on-surface">Accepted</span>
+                    <span class="font-body-sm text-body-sm text-on-surface-variant">{{ accepted }}</span>
+                </div>
+                <div class="w-full bg-surface-container-high rounded-full h-3">
+                    <div class="bg-primary h-3 rounded-full opacity-40" style="width: {% if sent %}{% widthratio accepted sent 100 %}{% else %}0{% endif %}%"></div>
+                </div>
+            </div>
+            {% endwith %}
+        </div>
+    </div>
+
+    <!-- Upcoming Follow-ups -->
+    <div class="bg-surface-container-lowest border border-outline-variant rounded-xl shadow-sm p-container-padding flex flex-col">
+        <div class="flex justify-between items-center mb-6">
+            <h3 class="font-h3 text-h3 text-on-surface">Urgent Follow-ups</h3>
+        </div>
+        <ul class="flex flex-col gap-4">
+            {% for fu in urgent_followups|default:'' %}
+            <li class="flex items-start gap-3 p-3 rounded-lg border border-outline-variant {% if fu.is_overdue %}bg-error-container/30{% else %}hover:bg-surface-container-low{% endif %} transition-colors">
+                <div class="p-2 {% if fu.is_overdue %}bg-error-container text-on-error-container{% else %}bg-secondary-container text-on-secondary-container{% endif %} rounded-full mt-1">
+                    <span class="material-symbols-outlined text-[16px]">{% if fu.is_overdue %}priority_high{% else %}mail{% endif %}</span>
+                </div>
+                <div>
+                    <h4 class="font-label-md text-label-md text-on-surface">{{ fu.proposal.title|default:"Follow-up" }}</h4>
+                    <p class="font-body-sm text-body-sm text-on-surface-variant mt-1">{{ fu.notes|truncatechars:50 }}</p>
+                    <span class="inline-block mt-2 font-label-sm text-label-sm {% if fu.is_overdue %}text-error bg-error-container{% else %}text-on-surface-variant bg-surface-container-high{% endif %} px-2 py-1 rounded">{{ fu.scheduled_for|date:"M d" }}</span>
+                </div>
+            </li>
+            {% empty %}
+            <li class="text-center py-8 text-on-surface-variant font-body-sm text-body-sm">
+                <span class="material-symbols-outlined text-[40px] text-outline-variant mb-2 block">inbox</span>
+                No urgent follow-ups.
+            </li>
+            {% endfor %}
+        </ul>
+        <a href="{% url 'followup-list' %}" class="mt-auto pt-4 w-full text-center font-label-md text-label-md text-primary hover:text-primary-container transition-colors">View All Tasks</a>
     </div>
 </div>
 
 <!-- Forecast -->
-<div class="bg-white rounded-lg border border-slate-200 p-6 shadow-soft">
-    <h3 class="text-h3 text-slate-900 mb-4">Forecast</h3>
-    <div class="grid grid-cols-2 gap-4">
-        <div class="flex items-center justify-between">
-            <span class="text-sm text-slate-600">Expected Wins</span>
-            <span class="font-medium text-slate-900">{{ forecast.expected_wins }}</span>
+<div class="mt-stack-lg bg-surface-container-lowest border border-outline-variant rounded-xl shadow-sm p-container-padding">
+    <h3 class="font-h3 text-h3 text-on-surface mb-stack-md">Forecast</h3>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+        <div class="flex flex-col">
+            <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Expected Wins</span>
+            <span class="font-h2 text-h2 text-on-surface mt-1">{{ forecast.expected_wins|default:0 }}</span>
         </div>
-        <div class="flex items-center justify-between">
-            <span class="text-sm text-slate-600">Expected Amount</span>
-            <span class="font-medium text-slate-900">${{ forecast.expected_amount }}</span>
+        <div class="flex flex-col">
+            <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Expected Amount</span>
+            <span class="font-h2 text-h2 text-on-surface mt-1">${{ forecast.expected_amount|default:0 }}</span>
+        </div>
+        <div class="flex flex-col">
+            <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Win Rate</span>
+            <span class="font-h2 text-h2 text-on-surface mt-1">{{ conversion.win_rate|default:0 }}%</span>
         </div>
     </div>
 </div>

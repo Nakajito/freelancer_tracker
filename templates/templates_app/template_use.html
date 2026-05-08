@@ -1,53 +1,60 @@
-{% extends "base.html" %}
+{% extends "app_base.html" %}
 
-{% block title %}Use Template - {{ template.name }}{% endblock %}
+{% block title %}Use Template: {{ template.name }} - PropoTrack{% endblock %}
+{% block active_nav %}templates{% endblock %}
 
-{% block content %}
-<div class="page-header">
-    <div>
-        <h1 class="page-title">Use Template: {{ template.name }}</h1>
-        <p class="page-subtitle">Select a client to create a proposal.</p>
-    </div>
-    <a href="{% url 'template-list' %}" class="btn btn-ghost">
-        <i class="bi bi-arrow-left"></i> Back
+{% block app_content %}
+<div class="mb-stack-lg">
+    <a href="{% url 'template-list' %}" class="inline-flex items-center gap-1 text-on-surface-variant hover:text-primary transition-colors font-label-sm text-label-sm mb-2">
+        <span class="material-symbols-outlined text-[16px]">arrow_back</span>
+        Back to Templates
     </a>
+    <h1 class="font-h1 text-h1 text-on-surface">Use Template: {{ template.name }}</h1>
+    <p class="font-body-md text-body-md text-on-surface-variant mt-1">Pick a client to spin up a new proposal pre-filled with this template.</p>
 </div>
 
-<div class="table-container">
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Client</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for client in clients %}
-            <tr>
-                <td>
-                    <span class="fw-medium">{{ client.name }}</span>
-                </td>
-                <td>
-                    <a href="{% url 'proposal-create' %}?template={{ template.pk }}&client={{ client.pk }}" class="btn btn-primary btn-sm">
-                        <i class="bi bi-play-btn"></i> Use
-                    </a>
-                </td>
-            </tr>
-            {% empty %}
-            <tr>
-                <td colspan="2">
-                    <div class="empty-state">
-                        <i class="bi bi-people empty-state-icon"></i>
-                        <h4 class="empty-state-title">No clients available</h4>
-                        <p class="empty-state-text">Create a client first to use this template.</p>
-                        <a href="{% url 'client-create' %}" class="btn btn-primary">
-                            <i class="bi bi-plus-lg"></i> Create Client
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl shadow-sm overflow-hidden">
+    <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+            <thead>
+                <tr class="bg-surface-container-low border-b border-outline-variant">
+                    <th class="font-label-sm text-label-sm text-secondary py-4 px-6 uppercase tracking-wider">Client</th>
+                    <th class="font-label-sm text-label-sm text-secondary py-4 px-6 uppercase tracking-wider">Email</th>
+                    <th class="font-label-sm text-label-sm text-secondary py-4 px-6 uppercase tracking-wider text-right">Action</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-outline-variant">
+                {% for client in clients %}
+                <tr class="hover:bg-surface-container-low/50 transition-colors">
+                    <td class="py-4 px-6">
+                        <div class="flex items-center gap-3">
+                            <div class="w-9 h-9 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-label-md text-label-md uppercase">{{ client.name|slice:":1" }}</div>
+                            <span class="font-label-md text-label-md text-on-surface">{{ client.name }}</span>
+                        </div>
+                    </td>
+                    <td class="py-4 px-6 font-body-sm text-body-sm text-on-surface-variant">{{ client.email|default:"—" }}</td>
+                    <td class="py-4 px-6 text-right">
+                        <a href="{% url 'proposal-create' %}?template={{ template.pk }}&client={{ client.pk }}" class="inline-flex items-center gap-2 px-3 py-1.5 bg-primary text-on-primary rounded-lg font-label-md text-label-md hover:bg-primary-container transition-colors">
+                            <span class="material-symbols-outlined text-[16px]">play_arrow</span>
+                            Use
                         </a>
-                    </div>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="3" class="py-16 text-center">
+                        <span class="material-symbols-outlined text-[48px] text-outline-variant mb-3 block">groups</span>
+                        <h3 class="font-h3 text-h3 text-on-surface mb-1">No clients available</h3>
+                        <p class="font-body-md text-body-md text-on-surface-variant mb-4">Create a client first to use this template.</p>
+                        <a href="{% url 'client-create' %}" class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-on-primary rounded-lg font-label-md text-label-md hover:bg-primary-container">
+                            <span class="material-symbols-outlined text-[18px]">add</span>
+                            Create Client
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </div>
 {% endblock %}

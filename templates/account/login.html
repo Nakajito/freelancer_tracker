@@ -1,63 +1,51 @@
-{% extends "base.html" %}
+{% extends "auth_base.html" %}
 
 {% block title %}Sign In - PropoTrack{% endblock %}
+{% block auth_title %}Welcome back{% endblock %}
+{% block auth_subtitle %}Please enter your details to sign in.{% endblock %}
 
-{% block content %}
-<div class="flex items-center justify-center min-h-[calc(100vh-200px)]">
-    <div class="w-full max-w-md">
-        <div class="text-center mb-8">
-            <i class="bi bi-briefcase text-5xl text-primary"></i>
-            <h1 class="text-h1 text-slate-900 mt-4 mb-2">PropoTrack</h1>
-            <p class="text-slate-500">Sign in to continue</p>
-        </div>
-        
-        <div class="bg-white rounded-lg border border-slate-200 p-6 shadow-soft">
-            <form method="post" action="{% url 'account_login' %}">
-                {% csrf_token %}
-                
-                {% if form.errors %}
-                <div class="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
-                    {% for field in form %}
-                        {% for error in field.errors %}
-                            <p class="mb-0">{{ error }}</p>
-                        {% endfor %}
-                    {% endfor %}
-                    {% for error in form.non_field_errors %}
-                        <p class="mb-0">{{ error }}</p>
-                    {% endfor %}
-                </div>
-                {% endif %}
-                
-                <div class="mb-4">
-                    <label class="block text-sm font-medium text-slate-700 mb-1">Email</label>
-                    <input type="email" name="login" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary" placeholder="you@example.com" required>
-                </div>
-                
-                <div class="mb-4">
-                    <label class="block text-sm font-medium text-slate-700 mb-1">Password</label>
-                    <input type="password" name="password" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary" placeholder="Your password" required>
-                </div>
-                
-                <div class="mb-4">
-                    <label class="flex items-center gap-2 text-sm text-slate-600">
-                        <input type="checkbox" name="remember" id="remember" class="rounded border-slate-300 text-primary focus:ring-primary">
-                        <span>Remember me</span>
-                    </label>
-                </div>
-                
-                <button type="submit" class="w-full py-2 bg-primary text-white rounded-lg font-medium text-sm hover:bg-primary-hover transition-colors">
-                    <i class="bi bi-box-arrow-in-right mr-2"></i>Sign In
-                </button>
-            </form>
-            
-            <div class="mt-6 text-center">
-                <p class="text-sm text-slate-500">Don't have an account? <a href="{% url 'account_signup' %}" class="text-primary hover:text-primary-hover font-medium">Sign up</a></p>
-            </div>
-            
-            <div class="mt-3 text-center">
-                <a href="{% url 'account_reset_password' %}" class="text-sm text-slate-500 hover:text-slate-700">Forgot your password?</a>
-            </div>
+{% block auth_content %}
+<form method="post" action="{% url 'account_login' %}" class="flex flex-col gap-stack-md">
+    {% csrf_token %}
+
+    {% if form.errors or form.non_field_errors %}
+    <div class="px-4 py-3 rounded-lg bg-error-container text-on-error-container border border-error/30 flex items-start gap-2">
+        <span class="material-symbols-outlined text-[20px]">error</span>
+        <div class="font-body-sm text-body-sm">
+            {% for field in form %}{% for error in field.errors %}<p>{{ error }}</p>{% endfor %}{% endfor %}
+            {% for error in form.non_field_errors %}<p>{{ error }}</p>{% endfor %}
         </div>
     </div>
+    {% endif %}
+
+    <div class="flex flex-col gap-stack-sm">
+        <label class="font-label-md text-label-md text-on-surface" for="id_login">Email</label>
+        <input class="w-full px-4 py-3 rounded-lg bg-surface-container-low border-2 border-transparent focus:bg-surface-container-lowest focus:border-primary focus:outline-none font-body-md text-body-md text-on-surface placeholder:text-outline transition-colors" id="id_login" name="login" placeholder="Enter your email" required type="email">
+    </div>
+
+    <div class="flex flex-col gap-stack-sm">
+        <label class="font-label-md text-label-md text-on-surface" for="id_password">Password</label>
+        <input class="w-full px-4 py-3 rounded-lg bg-surface-container-low border-2 border-transparent focus:bg-surface-container-lowest focus:border-primary focus:outline-none font-body-md text-body-md text-on-surface placeholder:text-outline transition-colors" id="id_password" name="password" placeholder="••••••••" required type="password">
+    </div>
+
+    <div class="flex items-center justify-between mt-unit">
+        <label class="flex items-center gap-2 cursor-pointer group">
+            <input class="w-4 h-4 rounded border-outline text-primary focus:ring-primary focus:ring-offset-0" type="checkbox" name="remember">
+            <span class="font-body-sm text-body-sm text-on-surface-variant group-hover:text-on-surface transition-colors">Remember me</span>
+        </label>
+        <a class="font-label-md text-label-md text-primary hover:text-primary-container transition-colors" href="{% url 'account_reset_password' %}">Forgot password?</a>
+    </div>
+
+    <button class="w-full py-3 px-4 rounded-lg bg-primary text-on-primary font-label-md text-label-md mt-stack-sm hover:opacity-90 active:scale-[0.98] transition-all flex items-center justify-center gap-2" type="submit">
+        Sign In
+        <span class="material-symbols-outlined text-[18px]">login</span>
+    </button>
+</form>
+
+<div class="mt-stack-md text-center">
+    <p class="font-body-sm text-body-sm text-on-surface-variant">
+        Don't have an account?
+        <a class="font-label-md text-label-md text-primary hover:text-primary-container hover:underline transition-all ml-1" href="{% url 'account_signup' %}">Sign up</a>
+    </p>
 </div>
 {% endblock %}

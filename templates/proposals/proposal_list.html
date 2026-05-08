@@ -1,24 +1,28 @@
-{% extends "base.html" %}
+{% extends "app_base.html" %}
 
 {% block title %}Proposals - PropoTrack{% endblock %}
+{% block active_nav %}proposals{% endblock %}
 
-{% block content %}
-<div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+{% block app_content %}
+<div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-stack-lg">
     <div>
-        <h1 class="text-h1 text-slate-900 mb-1">Proposals</h1>
-        <p class="text-slate-500 text-sm">Manage, track, and send your project pitches.</p>
+        <h2 class="font-display text-display text-on-background flex items-baseline gap-3">
+            Proposals
+            <span class="font-body-md text-body-md text-secondary bg-surface-container px-3 py-1 rounded-full align-middle">{{ paginator.count|default:proposals|length }} Total</span>
+        </h2>
+        <p class="font-body-md text-body-md text-on-surface-variant mt-1">Manage, track, and send your project pitches.</p>
     </div>
-    <a href="{% url 'proposal-create' %}" class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg font-medium text-sm hover:bg-primary-hover transition-colors">
-        <i class="bi bi-plus-lg"></i> Add Proposal
+    <a href="{% url 'proposal-create' %}" class="bg-primary text-on-primary font-label-md text-label-md py-2.5 px-5 rounded-lg flex items-center gap-2 hover:bg-primary-container shadow-sm transition-all">
+        <span class="material-symbols-outlined text-[20px]">add</span>
+        Add Proposal
     </a>
 </div>
 
 <!-- Filters -->
-<form method="get" class="bg-white rounded-lg border border-slate-200 p-4 mb-6 shadow-soft">
-    <div class="flex flex-wrap items-end gap-4">
-        <div class="flex-1 min-w-[200px]">
-            <label class="block text-xs font-medium text-slate-500 mb-1">Status</label>
-            <select name="status" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary">
+<form method="get" class="bg-surface-container-lowest border border-outline-variant rounded-xl p-4 mb-stack-md flex flex-col md:flex-row gap-4 items-center justify-between shadow-sm">
+    <div class="flex flex-col sm:flex-row w-full md:w-auto gap-4">
+        <div class="relative min-w-[180px]">
+            <select name="status" class="w-full appearance-none bg-surface border border-outline-variant rounded-lg py-2 pl-4 pr-10 font-body-sm text-body-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer">
                 <option value="">All Statuses</option>
                 <option value="draft" {% if request.GET.status == 'draft' %}selected{% endif %}>Draft</option>
                 <option value="sent" {% if request.GET.status == 'sent' %}selected{% endif %}>Sent</option>
@@ -27,120 +31,129 @@
                 <option value="accepted" {% if request.GET.status == 'accepted' %}selected{% endif %}>Accepted</option>
                 <option value="rejected" {% if request.GET.status == 'rejected' %}selected{% endif %}>Rejected</option>
             </select>
+            <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant">arrow_drop_down</span>
         </div>
-        <div class="flex-1 min-w-[200px]">
-            <label class="block text-xs font-medium text-slate-500 mb-1">Platform</label>
-            <select name="platform" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary">
+        <div class="relative min-w-[180px]">
+            <select name="platform" class="w-full appearance-none bg-surface border border-outline-variant rounded-lg py-2 pl-4 pr-10 font-body-sm text-body-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer">
                 <option value="">All Platforms</option>
-                <option value="upwork">Upwork</option>
-                <option value="fiverr">Fiverr</option>
-                <option value="linkedin">LinkedIn</option>
-                <option value="other">Other</option>
+                <option value="upwork" {% if request.GET.platform == 'upwork' %}selected{% endif %}>Upwork</option>
+                <option value="linkedin" {% if request.GET.platform == 'linkedin' %}selected{% endif %}>LinkedIn</option>
+                <option value="fiverr" {% if request.GET.platform == 'fiverr' %}selected{% endif %}>Fiverr</option>
+                <option value="direct" {% if request.GET.platform == 'direct' %}selected{% endif %}>Direct Client</option>
+                <option value="other" {% if request.GET.platform == 'other' %}selected{% endif %}>Other</option>
             </select>
+            <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant">arrow_drop_down</span>
         </div>
-        <button type="submit" class="px-4 py-2 bg-slate-100 text-slate-700 rounded-lg text-sm font-medium hover:bg-slate-200 transition-colors">
-            Filter
-        </button>
     </div>
+    <button type="submit" class="px-4 py-2 bg-primary text-on-primary rounded-lg font-label-md text-label-md hover:bg-primary-container transition-colors shadow-sm flex items-center gap-2">
+        <span class="material-symbols-outlined text-[18px]">filter_list</span>
+        Filter
+    </button>
 </form>
 
-<!-- Table -->
-<div class="bg-white rounded-lg border border-slate-200 overflow-hidden shadow-soft">
-    <table class="w-full">
-        <thead class="bg-slate-50 border-b border-slate-200">
-            <tr>
-                <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Title</th>
-                <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Client</th>
-                <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Amount</th>
-                <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Status</th>
-                <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Sent</th>
-                <th class="px-4 py-3 text-right text-xs font-semibold text-slate-500 uppercase tracking-wider">Actions</th>
-            </tr>
-        </thead>
-        <tbody class="divide-y divide-slate-200">
-            {% for proposal in proposals %}
-            <tr class="hover:bg-slate-50 transition-colors">
-                <td class="px-4 py-4">
-                    <a href="{% url 'proposal-detail' proposal.pk %}" class="font-medium text-slate-900 hover:text-primary">
-                        {{ proposal.title }}
-                    </a>
-                    <p class="text-sm text-slate-500 mt-0.5">{{ proposal.proposal_text|truncatechars:60 }}</p>
-                </td>
-                <td class="px-4 py-4">
-                    {% if proposal.client %}
-                    <div class="flex items-center gap-2 text-sm">
-                        <i class="bi bi-building text-slate-400"></i>
-                        <span class="text-slate-700">{{ proposal.client.name }}</span>
-                    </div>
-                    <div class="flex items-center gap-2 text-xs text-slate-500 mt-1">
-                        <i class="bi bi-globe"></i>
-                        {{ proposal.get_platform_display }}
-                    </div>
-                    {% else %}
-                    <span class="text-slate-400 text-sm">—</span>
-                    {% endif %}
-                </td>
-                <td class="px-4 py-4">
-                    <span class="font-semibold text-slate-900">${{ proposal.amount }}</span>
-                </td>
-                <td class="px-4 py-4">
-                    {% if proposal.status == 'accepted' %}
-                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">Accepted</span>
-                    {% elif proposal.status == 'sent' %}
-                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">Sent</span>
-                    {% elif proposal.status == 'negotiating' %}
-                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">Negotiating</span>
-                    {% elif proposal.status == 'rejected' %}
-                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">Rejected</span>
-                    {% elif proposal.status == 'draft' %}
-                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-100 text-slate-600">Draft</span>
-                    {% else %}
-                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">{{ proposal.get_status_display }}</span>
-                    {% endif %}
-                </td>
-                <td class="px-4 py-4 text-sm text-slate-500">
-                    {{ proposal.sent_date|default:"—" }}
-                </td>
-                <td class="px-4 py-4 text-right">
-                    <div class="flex items-center justify-end gap-2">
-                        <a href="{% url 'proposal-detail' proposal.pk %}" class="p-2 text-slate-400 hover:text-slate-600 rounded-lg hover:bg-slate-100" title="View">
-                            <i class="bi bi-eye"></i>
-                        </a>
-                        <a href="{% url 'proposal-update' proposal.pk %}" class="p-2 text-slate-400 hover:text-slate-600 rounded-lg hover:bg-slate-100" title="Edit">
-                            <i class="bi bi-pencil"></i>
-                        </a>
-                    </div>
-                </td>
-            </tr>
-            {% empty %}
-            <tr>
-                <td colspan="6" class="px-4 py-12 text-center">
-                    <div class="flex flex-col items-center">
-                        <i class="bi bi-inbox text-4xl text-slate-300 mb-3"></i>
-                        <h3 class="text-lg font-medium text-slate-900 mb-1">No proposals found</h3>
-                        <p class="text-slate-500 mb-4">Create your first proposal to get started.</p>
-                        <a href="{% url 'proposal-create' %}" class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg font-medium text-sm hover:bg-primary-hover">
-                            <i class="bi bi-plus-lg"></i> Add Proposal
-                        </a>
-                    </div>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</div>
+<!-- Data Table -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl shadow-sm overflow-hidden">
+    <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+            <thead>
+                <tr class="bg-surface-container-low border-b border-outline-variant">
+                    <th class="font-label-sm text-label-sm text-secondary py-4 px-6 uppercase tracking-wider whitespace-nowrap w-[30%]">Title</th>
+                    <th class="font-label-sm text-label-sm text-secondary py-4 px-6 uppercase tracking-wider whitespace-nowrap">Client &amp; Platform</th>
+                    <th class="font-label-sm text-label-sm text-secondary py-4 px-6 uppercase tracking-wider whitespace-nowrap">Amount</th>
+                    <th class="font-label-sm text-label-sm text-secondary py-4 px-6 uppercase tracking-wider whitespace-nowrap">Status</th>
+                    <th class="font-label-sm text-label-sm text-secondary py-4 px-6 uppercase tracking-wider whitespace-nowrap">Date Sent</th>
+                    <th class="font-label-sm text-label-sm text-secondary py-4 px-6 uppercase tracking-wider whitespace-nowrap text-right">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-outline-variant">
+                {% for proposal in proposals %}
+                <tr class="hover:bg-surface-container-low/50 transition-colors group">
+                    <td class="py-4 px-6">
+                        <a href="{% url 'proposal-detail' proposal.pk %}" class="font-label-md text-label-md text-on-surface hover:text-primary transition-colors mb-1 block">{{ proposal.title }}</a>
+                        <div class="font-body-sm text-body-sm text-on-surface-variant truncate max-w-[280px]">{{ proposal.proposal_text|truncatechars:60 }}</div>
+                    </td>
+                    <td class="py-4 px-6">
+                        <div class="font-body-sm text-body-sm text-on-surface font-medium">{{ proposal.client.name|default:"—" }}</div>
+                        <div class="flex items-center gap-1 mt-1">
+                            <span class="material-symbols-outlined text-[14px] text-on-surface-variant">work</span>
+                            <span class="font-body-sm text-body-sm text-on-surface-variant text-xs">{{ proposal.get_platform_display }}</span>
+                        </div>
+                    </td>
+                    <td class="py-4 px-6">
+                        <div class="font-h3 text-h3 text-on-surface">${{ proposal.amount|default:"—" }}</div>
+                    </td>
+                    <td class="py-4 px-6">
+                        {% with s=proposal.status %}
+                        <span class="inline-flex items-center px-2.5 py-1 rounded-full font-label-sm text-label-sm border
+                            {% if s == 'accepted' %}bg-primary/10 text-primary border-primary/20
+                            {% elif s == 'negotiating' %}bg-tertiary-container/10 text-tertiary-container border-tertiary-container/20
+                            {% elif s == 'sent' or s == 'viewed' %}bg-secondary/10 text-secondary border-secondary/20
+                            {% elif s == 'rejected' %}bg-error/10 text-error border-error/20
+                            {% else %}bg-surface-container-high text-on-surface-variant border-outline-variant{% endif %}">
+                            <span class="w-1.5 h-1.5 rounded-full mr-1.5
+                                {% if s == 'accepted' %}bg-primary
+                                {% elif s == 'negotiating' %}bg-tertiary-container
+                                {% elif s == 'sent' or s == 'viewed' %}bg-secondary
+                                {% elif s == 'rejected' %}bg-error
+                                {% else %}bg-outline{% endif %}"></span>
+                            {{ proposal.get_status_display }}
+                        </span>
+                        {% endwith %}
+                    </td>
+                    <td class="py-4 px-6">
+                        <div class="font-body-sm text-body-sm text-on-surface">{{ proposal.sent_date|date:"M d, Y"|default:"—" }}</div>
+                    </td>
+                    <td class="py-4 px-6 text-right">
+                        <div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <a href="{% url 'proposal-detail' proposal.pk %}" class="p-1.5 text-on-surface-variant hover:text-primary hover:bg-surface-container rounded-md" title="View">
+                                <span class="material-symbols-outlined text-[18px]">visibility</span>
+                            </a>
+                            <a href="{% url 'proposal-update' proposal.pk %}" class="p-1.5 text-on-surface-variant hover:text-primary hover:bg-surface-container rounded-md" title="Edit">
+                                <span class="material-symbols-outlined text-[18px]">edit</span>
+                            </a>
+                            <a href="{% url 'proposal-delete' proposal.pk %}" class="p-1.5 text-on-surface-variant hover:text-error hover:bg-error-container rounded-md" title="Delete">
+                                <span class="material-symbols-outlined text-[18px]">delete</span>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" class="py-16 text-center">
+                        <div class="flex flex-col items-center">
+                            <span class="material-symbols-outlined text-[48px] text-outline-variant mb-3">inbox</span>
+                            <h3 class="font-h3 text-h3 text-on-surface mb-1">No proposals found</h3>
+                            <p class="font-body-md text-body-md text-on-surface-variant mb-4">Create your first proposal to get started.</p>
+                            <a href="{% url 'proposal-create' %}" class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-on-primary rounded-lg font-label-md text-label-md hover:bg-primary-container">
+                                <span class="material-symbols-outlined text-[18px]">add</span>
+                                Add Proposal
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
-{% if is_paginated %}
-<div class="flex items-center justify-center gap-2 mt-6">
-    {% if page_obj.has_previous %}
-    <a href="?page=1" class="px-3 py-2 text-sm text-slate-600 hover:bg-slate-100 rounded-lg">&laquo;</a>
-    <a href="?page={{ page_obj.previous_page_number }}" class="px-3 py-2 text-sm text-slate-600 hover:bg-slate-100 rounded-lg">&lsaquo;</a>
-    {% endif %}
-    <span class="px-3 py-2 text-sm text-slate-600">{{ page_obj.number }} / {{ paginator.num_pages }}</span>
-    {% if page_obj.has_next %}
-    <a href="?page={{ page_obj.next_page_number }}" class="px-3 py-2 text-sm text-slate-600 hover:bg-slate-100 rounded-lg">&rsaquo;</a>
-    <a href="?page={{ paginator.num_pages }}" class="px-3 py-2 text-sm text-slate-600 hover:bg-slate-100 rounded-lg">&raquo;</a>
+    {% if is_paginated %}
+    <div class="border-t border-outline-variant px-6 py-4 flex items-center justify-between bg-surface-container-lowest">
+        <div class="font-body-sm text-body-sm text-on-surface-variant">
+            Page <span class="font-medium text-on-surface">{{ page_obj.number }}</span> of <span class="font-medium text-on-surface">{{ paginator.num_pages }}</span> ({{ paginator.count }} total)
+        </div>
+        <div class="flex items-center gap-2">
+            {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}" class="px-3 py-1 border border-outline-variant rounded text-on-surface hover:bg-surface-container transition-colors font-label-sm text-label-sm">Previous</a>
+            {% else %}
+            <button class="px-3 py-1 border border-outline-variant rounded text-on-surface-variant opacity-50 cursor-not-allowed font-label-sm text-label-sm" disabled>Previous</button>
+            {% endif %}
+            {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}" class="px-3 py-1 border border-outline-variant rounded text-on-surface hover:bg-surface-container transition-colors font-label-sm text-label-sm">Next</a>
+            {% else %}
+            <button class="px-3 py-1 border border-outline-variant rounded text-on-surface-variant opacity-50 cursor-not-allowed font-label-sm text-label-sm" disabled>Next</button>
+            {% endif %}
+        </div>
+    </div>
     {% endif %}
 </div>
-{% endif %}
 {% endblock %}

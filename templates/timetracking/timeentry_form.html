@@ -1,56 +1,92 @@
-{% extends "base.html" %}
+{% extends "app_base.html" %}
 
-{% block title %}{% if object %}Edit{% else %}Log{% endif %} Hours - Freelancer Tracker{% endblock %}
+{% block title %}{% if object %}Edit Time Entry{% else %}Log Hours{% endif %} - PropoTrack{% endblock %}
+{% block active_nav %}time{% endblock %}
 
-{% block content %}
-<div class="page-header">
-    <div>
-        <h1 class="page-title">{% if object %}Edit{% else %}Log Hours{% endif %}</h1>
-        <p class="page-subtitle">Track time spent on a project.</p>
+{% block app_content %}
+<div class="max-w-[1000px] mx-auto">
+    <div class="mb-stack-lg">
+        <a href="{% url 'timeentry-list' %}" class="inline-flex items-center gap-1 text-on-surface-variant hover:text-primary transition-colors font-label-sm text-label-sm mb-2">
+            <span class="material-symbols-outlined text-[16px]">arrow_back</span>
+            Back to Time Tracking
+        </a>
+        <h1 class="font-h1 text-h1 text-on-surface">{% if object %}Edit Time Entry{% else %}Log Hours{% endif %}</h1>
+        <p class="font-body-md text-body-md text-on-surface-variant mt-1">Track time spent on a project with billable status.</p>
     </div>
-</div>
 
-<form method="post">
-{% csrf_token %}
-<div class="grid grid-cols-2 mb-lg">
-    <div class="card">
-        <div class="form-group">
-            <label class="form-label" for="id_proposal">Proposal</label>
-            {{ form.proposal }}
+    <form method="post" class="bg-surface-container-lowest border border-outline-variant shadow-sm rounded-xl p-container-padding md:p-stack-lg grid grid-cols-1 md:grid-cols-12 gap-y-stack-md gap-x-gutter">
+        {% csrf_token %}
+
+        {% if form.non_field_errors %}
+        <div class="col-span-12 px-4 py-3 rounded-lg bg-error-container text-on-error-container border border-error/30">
+            {% for e in form.non_field_errors %}<p class="font-body-sm text-body-sm">{{ e }}</p>{% endfor %}
         </div>
-        
-        <div class="form-group">
-            <label class="form-label" for="id_date">Date</label>
+        {% endif %}
+
+        <div class="col-span-12 md:col-span-8 flex flex-col gap-2">
+            <label class="font-label-md text-label-md text-on-surface-variant" for="id_proposal">Proposal <span class="text-error">*</span></label>
+            {{ form.proposal }}
+            {% if form.proposal.errors %}<p class="font-body-sm text-body-sm text-error">{{ form.proposal.errors.0 }}</p>{% endif %}
+        </div>
+
+        <div class="col-span-6 md:col-span-2 flex flex-col gap-2">
+            <label class="font-label-md text-label-md text-on-surface-variant" for="id_date">Date</label>
             {{ form.date }}
         </div>
-        
-        <div class="form-group">
-            <label class="form-label" for="id_hours">Hours</label>
+
+        <div class="col-span-6 md:col-span-2 flex flex-col gap-2">
+            <label class="font-label-md text-label-md text-on-surface-variant" for="id_hours">Hours</label>
             {{ form.hours }}
+            {% if form.hours.errors %}<p class="font-body-sm text-body-sm text-error">{{ form.hours.errors.0 }}</p>{% endif %}
         </div>
-    </div>
-    
-    <div class="card">
-        <div class="form-group">
-            <label class="form-label" for="id_description">Description</label>
+
+        <div class="col-span-12 flex flex-col gap-2">
+            <label class="font-label-md text-label-md text-on-surface-variant" for="id_description">Description</label>
             {{ form.description }}
         </div>
-        
-        <div class="form-group">
-            <label class="form-label" for="id_billable">Billable</label>
-            {{ form.billable }}
-            <small class="text-muted">Check if this time is billable to the client.</small>
-        </div>
-    </div>
-</div>
 
-<div class="flex gap-md mt-lg">
-    <button type="submit" class="btn btn-primary">
-        <i class="bi bi-check-lg"></i> Save Entry
-    </button>
-    <a href="{% url 'timeentry-list' %}" class="btn btn-ghost">
-        Cancel
-    </a>
+        <div class="col-span-12 flex items-start gap-3 mt-2">
+            {{ form.billable }}
+            <label class="font-body-sm text-body-sm text-on-surface-variant" for="id_billable">
+                Billable to client
+                <span class="block font-body-sm text-on-surface-variant opacity-70">Counts toward effective hourly rate calculation.</span>
+            </label>
+        </div>
+
+        <div class="col-span-12 border-t border-outline-variant pt-stack-md flex flex-col-reverse sm:flex-row items-center justify-end gap-3">
+            <a href="{% url 'timeentry-list' %}" class="w-full sm:w-auto px-6 py-3 rounded-lg border border-outline bg-transparent text-secondary hover:bg-surface-container transition-colors font-label-md text-label-md text-center">
+                Cancel
+            </a>
+            <button type="submit" class="w-full sm:w-auto px-6 py-3 rounded-lg bg-primary text-on-primary hover:bg-on-primary-fixed-variant transition-colors font-label-md text-label-md shadow-sm flex items-center justify-center gap-2">
+                <span class="material-symbols-outlined text-[18px]">save</span>
+                Save Entry
+            </button>
+        </div>
+    </form>
 </div>
-</form>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    input[type=text], input[type=number], input[type=date], select, textarea {
+        width: 100%;
+        background-color: #f0f5f2;
+        border: 1px solid #bcc9c6;
+        border-radius: 0.5rem;
+        padding: 0.75rem 1rem;
+        font-family: 'Inter', sans-serif;
+        font-size: 16px;
+        color: #171d1c;
+        transition: all 0.2s;
+        outline: none;
+    }
+    input:focus, select:focus, textarea:focus {
+        background-color: #ffffff;
+        border-color: #00685f;
+        box-shadow: 0 0 0 2px rgba(0,104,95,0.2);
+    }
+    textarea { min-height: 120px; resize: vertical; }
+    select { appearance: none; background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%233d4947'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e"); background-repeat: no-repeat; background-position: right 0.75rem center; background-size: 20px; padding-right: 2.5rem; }
+    input[type=checkbox] { width: 18px; height: 18px; accent-color: #00685f; }
+</style>
 {% endblock %}

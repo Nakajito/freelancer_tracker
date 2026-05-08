@@ -1,43 +1,42 @@
-{% extends "base.html" %}
+{% extends "app_base.html" %}
 
-{% block title %}Preview - {{ template.name }}{% endblock %}
+{% block title %}Preview: {{ template.name }} - PropoTrack{% endblock %}
+{% block active_nav %}templates{% endblock %}
 
-{% block content %}
-<div class="page-header">
-    <div>
-        <h1 class="page-title">Preview: {{ template.name }}</h1>
-        <p class="page-subtitle">Test your template with sample data.</p>
-    </div>
-    <a href="{% url 'template-list' %}" class="btn btn-ghost">
-        <i class="bi bi-arrow-left"></i> Back
+{% block app_content %}
+<div class="mb-stack-lg">
+    <a href="{% url 'template-list' %}" class="inline-flex items-center gap-1 text-on-surface-variant hover:text-primary transition-colors font-label-sm text-label-sm mb-2">
+        <span class="material-symbols-outlined text-[16px]">arrow_back</span>
+        Back to Templates
     </a>
+    <h1 class="font-h1 text-h1 text-on-surface">Preview: {{ template.name }}</h1>
+    <p class="font-body-md text-body-md text-on-surface-variant mt-1">Test your template with sample data.</p>
 </div>
 
-<form method="get" class="filter-bar">
-    <div class="form-group" style="flex: 1;">
-        <label class="form-label" for="client">Client Name</label>
-        <input type="text" name="client" class="form-control" placeholder="Client Name" value="{{ request.GET.client }}">
+<form method="get" class="bg-surface-container-lowest border border-outline-variant rounded-xl p-container-padding shadow-sm flex flex-col md:flex-row gap-4 items-end mb-stack-md">
+    <div class="flex flex-col gap-2 flex-1">
+        <label class="font-label-md text-label-md text-on-surface-variant" for="client">Client Name</label>
+        <input type="text" name="client" id="client" placeholder="Acme Corp" value="{{ request.GET.client }}" class="w-full bg-surface-container-low border border-outline-variant rounded-lg px-4 py-3 font-body-md text-body-md text-on-surface focus:outline-none focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all">
     </div>
-    <div class="form-group" style="flex: 1;">
-        <label class="form-label" for="project">Project Title</label>
-        <input type="text" name="project" class="form-control" placeholder="Project Title" value="{{ request.GET.project }}">
+    <div class="flex flex-col gap-2 flex-1">
+        <label class="font-label-md text-label-md text-on-surface-variant" for="project">Project Title</label>
+        <input type="text" name="project" id="project" placeholder="Website Redesign" value="{{ request.GET.project }}" class="w-full bg-surface-container-low border border-outline-variant rounded-lg px-4 py-3 font-body-md text-body-md text-on-surface focus:outline-none focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all">
     </div>
-    <div class="form-group" style="flex: 1;">
-        <label class="form-label" for="amount">Amount</label>
-        <input type="text" name="amount" class="form-control" placeholder="Amount" value="{{ request.GET.amount }}">
+    <div class="flex flex-col gap-2 w-full md:w-40">
+        <label class="font-label-md text-label-md text-on-surface-variant" for="amount">Amount</label>
+        <input type="text" name="amount" id="amount" placeholder="$2,500" value="{{ request.GET.amount }}" class="w-full bg-surface-container-low border border-outline-variant rounded-lg px-4 py-3 font-body-md text-body-md text-on-surface focus:outline-none focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all">
     </div>
-    <div class="flex items-end">
-        <button type="submit" class="btn btn-primary">
-            <i class="bi bi-arrow-repeat"></i> Update
-        </button>
-    </div>
+    <button type="submit" class="bg-primary text-on-primary px-5 py-3 rounded-lg font-label-md text-label-md hover:bg-primary-container transition-colors shadow-sm flex items-center gap-2">
+        <span class="material-symbols-outlined text-[18px]">refresh</span>
+        Update
+    </button>
 </form>
 
-<div class="card">
-    <div class="card-header">
-        <h3 class="card-title">Rendered Template</h3>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl shadow-sm overflow-hidden">
+    <div class="px-container-padding py-4 border-b border-outline-variant">
+        <h3 class="font-h3 text-h3 text-on-surface">Rendered Template</h3>
     </div>
-    <div class="p-lg" style="background: var(--color-surface-muted);">
+    <div class="p-container-padding bg-surface-container-low font-body-md text-body-md text-on-surface leading-relaxed">
         {{ rendered|linebreaks }}
     </div>
 </div>

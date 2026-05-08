@@ -1,65 +1,58 @@
-{% extends "base.html" %}
+{% extends "app_base.html" %}
 
-{% block title %}Templates - Freelancer Tracker{% endblock %}
+{% block title %}Templates - PropoTrack{% endblock %}
+{% block active_nav %}templates{% endblock %}
 
-{% block content %}
-<div class="page-header">
+{% block app_content %}
+<div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-stack-lg">
     <div>
-        <h1 class="page-title">Templates</h1>
-        <p class="page-subtitle">Manage your reusable proposal structures.</p>
+        <h2 class="font-display text-display text-on-background flex items-baseline gap-3">
+            Templates
+            <span class="font-body-md text-body-md text-secondary bg-surface-container px-3 py-1 rounded-full align-middle">{{ templates|length }}</span>
+        </h2>
+        <p class="font-body-md text-body-md text-on-surface-variant mt-1">Reusable proposal structures to ship pitches faster.</p>
     </div>
-    <a href="{% url 'template-create' %}" class="btn btn-primary">
-        <i class="bi bi-plus-lg"></i> Create Template
+    <a href="{% url 'template-create' %}" class="bg-primary text-on-primary font-label-md text-label-md py-2.5 px-5 rounded-lg flex items-center gap-2 hover:bg-primary-container shadow-sm transition-all">
+        <span class="material-symbols-outlined text-[20px]">add</span>
+        Create Template
     </a>
 </div>
 
-<div class="table-container">
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for template in templates %}
-            <tr>
-                <td>
-                    <a href="{% url 'template-detail' template.pk %}" class="text-primary fw-medium">
-                        <i class="bi bi-file-earmark-code"></i> {{ template.name }}
-                    </a>
-                </td>
-                <td>{{ template.body|truncatechars:80|default:"No description" }}</td>
-                <td>
-                    <div class="flex gap-sm">
-                        <a href="{% url 'template-preview' template.pk %}" class="btn btn-ghost btn-sm" title="Preview">
-                            <i class="bi bi-eye"></i>
-                        </a>
-                        <a href="{% url 'template-use' template.pk %}" class="btn btn-ghost btn-sm" title="Use">
-                            <i class="bi bi-play-btn"></i>
-                        </a>
-                        <a href="{% url 'template-edit' template.pk %}" class="btn btn-ghost btn-icon" title="Edit">
-                            <i class="bi bi-pencil"></i>
-                        </a>
-                    </div>
-                </td>
-            </tr>
-            {% empty %}
-            <tr>
-                <td colspan="3">
-                    <div class="empty-state">
-                        <i class="bi bi-file-earmark-text empty-state-icon"></i>
-                        <h4 class="empty-state-title">No templates yet</h4>
-                        <p class="empty-state-text">Create your first template to speed up proposal writing.</p>
-                        <a href="{% url 'template-create' %}" class="btn btn-primary">
-                            <i class="bi bi-plus-lg"></i> Create Template
-                        </a>
-                    </div>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter">
+    {% for template in templates %}
+    <div class="bg-surface-container-lowest border border-outline-variant rounded-xl shadow-sm p-container-padding flex flex-col gap-stack-sm hover:border-primary/40 transition-colors group">
+        <div class="flex items-start justify-between">
+            <div class="p-2 bg-secondary-container rounded-lg text-on-secondary-container">
+                <span class="material-symbols-outlined text-[22px]">article</span>
+            </div>
+            <div class="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                <a href="{% url 'template-preview' template.pk %}" class="p-1.5 text-on-surface-variant hover:text-primary hover:bg-surface-container rounded-md" title="Preview">
+                    <span class="material-symbols-outlined text-[18px]">visibility</span>
+                </a>
+                <a href="{% url 'template-update' template.pk %}" class="p-1.5 text-on-surface-variant hover:text-primary hover:bg-surface-container rounded-md" title="Edit">
+                    <span class="material-symbols-outlined text-[18px]">edit</span>
+                </a>
+            </div>
+        </div>
+        <a href="{% url 'template-detail' template.pk %}" class="font-h3 text-h3 text-on-surface hover:text-primary transition-colors">{{ template.name }}</a>
+        <p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-3">{{ template.body|truncatechars:140|default:"No description" }}</p>
+        <div class="mt-auto pt-stack-sm border-t border-outline-variant flex items-center justify-between">
+            <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Last used —</span>
+            <a href="{% url 'template-use' template.pk %}" class="text-primary font-label-md text-label-md hover:text-primary-container transition-colors flex items-center gap-1">
+                Use <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+            </a>
+        </div>
+    </div>
+    {% empty %}
+    <div class="md:col-span-2 lg:col-span-3 bg-surface-container-lowest border border-outline-variant rounded-xl shadow-sm py-16 text-center">
+        <span class="material-symbols-outlined text-[48px] text-outline-variant mb-3 block">article</span>
+        <h3 class="font-h3 text-h3 text-on-surface mb-1">No templates yet</h3>
+        <p class="font-body-md text-body-md text-on-surface-variant mb-4">Create your first template to speed up proposal writing.</p>
+        <a href="{% url 'template-create' %}" class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-on-primary rounded-lg font-label-md text-label-md hover:bg-primary-container">
+            <span class="material-symbols-outlined text-[18px]">add</span>
+            Create Template
+        </a>
+    </div>
+    {% endfor %}
 </div>
 {% endblock %}
