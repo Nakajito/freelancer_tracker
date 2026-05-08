@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}{% if object %}Edit Client{% else %}Create New Client{% endblock %} - PropoTrack{% endblock %}
+
+{% block content %}
+<div class="mb-6">
+    <h1 class="text-h1 text-slate-900 mb-1">{% if object %}Edit{% else %}Create New{% endif %} Client</h1>
+    <p class="text-slate-500 text-sm">Add a client to your roster.</p>
+</div>
+
+<form method="post">
+{% csrf_token %}
+<div class="bg-white rounded-lg border border-slate-200 p-6 shadow-soft max-w-2xl">
+    <div class="mb-4">
+        <label class="block text-sm font-medium text-slate-700 mb-1">Client/Company Name</label>
+        {{ form.name }}
+    </div>
+    
+    <div class="mb-4">
+        <label class="block text-sm font-medium text-slate-700 mb-1">Email Address</label>
+        {{ form.email }}
+    </div>
+    
+    <div class="mb-4">
+        <label class="block text-sm font-medium text-slate-700 mb-1">Notes</label>
+        {{ form.notes }}
+    </div>
+    
+    <div class="flex items-center gap-3 pt-2">
+        <button type="submit" class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg font-medium text-sm hover:bg-primary-hover transition-colors">
+            <i class="bi bi-check-lg"></i> Add Client
+        </button>
+        <a href="{% url 'client-list' %}" class="px-4 py-2 text-slate-600 hover:text-slate-900 font-medium text-sm">
+            Cancel
+        </a>
+    </div>
+</div>
+</form>
+{% endblock %}

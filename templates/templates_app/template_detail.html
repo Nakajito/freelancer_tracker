@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}{{ template.name }} - Freelancer Tracker{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <h1 class="page-title">{{ template.name }}</h1>
+    </div>
+    <div class="flex gap-sm">
+        <a href="{% url 'template-preview' template.pk %}" class="btn btn-secondary">
+            <i class="bi bi-eye"></i> Preview
+        </a>
+        <a href="{% url 'template-use' template.pk %}" class="btn btn-primary">
+            <i class="bi bi-play-btn"></i> Use Template
+        </a>
+        <a href="{% url 'template-edit' template.pk %}" class="btn btn-ghost">
+            <i class="bi bi-pencil"></i> Edit
+        </a>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">Body</h3>
+    </div>
+    <div class="p-lg">
+        <pre class="mb-0" style="white-space: pre-wrap; font-family: var(--font-body);">{{ template.body }}</pre>
+    </div>
+</div>
+
+{% if template.placeholders %}
+<div class="card mt-lg">
+    <span class="card-muted">PLACEHOLDERS</span>
+    <div class="flex gap-sm mt-sm" style="flex-wrap: wrap;">
+        {% for placeholder in template.placeholders %}
+        <code class="badge badge-draft">{{ placeholder }}</code>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+{% endblock %}

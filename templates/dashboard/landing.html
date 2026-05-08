@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block container_class %}{% endblock %}
+
+{% block title %}PropoTrack - Professional Proposal Tracking{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="relative overflow-hidden bg-gradient-to-b from-surface to-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+        <div class="text-center">
+            <h1 class="text-display text-slate-900 mb-6">
+                Professional Freelance Management
+            </h1>
+            <p class="text-xl text-slate-600 max-w-2xl mx-auto mb-8">
+                Win More Work with Professional Proposal Tracking.<br>
+                PropoTrack helps freelancers manage pitches, log hours, and analyze performance in one sleek dashboard.
+            </p>
+            <div class="flex items-center justify-center gap-4">
+                <a href="{% url 'account_signup' %}" class="inline-flex items-center gap-2 px-6 py-3 bg-primary text-white rounded-lg font-semibold text-lg hover:bg-primary-hover transition-colors">
+                    Get Started for Free
+                </a>
+                <a href="{% url 'dashboard' %}" class="inline-flex items-center gap-2 px-6 py-3 bg-white text-slate-700 border border-slate-300 rounded-lg font-semibold text-lg hover:bg-slate-50 transition-colors">
+                    View Demo
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-h1 text-center text-slate-900 mb-12">Features</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="text-center p-8">
+                <div class="w-16 h-16 bg-primary/10 rounded-xl flex items-center justify-center mx-auto mb-4">
+                    <i class="bi bi-file-earmark-text text-2xl text-primary"></i>
+                </div>
+                <h3 class="text-h3 text-slate-900 mb-2">Proposal Tracking</h3>
+                <p class="text-slate-600">Track all your proposals in one place</p>
+            </div>
+            <div class="text-center p-8">
+                <div class="w-16 h-16 bg-primary/10 rounded-xl flex items-center justify-center mx-auto mb-4">
+                    <i class="bi bi-clock text-2xl text-primary"></i>
+                </div>
+                <h3 class="text-h3 text-slate-900 mb-2">Time Logging</h3>
+                <p class="text-slate-600">Log hours and monitor billable time</p>
+            </div>
+            <div class="text-center p-8">
+                <div class="w-16 h-16 bg-primary/10 rounded-xl flex items-center justify-center mx-auto mb-4">
+                    <i class="bi bi-graph-up text-2xl text-primary"></i>
+                </div>
+                <h3 class="text-h3 text-slate-900 mb-2">Analytics</h3>
+                <p class="text-slate-600">Analyze your conversion and earnings</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-20 bg-surface">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-h1 text-slate-900 mb-4">Ready to get started?</h2>
+        <p class="text-slate-600 mb-8">Join thousands of freelancers tracking their proposals.</p>
+        <a href="{% url 'account_signup' %}" class="inline-flex items-center gap-2 px-6 py-3 bg-primary text-white rounded-lg font-semibold text-lg hover:bg-primary-hover transition-colors">
+            Get Started for Free
+        </a>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="py-12 bg-slate-900 text-slate-400">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
+            <div>
+                <h4 class="text-white font-semibold mb-4">PropoTrack</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="#" class="hover:text-white">Privacy Policy</a></li>
+                    <li><a href="#" class="hover:text-white">Terms of Service</a></li>
+                    <li><a href="#" class="hover:text-white">Security</a></li>
+                    <li><a href="#" class="hover:text-white">API Docs</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="pt-8 border-t border-slate-800 text-center text-sm">
+            © 2024 PropoTrack. Precision tracking for professional growth.
+        </div>
+    </div>
+</footer>
+{% endblock %}

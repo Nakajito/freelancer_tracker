@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git -C /home/nakajito/proyectos/freelancer_tracker log --oneline --all)",
+      "Bash(mkdir -p /home/nakajito/proyectos/freelancer_tracker/plans)"
+    ],
+    "additionalDirectories": [
+      "/home/nakajito/proyectos/freelancer_tracker"
+    ]
+  }
+}

@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - PropoTrack{% endblock %}
+
+{% block content %}
+<div class="mb-6">
+    <h1 class="text-h1 text-slate-900 mb-1">Dashboard Overview</h1>
+    <p class="text-slate-500 text-sm">Here is what's happening with your freelance business today.</p>
+</div>
+
+<!-- Stats Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+    <div class="bg-white rounded-lg border border-slate-200 p-6 shadow-soft">
+        <div class="flex items-center gap-3 mb-2">
+            <i class="bi bi-file-earmark-text text-primary text-xl"></i>
+            <span class="text-sm text-slate-500">Active Proposals</span>
+        </div>
+        <div class="text-2xl font-bold text-slate-900">{{ funnel.total }}</div>
+        <div class="flex items-center gap-1 text-xs text-green-600 mt-1">
+            <i class="bi bi-arrow-up"></i>
+            <span>+2 from last week</span>
+        </div>
+    </div>
+    
+    <div class="bg-white rounded-lg border border-slate-200 p-6 shadow-soft">
+        <div class="flex items-center gap-3 mb-2">
+            <i class="bi bi-arrow-left-right text-primary text-xl"></i>
+            <span class="text-sm text-slate-500">Conversion Rate</span>
+        </div>
+        <div class="text-2xl font-bold text-slate-900">{{ funnel.conversion_rate }}%</div>
+        <div class="flex items-center gap-1 text-xs text-green-600 mt-1">
+            <i class="bi bi-arrow-up"></i>
+            <span>+4% this month</span>
+        </div>
+    </div>
+    
+    <div class="bg-white rounded-lg border border-slate-200 p-6 shadow-soft">
+        <div class="flex items-center gap-3 mb-2">
+            <i class="bi bi-cash-stack text-primary text-xl"></i>
+            <span class="text-sm text-slate-500">Total Earned</span>
+        </div>
+        <div class="text-2xl font-bold text-slate-900">${{ funnel.accepted_amount|default:"0" }}</div>
+        <div class="flex items-center gap-1 text-xs text-green-600 mt-1">
+            <i class="bi bi-arrow-up"></i>
+            <span>+$1,200 expected</span>
+        </div>
+    </div>
+    
+    <div class="bg-white rounded-lg border border-slate-200 p-6 shadow-soft">
+        <div class="flex items-center gap-3 mb-2">
+            <i class="bi bi-clock-history text-primary text-xl"></i>
+            <span class="text-sm text-slate-500">Logged Hours</span>
+        </div>
+        <div class="text-2xl font-bold text-slate-900">{{ hourly_rate.total_hours|default:"0" }}h</div>
+        <div class="flex items-center gap-1 text-xs text-red-600 mt-1">
+            <i class="bi bi-arrow-down"></i>
+            <span>-12h vs last month</span>
+        </div>
+    </div>
+</div>
+
+<!-- Charts Row -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+    <div class="bg-white rounded-lg border border-slate-200 p-6 shadow-soft">
+        <div class="flex items-center justify-between mb-4">
+            <h3 class="text-h3 text-slate-900">Proposal Funnel</h3>
+            <a href="{% url 'proposal-list' %}" class="text-sm text-primary hover:text-primary-hover">View Detailed</a>
+        </div>
+        <div class="space-y-3">
+            <div class="flex items-center justify-between">
+                <span class="text-sm text-slate-600">Sent</span>
+                <span class="font-medium text-slate-900">{{ funnel.sent }}</span>
+            </div>
+            <div class="flex items-center justify-between">
+                <span class="text-sm text-slate-600">Viewed</span>
+                <span class="font-medium text-slate-900">{{ funnel.viewed }}</span>
+            </div>
+            <div class="flex items-center justify-between">
+                <span class="text-sm text-slate-600">Responded</span>
+                <span class="font-medium text-slate-900">{{ funnel.responded }}</span>
+            </div>
+            <div class="flex items-center justify-between pt-2 border-t border-slate-100">
+                <span class="text-sm font-medium text-slate-900">Accepted</span>
+                <span class="font-bold text-green-600">{{ funnel.accepted }}</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="bg-white rounded-lg border border-slate-200 p-6 shadow-soft">
+        <h3 class="text-h3 text-slate-900 mb-4">Conversion</h3>
+        <div class="flex items-center justify-center h-48">
+            <div class="text-center">
+                <div class="text-3xl font-bold text-slate-900 mb-1">{{ conversion.win_rate }}%</div>
+                <div class="text-sm text-slate-500">Win Rate</div>
+            </div>
+        </div>
+        <div class="grid grid-cols-3 gap-4 mt-4 pt-4 border-t border-slate-100">
+            <div class="text-center">
+                <div class="text-lg font-bold text-green-600">{{ conversion.won }}</div>
+                <div class="text-xs text-slate-500">Won</div>
+            </div>
+            <div class="text-center">
+                <div class="text-lg font-bold text-red-600">{{ conversion.lost }}</div>
+                <div class="text-xs text-slate-500">Lost</div>
+            </div>
+            <div class="text-center">
+                <div class="text-lg font-bold text-yellow-600">{{ conversion.pending }}</div>
+                <div class="text-xs text-slate-500">Pending</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Forecast -->
+<div class="bg-white rounded-lg border border-slate-200 p-6 shadow-soft">
+    <h3 class="text-h3 text-slate-900 mb-4">Forecast</h3>
+    <div class="grid grid-cols-2 gap-4">
+        <div class="flex items-center justify-between">
+            <span class="text-sm text-slate-600">Expected Wins</span>
+            <span class="font-medium text-slate-900">{{ forecast.expected_wins }}</span>
+        </div>
+        <div class="flex items-center justify-between">
+            <span class="text-sm text-slate-600">Expected Amount</span>
+            <span class="font-medium text-slate-900">${{ forecast.expected_amount }}</span>
+        </div>
+    </div>
+</div>
+{% endblock %}

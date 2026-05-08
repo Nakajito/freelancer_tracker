@@ -1,0 +1,147 @@
+{% extends "base.html" %}
+
+{% block title %}{{ proposal.title }} - Freelancer Tracker{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="flex items-center gap-md">
+        <a href="{% url 'proposal-list' %}" class="btn btn-ghost btn-icon">
+            <i class="bi bi-arrow-left"></i>
+        </a>
+        <div>
+            <h1 class="page-title">{{ proposal.title }}</h1>
+            <p class="page-subtitle">
+                {{ proposal.client.name }} &bull; {{ proposal.get_platform_display }}
+            </p>
+        </div>
+    </div>
+    <div class="flex gap-sm">
+        <button class="btn btn-ghost btn-icon" title="Duplicate">
+            <i class="bi bi-copy"></i>
+        </button>
+        <a href="{% url 'proposal-update' proposal.pk %}" class="btn btn-secondary">
+            <i class="bi bi-pencil"></i> Edit
+        </a>
+    </div>
+</div>
+
+<div class="badge badge-{{ proposal.status }} mb-lg">
+    {{ proposal.get_status_display }}
+</div>
+
+<div class="grid grid-cols-3 mb-lg">
+    <div class="card">
+        <span class="card-muted">CLIENT</span>
+        <p class="fw-semibold mt-sm">{{ proposal.client.name }}</p>
+    </div>
+    <div class="card">
+        <span class="card-muted">PLATFORM</span>
+        <p class="fw-semibold mt-sm">
+            <i class="bi bi-globe"></i> {{ proposal.get_platform_display }}
+        </p>
+    </div>
+    <div class="card">
+        <span class="card-muted">AMOUNT</span>
+        <p class="fw-semibold mt-sm">${{ proposal.amount }}</p>
+    </div>
+</div>
+
+<div class="card mb-lg">
+    <div class="card-header">
+        <h3 class="card-title">Cover Letter</h3>
+    </div>
+    <div class="p-lg">
+        {{ proposal.proposal_text|linebreaks|default:"No proposal text provided." }}
+    </div>
+</div>
+
+<div class="tabs">
+    <button class="tab active">Details</button>
+    <button class="tab">Follow-ups</button>
+    <button class="tab">Time Entries</button>
+    <button class="tab">Activity Log</button>
+</div>
+
+<div class="card mb-lg">
+    <div class="card-header">
+        <h3 class="card-title">Proposal Insights</h3>
+    </div>
+    <div class="grid grid-cols-3 p-lg">
+        <div>
+            <span class="card-muted">Days since sent</span>
+            <p class="stat-value">{{ proposal.sent_date|timesince }}</p>
+        </div>
+        <div>
+            <span class="card-muted">Expected Response</span>
+            <p class="stat-value">
+                {% if proposal.actual_response_date %}
+                <span class="text-success">Received</span>
+                {% else %}
+                <span class="text-warning">Pending</span>
+                {% endif %}
+            </p>
+        </div>
+        <div>
+            <span class="card-muted">Paid</span>
+            <p class="stat-value">
+                {% if proposal.paid %}<span class="text-success">Yes</span>{% else %}<span class="text-muted">No</span>{% endif %}
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="card mb-lg">
+    <div class="card-header">
+        <h3 class="card-title">Key Dates</h3>
+    </div>
+    <div class="p-lg">
+        <div class="flex justify-between items-center mb-md">
+            <span class="text-secondary">Sent Date</span>
+            <span class="fw-semibold">{{ proposal.sent_date|default:"-" }}</span>
+        </div>
+        <div class="flex justify-between items-center mb-md">
+            <span class="text-secondary">Expected Response</span>
+            <span class="fw-semibold">{{ proposal.expected_response_date|default:"-" }}</span>
+        </div>
+        <div class="flex justify-between items-center">
+            <span class="text-secondary">Actual Response</span>
+            <span class="fw-semibold">{{ proposal.actual_response_date|default:"-" }}</span>
+        </div>
+    </div>
+</div>
+
+{% if proposal.tags.all %}
+<div class="card mb-lg">
+    <span class="card-muted">TAGS</span>
+    <div class="flex gap-sm mt-sm">
+        {% for tag in proposal.tags.all %}
+        <span class="badge badge-draft">{{ tag.name }}</span>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+
+{% if proposal.job_url or proposal.proposal_url %}
+<div class="flex gap-md mb-lg">
+    {% if proposal.job_url %}
+    <a href="{{ proposal.job_url }}" target="_blank" class="btn btn-secondary">
+        <i class="bi bi-link-45deg"></i> Job URL
+    </a>
+    {% endif %}
+    {% if proposal.proposal_url %}
+    <a href="{{ proposal.proposal_url }}" target="_blank" class="btn btn-secondary">
+        <i class="bi bi-file-earmark-text"></i> Proposal URL
+    </a>
+    {% endif %}
+</div>
+{% endif %}
+
+<div class="flex gap-md">
+    <a href="{% url 'proposal-list' %}" class="btn btn-ghost">
+        <i class="bi bi-arrow-left"></i> Back to Proposals
+    </a>
+    <a href="{% url 'proposal-delete' proposal.pk %}" class="btn btn-ghost text-error">
+        <i class="bi bi-trash"></i> Delete
+    </a>
+</div>
+{% endblock %}

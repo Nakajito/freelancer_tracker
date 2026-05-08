@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}Use Template - {{ template.name }}{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <h1 class="page-title">Use Template: {{ template.name }}</h1>
+        <p class="page-subtitle">Select a client to create a proposal.</p>
+    </div>
+    <a href="{% url 'template-list' %}" class="btn btn-ghost">
+        <i class="bi bi-arrow-left"></i> Back
+    </a>
+</div>
+
+<div class="table-container">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Client</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for client in clients %}
+            <tr>
+                <td>
+                    <span class="fw-medium">{{ client.name }}</span>
+                </td>
+                <td>
+                    <a href="{% url 'proposal-create' %}?template={{ template.pk }}&client={{ client.pk }}" class="btn btn-primary btn-sm">
+                        <i class="bi bi-play-btn"></i> Use
+                    </a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="2">
+                    <div class="empty-state">
+                        <i class="bi bi-people empty-state-icon"></i>
+                        <h4 class="empty-state-title">No clients available</h4>
+                        <p class="empty-state-text">Create a client first to use this template.</p>
+                        <a href="{% url 'client-create' %}" class="btn btn-primary">
+                            <i class="bi bi-plus-lg"></i> Create Client
+                        </a>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}Recurring Retainers - Freelancer Tracker{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <h1 class="page-title">Recurring Retainers</h1>
+        <p class="page-subtitle">Manage your monthly retainer agreements.</p>
+    </div>
+    <a href="{% url 'retainer-create' %}" class="btn btn-primary">New Retainer</a>
+</div>
+
+<div class="table-container">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Proposal</th>
+                <th>Monthly Hours</th>
+                <th>Day of Month</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for retainer in retainers %}
+            <tr>
+                <td>
+                    <a href="{% url 'proposal-detail' retainer.proposal.pk %}" class="text-primary fw-medium">
+                        {{ retainer.proposal.title }}
+                    </a>
+                    <p class="text-muted mb-0" style="font-size: 0.875rem;">{{ retainer.proposal.client.name }}</p>
+                </td>
+                <td><span class="fw-semibold">{{ retainer.monthly_hours }}h</span></td>
+                <td>Day {{ retainer.day_of_month }}</td>
+                <td>
+                    {% if retainer.active %}
+                    <span class="badge badge-accepted">Active</span>
+                    {% else %}
+                    <span class="badge badge-draft">Inactive</span>
+                    {% endif %}
+                </td>
+                <td>
+                    <div class="flex gap-sm">
+                        <a href="{% url 'retainer-update' retainer.pk %}" class="btn btn-ghost btn-icon" title="Edit">Edit</a>
+                    </div>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">
+                    <div class="empty-state">
+                        <h4 class="empty-state-title">No retainers yet</h4>
+                        <p class="empty-state-text">Create your first retainer to set up recurring hours.</p>
+                        <a href="{% url 'retainer-create' %}" class="btn btn-primary">New Retainer</a>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

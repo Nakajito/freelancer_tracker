@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+
+{% block title %}{% if object %}Edit Proposal{% else %}Create New Proposal{% endif %} - PropoTrack{% endblock %}
+
+{% block content %}
+<div class="mb-6">
+    <h1 class="text-h1 text-slate-900 mb-1">{% if object %}Edit{% else %}Create New{% endif %} Proposal</h1>
+    <p class="text-slate-500 text-sm">Fill in the details for your project pitch.</p>
+</div>
+
+<form method="post">
+{% csrf_token %}
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+    <!-- Left Column -->
+    <div class="bg-white rounded-lg border border-slate-200 p-6 shadow-soft">
+        <h3 class="text-h3 text-slate-900 mb-4">Basic Info</h3>
+        
+        <div class="mb-4">
+            <label class="block text-sm font-medium text-slate-700 mb-1">Title</label>
+            {{ form.title }}
+            {% if form.title.errors %}
+            <p class="text-red-600 text-sm mt-1">{{ form.title.errors.0 }}</p>
+            {% endif %}
+        </div>
+        
+        <div class="mb-4">
+            <label class="block text-sm font-medium text-slate-700 mb-1">Client</label>
+            {{ form.client }}
+            {% if form.client.errors %}
+            <p class="text-red-600 text-sm mt-1">{{ form.client.errors.0 }}</p>
+            {% endif %}
+        </div>
+        
+        <div class="mb-4">
+            <label class="block text-sm font-medium text-slate-700 mb-1">Platform</label>
+            {{ form.platform }}
+        </div>
+        
+        <div class="mb-4">
+            <label class="block text-sm font-medium text-slate-700 mb-1">Status</label>
+            {{ form.status }}
+        </div>
+    </div>
+    
+    <!-- Right Column -->
+    <div class="bg-white rounded-lg border border-slate-200 p-6 shadow-soft">
+        <h3 class="text-h3 text-slate-900 mb-4">Details</h3>
+        
+        <div class="mb-4">
+            <label class="block text-sm font-medium text-slate-700 mb-1">Amount</label>
+            <div class="relative">
+                <span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500">$</span>
+                {{ form.amount }}
+            </div>
+        </div>
+        
+        <div class="mb-4">
+            <label class="block text-sm font-medium text-slate-700 mb-1">Sent Date</label>
+            {{ form.sent_date }}
+        </div>
+        
+        <div class="mb-4">
+            <label class="block text-sm font-medium text-slate-700 mb-1">Expected Response</label>
+            {{ form.expected_response_date }}
+        </div>
+        
+        <div class="mb-0">
+            <label class="block text-sm font-medium text-slate-700 mb-1">Job URL</label>
+            {{ form.job_url }}
+        </div>
+    </div>
+</div>
+
+<!-- Cover Letter -->
+<div class="bg-white rounded-lg border border-slate-200 p-6 shadow-soft mb-6">
+    <h3 class="text-h3 text-slate-900 mb-4">Cover Letter</h3>
+    
+    <div class="mb-4">
+        <label class="block text-sm font-medium text-slate-700 mb-1">Proposal Text</label>
+        {{ form.proposal_text }}
+        <p class="text-slate-500 text-xs mt-1">Write a compelling proposal text. Be specific about deliverables and timeline.</p>
+    </div>
+    
+    <div class="mb-0">
+        <label class="block text-sm font-medium text-slate-700 mb-1">Proposal URL</label>
+        {{ form.proposal_url }}
+    </div>
+</div>
+
+<!-- Actions -->
+<div class="flex items-center gap-3">
+    <button type="submit" class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg font-medium text-sm hover:bg-primary-hover transition-colors">
+        <i class="bi bi-check-lg"></i> Save Proposal
+    </button>
+    <a href="{% url 'proposal-list' %}" class="px-4 py-2 text-slate-600 hover:text-slate-900 font-medium text-sm">
+        Cancel
+    </a>
+</div>
+</form>
+{% endblock %}

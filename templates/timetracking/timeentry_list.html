@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block title %}Time Tracking - PropoTrack{% endblock %}
+
+{% block content %}
+<div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+    <div>
+        <h1 class="text-h1 text-slate-900 mb-1">Time Tracking</h1>
+        <p class="text-slate-500 text-sm">Manage and log your project hours.</p>
+    </div>
+    <a href="{% url 'timeentry-create' %}" class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg font-medium text-sm hover:bg-primary-hover">
+        <i class="bi bi-clock"></i> Log Hours
+    </a>
+</div>
+
+<!-- Stats -->
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+    <div class="bg-white rounded-lg border border-slate-200 p-6 shadow-soft">
+        <span class="text-sm text-slate-500">Total Hours (This Week)</span>
+        <div class="text-2xl font-bold text-slate-900 mt-1">{{ total_hours|default:"0" }}h</div>
+        <div class="flex items-center gap-1 text-xs text-green-600 mt-1">
+            <i class="bi bi-arrow-up"></i> 12% vs last week
+        </div>
+    </div>
+    <div class="bg-white rounded-lg border border-slate-200 p-6 shadow-soft">
+        <span class="text-sm text-slate-500">Billable Ratio</span>
+        <div class="text-2xl font-bold text-slate-900 mt-1">{{ billable_ratio|default:"0" }}%</div>
+        <span class="text-xs text-slate-500 mt-1 block">On track to meet goal</span>
+    </div>
+    <div class="bg-white rounded-lg border border-slate-200 p-6 shadow-soft">
+        <span class="text-sm text-slate-500">Total Hours (Last Week)</span>
+        <div class="text-2xl font-bold text-slate-900 mt-1">{{ last_week_hours|default:"0" }}h</div>
+    </div>
+</div>
+
+<!-- Table -->
+<div class="bg-white rounded-lg border border-slate-200 overflow-hidden shadow-soft">
+    <table class="w-full">
+        <thead class="bg-slate-50 border-b border-slate-200">
+            <tr>
+                <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase">Date</th>
+                <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase">Project</th>
+                <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase">Description</th>
+                <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase">Hours</th>
+                <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase">Billable</th>
+                <th class="px-4 py-3 text-right text-xs font-semibold text-slate-500 uppercase">Actions</th>
+            </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-200">
+            {% for entry in time_entries %}
+            <tr class="hover:bg-slate-50">
+                <td class="px-4 py-4 text-sm text-slate-600">{{ entry.date }}</td>
+                <td class="px-4 py-4">
+                    <a href="{% url 'proposal-detail' entry.proposal.pk %}" class="font-medium text-slate-900 hover:text-primary">
+                        {{ entry.proposal.title }}
+                    </a>
+                    <p class="text-xs text-slate-500">{{ entry.proposal.client.name }}</p>
+                </td>
+                <td class="px-4 py-4 text-slate-600 text-sm">{{ entry.description|truncatechars:40 }}</td>
+                <td class="px-4 py-4 font-semibold text-slate-900">{{ entry.hours }}h</td>
+                <td class="px-4 py-4">
+                    {% if entry.billable %}
+                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">Billable</span>
+                    {% else %}
+                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-100 text-slate-600">Non-billable</span>
+                    {% endif %}
+                </td>
+                <td class="px-4 py-4 text-right">
+                    <div class="flex items-center justify-end gap-2">
+                        <a href="{% url 'timeentry-update' entry.pk %}" class="p-2 text-slate-400 hover:text-slate-600 rounded-lg hover:bg-slate-100">
+                            <i class="bi bi-pencil"></i>
+                        </a>
+                        <a href="{% url 'timeentry-delete' entry.pk %}" class="p-2 text-slate-400 hover:text-red-600 rounded-lg hover:bg-red-50">
+                            <i class="bi bi-trash"></i>
+                        </a>
+                    </div>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6" class="px-4 py-12 text-center">
+                    <i class="bi bi-clock-history text-4xl text-slate-300 mb-3 block"></i>
+                    <h3 class="text-lg font-medium text-slate-900 mb-1">No time entries yet</h3>
+                    <p class="text-slate-500 mb-4">Start logging your hours to track productivity.</p>
+                    <a href="{% url 'timeentry-create' %}" class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg font-medium text-sm hover:bg-primary-hover">
+                        <i class="bi bi-plus-lg"></i> Log Hours
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

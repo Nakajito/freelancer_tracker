@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}{% if object %}Edit{% else %}Create{% endif %} Template - Freelancer Tracker{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <h1 class="page-title">{% if object %}Edit{% else %}Create New{% endif %} Template</h1>
+        <p class="page-subtitle">Build a reusable proposal structure.</p>
+    </div>
+</div>
+
+<div class="card">
+    <div class="form-group">
+        <label class="form-label" for="id_name">Name</label>
+        {{ form.name }}
+    </div>
+    
+    <div class="form-group">
+        <label class="form-label" for="id_body">Body</label>
+        {{ form.body }}
+    </div>
+    
+    <div class="flex gap-md mt-lg">
+        <button type="submit" class="btn btn-primary">
+            <i class="bi bi-check-lg"></i> Save Template
+        </button>
+        <a href="{% url 'template-list' %}" class="btn btn-ghost">
+            Cancel
+        </a>
+    </div>
+</div>
+
+<div class="card mt-lg">
+    <div class="card-header">
+        <h3 class="card-title">Template Tips</h3>
+    </div>
+    <div class="p-lg">
+        <div class="flex items-center gap-sm mb-sm">
+            <i class="bi bi-check-circle text-success"></i>
+            <span>Use Variables wisely - keep placeholders like <code>{client}</code>, <code>{project}</code>, <code>{amount}</code></span>
+        </div>
+        <div class="flex items-center gap-sm">
+            <i class="bi bi-check-circle text-success"></i>
+            <span>Structure for Scanning - clients skim proposals</span>
+        </div>
+    </div>
+</div>
+{% endblock %}

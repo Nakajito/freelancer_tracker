@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}{% if object %}Edit{% else %}Log{% endif %} Hours - Freelancer Tracker{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <h1 class="page-title">{% if object %}Edit{% else %}Log Hours{% endif %}</h1>
+        <p class="page-subtitle">Track time spent on a project.</p>
+    </div>
+</div>
+
+<form method="post">
+{% csrf_token %}
+<div class="grid grid-cols-2 mb-lg">
+    <div class="card">
+        <div class="form-group">
+            <label class="form-label" for="id_proposal">Proposal</label>
+            {{ form.proposal }}
+        </div>
+        
+        <div class="form-group">
+            <label class="form-label" for="id_date">Date</label>
+            {{ form.date }}
+        </div>
+        
+        <div class="form-group">
+            <label class="form-label" for="id_hours">Hours</label>
+            {{ form.hours }}
+        </div>
+    </div>
+    
+    <div class="card">
+        <div class="form-group">
+            <label class="form-label" for="id_description">Description</label>
+            {{ form.description }}
+        </div>
+        
+        <div class="form-group">
+            <label class="form-label" for="id_billable">Billable</label>
+            {{ form.billable }}
+            <small class="text-muted">Check if this time is billable to the client.</small>
+        </div>
+    </div>
+</div>
+
+<div class="flex gap-md mt-lg">
+    <button type="submit" class="btn btn-primary">
+        <i class="bi bi-check-lg"></i> Save Entry
+    </button>
+    <a href="{% url 'timeentry-list' %}" class="btn btn-ghost">
+        Cancel
+    </a>
+</div>
+</form>
+{% endblock %}

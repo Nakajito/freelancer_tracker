@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block title %}Follow-ups - PropoTrack{% endblock %}
+
+{% block content %}
+<div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+    <div>
+        <h1 class="text-h1 text-slate-900 mb-1">Urgent Follow-ups</h1>
+        <p class="text-slate-500 text-sm">Track and complete your follow-up tasks.</p>
+    </div>
+    <a href="{% url 'followup-create' %}" class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg font-medium text-sm hover:bg-primary-hover">
+        <i class="bi bi-plus-lg"></i> Add Follow-up
+    </a>
+</div>
+
+<!-- Filters -->
+<form method="get" class="bg-white rounded-lg border border-slate-200 p-4 mb-6 shadow-soft">
+    <div class="flex items-center gap-2">
+        <input type="radio" name="filter" id="filter-upcoming" value="upcoming" {% if request.GET.filter != 'overdue' and request.GET.filter != 'completed' %}checked{% endif %} class="hidden">
+        <label for="filter-upcoming" class="px-3 py-1.5 text-sm font-medium rounded-lg {% if request.GET.filter != 'overdue' and request.GET.filter != 'completed' %}bg-primary text-white{% else %}bg-slate-100 text-slate-600 hover:bg-slate-200{% endif %} transition-colors cursor-pointer">Upcoming</label>
+        
+        <input type="radio" name="filter" id="filter-overdue" value="overdue" {% if request.GET.filter == 'overdue' %}checked{% endif %} class="hidden">
+        <label for="filter-overdue" class="px-3 py-1.5 text-sm font-medium rounded-lg {% if request.GET.filter == 'overdue' %}bg-primary text-white{% else %}bg-slate-100 text-slate-600 hover:bg-slate-200{% endif %} transition-colors cursor-pointer">Overdue</label>
+        
+        <input type="radio" name="filter" id="filter-completed" value="completed" {% if request.GET.filter == 'completed' %}checked{% endif %} class="hidden">
+        <label for="filter-completed" class="px-3 py-1.5 text-sm font-medium rounded-lg {% if request.GET.filter == 'completed' %}bg-primary text-white{% else %}bg-slate-100 text-slate-600 hover:bg-slate-200{% endif %} transition-colors cursor-pointer">Completed</label>
+        
+        <button type="submit" class="ml-auto px-3 py-1.5 bg-slate-100 text-slate-600 text-sm font-medium rounded-lg hover:bg-slate-200">Filter</button>
+    </div>
+</form>
+
+<div class="bg-white rounded-lg border border-slate-200 overflow-hidden shadow-soft">
+    <table class="w-full">
+        <thead class="bg-slate-50 border-b border-slate-200">
+            <tr>
+                <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase">Proposal</th>
+                <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase">Description</th>
+                <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase">Due Date</th>
+                <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase">Status</th>
+                <th class="px-4 py-3 text-right text-xs font-semibold text-slate-500 uppercase">Actions</th>
+            </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-200">
+            {% for followup in followups %}
+            <tr class="hover:bg-slate-50">
+                <td class="px-4 py-4">
+                    <a href="{% url 'proposal-detail' followup.proposal.pk %}" class="font-medium text-slate-900 hover:text-primary">
+                        {{ followup.proposal.title }}
+                    </a>
+                    <p class="text-sm text-slate-500">{{ followup.proposal.client.name }}</p>
+                </td>
+                <td class="px-4 py-4 text-slate-600 text-sm">{{ followup.description|truncatechars:50 }}</td>
+                <td class="px-4 py-4">
+                    {% if followup.due_date < today %}
+                    <span class="text-red-600 text-sm font-medium">
+                        <i class="bi bi-exclamation-triangle mr-1"></i>{{ followup.due_date }}
+                    </span>
+                    {% else %}
+                    <span class="text-slate-600 text-sm">{{ followup.due_date }}</span>
+                    {% endif %}
+                </td>
+                <td class="px-4 py-4">
+                    {% if followup.completed %}
+                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">Completed</span>
+                    {% else %}
+                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">Pending</span>
+                    {% endif %}
+                </td>
+                <td class="px-4 py-4 text-right">
+                    {% if not followup.completed %}
+                    <form method="post" action="{% url 'followup-complete' followup.pk %}" class="inline">
+                        {% csrf_token %}
+                        <button type="submit" class="inline-flex items-center gap-1 px-3 py-1.5 text-sm text-green-600 hover:bg-green-50 rounded-lg">
+                            <i class="bi bi-check-lg"></i> Complete
+                        </button>
+                    </form>
+                    {% endif %}
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5" class="px-4 py-12 text-center">
+                    <i class="bi bi-check2-circle text-4xl text-slate-300 mb-3 block"></i>
+                    <h3 class="text-lg font-medium text-slate-900 mb-1">All caught up!</h3>
+                    <p class="text-slate-500">No follow-ups pending.</p>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
