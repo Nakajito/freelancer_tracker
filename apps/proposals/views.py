@@ -8,6 +8,7 @@ from django.views.generic import (
     UpdateView,
 )
 
+from apps.proposals.forms import ProposalForm
 from apps.proposals.models import Client, Proposal
 
 
@@ -40,20 +41,8 @@ class ProposalDetailView(OwnerQuerysetMixin, DetailView):
 
 class ProposalCreateView(LoginRequiredMixin, CreateView):
     model = Proposal
+    form_class = ProposalForm
     template_name = "proposals/proposal_form.html"
-    fields = [
-        "title",
-        "platform",
-        "client",
-        "proposal_text",
-        "amount",
-        "status",
-        "sent_date",
-        "expected_response_date",
-        "job_url",
-        "proposal_url",
-        "tags",
-    ]
 
     def form_valid(self, form):
         form.instance.owner = self.request.user
@@ -65,20 +54,8 @@ class ProposalCreateView(LoginRequiredMixin, CreateView):
 
 class ProposalUpdateView(OwnerQuerysetMixin, UpdateView):
     model = Proposal
+    form_class = ProposalForm
     template_name = "proposals/proposal_form.html"
-    fields = [
-        "title",
-        "platform",
-        "client",
-        "proposal_text",
-        "amount",
-        "status",
-        "sent_date",
-        "expected_response_date",
-        "job_url",
-        "proposal_url",
-        "tags",
-    ]
 
     def get_success_url(self):
         return reverse_lazy("proposal-detail", kwargs={"pk": self.object.pk})

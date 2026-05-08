@@ -51,10 +51,10 @@
             </div>
         </div>
         <div>
-            <div class="font-h1 text-h1 text-on-surface">${{ funnel.accepted_amount|default:"0" }}</div>
+            <div class="font-h1 text-h1 text-on-surface">${{ funnel.accepted_amount|floatformat:0 }}</div>
             <div class="flex items-center gap-1 mt-2 font-body-sm text-body-sm text-on-surface-variant">
                 <span class="material-symbols-outlined text-[16px] text-primary">trending_up</span>
-                <span class="text-primary font-medium">${{ forecast.expected_amount|default:0 }}</span> expected
+                <span class="text-primary font-medium">${{ forecast.expected_amount|floatformat:0 }}</span> expected
             </div>
         </div>
     </div>
@@ -67,10 +67,10 @@
             </div>
         </div>
         <div>
-            <div class="font-h1 text-h1 text-on-surface">{{ hourly_rate.total_hours|default:"0" }}h</div>
+            <div class="font-h1 text-h1 text-on-surface">{{ hourly_rate.total_hours|floatformat:0 }}h</div>
             <div class="flex items-center gap-1 mt-2 font-body-sm text-body-sm text-on-surface-variant">
                 <span class="material-symbols-outlined text-[16px] text-on-surface-variant">paid</span>
-                <span class="font-medium">${{ hourly_rate.effective_rate|default:0 }}</span>/hr effective
+                <span class="font-medium">${{ hourly_rate.hourly_rate|floatformat:0 }}</span>/hr effective
             </div>
         </div>
     </div>
@@ -132,15 +132,15 @@
             <h3 class="font-h3 text-h3 text-on-surface">Urgent Follow-ups</h3>
         </div>
         <ul class="flex flex-col gap-4">
-            {% for fu in urgent_followups|default:'' %}
+            {% for fu in urgent_followups %}
             <li class="flex items-start gap-3 p-3 rounded-lg border border-outline-variant {% if fu.is_overdue %}bg-error-container/30{% else %}hover:bg-surface-container-low{% endif %} transition-colors">
                 <div class="p-2 {% if fu.is_overdue %}bg-error-container text-on-error-container{% else %}bg-secondary-container text-on-secondary-container{% endif %} rounded-full mt-1">
                     <span class="material-symbols-outlined text-[16px]">{% if fu.is_overdue %}priority_high{% else %}mail{% endif %}</span>
                 </div>
                 <div>
-                    <h4 class="font-label-md text-label-md text-on-surface">{{ fu.proposal.title|default:"Follow-up" }}</h4>
-                    <p class="font-body-sm text-body-sm text-on-surface-variant mt-1">{{ fu.notes|truncatechars:50 }}</p>
-                    <span class="inline-block mt-2 font-label-sm text-label-sm {% if fu.is_overdue %}text-error bg-error-container{% else %}text-on-surface-variant bg-surface-container-high{% endif %} px-2 py-1 rounded">{{ fu.scheduled_for|date:"M d" }}</span>
+                    <h4 class="font-label-md text-label-md text-on-surface">{{ fu.proposal.title }}</h4>
+                    <p class="font-body-sm text-body-sm text-on-surface-variant mt-1">{{ fu.description|truncatechars:50 }}</p>
+                    <span class="inline-block mt-2 font-label-sm text-label-sm {% if fu.is_overdue %}text-error bg-error-container{% else %}text-on-surface-variant bg-surface-container-high{% endif %} px-2 py-1 rounded">{{ fu.due_date|date:"M d" }}</span>
                 </div>
             </li>
             {% empty %}
@@ -164,7 +164,7 @@
         </div>
         <div class="flex flex-col">
             <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Expected Amount</span>
-            <span class="font-h2 text-h2 text-on-surface mt-1">${{ forecast.expected_amount|default:0 }}</span>
+            <span class="font-h2 text-h2 text-on-surface mt-1">${{ forecast.expected_amount|floatformat:0 }}</span>
         </div>
         <div class="flex flex-col">
             <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Win Rate</span>

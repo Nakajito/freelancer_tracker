@@ -1,6 +1,6 @@
 from django import forms
 
-from apps.proposals.models import Platform, Proposal, ProposalStatus
+from apps.proposals.models import Client, Platform, Proposal, ProposalStatus
 
 
 class ProposalFilterForm(forms.Form):
@@ -33,12 +33,16 @@ class ProposalForm(forms.ModelForm):
             "tags",
         ]
         widgets = {
-            "sent_date": forms.DateInput(attrs={"type": "date"}),
-            "expected_response_date": forms.DateInput(attrs={"type": "date"}),
+            "sent_date": forms.DateInput(
+                attrs={"type": "date"}, format="%Y-%m-%d"
+            ),
+            "expected_response_date": forms.DateInput(
+                attrs={"type": "date"}, format="%Y-%m-%d"
+            ),
         }
 
 
 class ClientForm(forms.ModelForm):
     class Meta:
-        model = Proposal
+        model = Client
         fields = ["name", "email", "notes"]

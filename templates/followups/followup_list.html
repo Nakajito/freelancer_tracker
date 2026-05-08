@@ -17,11 +17,18 @@
 
 <!-- Filter Tabs -->
 <form method="get" class="bg-surface-container-lowest border border-outline-variant rounded-xl p-4 mb-stack-md shadow-sm flex items-center gap-2 flex-wrap">
-    {% with f=request.GET.filter %}
-    <a href="?filter=upcoming" class="px-4 py-2 rounded-lg font-label-md text-label-md transition-colors {% if f == 'upcoming' or not f %}bg-primary text-on-primary{% else %}bg-surface-container text-on-surface-variant hover:bg-surface-container-high{% endif %}">Upcoming</a>
-    <a href="?filter=overdue" class="px-4 py-2 rounded-lg font-label-md text-label-md transition-colors {% if f == 'overdue' %}bg-primary text-on-primary{% else %}bg-surface-container text-on-surface-variant hover:bg-surface-container-high{% endif %}">Overdue</a>
-    <a href="?filter=completed" class="px-4 py-2 rounded-lg font-label-md text-label-md transition-colors {% if f == 'completed' %}bg-primary text-on-primary{% else %}bg-surface-container text-on-surface-variant hover:bg-surface-container-high{% endif %}">Completed</a>
-    {% endwith %}
+    <a href="?filter=upcoming" class="px-4 py-2 rounded-lg font-label-md text-label-md transition-colors flex items-center gap-2 {% if current_filter == 'upcoming' %}bg-primary text-on-primary{% else %}bg-surface-container text-on-surface-variant hover:bg-surface-container-high{% endif %}">
+        Upcoming
+        <span class="px-2 py-0.5 rounded-full text-xs {% if current_filter == 'upcoming' %}bg-on-primary/20{% else %}bg-surface-container-high{% endif %}">{{ upcoming_count }}</span>
+    </a>
+    <a href="?filter=overdue" class="px-4 py-2 rounded-lg font-label-md text-label-md transition-colors flex items-center gap-2 {% if current_filter == 'overdue' %}bg-primary text-on-primary{% else %}bg-surface-container text-on-surface-variant hover:bg-surface-container-high{% endif %}">
+        Overdue
+        <span class="px-2 py-0.5 rounded-full text-xs {% if current_filter == 'overdue' %}bg-on-primary/20{% elif overdue_count > 0 %}bg-error-container text-on-error-container{% else %}bg-surface-container-high{% endif %}">{{ overdue_count }}</span>
+    </a>
+    <a href="?filter=completed" class="px-4 py-2 rounded-lg font-label-md text-label-md transition-colors flex items-center gap-2 {% if current_filter == 'completed' %}bg-primary text-on-primary{% else %}bg-surface-container text-on-surface-variant hover:bg-surface-container-high{% endif %}">
+        Completed
+        <span class="px-2 py-0.5 rounded-full text-xs {% if current_filter == 'completed' %}bg-on-primary/20{% else %}bg-surface-container-high{% endif %}">{{ completed_count }}</span>
+    </a>
 </form>
 
 <div class="bg-surface-container-lowest border border-outline-variant rounded-xl shadow-sm overflow-hidden">

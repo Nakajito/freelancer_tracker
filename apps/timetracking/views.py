@@ -3,7 +3,9 @@ from django.urls import reverse, reverse_lazy
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
 from apps.proposals.models import Proposal, ProposalStatus
+from apps.timetracking.forms import TimeEntryForm, TimeEntryUpdateForm
 from apps.timetracking.models import RecurringRetainer, TimeEntry
+from apps.timetracking.services import BillableAggregationService
 
 
 class OwnerQuerysetMixin(LoginRequiredMixin):
@@ -19,18 +21,17 @@ class TimeEntryListView(OwnerQuerysetMixin, ListView):
     def get_queryset(self):
         return super().get_queryset().select_related("proposal", "proposal__client")
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        summary = BillableAggregationService.get_weekly_summary(self.request.user)
+        context.update(summary)
+        return context
+
 
 class TimeEntryCreateView(LoginRequiredMixin, CreateView):
     model = TimeEntry
+    form_class = TimeEntryForm
     template_name = "timetracking/timeentry_form.html"
-    fields = [
-        "proposal",
-        "date",
-        "hours",
-        "description",
-        "billable",
-        "override_status_restriction",
-    ]
 
     def get_form(self, form_class=None):
         form = super().get_form(form_class)
@@ -45,8 +46,8 @@ class TimeEntryCreateView(LoginRequiredMixin, CreateView):
 
 class TimeEntryUpdateView(OwnerQuerysetMixin, UpdateView):
     model = TimeEntry
+    form_class = TimeEntryUpdateForm
     template_name = "timetracking/timeentry_form.html"
-    fields = ["date", "hours", "description", "billable", "override_status_restriction"]
 
     def get_success_url(self):
         return reverse("timeentry-list")

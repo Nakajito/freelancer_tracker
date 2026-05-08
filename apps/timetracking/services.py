@@ -2,6 +2,7 @@ from datetime import timedelta
 from decimal import Decimal
 from typing import Optional
 
+from django.db import models
 from django.db.models import Sum
 from django.utils import timezone
 
@@ -34,9 +35,41 @@ class BillableAggregationService:
         )
 
     @staticmethod
-    def get_total_for_user(user, start_date=None, end_date=None):
-        from django.db import models
+    def get_weekly_summary(user) -> dict:
+        today = timezone.now().date()
+        this_week_start = today - timedelta(days=today.weekday())
+        last_week_start = this_week_start - timedelta(days=7)
 
+        this_week = TimeEntry.objects.filter(
+            proposal__owner=user,
+            date__gte=this_week_start,
+            date__lte=today,
+        ).aggregate(
+            total=Sum("hours"),
+            billable=Sum("hours", filter=models.Q(billable=True)),
+        )
+        last_week = TimeEntry.objects.filter(
+            proposal__owner=user,
+            date__gte=last_week_start,
+            date__lt=this_week_start,
+        ).aggregate(total=Sum("hours"))
+
+        total_hours = this_week["total"] or Decimal("0")
+        billable_hours = this_week["billable"] or Decimal("0")
+        billable_ratio = (
+            round((billable_hours / total_hours) * 100, 0)
+            if total_hours > 0
+            else Decimal("0")
+        )
+
+        return {
+            "total_hours": total_hours,
+            "billable_ratio": billable_ratio,
+            "last_week_hours": last_week["total"] or Decimal("0"),
+        }
+
+    @staticmethod
+    def get_total_for_user(user, start_date=None, end_date=None):
         queryset = TimeEntry.objects.filter(proposal__owner=user)
 
         if start_date:

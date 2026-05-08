@@ -26,6 +26,12 @@ class FollowUp(TimeStampedModel):
     def __str__(self):
         return f"Follow-up for {self.proposal.title}"
 
+    @property
+    def is_overdue(self) -> bool:
+        from django.utils import timezone
+
+        return not self.completed and self.due_date < timezone.now().date()
+
     def mark_completed(self):
         from django.utils import timezone
 

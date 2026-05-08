@@ -4,6 +4,7 @@ from django.views.generic import CreateView, DeleteView, ListView, View
 from django.http import HttpResponseRedirect
 from django.utils import timezone
 
+from apps.followups.forms import FollowUpForm
 from apps.followups.models import FollowUp
 from apps.followups.services import FollowUpQuerySet
 
@@ -27,11 +28,23 @@ class FollowUpListView(OwnerQuerysetMixin, ListView):
             return qs.filter(completed=True)
         return FollowUpQuerySet.upcoming(self.request.user)
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = self.request.user
+        context["today"] = timezone.now().date()
+        context["upcoming_count"] = FollowUpQuerySet.upcoming(user).count()
+        context["overdue_count"] = FollowUpQuerySet.overdue(user).count()
+        context["completed_count"] = FollowUp.objects.filter(
+            proposal__owner=user, completed=True
+        ).count()
+        context["current_filter"] = self.request.GET.get("filter", "upcoming")
+        return context
+
 
 class FollowUpCreateView(LoginRequiredMixin, CreateView):
     model = FollowUp
+    form_class = FollowUpForm
     template_name = "followups/followup_form.html"
-    fields = ["proposal", "description", "due_date"]
 
     def get_form(self, form_class=None):
         form = super().get_form(form_class)

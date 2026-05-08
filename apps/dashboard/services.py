@@ -1,24 +1,31 @@
-from datetime import timedelta
+from calendar import monthrange
+from datetime import date, timedelta
 from decimal import Decimal
-from typing import Dict, List, Optional
 
 from django.db import models
-from django.db.models import Count, Q
 from django.utils import timezone
 
-from apps.proposals.models import Proposal, ProposalStatus
+from apps.followups.models import FollowUp
+from apps.proposals.models import Platform, Proposal, ProposalStatus
 from apps.timetracking.models import TimeEntry
 
 
 class FunnelMetrics:
     def __init__(
-        self, total: int, sent: int, viewed: int, responded: int, accepted: int
+        self,
+        total: int,
+        sent: int,
+        viewed: int,
+        responded: int,
+        accepted: int,
+        accepted_amount: Decimal,
     ):
         self.total = total
         self.sent = sent
         self.viewed = viewed
         self.responded = responded
         self.accepted = accepted
+        self.accepted_amount = accepted_amount
         self.conversion_rate = round((accepted / sent * 100), 2) if sent > 0 else 0
 
 
@@ -51,6 +58,10 @@ class DashboardService:
         cutoff = timezone.now().date() - timedelta(days=days)
 
         proposals = Proposal.objects.for_user(user).filter(sent_date__gte=cutoff)
+        accepted_qs = proposals.filter(status=ProposalStatus.ACCEPTED)
+        accepted_amount = accepted_qs.aggregate(total=models.Sum("amount"))[
+            "total"
+        ] or Decimal("0")
 
         return FunnelMetrics(
             total=proposals.count(),
@@ -59,7 +70,8 @@ class DashboardService:
             responded=proposals.filter(
                 status__in=[ProposalStatus.RESPONDED, ProposalStatus.NEGOTIATING]
             ).count(),
-            accepted=proposals.filter(status=ProposalStatus.ACCEPTED).count(),
+            accepted=accepted_qs.count(),
+            accepted_amount=accepted_amount,
         )
 
     @staticmethod
@@ -141,3 +153,139 @@ class DashboardService:
             total_amount=total_amount,
             hourly_rate=hourly_rate,
         )
+
+    @staticmethod
+    def get_urgent_followups(user, limit: int = 5):
+        return list(
+            FollowUp.objects.filter(
+                proposal__owner=user,
+                completed=False,
+            )
+            .select_related("proposal", "proposal__client")
+            .order_by("due_date")[:limit]
+        )
+
+    @staticmethod
+    def get_earnings_chart(user, months: int = 6) -> dict:
+        today = timezone.now().date()
+        labels: list[str] = []
+        data: list[float] = []
+
+        first_of_current = date(today.year, today.month, 1)
+        cursor = first_of_current
+        for _ in range(months - 1):
+            cursor = (cursor - timedelta(days=1)).replace(day=1)
+        bucket_start = cursor
+
+        for _ in range(months):
+            _, last_day = monthrange(bucket_start.year, bucket_start.month)
+            bucket_end = date(bucket_start.year, bucket_start.month, last_day)
+
+            qs = Proposal.objects.for_user(user).filter(
+                status=ProposalStatus.ACCEPTED,
+            )
+            qs_with_response = qs.filter(
+                actual_response_date__gte=bucket_start,
+                actual_response_date__lte=bucket_end,
+            )
+            qs_without_response = qs.filter(
+                actual_response_date__isnull=True,
+                sent_date__gte=bucket_start,
+                sent_date__lte=bucket_end,
+            )
+            total = (
+                qs_with_response.aggregate(total=models.Sum("amount"))["total"]
+                or Decimal("0")
+            ) + (
+                qs_without_response.aggregate(total=models.Sum("amount"))["total"]
+                or Decimal("0")
+            )
+
+            labels.append(bucket_start.strftime("%b %Y"))
+            data.append(float(total))
+
+            next_month = bucket_start.month + 1
+            next_year = bucket_start.year
+            if next_month > 12:
+                next_month = 1
+                next_year += 1
+            bucket_start = date(next_year, next_month, 1)
+
+        return {"labels": labels, "data": data}
+
+    @staticmethod
+    def _month_range(year: int, month: int) -> tuple[date, date]:
+        start = date(year, month, 1)
+        if month == 12:
+            end = date(year + 1, 1, 1)
+        else:
+            end = date(year, month + 1, 1)
+        return start, end
+
+    @staticmethod
+    def get_platform_conversion(user, year: int, month: int) -> list[dict]:
+        start, end = DashboardService._month_range(year, month)
+
+        rows: list[dict] = []
+        for value, label in Platform.choices:
+            sent_qs = (
+                Proposal.objects.for_user(user)
+                .filter(platform=value, sent_date__gte=start, sent_date__lt=end)
+                .exclude(status=ProposalStatus.DRAFT)
+            )
+            sent_count = sent_qs.count()
+            if sent_count == 0:
+                continue
+            accepted_count = sent_qs.filter(status=ProposalStatus.ACCEPTED).count()
+            rate = round((accepted_count / sent_count) * 100, 1)
+            rows.append({"name": label, "rate": rate})
+
+        rows.sort(key=lambda r: r["rate"], reverse=True)
+        return rows
+
+    @staticmethod
+    def get_platform_stats(user, year: int, month: int) -> list[dict]:
+        start, end = DashboardService._month_range(year, month)
+
+        rows: list[dict] = []
+        for value, label in Platform.choices:
+            sent_qs = (
+                Proposal.objects.for_user(user)
+                .filter(platform=value, sent_date__gte=start, sent_date__lt=end)
+                .exclude(status=ProposalStatus.DRAFT)
+            )
+            sent_count = sent_qs.count()
+            if sent_count == 0:
+                continue
+            accepted_qs = sent_qs.filter(status=ProposalStatus.ACCEPTED)
+            accepted_count = accepted_qs.count()
+            success_rate = round((accepted_count / sent_count) * 100, 1)
+            earned = accepted_qs.aggregate(total=models.Sum("amount"))[
+                "total"
+            ] or Decimal("0")
+
+            responded = sent_qs.filter(
+                sent_date__isnull=False,
+                actual_response_date__isnull=False,
+            )
+            response_days = [
+                (p.actual_response_date - p.sent_date).days for p in responded
+            ]
+            avg_response = (
+                round(sum(response_days) / len(response_days), 1)
+                if response_days
+                else None
+            )
+
+            rows.append(
+                {
+                    "name": label,
+                    "sent": sent_count,
+                    "success_rate": success_rate,
+                    "earned": earned,
+                    "avg_response": f"{avg_response}d" if avg_response is not None else "—",
+                }
+            )
+
+        rows.sort(key=lambda r: r["sent"], reverse=True)
+        return rows

@@ -129,17 +129,26 @@ class MonthlySummaryGenerator:
             total=Sum("hours")
         )["total"] or Decimal("0")
 
+        proposals_sent = proposals.exclude(status=ProposalStatus.DRAFT).count()
+        proposals_accepted = proposals.filter(status=ProposalStatus.ACCEPTED).count()
+        proposals_rejected = proposals.filter(status=ProposalStatus.REJECTED).count()
+        win_rate = (
+            round((proposals_accepted / proposals_sent) * 100, 1)
+            if proposals_sent > 0
+            else 0
+        )
+
         return {
             "year": year,
             "month": month,
-            "proposals_sent": proposals.exclude(status=ProposalStatus.DRAFT).count(),
-            "proposals_accepted": proposals.filter(
-                status=ProposalStatus.ACCEPTED
-            ).count(),
-            "proposals_rejected": proposals.filter(
-                status=ProposalStatus.REJECTED
-            ).count(),
-            "total_amount": proposals.aggregate(total=Sum("amount"))["total"]
+            "period_label": start_date.strftime("%b %Y"),
+            "proposals_sent": proposals_sent,
+            "proposals_accepted": proposals_accepted,
+            "proposals_rejected": proposals_rejected,
+            "win_rate": win_rate,
+            "total_amount": proposals.filter(status=ProposalStatus.ACCEPTED).aggregate(
+                total=Sum("amount")
+            )["total"]
             or Decimal("0"),
             "total_hours": total_hours,
             "billable_hours": billable_hours,

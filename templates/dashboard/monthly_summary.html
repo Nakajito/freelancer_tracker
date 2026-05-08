@@ -10,10 +10,10 @@
         <p class="font-body-md text-body-md text-on-surface-variant mt-1">Track your freelance business performance.</p>
     </div>
     <div class="flex gap-2">
-        <button class="flex items-center gap-2 px-4 py-2 border border-outline-variant rounded-lg text-secondary font-label-md text-label-md hover:bg-surface-container-low transition-colors bg-surface-container-lowest">
+        <a href="{% url 'proposal-export-csv' %}" class="flex items-center gap-2 px-4 py-2 border border-outline-variant rounded-lg text-secondary font-label-md text-label-md hover:bg-surface-container-low transition-colors bg-surface-container-lowest">
             <span class="material-symbols-outlined text-[18px]">download</span>
             Export CSV
-        </button>
+        </a>
     </div>
 </div>
 
@@ -32,7 +32,7 @@
     </div>
     <div class="flex flex-col gap-1">
         <label for="year" class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Year</label>
-        <input type="number" name="year" id="year" value="{{ year|default:2024 }}" class="bg-surface border border-outline-variant rounded-lg py-2 px-4 font-body-sm text-body-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary">
+        <input type="number" name="year" id="year" value="{{ year }}" class="bg-surface border border-outline-variant rounded-lg py-2 px-4 font-body-sm text-body-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary">
     </div>
     <button type="submit" class="bg-primary text-on-primary px-5 py-2 rounded-lg font-label-md text-label-md hover:bg-primary-container transition-colors shadow-sm">View</button>
 </form>
@@ -41,22 +41,22 @@
 <div class="grid grid-cols-1 md:grid-cols-4 gap-gutter mb-stack-lg">
     <div class="bg-surface-container-lowest p-container-padding rounded-xl border border-outline-variant shadow-sm flex flex-col justify-between">
         <p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-2">Total Revenue</p>
-        <h3 class="font-display text-display text-on-surface">${{ summary.total_amount|default:"0" }}</h3>
-        <span class="font-body-sm text-body-sm text-on-surface-variant mt-2">{{ summary.period_label|default:"This period" }}</span>
+        <h3 class="font-display text-display text-on-surface">${{ summary.total_amount|floatformat:0 }}</h3>
+        <span class="font-body-sm text-body-sm text-on-surface-variant mt-2">{{ summary.period_label }}</span>
     </div>
     <div class="bg-surface-container-lowest p-container-padding rounded-xl border border-outline-variant shadow-sm flex flex-col justify-between">
         <p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-2">Proposals Sent</p>
-        <h3 class="font-display text-display text-on-surface">{{ summary.proposals_sent|default:"0" }}</h3>
+        <h3 class="font-display text-display text-on-surface">{{ summary.proposals_sent }}</h3>
         <span class="font-body-sm text-body-sm text-on-surface-variant mt-2">total in period</span>
     </div>
     <div class="bg-surface-container-lowest p-container-padding rounded-xl border border-outline-variant shadow-sm flex flex-col justify-between">
         <p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-2">Win Rate</p>
-        <h3 class="font-display text-display text-on-surface">{{ summary.win_rate|default:"0" }}%</h3>
+        <h3 class="font-display text-display text-on-surface">{{ summary.win_rate }}%</h3>
         <span class="font-body-sm text-body-sm text-on-surface-variant mt-2">accepted / sent</span>
     </div>
     <div class="bg-surface-container-lowest p-container-padding rounded-xl border border-outline-variant shadow-sm flex flex-col justify-between">
         <p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-2">Avg. Hourly Rate</p>
-        <h3 class="font-display text-display text-on-surface">${{ hourly_rate|default:"0" }}</h3>
+        <h3 class="font-display text-display text-on-surface">${{ hourly_rate|floatformat:0 }}</h3>
         <span class="font-body-sm text-body-sm text-on-surface-variant mt-2">effective rate</span>
     </div>
 </div>
@@ -72,7 +72,7 @@
     <div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm p-container-padding flex flex-col">
         <h3 class="font-h3 text-h3 text-on-surface mb-stack-md">Platform Conversion</h3>
         <div class="flex flex-col gap-4">
-            {% for p in platform_conversion|default:'' %}
+            {% for p in platform_conversion %}
             <div>
                 <div class="flex justify-between font-label-sm text-label-sm text-on-surface-variant mb-1">
                     <span>{{ p.name }}</span>
@@ -107,7 +107,7 @@
                 </tr>
             </thead>
             <tbody class="font-body-md text-body-md text-on-surface divide-y divide-outline-variant">
-                {% for row in platform_stats|default:'' %}
+                {% for row in platform_stats %}
                 <tr class="hover:bg-surface-container-lowest transition-colors h-[56px]">
                     <td class="py-3 px-6 font-medium flex items-center gap-2">
                         <span class="w-2 h-2 rounded-full bg-primary"></span>
@@ -117,7 +117,7 @@
                     <td class="py-3 px-6 text-right">
                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {% if row.success_rate >= 60 %}bg-primary-container text-on-primary-container{% else %}bg-surface-container-high text-on-surface-variant{% endif %}">{{ row.success_rate }}%</span>
                     </td>
-                    <td class="py-3 px-6 text-right font-semibold">${{ row.earned }}</td>
+                    <td class="py-3 px-6 text-right font-semibold">${{ row.earned|floatformat:0 }}</td>
                     <td class="py-3 px-6 text-right text-on-surface-variant">{{ row.avg_response }}</td>
                 </tr>
                 {% empty %}
@@ -142,10 +142,10 @@ if (fc) {
     new Chart(fc.getContext('2d'), {
         type: 'bar',
         data: {
-            labels: {{ chart_labels|default:'["Jan","Feb","Mar","Apr","May"]'|safe }},
+            labels: {{ chart_labels|safe }},
             datasets: [{
                 label: 'Earnings',
-                data: {{ chart_data|default:'[2000,3500,5000,7200,6000]'|safe }},
+                data: {{ chart_data|safe }},
                 backgroundColor: '#00685f'
             }]
         },
