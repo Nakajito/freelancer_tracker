@@ -1,5 +1,6 @@
 from django import forms
 
+from apps.core.forms import date_input_widget
 from apps.proposals.models import Client, Platform, Proposal, ProposalStatus
 
 
@@ -33,12 +34,8 @@ class ProposalForm(forms.ModelForm):
             "tags",
         ]
         widgets = {
-            "sent_date": forms.DateInput(
-                attrs={"type": "date"}, format="%Y-%m-%d"
-            ),
-            "expected_response_date": forms.DateInput(
-                attrs={"type": "date"}, format="%Y-%m-%d"
-            ),
+            "sent_date": date_input_widget(),
+            "expected_response_date": date_input_widget(),
         }
 
 

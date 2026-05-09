@@ -66,27 +66,3 @@
 </div>
 {% endblock %}
 
-{% block extra_css %}
-<style>
-    input[type=text], input[type=number], input[type=date], select, textarea {
-        width: 100%;
-        background-color: #f0f5f2;
-        border: 1px solid #bcc9c6;
-        border-radius: 0.5rem;
-        padding: 0.75rem 1rem;
-        font-family: 'Inter', sans-serif;
-        font-size: 16px;
-        color: #171d1c;
-        transition: all 0.2s;
-        outline: none;
-    }
-    input:focus, select:focus, textarea:focus {
-        background-color: #ffffff;
-        border-color: #00685f;
-        box-shadow: 0 0 0 2px rgba(0,104,95,0.2);
-    }
-    textarea { min-height: 120px; resize: vertical; }
-    select { appearance: none; background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%233d4947'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e"); background-repeat: no-repeat; background-position: right 0.75rem center; background-size: 20px; padding-right: 2.5rem; }
-    input[type=checkbox] { width: 18px; height: 18px; accent-color: #00685f; }
-</style>
-{% endblock %}

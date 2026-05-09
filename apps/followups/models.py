@@ -1,4 +1,5 @@
-from django.conf import settings
+"""Follow-up tasks scheduled against pending proposals."""
+
 from django.db import models
 
 from apps.core.models import TimeStampedModel
@@ -6,6 +7,8 @@ from apps.proposals.models import Proposal
 
 
 class FollowUp(TimeStampedModel):
+    """A reminder to nudge a client about a specific proposal."""
+
     proposal = models.ForeignKey(
         Proposal,
         on_delete=models.CASCADE,
@@ -28,11 +31,13 @@ class FollowUp(TimeStampedModel):
 
     @property
     def is_overdue(self) -> bool:
+        """``True`` if the follow-up is still pending past its ``due_date``."""
         from django.utils import timezone
 
         return not self.completed and self.due_date < timezone.now().date()
 
     def mark_completed(self):
+        """Mark this follow-up done and stamp ``completed_at``."""
         from django.utils import timezone
 
         self.completed = True

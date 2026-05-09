@@ -1,4 +1,7 @@
-from datetime import timedelta
+"""Aggregation and recurring-retainer services for time-entry data."""
+
+from calendar import monthrange
+from datetime import date, timedelta
 from decimal import Decimal
 from typing import Optional
 
@@ -10,6 +13,8 @@ from apps.timetracking.models import RecurringRetainer, TimeEntry
 
 
 class BillableAggregation:
+    """Container for total/billable hour sums with optional revenue."""
+
     def __init__(
         self,
         total_hours: Decimal,
@@ -22,8 +27,12 @@ class BillableAggregation:
 
 
 class BillableAggregationService:
+    """Aggregations over ``TimeEntry`` rows for one proposal or one user."""
+
+
     @staticmethod
     def get_total_for_proposal(proposal) -> BillableAggregation:
+        """Sum hours logged against a single proposal."""
         result = TimeEntry.objects.filter(proposal=proposal).aggregate(
             total=Sum("hours"),
             billable=Sum("hours", filter=models.Q(billable=True)),
@@ -36,6 +45,11 @@ class BillableAggregationService:
 
     @staticmethod
     def get_weekly_summary(user) -> dict:
+        """Return current-week totals plus last-week hours for KPI cards.
+
+        Returns:
+            ``{"total_hours", "billable_ratio", "last_week_hours"}``.
+        """
         today = timezone.now().date()
         this_week_start = today - timedelta(days=today.weekday())
         last_week_start = this_week_start - timedelta(days=7)
@@ -70,6 +84,7 @@ class BillableAggregationService:
 
     @staticmethod
     def get_total_for_user(user, start_date=None, end_date=None):
+        """Sum hours across all proposals owned by ``user`` in a date window."""
         queryset = TimeEntry.objects.filter(proposal__owner=user)
 
         if start_date:
@@ -93,9 +108,6 @@ class RetainerGeneratorService:
     def generate_entries(
         retainer: RecurringRetainer, year: int, month: int
     ) -> list[TimeEntry]:
-        from calendar import monthrange
-        from datetime import date
-
         if not retainer.active:
             return []
 

@@ -2,8 +2,7 @@ import pytest
 from decimal import Decimal
 from datetime import date
 
-from apps.accounts.models import User
-from apps.proposals.models import Client, Proposal, Tag, ProposalStatus, Platform
+from apps.proposals.models import Client, Proposal, Tag, ProposalStatus
 
 
 @pytest.mark.django_db

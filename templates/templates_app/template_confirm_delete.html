@@ -1,0 +1,9 @@
+{% extends "app_base.html" %}
+
+{% block title %}Delete Template - PropoTrack{% endblock %}
+{% block active_nav %}templates{% endblock %}
+
+{% block app_content %}
+{% url 'template-list' as cancel_url %}
+{% include "partials/_delete_confirm.html" with entity_type="template" entity_label=object.name cancel_url=cancel_url submit_label="Delete Template" %}
+{% endblock %}

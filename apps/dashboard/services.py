@@ -1,3 +1,5 @@
+"""Read-only metric services that power the main dashboard and analytics."""
+
 from calendar import monthrange
 from datetime import date, timedelta
 from decimal import Decimal
@@ -5,12 +7,15 @@ from decimal import Decimal
 from django.db import models
 from django.utils import timezone
 
+from apps.core.utils import month_range
 from apps.followups.models import FollowUp
 from apps.proposals.models import Platform, Proposal, ProposalStatus
 from apps.timetracking.models import TimeEntry
 
 
 class FunnelMetrics:
+    """Per-status counts for the proposal funnel plus accepted revenue."""
+
     def __init__(
         self,
         total: int,
@@ -30,6 +35,8 @@ class FunnelMetrics:
 
 
 class ConversionMetrics:
+    """Won / lost / pending counts and win-rate over a period."""
+
     def __init__(self, won: int, lost: int, pending: int):
         self.won = won
         self.lost = lost
@@ -38,12 +45,16 @@ class ConversionMetrics:
 
 
 class ForecastMetrics:
+    """Expected wins (count) and value derived from in-flight proposals."""
+
     def __init__(self, expected_wins: int, expected_amount: Decimal):
         self.expected_wins = expected_wins
         self.expected_amount = expected_amount
 
 
 class HourlyRateMetrics:
+    """Effective hourly rate computed from billable hours and accepted revenue."""
+
     def __init__(
         self, total_hours: Decimal, total_amount: Decimal, hourly_rate: Decimal
     ):
@@ -53,8 +64,12 @@ class HourlyRateMetrics:
 
 
 class DashboardService:
+    """Stateless aggregator that produces dashboard and analytics metrics."""
+
+
     @staticmethod
     def get_funnel_metrics(user, days: int = 30) -> FunnelMetrics:
+        """Return funnel counts and accepted revenue for the last ``days`` days."""
         cutoff = timezone.now().date() - timedelta(days=days)
 
         proposals = Proposal.objects.for_user(user).filter(sent_date__gte=cutoff)
@@ -76,6 +91,7 @@ class DashboardService:
 
     @staticmethod
     def get_conversion_metrics(user, days: int = 30) -> ConversionMetrics:
+        """Return won/lost/pending counts plus win-rate over the period."""
         cutoff = timezone.now().date() - timedelta(days=days)
 
         proposals = Proposal.objects.for_user(user).filter(sent_date__gte=cutoff)
@@ -95,6 +111,7 @@ class DashboardService:
 
     @staticmethod
     def get_forecast_metrics(user, days: int = 90) -> ForecastMetrics:
+        """Project wins and revenue from in-flight proposals using historical win-rate."""
         cutoff = timezone.now().date() - timedelta(days=days)
 
         proposals = Proposal.objects.for_user(user).filter(sent_date__gte=cutoff)
@@ -126,6 +143,7 @@ class DashboardService:
 
     @staticmethod
     def get_hourly_rate_metrics(user, days: int = 30) -> HourlyRateMetrics:
+        """Compute effective hourly rate from accepted revenue / billable hours."""
         cutoff = timezone.now().date() - timedelta(days=days)
 
         time_entries = TimeEntry.objects.filter(
@@ -156,6 +174,7 @@ class DashboardService:
 
     @staticmethod
     def get_urgent_followups(user, limit: int = 5):
+        """Return up to ``limit`` pending follow-ups ordered by ``due_date``."""
         return list(
             FollowUp.objects.filter(
                 proposal__owner=user,
@@ -167,6 +186,15 @@ class DashboardService:
 
     @staticmethod
     def get_earnings_chart(user, months: int = 6) -> dict:
+        """Return labels/data arrays of accepted revenue per month for charting.
+
+        Args:
+            user: Authenticated user whose proposals are aggregated.
+            months: Number of trailing months to include (current month last).
+
+        Returns:
+            ``{"labels": [...], "data": [...]}`` ready for Chart.js.
+        """
         today = timezone.now().date()
         labels: list[str] = []
         data: list[float] = []
@@ -214,17 +242,14 @@ class DashboardService:
         return {"labels": labels, "data": data}
 
     @staticmethod
-    def _month_range(year: int, month: int) -> tuple[date, date]:
-        start = date(year, month, 1)
-        if month == 12:
-            end = date(year + 1, 1, 1)
-        else:
-            end = date(year, month + 1, 1)
-        return start, end
-
-    @staticmethod
     def get_platform_conversion(user, year: int, month: int) -> list[dict]:
-        start, end = DashboardService._month_range(year, month)
+        """Return per-platform win-rate dicts for a single month.
+
+        Returns:
+            List of ``{"name", "rate"}`` sorted by rate descending. Platforms
+            with no sent proposals in the period are omitted.
+        """
+        start, end = month_range(year, month)
 
         rows: list[dict] = []
         for value, label in Platform.choices:
@@ -245,7 +270,13 @@ class DashboardService:
 
     @staticmethod
     def get_platform_stats(user, year: int, month: int) -> list[dict]:
-        start, end = DashboardService._month_range(year, month)
+        """Return per-platform statistics rows for the analytics table.
+
+        Each row contains ``name``, ``sent``, ``success_rate``, ``earned``,
+        and ``avg_response`` (formatted ``"Xd"`` or ``"—"``). Sorted by
+        ``sent`` descending.
+        """
+        start, end = month_range(year, month)
 
         rows: list[dict] = []
         for value, label in Platform.choices:

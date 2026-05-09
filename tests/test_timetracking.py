@@ -4,7 +4,6 @@ from decimal import Decimal
 import pytest
 from django.urls import reverse
 
-from apps.proposals.models import Proposal, ProposalStatus
 from apps.timetracking.models import TimeEntry
 from apps.timetracking.services import BillableAggregationService
 

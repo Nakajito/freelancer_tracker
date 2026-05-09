@@ -26,7 +26,10 @@
       "Bash(xargs -I {} find {} -type f -name \"*.py\")",
       "Bash(awk '{print $NF}')",
       "Bash(xargs -I {} bash -c 'echo \"=== {} ===\" && ls -la {} | grep -E \"^\\\\-\"')",
-      "Bash(grep -E \"\\\\.py$\")"
+      "Bash(grep -E \"\\\\.py$\")",
+      "Bash(awk '/{% block extra_css %}/,/{% endblock %}/' /home/nakajito/proyectos/freelancer_tracker/__TRACKED_VAR__)",
+      "Bash(python3 -c ' *)",
+      "Bash(git rm *)"
     ],
     "additionalDirectories": [
       "/home/nakajito/proyectos/freelancer_tracker",

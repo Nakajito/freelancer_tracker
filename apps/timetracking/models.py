@@ -1,6 +1,7 @@
+"""Time tracking models: individual entries and recurring retainers."""
+
 from decimal import Decimal
 
-from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator
 from django.db import models
@@ -10,6 +11,9 @@ from apps.proposals.models import Proposal, ProposalStatus
 
 
 class TimeEntry(TimeStampedModel):
+    """Hours logged against a proposal on a given date."""
+
+
     proposal = models.ForeignKey(
         Proposal,
         on_delete=models.CASCADE,
@@ -41,6 +45,8 @@ class TimeEntry(TimeStampedModel):
 
 
 class RecurringRetainer(TimeStampedModel):
+    """Monthly recurring time commitment tied to an accepted proposal."""
+
     proposal = models.OneToOneField(
         Proposal,
         on_delete=models.CASCADE,

@@ -1,4 +1,5 @@
 {% extends "app_base.html" %}
+{% load static %}
 
 {% block title %}Analytics & Reports - PropoTrack{% endblock %}
 {% block active_nav %}analytics{% endblock %}
@@ -67,7 +68,7 @@
         <div class="flex justify-between items-center mb-6">
             <h3 class="font-h3 text-h3 text-on-surface">Earnings Forecast</h3>
         </div>
-        <canvas id="forecastChart" class="min-h-[250px]"></canvas>
+        <canvas id="forecastChart" class="min-h-[250px]" data-labels="{{ chart_labels }}" data-data="{{ chart_data }}"></canvas>
     </div>
     <div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm p-container-padding flex flex-col">
         <h3 class="font-h3 text-h3 text-on-surface mb-stack-md">Platform Conversion</h3>
@@ -136,21 +137,5 @@
 
 {% block extra_js %}
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-const fc = document.getElementById('forecastChart');
-if (fc) {
-    new Chart(fc.getContext('2d'), {
-        type: 'bar',
-        data: {
-            labels: {{ chart_labels|safe }},
-            datasets: [{
-                label: 'Earnings',
-                data: {{ chart_data|safe }},
-                backgroundColor: '#00685f'
-            }]
-        },
-        options: { responsive: true, scales: { y: { beginAtZero: true } } }
-    });
-}
-</script>
+<script src="{% static 'js/charts.js' %}"></script>
 {% endblock %}

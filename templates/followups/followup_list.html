@@ -63,15 +63,9 @@
                     </td>
                     <td class="py-4 px-6">
                         {% if followup.completed %}
-                        <span class="inline-flex items-center px-2.5 py-1 rounded-full font-label-sm text-label-sm bg-primary/10 text-primary border border-primary/20">
-                            <span class="w-1.5 h-1.5 rounded-full bg-primary mr-1.5"></span>
-                            Completed
-                        </span>
+                            {% include "partials/_status_pill.html" with label="Completed" variant="success" %}
                         {% else %}
-                        <span class="inline-flex items-center px-2.5 py-1 rounded-full font-label-sm text-label-sm bg-tertiary-container/10 text-tertiary-container border border-tertiary-container/20">
-                            <span class="w-1.5 h-1.5 rounded-full bg-tertiary-container mr-1.5"></span>
-                            Pending
-                        </span>
+                            {% include "partials/_status_pill.html" with label="Pending" variant="warning" %}
                         {% endif %}
                     </td>
                     <td class="py-4 px-6 text-right">

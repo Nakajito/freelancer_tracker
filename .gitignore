@@ -17,6 +17,18 @@ wheels/
 # Ruff
 .ruff_cache/
 
-# Data base
+# Database
 *.db
-.sqlite3
+*.sqlite3
+
+# Coverage
+.coverage
+.coverage.*
+htmlcov/
+
+# Collected static
+staticfiles/
+
+# IDE / editor
+.vscode/
+.idea/

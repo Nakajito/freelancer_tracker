@@ -25,6 +25,11 @@ urlpatterns = [
     path("clients/", views.ClientListView.as_view(), name="client-list"),
     path("clients/create/", views.ClientCreateView.as_view(), name="client-create"),
     path(
+        "clients/<int:pk>/delete/",
+        views.ClientDeleteView.as_view(),
+        name="client-delete",
+    ),
+    path(
         "api/proposals/duplicate-check/",
         api_views.duplicate_check,
         name="duplicate-check",

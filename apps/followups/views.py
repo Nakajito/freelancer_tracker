@@ -1,20 +1,16 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.urls import reverse, reverse_lazy
-from django.views.generic import CreateView, DeleteView, ListView, View
 from django.http import HttpResponseRedirect
+from django.urls import reverse, reverse_lazy
 from django.utils import timezone
+from django.views.generic import CreateView, DeleteView, ListView, View
 
+from apps.core.mixins import ProposalOwnerQuerysetMixin
 from apps.followups.forms import FollowUpForm
 from apps.followups.models import FollowUp
 from apps.followups.services import FollowUpQuerySet
 
 
-class OwnerQuerysetMixin(LoginRequiredMixin):
-    def get_queryset(self):
-        return super().get_queryset().filter(proposal__owner=self.request.user)
-
-
-class FollowUpListView(OwnerQuerysetMixin, ListView):
+class FollowUpListView(ProposalOwnerQuerysetMixin, ListView):
     model = FollowUp
     template_name = "followups/followup_list.html"
     context_object_name = "followups"
@@ -65,7 +61,7 @@ class FollowUpCompleteView(LoginRequiredMixin, View):
         return HttpResponseRedirect(reverse("followup-list"))
 
 
-class FollowUpDeleteView(OwnerQuerysetMixin, DeleteView):
+class FollowUpDeleteView(ProposalOwnerQuerysetMixin, DeleteView):
     model = FollowUp
     template_name = "followups/followup_confirm_delete.html"
     success_url = reverse_lazy("followup-list")

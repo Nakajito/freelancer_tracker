@@ -1,16 +1,11 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import JsonResponse
 from django.urls import reverse, reverse_lazy
-from django.views.generic import CreateView, DetailView, ListView, UpdateView
+from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
 
-from apps.proposals.models import Client, Proposal
+from apps.core.mixins import OwnerQuerysetMixin
+from apps.proposals.models import Client
 from apps.templates_app.models import ProposalTemplate
 from apps.templates_app.services import PlaceholderRenderer
-
-
-class OwnerQuerysetMixin(LoginRequiredMixin):
-    def get_queryset(self):
-        return super().get_queryset().filter(owner=self.request.user)
 
 
 class TemplateListView(OwnerQuerysetMixin, ListView):
@@ -80,3 +75,9 @@ class TemplateUseView(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         context["clients"] = Client.objects.for_user(self.request.user)
         return context
+
+
+class TemplateDeleteView(OwnerQuerysetMixin, DeleteView):
+    model = ProposalTemplate
+    template_name = "templates_app/template_confirm_delete.html"
+    success_url = reverse_lazy("template-list")

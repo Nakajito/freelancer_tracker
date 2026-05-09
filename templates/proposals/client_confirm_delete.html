@@ -1,0 +1,9 @@
+{% extends "app_base.html" %}
+
+{% block title %}Delete Client - PropoTrack{% endblock %}
+{% block active_nav %}clients{% endblock %}
+
+{% block app_content %}
+{% url 'client-list' as cancel_url %}
+{% include "partials/_delete_confirm.html" with entity_type="client" entity_label=object.name cancel_url=cancel_url submit_label="Delete Client" %}
+{% endblock %}

@@ -1,17 +1,22 @@
+"""Proposals app data model: clients, tags, and the proposal record itself."""
+
 from decimal import Decimal
 
-from django.conf import settings
 from django.core.validators import MinValueValidator
 from django.db import models
 
-from apps.core.models import OwnedModel, TimeStampedModel
+from apps.core.models import OwnedModel
 
 
 class ProposalQuerySet(models.QuerySet):
+    """Chainable queryset filters used by ``ProposalManager`` and views."""
+
     def for_user(self, user):
+        """Restrict to proposals owned by ``user``."""
         return self.filter(owner=user)
 
     def pending_response(self):
+        """Restrict to proposals awaiting a client reply (``SENT``/``VIEWED``)."""
         return self.filter(
             status__in=[
                 ProposalStatus.SENT,
@@ -20,16 +25,21 @@ class ProposalQuerySet(models.QuerySet):
         )
 
     def with_client(self):
+        """Eager-load the related ``Client`` row."""
         return self.select_related("client")
 
     def with_tags(self):
+        """Eager-load the M2M tags collection."""
         return self.prefetch_related("tags")
 
     def accepted(self):
+        """Restrict to proposals with status ``ACCEPTED``."""
         return self.filter(status=ProposalStatus.ACCEPTED)
 
 
 class ProposalManager(models.Manager):
+    """Default manager that exposes ``ProposalQuerySet`` filters."""
+
     def get_queryset(self):
         return ProposalQuerySet(self.model, using=self._db)
 
@@ -50,6 +60,8 @@ class ProposalManager(models.Manager):
 
 
 class Platform(models.TextChoices):
+    """Sourcing platform a proposal originates from."""
+
     UPWORK = "upwork", "Upwork"
     FIVERR = "fiverr", "Fiverr"
     FREELANCER = "freelancer", "Freelancer"
@@ -59,6 +71,8 @@ class Platform(models.TextChoices):
 
 
 class ProposalStatus(models.TextChoices):
+    """Lifecycle states a proposal can move through."""
+
     DRAFT = "draft", "Draft"
     SENT = "sent", "Sent"
     VIEWED = "viewed", "Viewed"
@@ -70,6 +84,8 @@ class ProposalStatus(models.TextChoices):
 
 
 class Client(OwnedModel):
+    """A client (or prospect) the freelancer pitches to."""
+
     name = models.CharField(max_length=255)
     email = models.EmailField(blank=True, default="")
     notes = models.TextField(blank=True, default="")
@@ -87,6 +103,8 @@ class Client(OwnedModel):
 
 
 class Tag(OwnedModel):
+    """User-defined label used to group proposals."""
+
     slug = models.SlugField(max_length=50)
     name = models.CharField(max_length=100)
 
@@ -101,6 +119,12 @@ class Tag(OwnedModel):
 
 
 class Proposal(OwnedModel):
+    """A pitch the freelancer sent to a client on a given platform.
+
+    Tracks lifecycle, monetary value, expected vs actual response timing,
+    and tags. Conversion metrics in the dashboard derive from this model.
+    """
+
     title = models.CharField(max_length=255)
     platform = models.CharField(
         max_length=20, choices=Platform.choices, default=Platform.OTHER
@@ -137,10 +161,12 @@ class Proposal(OwnedModel):
         ordering = ["-created_at"]
 
     def __str__(self):
-        return f"{self.title} - {self.client.name}"
+        client_name = self.client.name if self.client_id else "—"
+        return f"{self.title} - {client_name}"
 
     @property
     def response_time(self):
+        """Days between ``sent_date`` and ``actual_response_date``, or ``None``."""
         if self.sent_date and self.actual_response_date:
             return (self.actual_response_date - self.sent_date).days
         return None

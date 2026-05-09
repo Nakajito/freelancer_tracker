@@ -56,7 +56,7 @@ jobs:
       - name: Run tests
         env:
           DATABASE_URL: postgresql://postgres:postgres@localhost:5432/test_db
-          DJANGO_SETTINGS_MODULE: config.settings_test
+          DJANGO_SETTINGS_MODULE: config.settings.test
         run: pytest --cov --cov-fail-under=85
 
   docs:

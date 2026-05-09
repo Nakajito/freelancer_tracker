@@ -73,25 +73,3 @@
 </div>
 {% endblock %}
 
-{% block extra_css %}
-<style>
-    input[type=text], textarea {
-        width: 100%;
-        background-color: #f0f5f2;
-        border: 1px solid #bcc9c6;
-        border-radius: 0.5rem;
-        padding: 0.75rem 1rem;
-        font-family: 'Inter', sans-serif;
-        font-size: 16px;
-        color: #171d1c;
-        transition: all 0.2s;
-        outline: none;
-    }
-    input:focus, textarea:focus {
-        background-color: #ffffff;
-        border-color: #00685f;
-        box-shadow: 0 0 0 2px rgba(0,104,95,0.2);
-    }
-    textarea { min-height: 320px; resize: vertical; font-family: ui-monospace, 'SF Mono', monospace; font-size: 14px; }
-</style>
-{% endblock %}

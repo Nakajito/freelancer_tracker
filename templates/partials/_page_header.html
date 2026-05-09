@@ -1,0 +1,32 @@
+{% comment %}
+Reusable page header. Params via {% include with %}:
+  title         — main heading text (required)
+  subtitle      — optional supporting line
+  back_url      — optional URL for "Back" link
+  back_label    — label for back link (default "Back")
+  action_url    — optional URL for primary CTA
+  action_label  — CTA label
+  action_icon   — Material Symbols name for the CTA (default "add")
+  badge         — optional small chip text next to the title
+{% endcomment %}
+<div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-stack-lg">
+    <div>
+        {% if back_url %}
+        <a href="{{ back_url }}" class="inline-flex items-center gap-1 text-on-surface-variant hover:text-primary transition-colors font-label-sm text-label-sm mb-2">
+            <span class="material-symbols-outlined text-[16px]">arrow_back</span>
+            {{ back_label|default:"Back" }}
+        </a>
+        {% endif %}
+        <h2 class="font-display text-display text-on-background flex items-baseline gap-3">
+            {{ title }}
+            {% if badge %}<span class="font-body-md text-body-md text-secondary bg-surface-container px-3 py-1 rounded-full align-middle">{{ badge }}</span>{% endif %}
+        </h2>
+        {% if subtitle %}<p class="font-body-md text-body-md text-on-surface-variant mt-1">{{ subtitle }}</p>{% endif %}
+    </div>
+    {% if action_url %}
+    <a href="{{ action_url }}" class="bg-primary text-on-primary font-label-md text-label-md py-2.5 px-5 rounded-lg flex items-center gap-2 hover:bg-primary-container shadow-sm transition-all">
+        <span class="material-symbols-outlined text-[20px]">{{ action_icon|default:"add" }}</span>
+        {{ action_label }}
+    </a>
+    {% endif %}
+</div>

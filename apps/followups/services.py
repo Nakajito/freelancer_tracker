@@ -1,3 +1,5 @@
+"""Follow-up suggestion engine and queryset filters."""
+
 from datetime import timedelta
 from typing import List
 
@@ -8,6 +10,8 @@ from apps.proposals.models import Proposal, ProposalStatus
 
 
 class FollowUpSuggestion:
+    """A suggested follow-up date with the reason it was generated."""
+
     def __init__(self, proposal: Proposal, suggested_date, reason: str):
         self.proposal = proposal
         self.suggested_date = suggested_date
@@ -15,8 +19,11 @@ class FollowUpSuggestion:
 
 
 class AutoSuggestService:
+    """Heuristics that propose follow-up dates for in-flight proposals."""
+
     @staticmethod
     def suggest_follow_ups(proposal: Proposal) -> List[FollowUpSuggestion]:
+        """Return suggested follow-up dates for a single proposal."""
         suggestions = []
 
         if proposal.status in [ProposalStatus.SENT, ProposalStatus.VIEWED]:
@@ -45,8 +52,11 @@ class AutoSuggestService:
 
 
 class FollowUpQuerySet:
+    """Static helpers that return common follow-up querysets."""
+
     @staticmethod
     def overdue(user):
+        """Pending follow-ups whose ``due_date`` is in the past."""
         return (
             FollowUp.objects.filter(
                 proposal__owner=user,
@@ -59,8 +69,7 @@ class FollowUpQuerySet:
 
     @staticmethod
     def upcoming(user, days: int = 7):
-        from datetime import timedelta
-
+        """Pending follow-ups due within the next ``days`` days."""
         cutoff = timezone.now().date() + timedelta(days=days)
         return (
             FollowUp.objects.filter(

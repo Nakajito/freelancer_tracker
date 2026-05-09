@@ -8,13 +8,9 @@ from django.views.generic import (
     UpdateView,
 )
 
+from apps.core.mixins import OwnerQuerysetMixin
 from apps.proposals.forms import ProposalForm
 from apps.proposals.models import Client, Proposal
-
-
-class OwnerQuerysetMixin(LoginRequiredMixin):
-    def get_queryset(self):
-        return super().get_queryset().filter(owner=self.request.user)
 
 
 class ProposalListView(OwnerQuerysetMixin, ListView):
@@ -84,3 +80,9 @@ class ClientCreateView(LoginRequiredMixin, CreateView):
 
     def get_success_url(self):
         return reverse_lazy("client-list")
+
+
+class ClientDeleteView(OwnerQuerysetMixin, DeleteView):
+    model = Client
+    template_name = "proposals/client_confirm_delete.html"
+    success_url = reverse_lazy("client-list")

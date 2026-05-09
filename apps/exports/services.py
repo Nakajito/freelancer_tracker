@@ -1,15 +1,23 @@
+"""Export services: CSV/JSON proposal exports and monthly HTML summaries."""
+
 import csv
-import json
-from datetime import date
+from decimal import Decimal
 from io import StringIO
 from typing import Iterator
 
-from django.http import HttpResponse
+from django.db.models import Sum
+
+from apps.core.utils import month_range
+from apps.proposals.models import Proposal, ProposalStatus
+from apps.timetracking.models import TimeEntry
 
 
 class CSVExporter:
+    """Stream proposals or time entries as CSV rows."""
+
     @staticmethod
     def export_proposals(proposals) -> Iterator[str]:
+        """Yield a single CSV blob for the given ``Proposal`` queryset."""
         output = StringIO()
         writer = csv.writer(output)
 
@@ -48,6 +56,7 @@ class CSVExporter:
 
     @staticmethod
     def export_time_entries(entries) -> Iterator[str]:
+        """Yield a single CSV blob for the given ``TimeEntry`` queryset."""
         output = StringIO()
         writer = csv.writer(output)
 
@@ -69,8 +78,11 @@ class CSVExporter:
 
 
 class JSONExporter:
+    """Serialize proposals to JSON-friendly dicts."""
+
     @staticmethod
     def export_proposals(proposals) -> list[dict]:
+        """Return a list of dicts representing the given proposals."""
         return [
             {
                 "id": p.id,
@@ -94,28 +106,26 @@ class JSONExporter:
 
 
 class MonthlySummaryGenerator:
+    """Aggregate a user's proposal and time-entry activity for one month."""
+
     @staticmethod
     def generate(user, year: int, month: int) -> dict:
-        from datetime import date
-        from decimal import Decimal
+        """Return a context dict suitable for the monthly-summary template.
 
-        from django.db.models import Sum
+        Args:
+            user: Authenticated user whose data is aggregated.
+            year: Four-digit year.
+            month: Month number, 1-12.
 
-        from apps.proposals.models import Proposal, ProposalStatus
-        from apps.timetracking.models import TimeEntry
-
-        start_date = date(year, month, 1)
-
-        if month == 12:
-            end_date = date(year + 1, 1, 1)
-        else:
-            end_date = date(year, month + 1, 1)
+        Returns:
+            Dict with proposal counts, win rate, totals, and labels.
+        """
+        start_date, end_date = month_range(year, month)
 
         proposals = Proposal.objects.for_user(user).filter(
             sent_date__gte=start_date,
             sent_date__lt=end_date,
         )
-
         time_entries = TimeEntry.objects.filter(
             proposal__owner=user,
             date__gte=start_date,

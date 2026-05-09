@@ -3,12 +3,10 @@ from decimal import Decimal
 
 import pytest
 from django.urls import reverse
-from django.utils import timezone
 
 from apps.dashboard.services import DashboardService
 from apps.followups.models import FollowUp
 from apps.proposals.models import Platform, Proposal, ProposalStatus
-from apps.timetracking.models import TimeEntry
 
 
 @pytest.mark.django_db

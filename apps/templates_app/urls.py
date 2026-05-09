@@ -25,4 +25,9 @@ urlpatterns = [
     path(
         "templates/<int:pk>/use/", views.TemplateUseView.as_view(), name="template-use"
     ),
+    path(
+        "templates/<int:pk>/delete/",
+        views.TemplateDeleteView.as_view(),
+        name="template-delete",
+    ),
 ]

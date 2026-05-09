@@ -4,19 +4,8 @@
 {% block active_nav %}clients{% endblock %}
 
 {% block app_content %}
-<div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-stack-lg">
-    <div>
-        <h2 class="font-display text-display text-on-background flex items-baseline gap-3">
-            Clients
-            <span class="font-body-md text-body-md text-secondary bg-surface-container px-3 py-1 rounded-full align-middle">{{ clients|length }} Total</span>
-        </h2>
-        <p class="font-body-md text-body-md text-on-surface-variant mt-1">Manage your client relationships.</p>
-    </div>
-    <a href="{% url 'client-create' %}" class="bg-primary text-on-primary font-label-md text-label-md py-2.5 px-5 rounded-lg flex items-center gap-2 hover:bg-primary-container shadow-sm transition-all">
-        <span class="material-symbols-outlined text-[20px]">add</span>
-        Add Client
-    </a>
-</div>
+{% url 'client-create' as create_url %}
+{% include "partials/_page_header.html" with title="Clients" subtitle="Manage your client relationships." badge=clients|length|stringformat:"d Total" action_url=create_url action_label="Add Client" %}
 
 <div class="bg-surface-container-lowest border border-outline-variant rounded-xl shadow-sm overflow-hidden">
     <div class="overflow-x-auto">
@@ -43,23 +32,18 @@
                     <td class="py-4 px-6 font-body-sm text-body-sm text-on-surface-variant">{{ client.email|default:"—" }}</td>
                     <td class="py-4 px-6 font-body-sm text-body-sm text-on-surface-variant">{{ client.notes|truncatechars:60|default:"—" }}</td>
                     <td class="py-4 px-6 text-right">
-                        <div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <div class="flex items-center justify-end gap-2">
                             <span class="font-body-sm text-body-sm text-on-surface-variant">{{ client.proposal_set.count|default:0 }} proposals</span>
+                            <a href="{% url 'client-delete' client.pk %}" class="opacity-0 group-hover:opacity-100 transition-opacity p-1.5 text-error hover:bg-error-container rounded-md" title="Delete">
+                                <span class="material-symbols-outlined text-[18px]">delete</span>
+                            </a>
                         </div>
                     </td>
                 </tr>
                 {% empty %}
                 <tr>
-                    <td colspan="4" class="py-16 text-center">
-                        <div class="flex flex-col items-center">
-                            <span class="material-symbols-outlined text-[48px] text-outline-variant mb-3">groups</span>
-                            <h3 class="font-h3 text-h3 text-on-surface mb-1">No clients yet</h3>
-                            <p class="font-body-md text-body-md text-on-surface-variant mb-4">Add your first client to get started.</p>
-                            <a href="{% url 'client-create' %}" class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-on-primary rounded-lg font-label-md text-label-md hover:bg-primary-container">
-                                <span class="material-symbols-outlined text-[18px]">add</span>
-                                Add Client
-                            </a>
-                        </div>
+                    <td colspan="4">
+                        {% include "partials/_empty_state.html" with icon="groups" title="No clients yet" message="Add your first client to get started." action_url=create_url action_label="Add Client" %}
                     </td>
                 </tr>
                 {% endfor %}

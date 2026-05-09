@@ -1,0 +1,20 @@
+{% comment %}
+Empty-state block. Params via {% include with %}:
+  icon          — Material Symbols name (required)
+  title         — heading (required)
+  message       — optional supporting line
+  action_url    — optional CTA URL
+  action_label  — CTA label
+  action_icon   — CTA Material Symbols name (default "add")
+{% endcomment %}
+<div class="py-16 text-center">
+    <span class="material-symbols-outlined text-[48px] text-outline-variant mb-3 block">{{ icon }}</span>
+    <h3 class="font-h3 text-h3 text-on-surface mb-1">{{ title }}</h3>
+    {% if message %}<p class="font-body-md text-body-md text-on-surface-variant mb-4">{{ message }}</p>{% endif %}
+    {% if action_url %}
+    <a href="{{ action_url }}" class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-on-primary rounded-lg font-label-md text-label-md hover:bg-primary-container">
+        <span class="material-symbols-outlined text-[18px]">{{ action_icon|default:"add" }}</span>
+        {{ action_label }}
+    </a>
+    {% endif %}
+</div>
