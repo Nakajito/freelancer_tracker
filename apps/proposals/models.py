@@ -130,7 +130,11 @@ class Proposal(OwnedModel):
         max_length=20, choices=Platform.choices, default=Platform.OTHER
     )
     client = models.ForeignKey(
-        Client, on_delete=models.CASCADE, related_name="proposals", null=True, blank=True
+        Client,
+        on_delete=models.CASCADE,
+        related_name="proposals",
+        null=True,
+        blank=True,
     )
     proposal_text = models.TextField(blank=True, default="")
     amount = models.DecimalField(

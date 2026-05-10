@@ -55,6 +55,8 @@ class MonthlySummaryView(LoginRequiredMixin, TemplateView):
         context["platform_stats"] = DashboardService.get_platform_stats(
             user, year, month
         )
-        context["hourly_rate"] = DashboardService.get_hourly_rate_metrics(user).hourly_rate
+        context["hourly_rate"] = DashboardService.get_hourly_rate_metrics(
+            user
+        ).hourly_rate
 
         return context

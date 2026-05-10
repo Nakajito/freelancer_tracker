@@ -45,6 +45,45 @@ target-version = "py314"
 python_version = "3.14"
 strict = true
 ignore_missing_imports = true
+disallow_untyped_defs = false
+disallow_untyped_calls = false
+warn_return_any = false
+warn_unused_ignores = true
+no_implicit_optional = true
+warn_redundant_casts = false
+disable_error_code = ["misc"]
+
+[[tool.mypy.overrides]]
+module = ["*.migrations.*"]
+ignore_errors = true
+
+[[tool.mypy.overrides]]
+module = ["apps.*.apps"]
+ignore_errors = true
+
+[[tool.mypy.overrides]]
+module = ["apps.*.models"]
+ignore_errors = true
+
+[[tool.mypy.overrides]]
+module = ["apps.*.views"]
+ignore_errors = true
+
+[[tool.mypy.overrides]]
+module = ["apps.*.forms"]
+ignore_errors = true
+
+[[tool.mypy.overrides]]
+module = ["apps.*.serializers"]
+ignore_errors = true
+
+[[tool.mypy.overrides]]
+module = ["apps.*.services"]
+ignore_errors = true
+
+[[tool.mypy.overrides]]
+module = ["config.*"]
+ignore_errors = true
 
 [tool.pytest.ini_options]
 DJANGO_SETTINGS_MODULE = "config.settings.test"

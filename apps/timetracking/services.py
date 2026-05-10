@@ -29,7 +29,6 @@ class BillableAggregation:
 class BillableAggregationService:
     """Aggregations over ``TimeEntry`` rows for one proposal or one user."""
 
-
     @staticmethod
     def get_total_for_proposal(proposal) -> BillableAggregation:
         """Sum hours logged against a single proposal."""

@@ -30,9 +30,7 @@ def duplicate_check(request):
     try:
         client = Client.objects.for_user(request.user).get(pk=client_id)
     except Client.DoesNotExist:
-        return Response(
-            {"error": "Client not found"}, status=status.HTTP_404_NOT_FOUND
-        )
+        return Response({"error": "Client not found"}, status=status.HTTP_404_NOT_FOUND)
 
     result = DuplicateCheckService.check_duplicate(
         owner=request.user,

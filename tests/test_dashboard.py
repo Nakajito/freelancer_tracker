@@ -128,7 +128,11 @@ class TestEarningsChart:
 class TestPlatformConversion:
     def test_rate_per_platform(self, user, client_model):
         today = date.today().replace(day=10)
-        for status in [ProposalStatus.ACCEPTED, ProposalStatus.SENT, ProposalStatus.SENT]:
+        for status in [
+            ProposalStatus.ACCEPTED,
+            ProposalStatus.SENT,
+            ProposalStatus.SENT,
+        ]:
             Proposal.objects.create(
                 owner=user,
                 title="P",

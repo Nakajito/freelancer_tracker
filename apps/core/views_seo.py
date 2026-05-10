@@ -45,4 +45,5 @@ def security_txt(request):
 class ChangePasswordRedirect(View):
     def get(self, request):
         from django.shortcuts import redirect
+
         return redirect("/accounts/password/change/", permanent=False)

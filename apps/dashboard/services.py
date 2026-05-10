@@ -66,7 +66,6 @@ class HourlyRateMetrics:
 class DashboardService:
     """Stateless aggregator that produces dashboard and analytics metrics."""
 
-
     @staticmethod
     def get_funnel_metrics(user, days: int = 30) -> FunnelMetrics:
         """Return funnel counts and accepted revenue for the last ``days`` days."""
@@ -314,7 +313,9 @@ class DashboardService:
                     "sent": sent_count,
                     "success_rate": success_rate,
                     "earned": earned,
-                    "avg_response": f"{avg_response}d" if avg_response is not None else "—",
+                    "avg_response": f"{avg_response}d"
+                    if avg_response is not None
+                    else "—",
                 }
             )
 

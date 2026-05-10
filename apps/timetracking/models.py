@@ -13,7 +13,6 @@ from apps.proposals.models import Proposal, ProposalStatus
 class TimeEntry(TimeStampedModel):
     """Hours logged against a proposal on a given date."""
 
-
     proposal = models.ForeignKey(
         Proposal,
         on_delete=models.CASCADE,
