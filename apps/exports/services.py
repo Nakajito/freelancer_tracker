@@ -41,7 +41,7 @@ class CSVExporter:
                 [
                     p.id,
                     p.title,
-                    p.client.name,
+                    p.client.name if p.client else "",
                     p.get_platform_display(),
                     p.get_status_display(),
                     str(p.amount),
@@ -87,7 +87,7 @@ class JSONExporter:
             {
                 "id": p.id,
                 "title": p.title,
-                "client": p.client.name,
+                "client": p.client.name if p.client else "",
                 "platform": p.platform,
                 "status": p.status,
                 "amount": str(p.amount),
