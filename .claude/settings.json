@@ -50,7 +50,11 @@
       "Bash(python3 -c \"import json,sys,base64; d=json.load\\(sys.stdin\\); print\\(base64.b64decode\\(d['content']\\).decode\\(\\)\\)\")",
       "Bash(xargs cat -n)",
       "Bash(uv lock *)",
-      "Bash(git -C /home/nakajito/proyectos/freelancer_tracker diff --stat)"
+      "Bash(git -C /home/nakajito/proyectos/freelancer_tracker diff --stat)",
+      "WebFetch(domain:contribution.usercontent.google.com)",
+      "Bash(curl -s \"https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ7Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpaCiVodG1sX2RlZGZlZjZkNDExMDQwMDg4YjQyOWE3YWY2YThlYmVkEgsSBxCxgKK9_gcYAZIBIwoKcHJvamVjdF9pZBIVQhM2MTc4MDIzNDQ5MTI4NTE2Mzgy&filename=&opi=89354086\")",
+      "Bash(curl -s \"https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ7Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpaCiVodG1sX2YyNjkwNzJjMWIxODQ3MGY4Y2NjZTQ4YzM4YTU1ZGM0EgsSBxCxgKK9_gcYAZIBIwoKcHJvamVjdF9pZBIVQhM2MTc4MDIzNDQ5MTI4NTE2Mzgy&filename=&opi=89354086\")",
+      "Bash(curl -s \"https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ7Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpaCiVodG1sXzI4NjRjYmVhZjIxZTQxZDE4NmRiNTJhMTJhZDMyNTJlEgsSBxCxgKK9_gcYAZIBIwoKcHJvamVjdF9pZBIVQhM2MTc4MDIzNDQ5MTI4NTE2Mzgy&filename=&opi=89354086\")"
     ],
     "additionalDirectories": [
       "/home/nakajito/proyectos/freelancer_tracker",
