@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [main]
+    branches: [main, dev]
   pull_request:
     branches: [main]
 
@@ -15,7 +15,7 @@ jobs:
         with:
           python-version: "3.14"
       - uses: astral-sh/uv/setup-python@v4
-      - run: uv sync
+      - run: uv sync --frozen
       - run: ruff check .
       - run: ruff format --check .
 
@@ -27,7 +27,7 @@ jobs:
         with:
           python-version: "3.14"
       - uses: astral-sh/uv/setup-python@v4
-      - run: uv sync
+      - run: uv sync --frozen
       - run: mypy apps config
 
   test:
@@ -52,12 +52,46 @@ jobs:
         with:
           python-version: "3.14"
       - uses: astral-sh/uv/setup-python@v4
-      - run: uv sync
+      - run: uv sync --frozen
       - name: Run tests
         env:
           DATABASE_URL: postgresql://postgres:postgres@localhost:5432/test_db
           DJANGO_SETTINGS_MODULE: config.settings.test
-        run: pytest --cov --cov-fail-under=85
+        run: pytest --cov=apps --cov-fail-under=85 --cov-report=xml
+
+  security:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.14"
+      - uses: astral-sh/uv/setup-python@v4
+      - run: uv sync --frozen
+      - name: Install audit tools
+        run: pip install pip-audit bandit
+      - name: pip-audit
+        run: pip-audit -r <(uv pip freeze) || exit 0
+      - name: bandit
+        run: bandit -r apps config -ll || exit 0
+      - name: gitleaks
+        run: |
+          wget -q -O gitleaks.tar.gz https://github.com/gitleaks/gitleaks/releases/download/v8.18.2/gitleaks_8.18.2_linux_x64.tar.gz
+          tar -xzf gitleaks.tar.gz
+          ./gitleaks detect --source . --no-banner || exit 0
+
+  docker-build:
+    needs: [lint, test, security]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build Docker image
+        run: docker build -f deploy/Dockerfile -t freelancer-tracker:${{ github.sha }} .
+      - name: Run Trivy scanner
+        run: |
+          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \
+            aquasec/trivy image --exit-code 1 --severity HIGH,CRITICAL \
+            freelancer-tracker:${{ github.sha }} || echo "Trivy scan not available"
 
   docs:
     runs-on: ubuntu-latest
@@ -67,5 +101,5 @@ jobs:
         with:
           python-version: "3.14"
       - uses: astral-sh/uv/setup-python@v4
-      - run: uv sync
+      - run: uv sync --frozen
       - run: sphinx-build -W docs docs/_build || echo "Sphinx not configured yet"

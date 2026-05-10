@@ -1,0 +1,35 @@
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.8.0
+    hooks:
+      - id: ruff
+      - id: ruff-format
+
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.14.0
+    hooks:
+      - id: mypy
+        args: ["--config-file=mypy.ini"]
+        additional_dependencies:
+          - types-python-dateutil
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: check-added-large-files
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      - id: check-yaml
+
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.18.2
+    hooks:
+      - id: gitleaks
+
+  - repo: local
+    hooks:
+      - id: detect-private-key
+        name: Detect private keys
+        entry: python -c "import sys; [sys.exit(1) if 'PRIVATE' in open(f).read() else None for f in sys.argv[1:]]"
+        types: [file]
+        pass_filenames: true
