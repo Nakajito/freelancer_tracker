@@ -1,5 +1,5 @@
 import json
-from datetime import date
+from datetime import date, timedelta
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils import timezone
@@ -38,22 +38,35 @@ class MonthlySummaryView(LoginRequiredMixin, TemplateView):
         user = self.request.user
 
         today = date.today()
+        period = self.request.GET.get("period", "90")
         year = int(self.request.GET.get("year", today.year))
-        month = int(self.request.GET.get("month", today.month))
 
-        summary = MonthlySummaryGenerator.generate(user, year, month)
+        if period == "30":
+            start_date = today - timedelta(days=30)
+            end_date = today + timedelta(days=1)
+            period_label = "Last 30 Days"
+        elif period == "year":
+            start_date = date(year, 1, 1)
+            end_date = date(year + 1, 1, 1)
+            period_label = str(year)
+        else:  # "90" default
+            start_date = today - timedelta(days=90)
+            end_date = today + timedelta(days=1)
+            period_label = "Last 90 Days"
+
+        summary = MonthlySummaryGenerator.generate(user, start_date, end_date, period_label)
         chart = DashboardService.get_earnings_chart(user, months=6)
 
         context["summary"] = summary
         context["year"] = year
-        context["month"] = month
+        context["period"] = period
         context["chart_labels"] = json.dumps(chart["labels"])
         context["chart_data"] = json.dumps(chart["data"])
         context["platform_conversion"] = DashboardService.get_platform_conversion(
-            user, year, month
+            user, start_date, end_date
         )
         context["platform_stats"] = DashboardService.get_platform_stats(
-            user, year, month
+            user, start_date, end_date
         )
         context["hourly_rate"] = DashboardService.get_hourly_rate_metrics(
             user

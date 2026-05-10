@@ -7,7 +7,6 @@ from typing import Iterator
 
 from django.db.models import Q, Sum
 
-from apps.core.utils import month_range
 from apps.proposals.models import Proposal, ProposalStatus
 from apps.timetracking.models import TimeEntry
 
@@ -106,22 +105,10 @@ class JSONExporter:
 
 
 class MonthlySummaryGenerator:
-    """Aggregate a user's proposal and time-entry activity for one month."""
+    """Aggregate a user's proposal and time-entry activity for a date range."""
 
     @staticmethod
-    def generate(user, year: int, month: int) -> dict:
-        """Return a context dict suitable for the monthly-summary template.
-
-        Args:
-            user: Authenticated user whose data is aggregated.
-            year: Four-digit year.
-            month: Month number, 1-12.
-
-        Returns:
-            Dict with proposal counts, win rate, totals, and labels.
-        """
-        start_date, end_date = month_range(year, month)
-
+    def generate(user, start_date, end_date, period_label: str) -> dict:
         proposals = Proposal.objects.for_user(user).exclude(
             status=ProposalStatus.DRAFT
         ).filter(
@@ -134,9 +121,7 @@ class MonthlySummaryGenerator:
             date__lt=end_date,
         )
 
-        total_hours = time_entries.aggregate(total=Sum("hours"))["total"] or Decimal(
-            "0"
-        )
+        total_hours = time_entries.aggregate(total=Sum("hours"))["total"] or Decimal("0")
         billable_hours = time_entries.filter(billable=True).aggregate(
             total=Sum("hours")
         )["total"] or Decimal("0")
@@ -151,9 +136,7 @@ class MonthlySummaryGenerator:
         )
 
         return {
-            "year": year,
-            "month": month,
-            "period_label": start_date.strftime("%b %Y"),
+            "period_label": period_label,
             "proposals_sent": proposals_sent,
             "proposals_accepted": proposals_accepted,
             "proposals_rejected": proposals_rejected,

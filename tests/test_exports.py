@@ -6,11 +6,14 @@ import pytest
 from apps.exports.services import MonthlySummaryGenerator
 from apps.proposals.models import Proposal, ProposalStatus
 
+JAN_START = date(2026, 1, 1)
+JAN_END = date(2026, 2, 1)
+
 
 @pytest.mark.django_db
 class TestMonthlySummaryGenerator:
     def test_period_label(self, user):
-        result = MonthlySummaryGenerator.generate(user, 2026, 1)
+        result = MonthlySummaryGenerator.generate(user, JAN_START, JAN_END, "Jan 2026")
         assert result["period_label"] == "Jan 2026"
 
     def test_win_rate(self, user, client_model):
@@ -37,13 +40,13 @@ class TestMonthlySummaryGenerator:
             status=ProposalStatus.SENT,
             sent_date=target,
         )
-        result = MonthlySummaryGenerator.generate(user, 2026, 1)
+        result = MonthlySummaryGenerator.generate(user, JAN_START, JAN_END, "Jan 2026")
         assert result["proposals_sent"] == 3
         assert result["proposals_accepted"] == 1
         assert result["win_rate"] == pytest.approx(33.3, abs=0.1)
 
     def test_win_rate_zero_when_no_sent(self, user):
-        result = MonthlySummaryGenerator.generate(user, 2026, 1)
+        result = MonthlySummaryGenerator.generate(user, JAN_START, JAN_END, "Jan 2026")
         assert result["win_rate"] == 0
 
     def test_total_amount_from_accepted_only(self, user, client_model):
@@ -64,5 +67,5 @@ class TestMonthlySummaryGenerator:
             amount=Decimal("9999"),
             sent_date=target,
         )
-        result = MonthlySummaryGenerator.generate(user, 2026, 1)
+        result = MonthlySummaryGenerator.generate(user, JAN_START, JAN_END, "Jan 2026")
         assert result["total_amount"] == Decimal("1500")

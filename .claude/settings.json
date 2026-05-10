@@ -56,7 +56,10 @@
       "Bash(curl -s \"https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ7Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpaCiVodG1sX2YyNjkwNzJjMWIxODQ3MGY4Y2NjZTQ4YzM4YTU1ZGM0EgsSBxCxgKK9_gcYAZIBIwoKcHJvamVjdF9pZBIVQhM2MTc4MDIzNDQ5MTI4NTE2Mzgy&filename=&opi=89354086\")",
       "Bash(curl -s \"https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ7Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpaCiVodG1sXzI4NjRjYmVhZjIxZTQxZDE4NmRiNTJhMTJhZDMyNTJlEgsSBxCxgKK9_gcYAZIBIwoKcHJvamVjdF9pZBIVQhM2MTc4MDIzNDQ5MTI4NTE2Mzgy&filename=&opi=89354086\")",
       "Bash(xargs cat)",
-      "Bash(python -m pytest tests/test_exports.py tests/test_dashboard.py -x -q)"
+      "Bash(python -m pytest tests/test_exports.py tests/test_dashboard.py -x -q)",
+      "Bash(python -m pytest tests/test_exports.py::TestMonthlySummaryGenerator::test_period_label -x -q)",
+      "Bash(python -m pytest tests/test_dashboard.py::TestPlatformConversion::test_rate_per_platform -x -s)",
+      "Bash(python -m pytest tests/test_exports.py tests/test_dashboard.py -q)"
     ],
     "additionalDirectories": [
       "/home/nakajito/proyectos/freelancer_tracker",

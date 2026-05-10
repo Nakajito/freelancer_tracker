@@ -8,7 +8,6 @@ from django.db import models
 from django.db.models import Q
 from django.utils import timezone
 
-from apps.core.utils import month_range
 from apps.followups.models import FollowUp
 from apps.proposals.models import Platform, Proposal, ProposalStatus
 from apps.timetracking.models import TimeEntry
@@ -242,14 +241,9 @@ class DashboardService:
         return {"labels": labels, "data": data}
 
     @staticmethod
-    def get_platform_conversion(user, year: int, month: int) -> list[dict]:
-        """Return per-platform win-rate dicts for a single month.
-
-        Returns:
-            List of ``{"name", "rate"}`` sorted by rate descending. Platforms
-            with no sent proposals in the period are omitted.
-        """
-        start, end = month_range(year, month)
+    def get_platform_conversion(user, start_date, end_date) -> list[dict]:
+        """Return per-platform win-rate dicts for the given date range."""
+        start, end = start_date, end_date
 
         rows: list[dict] = []
         for value, label in Platform.choices:
@@ -273,14 +267,9 @@ class DashboardService:
         return rows
 
     @staticmethod
-    def get_platform_stats(user, year: int, month: int) -> list[dict]:
-        """Return per-platform statistics rows for the analytics table.
-
-        Each row contains ``name``, ``sent``, ``success_rate``, ``earned``,
-        and ``avg_response`` (formatted ``"Xd"`` or ``"—"``). Sorted by
-        ``sent`` descending.
-        """
-        start, end = month_range(year, month)
+    def get_platform_stats(user, start_date, end_date) -> list[dict]:
+        """Return per-platform statistics rows for the analytics table."""
+        start, end = start_date, end_date
 
         rows: list[dict] = []
         for value, label in Platform.choices:

@@ -24,9 +24,9 @@
         <label for="period" class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Period</label>
         <div class="relative">
             <select name="period" id="period" class="w-full appearance-none bg-surface border border-outline-variant rounded-lg py-2 pl-4 pr-10 font-body-sm text-body-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer">
-                <option value="30">Last 30 Days</option>
-                <option value="90" selected>Last 90 Days</option>
-                <option value="year">This Year</option>
+                <option value="30" {% if period == "30" %}selected{% endif %}>Last 30 Days</option>
+                <option value="90" {% if period == "90" or not period %}selected{% endif %}>Last 90 Days</option>
+                <option value="year" {% if period == "year" %}selected{% endif %}>This Year</option>
             </select>
             <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant">arrow_drop_down</span>
         </div>

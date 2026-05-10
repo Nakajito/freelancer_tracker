@@ -142,12 +142,14 @@ class TestPlatformConversion:
                 sent_date=today,
                 amount=Decimal("100"),
             )
-        rows = DashboardService.get_platform_conversion(user, today.year, today.month)
+        start = date(today.year, today.month, 1)
+        end = date(today.year + (1 if today.month == 12 else 0), today.month % 12 + 1, 1)
+        rows = DashboardService.get_platform_conversion(user, start, end)
         upwork = next(r for r in rows if r["name"] == "Upwork")
         assert upwork["rate"] == pytest.approx(33.3, abs=0.1)
 
     def test_skips_empty_platforms(self, user):
-        rows = DashboardService.get_platform_conversion(user, 2026, 1)
+        rows = DashboardService.get_platform_conversion(user, date(2026, 1, 1), date(2026, 2, 1))
         assert rows == []
 
 
@@ -165,7 +167,9 @@ class TestPlatformStats:
             sent_date=today - timedelta(days=2),
             actual_response_date=today,
         )
-        rows = DashboardService.get_platform_stats(user, today.year, today.month)
+        start = date(today.year, today.month, 1)
+        end = date(today.year + (1 if today.month == 12 else 0), today.month % 12 + 1, 1)
+        rows = DashboardService.get_platform_stats(user, start, end)
         linkedin = next(r for r in rows if r["name"] == "LinkedIn")
         assert linkedin["sent"] == 1
         assert linkedin["success_rate"] == 100.0
