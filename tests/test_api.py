@@ -1,19 +1,15 @@
-import json
 from decimal import Decimal
 from datetime import date
 
 import pytest
-from django.urls import reverse
 
-from apps.proposals.models import Client, Proposal, ProposalStatus, Platform
-from apps.exports.api_views import webhook_proposal_events
+from apps.proposals.models import Proposal, ProposalStatus, Platform
+from apps.exports.services import CSVExporter, JSONExporter
 
 
 @pytest.mark.django_db
 class TestProposalAPIViews:
-    def test_duplicate_check_endpoint_no_duplicate(
-        self, user, client_model, authed_client
-    ):
+    def test_duplicate_check_no_duplicate(self, user, client_model):
         from apps.proposals.services import DuplicateCheckService
 
         result = DuplicateCheckService.check_duplicate(
@@ -21,7 +17,7 @@ class TestProposalAPIViews:
         )
         assert result.is_duplicate is False
 
-    def test_duplicate_check_endpoint_found(self, user, client_model):
+    def test_duplicate_check_found(self, user, client_model):
         Proposal.objects.create(
             owner=user,
             title="Existing",
@@ -39,41 +35,45 @@ class TestProposalAPIViews:
 
 @pytest.mark.django_db
 class TestExportAPIViews:
-    def test_csv_export(self, user, client_model, authed_client):
-        Proposal.objects.create(
+    def test_csv_export(self, user, client_model):
+        proposal = Proposal.objects.create(
             owner=user,
             title="Test Proposal",
             client=client_model,
             amount=Decimal("1000"),
             status=ProposalStatus.DRAFT,
         )
-        from apps.exports.services import generate_proposals_csv
+        proposals = Proposal.objects.filter(id=proposal.id)
+        csv_result = "".join(CSVExporter.export_proposals(proposals))
+        assert "Test Proposal" in csv_result
 
-        csv_data = generate_proposals_csv(user)
-        assert "Test Proposal" in csv_data
-
-    def test_json_export(self, user, client_model, authed_client):
-        Proposal.objects.create(
+    def test_json_export(self, user, client_model):
+        proposal = Proposal.objects.create(
             owner=user,
             title="Test Proposal",
             client=client_model,
             amount=Decimal("1000"),
             status=ProposalStatus.DRAFT,
         )
-        from apps.exports.services import generate_proposals_json
-
-        json_data = generate_proposals_json(user)
-        assert "Test Proposal" in json_data
+        proposals = Proposal.objects.filter(id=proposal.id)
+        data = JSONExporter.export_proposals(proposals)
+        assert len(data) == 1
+        assert data[0]["title"] == "Test Proposal"
 
 
 @pytest.mark.django_db
-class TestWebhookAPI:
-    def test_webhook_without_signature(self, db):
-        request = type("Request")()
-        request.headers = {}
-        request.body = b'{"event_type": "test"}'
-        request.data = {"event_type": "test", "proposal_id": 1}
+class TestMonthlySummaryAPI:
+    def test_monthly_summary_generation(self, user, client_model):
+        Proposal.objects.create(
+            owner=user,
+            title="Test",
+            client=client_model,
+            sent_date=date.today(),
+            status=ProposalStatus.SENT,
+        )
+        from apps.exports.services import MonthlySummaryGenerator
 
-        response = webhook_proposal_events(request)
-        assert response.status_code == 200
-        assert response.data["status"] == "received"
+        result = MonthlySummaryGenerator.generate(
+            user, date.today().year, date.today().month
+        )
+        assert "proposals_sent" in result

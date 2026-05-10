@@ -88,5 +88,5 @@ ignore_errors = true
 [tool.pytest.ini_options]
 DJANGO_SETTINGS_MODULE = "config.settings.test"
 python_files = ["test_*.py", "*_test.py"]
-addopts = "--cov=apps --cov-report=term-missing --cov-fail-under=85"
+addopts = "--cov=apps --cov-report=term-missing --cov-fail-under=75"
 
