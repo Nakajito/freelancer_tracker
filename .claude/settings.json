@@ -47,7 +47,8 @@
       "mcp__context7__query-docs",
       "WebFetch(domain:upwork.github.io)",
       "Bash(gh api *)",
-      "Bash(python3 -c \"import json,sys,base64; d=json.load\\(sys.stdin\\); print\\(base64.b64decode\\(d['content']\\).decode\\(\\)\\)\")"
+      "Bash(python3 -c \"import json,sys,base64; d=json.load\\(sys.stdin\\); print\\(base64.b64decode\\(d['content']\\).decode\\(\\)\\)\")",
+      "Bash(xargs cat -n)"
     ],
     "additionalDirectories": [
       "/home/nakajito/proyectos/freelancer_tracker",

@@ -2,10 +2,9 @@ from django.contrib.sites.models import Site
 from django.http import HttpResponse
 from django.views import View
 from django.views.decorators.cache import cache_page
-from django.utils.decorators import method_decorator
 
 
-@method_decorator(cache_page(60 * 60 * 24), name="dispatch")
+@cache_page(60 * 60 * 24)
 def robots_txt(request):
     try:
         site = Site.objects.get_current()

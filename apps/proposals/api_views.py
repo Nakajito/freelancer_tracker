@@ -28,7 +28,7 @@ def duplicate_check(request):
     days = serializer.validated_data.get("days", 30)
 
     try:
-        client = Client.objects.for_user(request.user).get(pk=client_id)
+        client = Client.objects.get(pk=client_id, owner=request.user)
     except Client.DoesNotExist:
         return Response({"error": "Client not found"}, status=status.HTTP_404_NOT_FOUND)
 
