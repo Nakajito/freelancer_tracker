@@ -48,7 +48,9 @@
       "WebFetch(domain:upwork.github.io)",
       "Bash(gh api *)",
       "Bash(python3 -c \"import json,sys,base64; d=json.load\\(sys.stdin\\); print\\(base64.b64decode\\(d['content']\\).decode\\(\\)\\)\")",
-      "Bash(xargs cat -n)"
+      "Bash(xargs cat -n)",
+      "Bash(uv lock *)",
+      "Bash(git -C /home/nakajito/proyectos/freelancer_tracker diff --stat)"
     ],
     "additionalDirectories": [
       "/home/nakajito/proyectos/freelancer_tracker",
