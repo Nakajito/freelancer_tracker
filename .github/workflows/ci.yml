@@ -14,7 +14,9 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.14"
-      - uses: astral-sh/uv/setup-python@v4
+      - uses: astral-sh/setup-uv@v4
+        with:
+          python-version: "3.14"
       - run: uv sync --frozen
       - run: ruff check .
       - run: ruff format --check .
@@ -26,7 +28,9 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.14"
-      - uses: astral-sh/uv/setup-python@v4
+      - uses: astral-sh/setup-uv@v4
+        with:
+          python-version: "3.14"
       - run: uv sync --frozen
       - run: mypy apps config
 
@@ -51,7 +55,9 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.14"
-      - uses: astral-sh/uv/setup-python@v4
+      - uses: astral-sh/setup-uv@v4
+        with:
+          python-version: "3.14"
       - run: uv sync --frozen
       - name: Run tests
         env:
@@ -66,7 +72,9 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.14"
-      - uses: astral-sh/uv/setup-python@v4
+      - uses: astral-sh/setup-uv@v4
+        with:
+          python-version: "3.14"
       - run: uv sync --frozen
       - name: Install audit tools
         run: pip install pip-audit bandit
@@ -100,6 +108,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.14"
-      - uses: astral-sh/uv/setup-python@v4
+      - uses: astral-sh/setup-uv@v4
+        with:
+          python-version: "3.14"
       - run: uv sync --frozen
       - run: sphinx-build -W docs docs/_build || echo "Sphinx not configured yet"
