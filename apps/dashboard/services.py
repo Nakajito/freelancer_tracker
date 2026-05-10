@@ -5,6 +5,7 @@ from datetime import date, timedelta
 from decimal import Decimal
 
 from django.db import models
+from django.db.models import Q
 from django.utils import timezone
 
 from apps.core.utils import month_range
@@ -254,8 +255,12 @@ class DashboardService:
         for value, label in Platform.choices:
             sent_qs = (
                 Proposal.objects.for_user(user)
-                .filter(platform=value, sent_date__gte=start, sent_date__lt=end)
+                .filter(platform=value)
                 .exclude(status=ProposalStatus.DRAFT)
+                .filter(
+                    Q(sent_date__gte=start, sent_date__lt=end)
+                    | Q(sent_date__isnull=True, created_at__date__gte=start, created_at__date__lt=end)
+                )
             )
             sent_count = sent_qs.count()
             if sent_count == 0:
@@ -281,8 +286,12 @@ class DashboardService:
         for value, label in Platform.choices:
             sent_qs = (
                 Proposal.objects.for_user(user)
-                .filter(platform=value, sent_date__gte=start, sent_date__lt=end)
+                .filter(platform=value)
                 .exclude(status=ProposalStatus.DRAFT)
+                .filter(
+                    Q(sent_date__gte=start, sent_date__lt=end)
+                    | Q(sent_date__isnull=True, created_at__date__gte=start, created_at__date__lt=end)
+                )
             )
             sent_count = sent_qs.count()
             if sent_count == 0:

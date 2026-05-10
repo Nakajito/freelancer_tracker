@@ -5,7 +5,7 @@ from decimal import Decimal
 from io import StringIO
 from typing import Iterator
 
-from django.db.models import Sum
+from django.db.models import Q, Sum
 
 from apps.core.utils import month_range
 from apps.proposals.models import Proposal, ProposalStatus
@@ -122,9 +122,11 @@ class MonthlySummaryGenerator:
         """
         start_date, end_date = month_range(year, month)
 
-        proposals = Proposal.objects.for_user(user).filter(
-            sent_date__gte=start_date,
-            sent_date__lt=end_date,
+        proposals = Proposal.objects.for_user(user).exclude(
+            status=ProposalStatus.DRAFT
+        ).filter(
+            Q(sent_date__gte=start_date, sent_date__lt=end_date)
+            | Q(sent_date__isnull=True, created_at__date__gte=start_date, created_at__date__lt=end_date)
         )
         time_entries = TimeEntry.objects.filter(
             proposal__owner=user,
@@ -139,7 +141,7 @@ class MonthlySummaryGenerator:
             total=Sum("hours")
         )["total"] or Decimal("0")
 
-        proposals_sent = proposals.exclude(status=ProposalStatus.DRAFT).count()
+        proposals_sent = proposals.count()
         proposals_accepted = proposals.filter(status=ProposalStatus.ACCEPTED).count()
         proposals_rejected = proposals.filter(status=ProposalStatus.REJECTED).count()
         win_rate = (
