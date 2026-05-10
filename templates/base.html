@@ -1,41 +1,52 @@
-{% load static %}<!DOCTYPE html>
+{% load static %}
+<!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}{% if page_title %}{{ page_title }} - {% endif %}PropoTrack{% endblock %}</title>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
-
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <script src="{% static 'js/tailwind.config.js' %}"></script>
-    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
-
-    <link rel="stylesheet" href="{% static 'css/icons.css' %}">
-    <link rel="stylesheet" href="{% static 'css/forms.css' %}">
-    <link rel="stylesheet" href="{% static 'css/htmx.css' %}">
-    {% block extra_css %}{% endblock %}
-</head>
-<body class="bg-background text-on-background font-body-md antialiased">
-    {% block body %}
-        {% if messages %}
-        <div class="fixed top-4 right-4 z-[100] flex flex-col gap-2 max-w-sm">
-            {% for message in messages %}
-            <div class="px-4 py-3 rounded-lg border shadow-sm flex items-start gap-2
-                {% if message.tags == 'success' %}bg-primary-container text-on-primary-container border-primary{% elif message.tags == 'error' %}bg-error-container text-on-error-container border-error{% else %}bg-secondary-container text-on-secondary-container border-secondary{% endif %}">
-                <span class="material-symbols-outlined text-[20px]">
-                    {% if message.tags == 'success' %}check_circle{% elif message.tags == 'error' %}error{% else %}info{% endif %}
-                </span>
-                <span class="font-body-sm text-body-sm">{{ message }}</span>
-            </div>
-            {% endfor %}
-        </div>
-        {% endif %}
-        {% block content %}{% endblock %}
-    {% endblock %}
-    {% block extra_js %}{% endblock %}
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>
+            {% block title %}
+                {% if page_title %}{{ page_title }} -{% endif %}
+                PropoTrack
+            {% endblock %}
+        </title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600&display=swap"
+              rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+              rel="stylesheet">
+        <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+        <script src="{% static 'js/tailwind.config.js' %}"></script>
+        <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+        <link rel="stylesheet" href="{% static 'css/icons.css' %}">
+        <link rel="stylesheet" href="{% static 'css/forms.css' %}">
+        <link rel="stylesheet" href="{% static 'css/htmx.css' %}">
+        <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
+        {% block extra_css %}{% endblock %}
+    </head>
+    <body class="bg-background text-on-background font-body-md antialiased">
+        {% block body %}
+            {% if messages %}
+                <div class="fixed top-4 right-4 z-[100] flex flex-col gap-2 max-w-sm">
+                    {% for message in messages %}
+                        <div class="px-4 py-3 rounded-lg border shadow-sm flex items-start gap-2 {% if message.tags == 'success' %}bg-primary-container text-on-primary-container border-primary{% elif message.tags == 'error' %}bg-error-container text-on-error-container border-error{% else %}bg-secondary-container text-on-secondary-container border-secondary{% endif %}">
+                            <span class="material-symbols-outlined text-[20px]">
+                                {% if message.tags == 'success' %}
+                                    check_circle
+                                {% elif message.tags == 'error' %}
+                                    error
+                                {% else %}
+                                    info
+                                {% endif %}
+                            </span>
+                            <span class="font-body-sm text-body-sm">{{ message }}</span>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            {% block content %}{% endblock %}
+        {% endblock %}
+        {% block extra_js %}{% endblock %}
+    </body>
 </html>
