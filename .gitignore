@@ -32,3 +32,33 @@ staticfiles/
 # IDE / editor
 .vscode/
 .idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Sphinx docs build
+docs/_build/
+
+# Celery
+celerybeat-schedule
+celerybeat-schedule.db
+
+# Emails (file backend)
+emails/
+
+# pytest output
+.pytest_cache/
+.tox/
+
+# Temp files
+tmp/
+temp/
+*.tmp
