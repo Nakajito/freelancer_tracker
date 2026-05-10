@@ -9,6 +9,8 @@ ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")  # noqa: F405
 if not ALLOWED_HOSTS:
     raise ValueError("ALLOWED_HOSTS cannot be empty in production")
 
+ALLOWED_HOSTS += ["localhost", "127.0.0.1"]
+
 CSRF_TRUSTED_ORIGINS = [
     o if "://" in o else f"https://{o}"
     for o in env.list("CSRF_TRUSTED_ORIGINS", default=[])  # noqa: F405
