@@ -31,7 +31,7 @@
             <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant">arrow_drop_down</span>
         </div>
     </div>
-    <div class="flex flex-col gap-1">
+    <div class="flex flex-col gap-1" id="year-wrapper" {% if period != "year" %}style="display:none"{% endif %}>
         <label for="year" class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Year</label>
         <input type="number" name="year" id="year" value="{{ year }}" class="bg-surface border border-outline-variant rounded-lg py-2 px-4 font-body-sm text-body-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary">
     </div>
@@ -138,4 +138,15 @@
 {% block extra_js %}
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="{% static 'js/charts.js' %}"></script>
+<script>
+(function () {
+    var periodSelect = document.getElementById("period");
+    var yearWrapper = document.getElementById("year-wrapper");
+    function syncYear() {
+        yearWrapper.style.display = periodSelect.value === "year" ? "" : "none";
+    }
+    periodSelect.addEventListener("change", syncYear);
+    syncYear();
+})();
+</script>
 {% endblock %}

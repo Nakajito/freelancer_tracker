@@ -59,7 +59,14 @@
       "Bash(python -m pytest tests/test_exports.py tests/test_dashboard.py -x -q)",
       "Bash(python -m pytest tests/test_exports.py::TestMonthlySummaryGenerator::test_period_label -x -q)",
       "Bash(python -m pytest tests/test_dashboard.py::TestPlatformConversion::test_rate_per_platform -x -s)",
-      "Bash(python -m pytest tests/test_exports.py tests/test_dashboard.py -q)"
+      "Bash(python -m pytest tests/test_exports.py tests/test_dashboard.py -q)",
+      "Bash(python -m pytest tests/test_dashboard.py::TestMonthlySummaryViewPeriodFilter tests/test_dashboard.py::TestEarningsChart::test_respects_anchor_date -q)",
+      "Bash(python -m pytest tests/test_dashboard.py::TestMonthlySummaryViewPeriodFilter::test_chart_anchor_matches_period_end -s)",
+      "Bash(python -m pytest tests/test_dashboard.py::TestMonthlySummaryViewPeriodFilter::test_chart_anchor_matches_period_end -s --no-cov)",
+      "Bash(python -m pytest tests/test_dashboard.py::TestMonthlySummaryViewPeriodFilter tests/test_dashboard.py::TestEarningsChart::test_respects_anchor_date --no-cov -q)",
+      "Bash(python -m pytest --no-cov -q)",
+      "Bash(sed -n '150,170p' tests/test_services.py)",
+      "Bash(sed -n '190,215p' tests/test_api_full.py)"
     ],
     "additionalDirectories": [
       "/home/nakajito/proyectos/freelancer_tracker",

@@ -192,8 +192,9 @@ class TestMonthlySummaryGenerator:
             hours=Decimal("8.00"),
             billable=True,
         )
-        result = MonthlySummaryGenerator.generate(
-            user, date.today().year, date.today().month
-        )
+        today = date.today()
+        start = today.replace(day=1)
+        end = (start.replace(month=start.month % 12 + 1, year=start.year + (1 if start.month == 12 else 0))).replace(day=1)
+        result = MonthlySummaryGenerator.generate(user, start, end, today.strftime("%b %Y"))
         assert result["total_hours"] == Decimal("8.00")
         assert result["billable_hours"] == Decimal("8.00")

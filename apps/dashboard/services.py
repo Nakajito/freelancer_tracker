@@ -184,21 +184,22 @@ class DashboardService:
         )
 
     @staticmethod
-    def get_earnings_chart(user, months: int = 6) -> dict:
+    def get_earnings_chart(user, months: int = 6, anchor_date: date | None = None) -> dict:
         """Return labels/data arrays of accepted revenue per month for charting.
 
         Args:
             user: Authenticated user whose proposals are aggregated.
-            months: Number of trailing months to include (current month last).
+            months: Number of trailing months to include (anchor month last).
+            anchor_date: Last date of the chart window. Defaults to today.
 
         Returns:
             ``{"labels": [...], "data": [...]}`` ready for Chart.js.
         """
-        today = timezone.now().date()
+        anchor = anchor_date or timezone.now().date()
         labels: list[str] = []
         data: list[float] = []
 
-        first_of_current = date(today.year, today.month, 1)
+        first_of_current = date(anchor.year, anchor.month, 1)
         cursor = first_of_current
         for _ in range(months - 1):
             cursor = (cursor - timedelta(days=1)).replace(day=1)

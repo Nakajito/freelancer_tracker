@@ -55,7 +55,9 @@ class MonthlySummaryView(LoginRequiredMixin, TemplateView):
             period_label = "Last 90 Days"
 
         summary = MonthlySummaryGenerator.generate(user, start_date, end_date, period_label)
-        chart = DashboardService.get_earnings_chart(user, months=6)
+        chart = DashboardService.get_earnings_chart(
+            user, months=6, anchor_date=end_date - timedelta(days=1)
+        )
 
         context["summary"] = summary
         context["year"] = year

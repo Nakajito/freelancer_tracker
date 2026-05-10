@@ -73,7 +73,8 @@ class TestMonthlySummaryAPI:
         )
         from apps.exports.services import MonthlySummaryGenerator
 
-        result = MonthlySummaryGenerator.generate(
-            user, date.today().year, date.today().month
-        )
+        today = date.today()
+        start = today.replace(day=1)
+        end = (start.replace(month=start.month % 12 + 1, year=start.year + (1 if start.month == 12 else 0))).replace(day=1)
+        result = MonthlySummaryGenerator.generate(user, start, end, today.strftime("%b %Y"))
         assert "proposals_sent" in result

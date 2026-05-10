@@ -9,3 +9,15 @@
 3. **Missing middleware**: Forgot to add allauth.account.middleware.AccountMiddleware which is required by django-allauth 0.64+.
 
 4. **Migrations directories**: Had to manually create migrations directories and __init__.py files for each app before running makemigrations.
+
+## Analytics filter coupling (period + year params)
+
+**Pattern**: Filter form with two interdependent params (`period` and `year`) where `year` is only meaningful when `period="year"`.
+
+**Rule — UX layer**: Hide the secondary param's input via JS when it doesn't apply. Use a Django template conditional (`{% if period != "year" %}style="display:none"{% endif %}`) so initial render is correct even without JS. Add a `change` event listener that calls a `sync()` function — no framework needed.
+
+**Rule — service layer**: Services must accept explicit `start_date`/`end_date` (or `anchor_date`). Never let a service silently re-anchor to `date.today()` when the view has already computed the correct date range. The view is the single source of truth for date bounds.
+
+**Rule — null sent_date**: `Proposal.sent_date` is optional. All analytics queries must use a Q filter fallback: `Q(sent_date__gte=start, sent_date__lt=end) | Q(sent_date__isnull=True, created_at__date__gte=start, created_at__date__lt=end)`.
+
+**TDD**: Write tests for each period combination before implementing. The three required cases are `period=year&year=X`, `period=30&year=X` (year ignored), `period=90&year=X` (year ignored).
