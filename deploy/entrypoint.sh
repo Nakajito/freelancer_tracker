@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+export PATH="/app/.venv/bin:$PATH"
+
 python manage.py migrate --noinput
 
 python manage.py collectstatic --noinput
