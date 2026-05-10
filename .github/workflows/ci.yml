@@ -18,8 +18,8 @@ jobs:
         with:
           python-version: "3.14"
       - run: uv sync --frozen
-      - run: ruff check .
-      - run: ruff format --check .
+      - run: uv run ruff check .
+      - run: uv run ruff format --check .
 
   typecheck:
     runs-on: ubuntu-latest
@@ -32,7 +32,7 @@ jobs:
         with:
           python-version: "3.14"
       - run: uv sync --frozen
-      - run: mypy apps config
+      - run: uv run mypy apps config
 
   test:
     runs-on: ubuntu-latest
@@ -60,10 +60,10 @@ jobs:
           python-version: "3.14"
       - run: uv sync --frozen
       - name: Run tests
+        run: uv run pytest --cov=apps --cov-fail-under=85 --cov-report=xml
         env:
           DATABASE_URL: postgresql://postgres:postgres@localhost:5432/test_db
           DJANGO_SETTINGS_MODULE: config.settings.test
-        run: pytest --cov=apps --cov-fail-under=85 --cov-report=xml
 
   security:
     runs-on: ubuntu-latest
@@ -112,4 +112,4 @@ jobs:
         with:
           python-version: "3.14"
       - run: uv sync --frozen
-      - run: sphinx-build -W docs docs/_build || echo "Sphinx not configured yet"
+      - run: uv run sphinx-build -W docs docs/_build || echo "Sphinx not configured yet"
