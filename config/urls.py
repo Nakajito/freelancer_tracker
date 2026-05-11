@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.contrib.sitemaps.views import sitemap
 from django.urls import include, path
 from django.conf import settings
+from django.views.generic import TemplateView
 
 from apps.core.views_health import healthz
 from apps.core.views_seo import robots_txt, security_txt, ChangePasswordRedirect
@@ -11,6 +12,39 @@ sitemaps = {"static": StaticViewSitemap}
 
 urlpatterns = [
     path("healthz", healthz, name="healthz"),
+    path(
+        "privacy",
+        TemplateView.as_view(template_name="privacy.html"),
+        name="privacy_policy",
+    ),
+    path(
+        "terms",
+        TemplateView.as_view(template_name="terms.html"),
+        name="terms_of_service",
+    ),
+    path(
+        "security", TemplateView.as_view(template_name="security.html"), name="security"
+    ),
+    path(
+        "donate/",
+        TemplateView.as_view(
+            template_name="donate.html",
+            extra_context={
+                "donation_tiers": [
+                    {"label": "Mínimo", "amount": 5, "recommended": False},
+                    {"label": "Recomendado", "amount": 10, "recommended": True},
+                    {"label": "Apoyo", "amount": 25, "recommended": False},
+                    {"label": "Socio", "amount": 50, "recommended": False},
+                ],
+            },
+        ),
+        name="donate",
+    ),
+    path(
+        "donate/confirm/",
+        TemplateView.as_view(template_name="donate_confirm.html"),
+        name="donate_confirm",
+    ),
     path("robots.txt", robots_txt, name="robots_txt"),
     path("sitemap.xml", sitemap, {"sitemaps": sitemaps}, name="sitemap"),
     path(".well-known/security.txt", security_txt, name="security_txt"),

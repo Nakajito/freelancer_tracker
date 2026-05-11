@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block body %}
-<div class="bg-surface-container-low min-h-screen flex items-center justify-center p-container-padding">
+<div class="bg-surface-container-low min-h-screen flex flex-col">
     {% if messages %}
     <div class="fixed top-4 right-4 z-[100] flex flex-col gap-2 max-w-sm">
         {% for message in messages %}
@@ -16,20 +16,56 @@
     </div>
     {% endif %}
 
-    <main class="w-full max-w-[440px] bg-surface-container-lowest border border-outline-variant rounded-xl shadow-sm p-stack-lg flex flex-col gap-stack-md">
-        <header class="text-center flex flex-col gap-stack-sm items-center mb-2">
-            <div class="w-12 h-12 bg-primary rounded-lg flex items-center justify-center shadow-sm mb-1">
-                <span class="material-symbols-outlined text-on-primary text-[28px] fill">view_kanban</span>
+    <nav class="bg-surface/80 backdrop-blur-md sticky top-0 z-50 border-b border-outline-variant/30">
+        <div class="flex justify-between items-center px-container-padding py-4 max-w-[1440px] mx-auto w-full">
+            <a href="{% url 'landing' %}" class="font-display text-h2 font-bold text-primary tracking-tight">PropoTrack</a>
+            <div class="hidden md:flex items-center gap-gutter">
+                <a href="{% url 'landing' %}#features" class="text-on-secondary-fixed-variant hover:text-primary transition-colors font-label-md text-label-md">Features</a>
+                <a href="{% url 'landing' %}#advantages" class="text-on-secondary-fixed-variant hover:text-primary transition-colors font-label-md text-label-md">Advantages</a>
+                <a href="{% url 'landing' %}#solutions" class="text-on-secondary-fixed-variant hover:text-primary transition-colors font-label-md text-label-md">Solutions</a>
+                <a href="{% url 'landing' %}#pricing" class="text-on-secondary-fixed-variant hover:text-primary transition-colors font-label-md text-label-md">Pricing</a>
             </div>
-            <span class="font-h2 text-h2 font-black text-primary tracking-tight">PropoTrack</span>
-            <h1 class="font-h1 text-h1 text-on-surface mt-2">{% block auth_title %}Welcome{% endblock %}</h1>
-            <p class="font-body-sm text-body-sm text-on-surface-variant max-w-[85%] mx-auto">
-                {% block auth_subtitle %}{% endblock %}
-            </p>
-        </header>
+            <div class="flex items-center gap-unit">
+                {% if user.is_authenticated %}
+                <a href="{% url 'dashboard' %}" class="px-4 py-2 font-label-md text-label-md bg-primary text-on-primary rounded hover:bg-primary-container transition-colors shadow-sm">Dashboard</a>
+                {% else %}
+                <a href="{% url 'account_login' %}" class="hidden sm:block px-4 py-2 font-label-md text-label-md text-secondary border border-outline-variant rounded hover:bg-surface-container-highest transition-colors">Log In</a>
+                <a href="{% url 'account_signup' %}" class="px-4 py-2 font-label-md text-label-md bg-primary text-on-primary rounded hover:bg-primary-container transition-colors shadow-sm">Get Started</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
 
-        {% block auth_content %}{% endblock %}
-    </main>
+    <div class="flex-1 flex items-center justify-center p-container-padding">
+        <main class="w-full max-w-[440px] bg-surface-container-lowest border border-outline-variant rounded-xl shadow-sm p-stack-lg flex flex-col gap-stack-md">
+            <header class="text-center flex flex-col gap-stack-sm items-center mb-2">
+                <div class="w-12 h-12 bg-primary rounded-lg flex items-center justify-center shadow-sm mb-1">
+                    <span class="material-symbols-outlined text-on-primary text-[28px] fill">view_kanban</span>
+                </div>
+                <span class="font-h2 text-h2 font-black text-primary tracking-tight">PropoTrack</span>
+                <h1 class="font-h1 text-h1 text-on-surface mt-2">{% block auth_title %}Welcome{% endblock %}</h1>
+                <p class="font-body-sm text-body-sm text-on-surface-variant max-w-[85%] mx-auto">
+                    {% block auth_subtitle %}{% endblock %}
+                </p>
+            </header>
+
+            {% block auth_content %}{% endblock %}
+        </main>
+    </div>
+
+    <footer class="bg-surface-container-low border-t border-outline-variant/50">
+        <div class="w-full px-container-padding py-stack-lg max-w-[1440px] mx-auto flex flex-col md:flex-row justify-between items-center gap-gutter">
+            <div class="font-h3 text-h3 font-bold text-on-surface">PropoTrack</div>
+            <div class="flex flex-wrap justify-center gap-6">
+                <a href="{% url 'privacy_policy' %}" class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-all">Privacy Policy</a>
+                <a href="{% url 'terms_of_service' %}" class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-all">Terms of Service</a>
+                <a href="{% url 'security' %}" class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-all">Security</a>
+                <a href="#" class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-all">Status</a>
+                <a href="#" class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-all">API Docs</a>
+            </div>
+            <div class="font-body-sm text-body-sm text-on-surface-variant">© {% now "Y" %} PropoTrack.</div>
+        </div>
+    </footer>
 </div>
 {% endblock %}
 

@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+{% block title %}Security{% endblock %}
+{% block meta_description %}PropoTrack Security — how we protect your data, the controls we apply, and how to report vulnerabilities.{% endblock %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto px-4 py-12 space-y-8">
+    <header class="border-b border-outline pb-6">
+        <h1 class="font-headline-lg text-headline-lg font-display-md">Security</h1>
+        <p class="text-body-sm text-on-background-variant mt-2">Effective: May 11, 2026</p>
+    </header>
+
+    <section class="space-y-6">
+        <h2 class="font-title-lg text-title-lg">1. Introduction</h2>
+        <p class="text-body-md text-on-background-variant leading-relaxed">
+            PropoTrack is committed to protecting the data of freelancers who trust us with their proposals, clients, and time records. We apply layered defenses across the application, transport, and infrastructure layers. The practices described on this page reflect the current implementation and evolve continuously.
+        </p>
+    </section>
+
+    <section class="space-y-6">
+        <h2 class="font-title-lg text-title-lg">2. Authentication &amp; Sessions</h2>
+        <p class="text-body-md text-on-background-variant leading-relaxed">
+            Accounts are created with an email address and password via <code>django-allauth</code>. Login is email-only (<code>ACCOUNT_LOGIN_METHODS = {"email"}</code>). Sessions are stored server-side in the database — no JWTs, no tokens in <code>localStorage</code>. Session cookies are <code>HttpOnly</code>, <code>Secure</code>, and <code>SameSite=Lax</code> in production, with an 8-hour idle timeout. Password changes are available at <a href="/.well-known/change-password" class="text-link underline">/.well-known/change-password</a>.
+        </p>
+    </section>
+
+    <section class="space-y-6">
+        <h2 class="font-title-lg text-title-lg">3. Password Storage</h2>
+        <p class="text-body-md text-on-background-variant leading-relaxed">
+            Passwords are hashed with Django's default algorithm (PBKDF2-SHA256). Active validators include <code>UserAttributeSimilarityValidator</code>, <code>MinimumLengthValidator</code> (minimum 8 characters), <code>CommonPasswordValidator</code>, and <code>NumericPasswordValidator</code>. Passwords are never stored or transmitted in plaintext.
+        </p>
+    </section>
+
+    <section class="space-y-6">
+        <h2 class="font-title-lg text-title-lg">4. Transport Security (HTTPS/TLS)</h2>
+        <p class="text-body-md text-on-background-variant leading-relaxed">
+            HTTPS is enforced in production via <code>SECURE_SSL_REDIRECT</code>. HTTP Strict Transport Security (HSTS) is active with <code>max-age=31536000</code> (1 year), <code>includeSubDomains</code>, and <code>preload</code>. The following response headers are applied in production:
+        </p>
+        <table class="w-full text-body-sm text-on-background-variant border border-outline rounded-lg overflow-hidden">
+            <thead class="bg-surface text-on-surface">
+                <tr>
+                    <th class="px-4 py-2 text-left font-medium">Header</th>
+                    <th class="px-4 py-2 text-left font-medium">Value</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-outline">
+                <tr>
+                    <td class="px-4 py-2"><code>Strict-Transport-Security</code></td>
+                    <td class="px-4 py-2"><code>max-age=31536000; includeSubDomains; preload</code></td>
+                </tr>
+                <tr>
+                    <td class="px-4 py-2"><code>X-Content-Type-Options</code></td>
+                    <td class="px-4 py-2"><code>nosniff</code></td>
+                </tr>
+                <tr>
+                    <td class="px-4 py-2"><code>X-Frame-Options</code></td>
+                    <td class="px-4 py-2"><code>DENY</code></td>
+                </tr>
+                <tr>
+                    <td class="px-4 py-2"><code>Referrer-Policy</code></td>
+                    <td class="px-4 py-2"><code>same-origin</code></td>
+                </tr>
+                <tr>
+                    <td class="px-4 py-2"><code>Cross-Origin-Opener-Policy</code></td>
+                    <td class="px-4 py-2"><code>same-origin</code></td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <section class="space-y-6">
+        <h2 class="font-title-lg text-title-lg">5. Application-Layer Defenses</h2>
+        <p class="text-body-md text-on-background-variant leading-relaxed">
+            Cross-Site Request Forgery tokens are present in all <code>POST</code> forms, with <code>Secure</code>, <code>HttpOnly</code>, and <code>SameSite=Lax</code> cookies. A strict Content Security Policy is applied in production: <code>default-src 'self'</code>, no arbitrary inline scripts, and <code>frame-ancestors 'none'</code>. Django templates auto-escape all output by default, preventing XSS at the rendering layer. No third-party tracking or analytics scripts are loaded.
+        </p>
+    </section>
+
+    <section class="space-y-6">
+        <h2 class="font-title-lg text-title-lg">6. Per-User Data Isolation</h2>
+        <p class="text-body-md text-on-background-variant leading-relaxed">
+            Every domain model inherits from <code>OwnedModel</code>, which adds a mandatory <code>owner</code> foreign key to the user. Isolation is enforced at two levels:
+        </p>
+        <ul class="list-disc list-inside text-body-md text-on-background-variant space-y-1">
+            <li><strong>QuerySet layer</strong> — all views and services filter by <code>owner=request.user</code> via <code>OwnerQuerysetMixin</code> or <code>ProposalOwnerQuerysetMixin</code>. A user can never query another user's proposals, clients, time entries, or templates.</li>
+            <li><strong>API layer</strong> — all REST endpoints require <code>IsAuthenticated</code> permission. No public read endpoints expose user data.</li>
+        </ul>
+        <p class="text-body-md text-on-background-variant leading-relaxed">
+            The <code>ActivityLog</code> model uses a generic foreign key so signals from any app can record domain events without coupling the audit table to specific models.
+        </p>
+    </section>
+
+    <section class="space-y-6">
+        <h2 class="font-title-lg text-title-lg">7. Data Storage</h2>
+        <p class="text-body-md text-on-background-variant leading-relaxed">
+            In production, data is stored in PostgreSQL 16 with credentials sourced from environment variables and connections encrypted over TLS. No payment card data is stored — financial amounts are decimal values entered manually by the user. User data is not shared with or sold to third parties. Application-level isolation (Section 6) ensures logical separation between accounts.
+        </p>
+    </section>
+
+    <section class="space-y-6">
+        <h2 class="font-title-lg text-title-lg">8. Secrets &amp; Configuration</h2>
+        <p class="text-body-md text-on-background-variant leading-relaxed">
+            All sensitive configuration (secret keys, database credentials, SMTP credentials) is loaded via <code>django-environ</code> from environment variables. <code>DJANGO_SECRET_KEY</code> is required in production with no default value. <code>DEBUG=False</code> is enforced in production. The repository does not contain a <code>.env</code> file (only <code>.env.example</code> is committed).
+        </p>
+    </section>
+
+    <section class="space-y-6">
+        <h2 class="font-title-lg text-title-lg">9. Webhook Integrity</h2>
+        <p class="text-body-md text-on-background-variant leading-relaxed">
+            The webhook endpoint at <code>/api/webhooks/proposal-events/</code> validates payloads using HMAC-SHA256. The signature is compared with <code>hmac.compare_digest</code>, which is resistant to timing attacks. Requests with an invalid or missing signature are rejected with a <code>401 Unauthorized</code> response.
+        </p>
+    </section>
+
+    <section class="space-y-6">
+        <h2 class="font-title-lg text-title-lg">10. Audit Trail</h2>
+        <p class="text-body-md text-on-background-variant leading-relaxed">
+            The <code>ActivityLog</code> model records domain events — proposal status changes and follow-up completions — via Django signals. Django security events are emitted to the <code>django.security</code> logger at the <code>WARNING</code> level and above in production, making them visible in infrastructure logs for review.
+        </p>
+    </section>
+
+    <section class="space-y-6">
+        <h2 class="font-title-lg text-title-lg">11. Infrastructure</h2>
+        <p class="text-body-md text-on-background-variant leading-relaxed">
+            The application runs in a minimal multi-stage Docker container. The application process runs as a non-root user, reducing the escalation surface. A health check endpoint is exposed at <code>/healthz</code>. Deployments run via Coolify with <code>DJANGO_SETTINGS_MODULE=config.settings.prod</code> enforced. The stack is monitored and updated on a regular schedule.
+        </p>
+    </section>
+
+    <section class="space-y-6">
+        <h2 class="font-title-lg text-title-lg">12. Responsible Disclosure</h2>
+        <p class="text-body-md text-on-background-variant leading-relaxed">
+            If you discover a security vulnerability, please report it to <a href="mailto:security@dabg.dev" class="text-link underline">security@dabg.dev</a>. The full contact details and scope are also available in the standard <a href="/.well-known/security.txt" class="text-link underline">security.txt</a> format. We are committed to responding within 5 business days and will not pursue legal action against good-faith security research (no destructive scanning, no accessing other users' data, no denial-of-service).
+        </p>
+        <p class="text-body-md text-on-background-variant leading-relaxed">
+            Languages accepted for disclosure: Spanish, English.
+        </p>
+    </section>
+
+    <section class="space-y-6">
+        <h2 class="font-title-lg text-title-lg">13. Continuous Improvement</h2>
+        <p class="text-body-md text-on-background-variant leading-relaxed">
+            We evaluate and continuously improve our security practices. This page will be updated as new controls are added. The effective date at the top of the page indicates the current version.
+        </p>
+    </section>
+
+    <section class="space-y-6">
+        <h2 class="font-title-lg text-title-lg">14. Contact</h2>
+        <p class="text-body-md text-on-background-variant leading-relaxed">
+            For vulnerability reports: <a href="mailto:security@dabg.dev" class="text-link underline">security@dabg.dev</a><br>
+            For general privacy or data inquiries: <a href="mailto:noreply@freelancer-tracker.dabg.dev" class="text-link underline">noreply@freelancer-tracker.dabg.dev</a> (see the <a href="{% url 'privacy_policy' %}" class="text-link underline">Privacy Policy</a>).
+        </p>
+    </section>
+</div>
+{% endblock %}

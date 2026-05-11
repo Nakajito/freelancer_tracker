@@ -127,6 +127,17 @@
                 {% block app_content %}{% endblock %}
             </div>
         </main>
+
+        <footer class="bg-surface-container-low border-t border-outline-variant px-container-padding py-stack-md">
+            <div class="max-w-[1440px] mx-auto flex flex-wrap justify-between items-center gap-gutter text-center">
+                <span class="font-label-sm text-label-sm text-on-surface-variant">© {% now "Y" %} PropoTrack</span>
+                <div class="flex gap-6">
+                    <a href="{% url 'privacy_policy' %}" class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-all">Privacy Policy</a>
+                    <a href="{% url 'terms_of_service' %}" class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-all">Terms of Service</a>
+                    <a href="{% url 'security' %}" class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-all">Security</a>
+                </div>
+            </div>
+        </footer>
     </div>
 </div>
 {% endblock %}

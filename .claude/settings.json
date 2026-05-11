@@ -85,7 +85,18 @@
       "Bash(chmod +x /home/nakajito/proyectos/freelancer_tracker/bin/build-css.sh)",
       "Bash(/home/nakajito/proyectos/freelancer_tracker/.venv/lib/python3.14/site-packages/pytailwindcss/bin/latest/tailwindcss --version)",
       "Bash(TAILWINDCSS_VERSION=v3.4.17 .venv/bin/tailwindcss -i static/css/src/app.css -o static/css/app.css --minify --config tailwind.config.js)",
-      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8000/)"
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8000/)",
+      "Bash(mkdir -p /tmp/stitch)",
+      "Bash(curl -sL \"https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ7Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpaCiVodG1sX2EyNWI1YmY5ZmZhMDQ3ZWU5NjM5Mjk5YTg3NjI1NTIxEgsSBxCxgKK9_gcYAZIBIwoKcHJvamVjdF9pZBIVQhM2MTc4MDIzNDQ5MTI4NTE2Mzgy&filename=&opi=89354086\" -o /tmp/stitch/solutions.html)",
+      "Bash(curl -sL \"https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ7Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpaCiVodG1sXzQ1YzIwZDlmOWZjYzQwN2VhYjkyMTdlZTkyYWFjODJkEgsSBxCxgKK9_gcYAZIBIwoKcHJvamVjdF9pZBIVQhM2MTc4MDIzNDQ5MTI4NTE2Mzgy&filename=&opi=89354086\" -o /tmp/stitch/advantages.html)",
+      "Bash(curl -sL \"https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ7Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpaCiVodG1sXzkxMzEwMzM1OTUyZTQ2YmM5NGEzYWViZTcxZjVlZGE0EgsSBxCxgKK9_gcYAZIBIwoKcHJvamVjdF9pZBIVQhM2MTc4MDIzNDQ5MTI4NTE2Mzgy&filename=&opi=89354086\" -o /tmp/stitch/pricing.html)",
+      "Bash(git checkout *)",
+      "Bash(find ~/.cache /home/nakajito/proyectos/freelancer_tracker/.venv -name \"tailwindcss*\" -type f 2>/dev/null | head && uv run tailwindcss --help 2>&1 | grep -i version)",
+      "Read(//home/nakajito/.cache/**)",
+      "Bash(/home/nakajito/proyectos/freelancer_tracker/.venv/lib/python3.14/site-packages/pytailwindcss/bin/v3.4.17/tailwindcss -c tailwind.config.js -i static/css/src/app.css -o static/css/app.css --minify)",
+      "Bash(DJANGO_SETTINGS_MODULE=config.settings.dev uv run python -c ' *)",
+      "Bash(curl -sL \"https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ7Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpaCiVodG1sXzE3ZWU4YjBlMGUyZTRlM2Q5NDI3OWZhMTA2Y2IyNDUzEgsSBxCxgKK9_gcYAZIBIwoKcHJvamVjdF9pZBIVQhM2MTc4MDIzNDQ5MTI4NTE2Mzgy&filename=&opi=89354086\" -o /tmp/donar.html)",
+      "Bash(curl -sL \"https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ7Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpaCiVodG1sXzQzNDhkNGUyNjlkYzRiNDY5YTdjYTE0NDMzYjhhNjNhEgsSBxCxgKK9_gcYAZIBIwoKcHJvamVjdF9pZBIVQhM2MTc4MDIzNDQ5MTI4NTE2Mzgy&filename=&opi=89354086\" -o /tmp/confirmar.html)"
     ],
     "additionalDirectories": [
       "/home/nakajito/proyectos/freelancer_tracker",
