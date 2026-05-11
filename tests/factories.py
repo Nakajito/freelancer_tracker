@@ -2,7 +2,7 @@ import factory
 from factory.django import DjangoModelFactory
 
 from apps.accounts.models import User
-from apps.proposals.models import Client, Proposal, Tag, ProposalStatus, Platform
+from apps.proposals.models import Client, Platform, Proposal, ProposalStatus, Tag
 
 
 class UserFactory(DjangoModelFactory):
@@ -10,7 +10,9 @@ class UserFactory(DjangoModelFactory):
         model = User
 
     username = factory.Sequence(lambda n: f"user{n}")
-    email = factory.LazyAttribute(lambda obj: f"{obj.username}@example.com")
+    email = factory.LazyAttribute(
+        lambda obj: f"{obj.username}@freelancer-tracker.dabg.dev"
+    )
     password = factory.PostGenerationMethodCall("set_password", "password123")
 
 

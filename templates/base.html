@@ -10,16 +10,10 @@
                 PropoTrack
             {% endblock %}
         </title>
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600&display=swap"
-              rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
-              rel="stylesheet">
-        <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-        <script src="{% static 'js/tailwind.config.js' %}"></script>
-        <script src="https://unpkg.com/htmx.org@1.9.10"></script>
-        <link rel="stylesheet" href="{% static 'css/icons.css' %}">
+        <meta name="description" content="{% block meta_description %}PropoTrack — track freelance proposals, follow-ups, time entries, and revenue in one place.{% endblock %}">
+        <link rel="preload" href="{% static 'fonts/geist/geist-v4-latin.woff2' %}" as="font" type="font/woff2" crossorigin>
+        <link rel="preload" href="{% static 'fonts/inter/inter-v20-latin.woff2' %}" as="font" type="font/woff2" crossorigin>
+        <link rel="stylesheet" href="{% static 'css/app.css' %}">
         <link rel="stylesheet" href="{% static 'css/forms.css' %}">
         <link rel="stylesheet" href="{% static 'css/htmx.css' %}">
         <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
@@ -45,8 +39,11 @@
                     {% endfor %}
                 </div>
             {% endif %}
-            {% block content %}{% endblock %}
+            <main>
+                {% block content %}{% endblock %}
+            </main>
         {% endblock %}
+        <script src="{% static 'vendor/htmx-1.9.10.min.js' %}" defer></script>
         {% block extra_js %}{% endblock %}
     </body>
 </html>

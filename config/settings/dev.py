@@ -24,3 +24,17 @@ INTERNAL_IPS = ["127.0.0.1"]
 LOGGING["root"]["level"] = "DEBUG"  # noqa: F405
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+CONTENT_SECURITY_POLICY_REPORT_ONLY = {
+    "DIRECTIVES": {
+        "default-src": ["'self'"],
+        "script-src": ["'self'", "https://cdn.tailwindcss.com", "https://unpkg.com"],
+        "style-src": ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+        "font-src": ["'self'", "https://fonts.gstatic.com"],
+        "img-src": ["'self'", "data:"],
+        "connect-src": ["'self'"],
+        "frame-ancestors": ["'none'"],
+        "base-uri": ["'self'"],
+        "form-action": ["'self'"],
+    },
+}

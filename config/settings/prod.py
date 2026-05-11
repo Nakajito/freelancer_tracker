@@ -49,6 +49,22 @@ EMAIL_HOST_PASSWORD = env("RESEND_API_KEY")  # noqa: F405
 DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL", default="noreply@freelancer-tracker.dabg.dev")  # noqa: F405
 SERVER_EMAIL = DEFAULT_FROM_EMAIL
 
+CONTENT_SECURITY_POLICY = {
+    "DIRECTIVES": {
+        "default-src": ["'self'"],
+        "script-src": ["'self'"],
+        "style-src": ["'self'", "'unsafe-inline'"],
+        "font-src": ["'self'"],
+        "img-src": ["'self'", "data:"],
+        "connect-src": ["'self'"],
+        "frame-ancestors": ["'none'"],
+        "base-uri": ["'self'"],
+        "form-action": ["'self'"],
+    },
+}
+
+WHITENOISE_MAX_AGE = 31_536_000  # 1 year — manifest hashes guarantee invalidation
+
 DATA_UPLOAD_MAX_MEMORY_SIZE = 5 * 1024 * 1024
 FILE_UPLOAD_MAX_MEMORY_SIZE = 5 * 1024 * 1024
 

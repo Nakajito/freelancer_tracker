@@ -1,6 +1,9 @@
-// Tailwind config for Material Design 3 token palette used by PropoTrack.
-// Loaded via {% static %} in templates/base.html before the Tailwind CDN script.
-tailwind.config = {
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+    content: [
+        "templates/**/*.html",
+        "apps/**/templates/**/*.html",
+    ],
     darkMode: "class",
     theme: {
         extend: {
@@ -68,9 +71,15 @@ tailwind.config = {
                 "container-padding": "24px",
             },
             fontFamily: {
-                display: ["Geist"], h1: ["Geist"], h2: ["Geist"], h3: ["Geist"],
-                "label-md": ["Geist"], "label-sm": ["Geist"],
-                "body-lg": ["Inter"], "body-md": ["Inter"], "body-sm": ["Inter"],
+                display: ["Geist", "sans-serif"],
+                h1: ["Geist", "sans-serif"],
+                h2: ["Geist", "sans-serif"],
+                h3: ["Geist", "sans-serif"],
+                "label-md": ["Geist", "sans-serif"],
+                "label-sm": ["Geist", "sans-serif"],
+                "body-lg": ["Inter", "sans-serif"],
+                "body-md": ["Inter", "sans-serif"],
+                "body-sm": ["Inter", "sans-serif"],
             },
             fontSize: {
                 display: ["36px", { lineHeight: "1.2", letterSpacing: "-0.02em", fontWeight: "700" }],
@@ -85,4 +94,5 @@ tailwind.config = {
             },
         },
     },
+    plugins: [],
 };

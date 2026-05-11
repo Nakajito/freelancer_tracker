@@ -33,7 +33,7 @@ def security_txt(request):
         domain = request.get_host()
 
     body = (
-        "Contact: mailto:security@\n"
+        "Contact: mailto:security@dabg.dev\n"
         "Expires: 2027-05-10T00:00:00.000Z\n"
         "Preferred-Languages: es, en\n"
         f"Canonical: https://{domain}/.well-known/security.txt\n"
