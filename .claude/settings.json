@@ -84,7 +84,8 @@
       "Bash(echo \"Exit: $?\")",
       "Bash(chmod +x /home/nakajito/proyectos/freelancer_tracker/bin/build-css.sh)",
       "Bash(/home/nakajito/proyectos/freelancer_tracker/.venv/lib/python3.14/site-packages/pytailwindcss/bin/latest/tailwindcss --version)",
-      "Bash(TAILWINDCSS_VERSION=v3.4.17 .venv/bin/tailwindcss -i static/css/src/app.css -o static/css/app.css --minify --config tailwind.config.js)"
+      "Bash(TAILWINDCSS_VERSION=v3.4.17 .venv/bin/tailwindcss -i static/css/src/app.css -o static/css/app.css --minify --config tailwind.config.js)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8000/)"
     ],
     "additionalDirectories": [
       "/home/nakajito/proyectos/freelancer_tracker",
