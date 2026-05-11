@@ -5,8 +5,6 @@ export PATH="/app/.venv/bin:$PATH"
 
 python manage.py migrate --noinput
 
-bin/build-css.sh
-
 python manage.py collectstatic --noinput
 
 if [ "$SEED_DEMO" = "1" ]; then

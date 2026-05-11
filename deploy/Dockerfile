@@ -27,9 +27,16 @@ COPY config/ ./config/
 COPY templates/ ./templates/
 COPY static/ ./static/
 COPY manage.py ./
+COPY tailwind.config.js ./
+COPY bin/ ./bin/
 COPY deploy/entrypoint.sh ./
 
-RUN chmod +x entrypoint.sh
+RUN chmod +x entrypoint.sh \
+    && curl -fsSL https://github.com/tailwindlabs/tailwindcss/releases/download/v3.4.17/tailwindcss-linux-x64 \
+       -o /usr/local/bin/tailwindcss \
+    && chmod +x /usr/local/bin/tailwindcss \
+    && bin/build-css.sh \
+    && rm /usr/local/bin/tailwindcss
 
 RUN chown -R app:app /app
 
