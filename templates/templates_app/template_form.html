@@ -16,7 +16,7 @@
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter">
         <div class="lg:col-span-2">
-            <form method="post" class="bg-surface-container-lowest border border-outline-variant shadow-sm rounded-xl p-container-padding md:p-stack-lg flex flex-col gap-stack-md">
+            <form method="post" class="bg-surface-container-lowest border border-outline-variant shadow-xs rounded-xl p-container-padding md:p-stack-lg flex flex-col gap-stack-md">
                 {% csrf_token %}
                 {% if form.non_field_errors %}
                 <div class="px-4 py-3 rounded-lg bg-error-container text-on-error-container border border-error/30">
@@ -41,7 +41,7 @@
                     <a href="{% url 'template-list' %}" class="w-full sm:w-auto px-6 py-3 rounded-lg border border-outline bg-transparent text-secondary hover:bg-surface-container transition-colors font-label-md text-label-md text-center">
                         Cancel
                     </a>
-                    <button type="submit" class="w-full sm:w-auto px-6 py-3 rounded-lg bg-primary text-on-primary hover:bg-on-primary-fixed-variant transition-colors font-label-md text-label-md shadow-sm flex items-center justify-center gap-2">
+                    <button type="submit" class="w-full sm:w-auto px-6 py-3 rounded-lg bg-primary text-on-primary hover:bg-on-primary-fixed-variant transition-colors font-label-md text-label-md shadow-xs flex items-center justify-center gap-2">
                         <span class="material-symbols-outlined text-[18px]">save</span>
                         Save Template
                     </button>
@@ -49,7 +49,7 @@
             </form>
         </div>
 
-        <div class="bg-surface-container-lowest border border-outline-variant rounded-xl shadow-sm p-container-padding">
+        <div class="bg-surface-container-lowest border border-outline-variant rounded-xl shadow-xs p-container-padding">
             <h3 class="font-h3 text-h3 text-on-surface mb-stack-md flex items-center gap-2">
                 <span class="material-symbols-outlined text-primary">tips_and_updates</span>
                 Template Tips

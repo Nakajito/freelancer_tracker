@@ -25,7 +25,7 @@
             {% if messages %}
                 <div class="fixed top-4 right-4 z-[100] flex flex-col gap-2 max-w-sm">
                     {% for message in messages %}
-                        <div class="px-4 py-3 rounded-lg border shadow-sm flex items-start gap-2 {% if message.tags == 'success' %}bg-primary-container text-on-primary-container border-primary{% elif message.tags == 'error' %}bg-error-container text-on-error-container border-error{% else %}bg-secondary-container text-on-secondary-container border-secondary{% endif %}">
+                        <div class="px-4 py-3 rounded-lg border shadow-xs flex items-start gap-2 {% if message.tags == 'success' %}bg-primary-container text-on-primary-container border-primary{% elif message.tags == 'error' %}bg-error-container text-on-error-container border-error{% else %}bg-secondary-container text-on-secondary-container border-secondary{% endif %}">
                             <span class="material-symbols-outlined text-[20px]">
                                 {% if message.tags == 'success' %}
                                     check_circle

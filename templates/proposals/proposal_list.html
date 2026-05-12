@@ -12,17 +12,17 @@
         </h2>
         <p class="font-body-md text-body-md text-on-surface-variant mt-1">Manage, track, and send your project pitches.</p>
     </div>
-    <a href="{% url 'proposal-create' %}" class="bg-primary text-on-primary font-label-md text-label-md py-2.5 px-5 rounded-lg flex items-center gap-2 hover:bg-primary-container shadow-sm transition-all">
+    <a href="{% url 'proposal-create' %}" class="bg-primary text-on-primary font-label-md text-label-md py-2.5 px-5 rounded-lg flex items-center gap-2 hover:bg-primary-container shadow-xs transition-all">
         <span class="material-symbols-outlined text-[20px]">add</span>
         Add Proposal
     </a>
 </div>
 
 <!-- Filters -->
-<form method="get" class="bg-surface-container-lowest border border-outline-variant rounded-xl p-4 mb-stack-md flex flex-col md:flex-row gap-4 items-center justify-between shadow-sm">
+<form method="get" class="bg-surface-container-lowest border border-outline-variant rounded-xl p-4 mb-stack-md flex flex-col md:flex-row gap-4 items-center justify-between shadow-xs">
     <div class="flex flex-col sm:flex-row w-full md:w-auto gap-4">
         <div class="relative min-w-[180px]">
-            <select name="status" class="w-full appearance-none bg-surface border border-outline-variant rounded-lg py-2 pl-4 pr-10 font-body-sm text-body-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer">
+            <select name="status" class="w-full appearance-none bg-surface border border-outline-variant rounded-lg py-2 pl-4 pr-10 font-body-sm text-body-sm text-on-surface focus:outline-hidden focus:ring-2 focus:ring-primary cursor-pointer">
                 <option value="">All Statuses</option>
                 <option value="draft" {% if request.GET.status == 'draft' %}selected{% endif %}>Draft</option>
                 <option value="sent" {% if request.GET.status == 'sent' %}selected{% endif %}>Sent</option>
@@ -34,7 +34,7 @@
             <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant">arrow_drop_down</span>
         </div>
         <div class="relative min-w-[180px]">
-            <select name="platform" class="w-full appearance-none bg-surface border border-outline-variant rounded-lg py-2 pl-4 pr-10 font-body-sm text-body-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer">
+            <select name="platform" class="w-full appearance-none bg-surface border border-outline-variant rounded-lg py-2 pl-4 pr-10 font-body-sm text-body-sm text-on-surface focus:outline-hidden focus:ring-2 focus:ring-primary cursor-pointer">
                 <option value="">All Platforms</option>
                 <option value="upwork" {% if request.GET.platform == 'upwork' %}selected{% endif %}>Upwork</option>
                 <option value="linkedin" {% if request.GET.platform == 'linkedin' %}selected{% endif %}>LinkedIn</option>
@@ -45,14 +45,14 @@
             <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant">arrow_drop_down</span>
         </div>
     </div>
-    <button type="submit" class="px-4 py-2 bg-primary text-on-primary rounded-lg font-label-md text-label-md hover:bg-primary-container transition-colors shadow-sm flex items-center gap-2">
+    <button type="submit" class="px-4 py-2 bg-primary text-on-primary rounded-lg font-label-md text-label-md hover:bg-primary-container transition-colors shadow-xs flex items-center gap-2">
         <span class="material-symbols-outlined text-[18px]">filter_list</span>
         Filter
     </button>
 </form>
 
 <!-- Data Table -->
-<div class="bg-surface-container-lowest border border-outline-variant rounded-xl shadow-sm overflow-hidden">
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl shadow-xs overflow-hidden">
     <div class="overflow-x-auto">
         <table class="w-full text-left border-collapse">
             <thead>

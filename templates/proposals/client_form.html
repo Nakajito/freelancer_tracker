@@ -14,7 +14,7 @@
         <p class="font-body-md text-body-md text-on-surface-variant mt-1">Add a client to your roster.</p>
     </div>
 
-    <div class="bg-surface-container-lowest border border-outline-variant shadow-sm rounded-xl p-container-padding md:p-stack-lg">
+    <div class="bg-surface-container-lowest border border-outline-variant shadow-xs rounded-xl p-container-padding md:p-stack-lg">
         <form method="post" class="flex flex-col gap-stack-md">
             {% csrf_token %}
 
@@ -45,7 +45,7 @@
                 <a href="{% url 'client-list' %}" class="w-full sm:w-auto px-6 py-3 rounded-lg border border-outline bg-transparent text-secondary hover:bg-surface-container transition-colors font-label-md text-label-md text-center">
                     Cancel
                 </a>
-                <button type="submit" class="w-full sm:w-auto px-6 py-3 rounded-lg bg-primary text-on-primary hover:bg-on-primary-fixed-variant transition-colors font-label-md text-label-md shadow-sm flex items-center justify-center gap-2">
+                <button type="submit" class="w-full sm:w-auto px-6 py-3 rounded-lg bg-primary text-on-primary hover:bg-on-primary-fixed-variant transition-colors font-label-md text-label-md shadow-xs flex items-center justify-center gap-2">
                     <span class="material-symbols-outlined text-[18px]">save</span>
                     {% if object %}Save Changes{% else %}Add Client{% endif %}
                 </button>

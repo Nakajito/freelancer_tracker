@@ -14,10 +14,10 @@
         </div>
         <div class="flex items-center gap-unit">
             {% if user.is_authenticated %}
-            <a href="{% url 'dashboard' %}" class="px-4 py-2 font-label-md text-label-md bg-primary text-on-primary rounded hover:bg-primary-container transition-colors shadow-sm">Dashboard</a>
+            <a href="{% url 'dashboard' %}" class="px-4 py-2 font-label-md text-label-md bg-primary text-on-primary rounded hover:bg-primary-container transition-colors shadow-xs">Dashboard</a>
             {% else %}
             <a href="{% url 'account_login' %}" class="hidden sm:block px-4 py-2 font-label-md text-label-md text-secondary border border-outline-variant rounded hover:bg-surface-container-highest transition-colors">Log In</a>
-            <a href="{% url 'account_signup' %}" class="px-4 py-2 font-label-md text-label-md bg-primary text-on-primary rounded hover:bg-primary-container transition-colors shadow-sm">Get Started</a>
+            <a href="{% url 'account_signup' %}" class="px-4 py-2 font-label-md text-label-md bg-primary text-on-primary rounded hover:bg-primary-container transition-colors shadow-xs">Get Started</a>
             {% endif %}
         </div>
     </div>
@@ -37,10 +37,10 @@
             <div class="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
                 <h2 class="font-h2 text-h2 text-primary">Haz una donación</h2>
                 <div class="flex items-center bg-surface-container-low p-1 rounded-lg" role="tablist">
-                    <label class="px-4 py-2 text-label-md rounded-md cursor-pointer has-[:checked]:bg-white has-[:checked]:shadow-sm has-[:checked]:text-primary has-[:checked]:font-bold text-on-surface-variant">
+                    <label class="px-4 py-2 text-label-md rounded-md cursor-pointer has-[:checked]:bg-white has-[:checked]:shadow-xs has-[:checked]:text-primary has-[:checked]:font-bold text-on-surface-variant">
                         <input type="radio" name="frequency" value="one_time" class="sr-only" checked>Única
                     </label>
-                    <label class="px-4 py-2 text-label-md rounded-md cursor-pointer has-[:checked]:bg-white has-[:checked]:shadow-sm has-[:checked]:text-primary has-[:checked]:font-bold text-on-surface-variant">
+                    <label class="px-4 py-2 text-label-md rounded-md cursor-pointer has-[:checked]:bg-white has-[:checked]:shadow-xs has-[:checked]:text-primary has-[:checked]:font-bold text-on-surface-variant">
                         <input type="radio" name="frequency" value="monthly" class="sr-only">Mensual
                     </label>
                 </div>

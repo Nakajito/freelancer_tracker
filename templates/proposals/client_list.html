@@ -7,7 +7,7 @@
 {% url 'client-create' as create_url %}
 {% include "partials/_page_header.html" with title="Clients" subtitle="Manage your client relationships." badge=clients|length|stringformat:"d Total" action_url=create_url action_label="Add Client" %}
 
-<div class="bg-surface-container-lowest border border-outline-variant rounded-xl shadow-sm overflow-hidden">
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl shadow-xs overflow-hidden">
     <div class="overflow-x-auto">
         <table class="w-full text-left border-collapse">
             <thead>

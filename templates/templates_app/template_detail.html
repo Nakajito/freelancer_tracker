@@ -21,14 +21,14 @@
             <span class="material-symbols-outlined text-[18px]">edit</span>
             Edit
         </a>
-        <a href="{% url 'template-use' template.pk %}" class="flex items-center gap-2 px-4 py-2 bg-primary text-on-primary rounded-lg font-label-md text-label-md hover:bg-on-primary-fixed-variant transition-colors shadow-sm">
+        <a href="{% url 'template-use' template.pk %}" class="flex items-center gap-2 px-4 py-2 bg-primary text-on-primary rounded-lg font-label-md text-label-md hover:bg-on-primary-fixed-variant transition-colors shadow-xs">
             <span class="material-symbols-outlined text-[18px]">play_arrow</span>
             Use Template
         </a>
     </div>
 </div>
 
-<div class="bg-surface-container-lowest border border-outline-variant rounded-xl shadow-sm overflow-hidden mb-stack-md">
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl shadow-xs overflow-hidden mb-stack-md">
     <div class="px-container-padding py-4 border-b border-outline-variant flex justify-between items-center">
         <h3 class="font-h3 text-h3 text-on-surface">Body</h3>
     </div>
@@ -36,7 +36,7 @@
 </div>
 
 {% if template.placeholders %}
-<div class="bg-surface-container-lowest border border-outline-variant rounded-xl shadow-sm p-container-padding">
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl shadow-xs p-container-padding">
     <p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-3">Placeholders</p>
     <div class="flex flex-wrap gap-2">
         {% for placeholder in template.placeholders %}

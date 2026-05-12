@@ -16,10 +16,10 @@
         </div>
         <div class="flex items-center gap-unit">
             {% if user.is_authenticated %}
-            <a href="{% url 'dashboard' %}" class="px-4 py-2 font-label-md text-label-md bg-primary text-on-primary rounded hover:bg-primary-container transition-colors shadow-sm">Dashboard</a>
+            <a href="{% url 'dashboard' %}" class="px-4 py-2 font-label-md text-label-md bg-primary text-on-primary rounded hover:bg-primary-container transition-colors shadow-xs">Dashboard</a>
             {% else %}
             <a href="{% url 'account_login' %}" class="hidden sm:block px-4 py-2 font-label-md text-label-md text-secondary border border-outline-variant rounded hover:bg-surface-container-highest transition-colors">Log In</a>
-            <a href="{% url 'account_signup' %}" class="px-4 py-2 font-label-md text-label-md bg-primary text-on-primary rounded hover:bg-primary-container transition-colors shadow-sm">Get Started</a>
+            <a href="{% url 'account_signup' %}" class="px-4 py-2 font-label-md text-label-md bg-primary text-on-primary rounded hover:bg-primary-container transition-colors shadow-xs">Get Started</a>
             {% endif %}
         </div>
     </div>
@@ -38,7 +38,7 @@
             PropoTrack helps freelancers manage pitches, log hours, and analyze performance in one sleek dashboard.
         </p>
         <div class="flex flex-col sm:flex-row gap-4 pt-4">
-            <a href="{% url 'account_signup' %}" class="px-8 py-4 bg-primary text-on-primary rounded font-label-md text-label-md hover:bg-primary-container transition-colors shadow-sm text-center">Get Started for Free</a>
+            <a href="{% url 'account_signup' %}" class="px-8 py-4 bg-primary text-on-primary rounded font-label-md text-label-md hover:bg-primary-container transition-colors shadow-xs text-center">Get Started for Free</a>
             <a href="#features" class="px-8 py-4 border border-outline-variant text-on-surface rounded font-label-md text-label-md hover:bg-surface-container-low transition-colors text-center">View Demo</a>
         </div>
     </div>
@@ -54,21 +54,21 @@
         <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">From sent proposal to won deal, PropoTrack keeps every step measurable.</p>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
-        <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-container-padding shadow-sm">
+        <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-container-padding shadow-xs">
             <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-stack-md">
                 <span class="material-symbols-outlined text-primary text-[28px]">description</span>
             </div>
             <h3 class="font-h3 text-h3 text-on-surface mb-2">Proposal Tracking</h3>
             <p class="font-body-md text-body-md text-on-surface-variant">Funnel view from Sent to Accepted with conversion metrics built in.</p>
         </div>
-        <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-container-padding shadow-sm">
+        <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-container-padding shadow-xs">
             <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-stack-md">
                 <span class="material-symbols-outlined text-primary text-[28px]">schedule</span>
             </div>
             <h3 class="font-h3 text-h3 text-on-surface mb-2">Time Logging</h3>
             <p class="font-body-md text-body-md text-on-surface-variant">Track billable hours, retainers, and effective hourly rate per project.</p>
         </div>
-        <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-container-padding shadow-sm">
+        <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-container-padding shadow-xs">
             <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-stack-md">
                 <span class="material-symbols-outlined text-primary text-[28px]">analytics</span>
             </div>
@@ -91,7 +91,7 @@
 
     <div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
         <!-- Win Rates -->
-        <div class="md:col-span-7 bg-surface-container-lowest border border-outline-variant p-stack-lg rounded-xl shadow-sm flex flex-col justify-between overflow-hidden relative">
+        <div class="md:col-span-7 bg-surface-container-lowest border border-outline-variant p-stack-lg rounded-xl shadow-xs flex flex-col justify-between overflow-hidden relative">
             <div class="relative z-10">
                 <span class="material-symbols-outlined text-primary text-[40px] mb-4">trending_up</span>
                 <h3 class="font-h2 text-h2 mb-4">Increase Win Rates</h3>
@@ -115,7 +115,7 @@
         </div>
 
         <!-- Time Savings -->
-        <div class="md:col-span-5 bg-primary text-on-primary p-stack-lg rounded-xl shadow-sm flex flex-col">
+        <div class="md:col-span-5 bg-primary text-on-primary p-stack-lg rounded-xl shadow-xs flex flex-col">
             <span class="material-symbols-outlined text-[40px] mb-4">speed</span>
             <h3 class="font-h2 text-h2 mb-4">Unmatched Time Savings</h3>
             <p class="font-body-md text-body-md opacity-90 mb-8">Reusable template engine deploys world-class proposals in minutes, not hours.</p>
@@ -136,7 +136,7 @@
         </div>
 
         <!-- Data-Driven Growth -->
-        <div class="md:col-span-4 bg-surface-container-low border border-outline-variant p-stack-lg rounded-xl shadow-sm">
+        <div class="md:col-span-4 bg-surface-container-low border border-outline-variant p-stack-lg rounded-xl shadow-xs">
             <span class="material-symbols-outlined text-tertiary text-[40px] mb-4">analytics</span>
             <h3 class="font-h3 text-h3 mb-3">Data-Driven Growth</h3>
             <p class="font-body-sm text-body-sm text-on-surface-variant mb-6">Analyze your earnings trajectory and seasonal trends to forecast your next big move with confidence.</p>
@@ -147,7 +147,7 @@
         </div>
 
         <!-- Micro-Level Tracking -->
-        <div class="md:col-span-8 bg-surface-container-lowest border border-outline-variant p-stack-lg rounded-xl shadow-sm grid md:grid-cols-2 gap-8 items-center">
+        <div class="md:col-span-8 bg-surface-container-lowest border border-outline-variant p-stack-lg rounded-xl shadow-xs grid md:grid-cols-2 gap-8 items-center">
             <div>
                 <span class="material-symbols-outlined text-secondary text-[40px] mb-4">biotech</span>
                 <h3 class="font-h2 text-h2 mb-4">Micro-Level Tracking</h3>
@@ -407,7 +407,7 @@
     <div class="max-w-3xl mx-auto text-center">
         <h2 class="font-display text-display text-on-background mb-4">Ready to get started?</h2>
         <p class="font-body-lg text-body-lg text-on-surface-variant mb-stack-lg">Join independent professionals streamlining their freelance business.</p>
-        <a href="{% url 'account_signup' %}" class="inline-flex items-center gap-2 px-8 py-4 bg-primary text-on-primary rounded font-label-md text-label-md hover:bg-primary-container transition-colors shadow-sm">
+        <a href="{% url 'account_signup' %}" class="inline-flex items-center gap-2 px-8 py-4 bg-primary text-on-primary rounded font-label-md text-label-md hover:bg-primary-container transition-colors shadow-xs">
             Get Started for Free
             <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
         </a>

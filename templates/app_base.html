@@ -3,7 +3,7 @@
 {% block body %}
 <div class="h-screen flex overflow-hidden">
     <!-- SideNavBar -->
-    <nav class="hidden md:flex flex-col h-full py-stack-lg fixed left-0 top-0 w-[280px] bg-surface border-r border-outline-variant shadow-sm z-50">
+    <nav class="hidden md:flex flex-col h-full py-stack-lg fixed left-0 top-0 w-[280px] bg-surface border-r border-outline-variant shadow-xs z-50">
         <div class="px-container-padding mb-stack-lg">
             <a href="{% url 'dashboard' %}" class="flex items-center gap-3">
                 <div class="w-10 h-10 rounded-lg bg-primary flex items-center justify-center shrink-0">
@@ -17,7 +17,7 @@
         </div>
 
         <div class="px-container-padding mb-stack-md">
-            <a href="{% url 'proposal-create' %}" class="w-full bg-primary text-on-primary font-label-md text-label-md py-3 px-4 rounded-lg flex items-center justify-center gap-2 hover:bg-on-primary-fixed-variant transition-colors shadow-sm active:scale-95 duration-150">
+            <a href="{% url 'proposal-create' %}" class="w-full bg-primary text-on-primary font-label-md text-label-md py-3 px-4 rounded-lg flex items-center justify-center gap-2 hover:bg-on-primary-fixed-variant transition-colors shadow-xs active:scale-95 duration-150">
                 <span class="material-symbols-outlined text-[20px]">add</span>
                 New Proposal
             </a>
@@ -90,11 +90,11 @@
     <!-- Main Content Wrapper -->
     <div class="flex-1 flex flex-col md:ml-[280px] h-full relative">
         <!-- TopAppBar -->
-        <header class="bg-surface-container-lowest flex justify-between items-center px-container-padding h-16 z-40 fixed top-0 right-0 w-full md:w-[calc(100%-280px)] border-b border-outline-variant shadow-sm">
+        <header class="bg-surface-container-lowest flex justify-between items-center px-container-padding h-16 z-40 fixed top-0 right-0 w-full md:w-[calc(100%-280px)] border-b border-outline-variant shadow-xs">
             <div class="flex-1 max-w-md">
                 <div class="relative">
                     <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
-                    <input class="w-full bg-surface-container-low border border-outline-variant rounded-full py-2 pl-10 pr-4 font-body-sm text-body-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all placeholder:text-outline" placeholder="Search proposals, clients..." type="search">
+                    <input class="w-full bg-surface-container-low border border-outline-variant rounded-full py-2 pl-10 pr-4 font-body-sm text-body-sm text-on-surface focus:outline-hidden focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all placeholder:text-outline" placeholder="Search proposals, clients..." type="search">
                 </div>
             </div>
             <div class="flex items-center gap-gutter ml-auto">

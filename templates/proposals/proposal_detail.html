@@ -33,7 +33,7 @@
                 <span class="material-symbols-outlined text-[18px]">delete</span>
                 Delete
             </a>
-            <a href="{% url 'proposal-update' proposal.pk %}" class="flex items-center gap-2 px-4 py-2 bg-primary text-on-primary rounded-lg font-label-md text-label-md hover:bg-on-primary-fixed-variant transition-colors shadow-sm">
+            <a href="{% url 'proposal-update' proposal.pk %}" class="flex items-center gap-2 px-4 py-2 bg-primary text-on-primary rounded-lg font-label-md text-label-md hover:bg-on-primary-fixed-variant transition-colors shadow-xs">
                 <span class="material-symbols-outlined text-[18px]">edit</span>
                 Edit
             </a>
@@ -45,7 +45,7 @@
     <!-- Left: Main Content -->
     <div class="col-span-12 lg:col-span-8 flex flex-col gap-stack-md">
         <!-- Summary Strip -->
-        <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-container-padding shadow-sm grid grid-cols-1 sm:grid-cols-3 gap-6">
+        <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-container-padding shadow-xs grid grid-cols-1 sm:grid-cols-3 gap-6">
             <div>
                 <p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-1">Client</p>
                 <p class="font-body-md text-body-md font-medium text-on-surface">{{ proposal.client.name|default:"—" }}</p>
@@ -64,7 +64,7 @@
         </div>
 
         <!-- Cover Letter -->
-        <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-container-padding shadow-sm">
+        <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-container-padding shadow-xs">
             <h3 class="font-h3 text-h3 text-on-surface mb-stack-md">Cover Letter</h3>
             <div class="prose max-w-none font-body-md text-body-md text-on-surface-variant leading-relaxed">
                 {{ proposal.proposal_text|linebreaks|default:"No proposal text provided." }}
@@ -93,7 +93,7 @@
     <!-- Right: Widgets -->
     <div class="col-span-12 lg:col-span-4 flex flex-col gap-stack-md">
         <!-- Insights -->
-        <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-container-padding shadow-sm">
+        <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-container-padding shadow-xs">
             <h3 class="font-h3 text-h3 text-on-surface mb-stack-md">Proposal Insights</h3>
             <div class="flex flex-col gap-4">
                 <div class="flex justify-between items-center">
@@ -118,7 +118,7 @@
         </div>
 
         <!-- Key Dates -->
-        <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-container-padding shadow-sm">
+        <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-container-padding shadow-xs">
             <h3 class="font-h3 text-h3 text-on-surface mb-stack-md">Key Dates</h3>
             <div class="flex flex-col gap-3">
                 <div class="flex justify-between items-center">
@@ -137,7 +137,7 @@
         </div>
 
         <!-- Next Action -->
-        <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-container-padding shadow-sm bg-gradient-to-br from-surface-container-lowest to-surface-container-low">
+        <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-container-padding shadow-xs bg-gradient-to-br from-surface-container-lowest to-surface-container-low">
             <h3 class="font-h3 text-h3 text-on-surface mb-unit">Next Action</h3>
             <p class="font-body-sm text-body-sm text-on-surface-variant mb-stack-md">Schedule a follow-up to keep this proposal moving.</p>
             <a href="{% url 'followup-create' %}?proposal={{ proposal.pk }}" class="w-full py-2 border border-outline-variant rounded-lg font-label-md text-label-md text-on-surface hover:bg-surface-container transition-colors flex items-center justify-center gap-2">
@@ -147,7 +147,7 @@
         </div>
 
         {% if proposal.tags.all %}
-        <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-container-padding shadow-sm">
+        <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-container-padding shadow-xs">
             <h3 class="font-h3 text-h3 text-on-surface mb-stack-md">Tags</h3>
             <div class="flex flex-wrap gap-2">
                 {% for tag in proposal.tags.all %}
