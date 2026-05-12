@@ -104,7 +104,14 @@
       "Bash(chmod +x /tmp/twbin/tailwindcss)",
       "Bash(/tmp/twbin/tailwindcss --help)",
       "Bash(/tmp/twbin/tailwindcss -i static/css/src/app.css -o static/css/app.css --minify)",
-      "Bash(grep -oE \"has\\\\\\\\\\\\\\\\?\\\\[[^]]+\\\\][^,{}]{0,30}\" static/css/app.css)"
+      "Bash(grep -oE \"has\\\\\\\\\\\\\\\\?\\\\[[^]]+\\\\][^,{}]{0,30}\" static/css/app.css)",
+      "Bash(/home/nakajito/proyectos/freelancer_tracker/.venv/bin/tailwindcss --help)",
+      "Bash(awk '{s+=$1} END {print \"total occurrences:\", s}')",
+      "Bash(grep -rln \"\\\\bring\\\\b\\\\\\(\\\\$\\\\| \\\\|\\\\\"\\\\\\)\" templates apps --include=\"*.html\")",
+      "Bash(.venv/bin/tailwindcss --version)",
+      "Bash(.venv/bin/tailwindcss -i static/css/src/app.css -o static/css/app.css --minify)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)"
     ],
     "additionalDirectories": [
       "/home/nakajito/proyectos/freelancer_tracker",

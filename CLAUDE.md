@@ -86,3 +86,72 @@ Key fixtures: `user`, `other_user`, `authed_client`, `client_model`, `proposal` 
 - `TimeEntry.clean()` blocks creation unless proposal is `ACCEPTED` (or `override_status_restriction=True`).
 - `RecurringRetainer` is 1:1 with `Proposal`; the generator command is idempotent.
 - Deployed on Coolify via Docker. `SEED_DEMO=1` env var triggers seed on container start. See `deploy/COOLIFY.md`.
+
+
+## Plan Mode (default)
+- Plan si tarea >3 pasos o decisión arquitectónica. Si falla → para y replanifica.
+- Usa plan también para verificación. Especifica requisitos upfront.
+
+## Subagentes (ahorra contexto)
+- Investiga, explora o analiza en paralelo con subagentes. Uno por tarea.
+
+## Mejora continua
+- Tras cada corrección: actualiza `tasks/lessons.md` con el patrón y reglas para no repetirlo.
+- Revisa lecciones al iniciar cada sesión.
+
+## Verificación antes de finalizar
+- No marques completado sin pruebas. Compara comportamiento con el original.
+- Pregunta: “¿Staff engineer aprobaría esto?”. Corre tests, revisa logs.
+
+## Elegancia balanceada
+- Cambios no triviales: pausa y busca solución más elegante.
+- Si el fix es chapucero: implementa la versión elegante con lo que sabes ahora.
+- Omitir solo en fixes obvios.
+
+## Bug fixing autónomo
+- Recibes un bug → arréglalo sin pedir ayuda. Señala logs, errores, tests.
+- Arregla CI fallida sin instrucciones.
+
+## Task Management
+1. Plan → `tasks/todo.md` (ítems chequeables).
+2. Verifica plan antes de implementar.
+3. Marca progreso.
+4. Explica cambios al final.
+5. Documenta resultados en `todo.md`.
+6. Lecciones → `lessons.md`.
+
+## Principios
+- Simplicidad: cambios mínimos.
+- Sin parches temporales: encuentra causa raíz.
+- Impacto mínimo: solo toca lo necesario.
+
+## TDD
+- Usa TDD siempre.
+
+## Stack (por defecto)
+- Python (última versión - MCP Context 7)
+- Bootstrap 5 o Tailwind CSS (Preguntar primero),  SQLite (dev) / PostgreSQL (prod).
+
+## UI/UX
+- Responsivo, interfaces simples primero.
+
+## CI/CD
+- Genera configuración para GitHub Actions por defecto (a menos que se pida otro).
+
+## Calidad y Estilo de Código
+- Formateadores: Ruff 
+- Seguridad: CodeQL 
+
+## Pruebas (Testing):
+- Pytest
+- Cada vez que se agregue, modifique o elimine funcionalidad → actualizar los tests.
+
+## Gestión de Paquetes y Entornos
+- uv
+
+## Tipado Estático (Type Checking)
+- mypy, Pydantic
+
+## Creación de Documentación
+- Sphinx
+- Skill "software-docs"
