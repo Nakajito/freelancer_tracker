@@ -14,7 +14,7 @@
             <span class="material-symbols-outlined text-[18px]">repeat</span>
             Retainers
         </a>
-        <a href="{% url 'timeentry-create' %}" class="bg-primary text-on-primary font-label-md text-label-md py-2.5 px-5 rounded-lg flex items-center gap-2 hover:bg-primary-container shadow-sm transition-all">
+        <a href="{% url 'timeentry-create' %}" class="bg-primary text-on-primary font-label-md text-label-md py-2.5 px-5 rounded-lg flex items-center gap-2 hover:bg-primary-container shadow-xs transition-all">
             <span class="material-symbols-outlined text-[20px]">schedule</span>
             Log Hours
         </a>
@@ -23,22 +23,22 @@
 
 <!-- KPIs -->
 <div class="grid grid-cols-1 sm:grid-cols-3 gap-gutter mb-stack-md">
-    <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-container-padding shadow-sm">
+    <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-container-padding shadow-xs">
         <p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-2">Total Hours (This Week)</p>
         <h3 class="font-display text-display text-on-surface">{{ total_hours|default:"0" }}h</h3>
     </div>
-    <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-container-padding shadow-sm">
+    <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-container-padding shadow-xs">
         <p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-2">Billable Ratio</p>
         <h3 class="font-display text-display text-on-surface">{{ billable_ratio|default:"0" }}%</h3>
     </div>
-    <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-container-padding shadow-sm">
+    <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-container-padding shadow-xs">
         <p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-2">Last Week</p>
         <h3 class="font-display text-display text-on-surface">{{ last_week_hours|default:"0" }}h</h3>
     </div>
 </div>
 
 <!-- Table -->
-<div class="bg-surface-container-lowest border border-outline-variant rounded-xl shadow-sm overflow-hidden">
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl shadow-xs overflow-hidden">
     <div class="overflow-x-auto">
         <table class="w-full text-left border-collapse">
             <thead>

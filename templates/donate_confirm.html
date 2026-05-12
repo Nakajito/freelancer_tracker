@@ -14,10 +14,10 @@
         </div>
         <div class="flex items-center gap-unit">
             {% if user.is_authenticated %}
-            <a href="{% url 'dashboard' %}" class="px-4 py-2 font-label-md text-label-md bg-primary text-on-primary rounded hover:bg-primary-container transition-colors shadow-sm">Dashboard</a>
+            <a href="{% url 'dashboard' %}" class="px-4 py-2 font-label-md text-label-md bg-primary text-on-primary rounded hover:bg-primary-container transition-colors shadow-xs">Dashboard</a>
             {% else %}
             <a href="{% url 'account_login' %}" class="hidden sm:block px-4 py-2 font-label-md text-label-md text-secondary border border-outline-variant rounded hover:bg-surface-container-highest transition-colors">Log In</a>
-            <a href="{% url 'account_signup' %}" class="px-4 py-2 font-label-md text-label-md bg-primary text-on-primary rounded hover:bg-primary-container transition-colors shadow-sm">Get Started</a>
+            <a href="{% url 'account_signup' %}" class="px-4 py-2 font-label-md text-label-md bg-primary text-on-primary rounded hover:bg-primary-container transition-colors shadow-xs">Get Started</a>
             {% endif %}
         </div>
     </div>
@@ -62,23 +62,23 @@
                 <div class="space-y-stack-md">
                     <div class="space-y-2">
                         <label class="font-label-md text-label-md text-on-surface-variant" for="cardholder">Nombre del titular</label>
-                        <input id="cardholder" name="cardholder" type="text" placeholder="Nombre Apellido" class="w-full bg-surface-container-low border border-outline-variant rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all">
+                        <input id="cardholder" name="cardholder" type="text" placeholder="Nombre Apellido" class="w-full bg-surface-container-low border border-outline-variant rounded-lg px-4 py-3 focus:outline-hidden focus:ring-2 focus:ring-primary focus:border-transparent transition-all">
                     </div>
                     <div class="space-y-2">
                         <label class="font-label-md text-label-md text-on-surface-variant" for="card_number">Número de tarjeta</label>
                         <div class="relative">
-                            <input id="card_number" name="card_number" type="text" inputmode="numeric" autocomplete="cc-number" placeholder="0000 0000 0000 0000" class="w-full bg-surface-container-low border border-outline-variant rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all">
+                            <input id="card_number" name="card_number" type="text" inputmode="numeric" autocomplete="cc-number" placeholder="0000 0000 0000 0000" class="w-full bg-surface-container-low border border-outline-variant rounded-lg px-4 py-3 focus:outline-hidden focus:ring-2 focus:ring-primary focus:border-transparent transition-all">
                             <span class="material-symbols-outlined text-outline absolute right-3 top-1/2 -translate-y-1/2">credit_card</span>
                         </div>
                     </div>
                     <div class="grid grid-cols-2 gap-stack-md">
                         <div class="space-y-2">
                             <label class="font-label-md text-label-md text-on-surface-variant" for="expiry">Vencimiento</label>
-                            <input id="expiry" name="expiry" type="text" autocomplete="cc-exp" placeholder="MM/YY" class="w-full bg-surface-container-low border border-outline-variant rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all">
+                            <input id="expiry" name="expiry" type="text" autocomplete="cc-exp" placeholder="MM/YY" class="w-full bg-surface-container-low border border-outline-variant rounded-lg px-4 py-3 focus:outline-hidden focus:ring-2 focus:ring-primary focus:border-transparent transition-all">
                         </div>
                         <div class="space-y-2">
                             <label class="font-label-md text-label-md text-on-surface-variant" for="cvc">CVC</label>
-                            <input id="cvc" name="cvc" type="text" inputmode="numeric" autocomplete="cc-csc" placeholder="123" class="w-full bg-surface-container-low border border-outline-variant rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all">
+                            <input id="cvc" name="cvc" type="text" inputmode="numeric" autocomplete="cc-csc" placeholder="123" class="w-full bg-surface-container-low border border-outline-variant rounded-lg px-4 py-3 focus:outline-hidden focus:ring-2 focus:ring-primary focus:border-transparent transition-all">
                         </div>
                     </div>
                 </div>
@@ -92,15 +92,15 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-stack-md">
                     <div class="space-y-2 md:col-span-2">
                         <label class="font-label-md text-label-md text-on-surface-variant" for="street">Dirección</label>
-                        <input id="street" name="street" type="text" placeholder="Calle y número" class="w-full bg-surface-container-low border border-outline-variant rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary transition-all">
+                        <input id="street" name="street" type="text" placeholder="Calle y número" class="w-full bg-surface-container-low border border-outline-variant rounded-lg px-4 py-3 focus:outline-hidden focus:ring-2 focus:ring-primary transition-all">
                     </div>
                     <div class="space-y-2">
                         <label class="font-label-md text-label-md text-on-surface-variant" for="city">Ciudad</label>
-                        <input id="city" name="city" type="text" placeholder="Ciudad" class="w-full bg-surface-container-low border border-outline-variant rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary transition-all">
+                        <input id="city" name="city" type="text" placeholder="Ciudad" class="w-full bg-surface-container-low border border-outline-variant rounded-lg px-4 py-3 focus:outline-hidden focus:ring-2 focus:ring-primary transition-all">
                     </div>
                     <div class="space-y-2">
                         <label class="font-label-md text-label-md text-on-surface-variant" for="postal">Código postal</label>
-                        <input id="postal" name="postal" type="text" placeholder="00000" class="w-full bg-surface-container-low border border-outline-variant rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary transition-all">
+                        <input id="postal" name="postal" type="text" placeholder="00000" class="w-full bg-surface-container-low border border-outline-variant rounded-lg px-4 py-3 focus:outline-hidden focus:ring-2 focus:ring-primary transition-all">
                     </div>
                 </div>
             </section>

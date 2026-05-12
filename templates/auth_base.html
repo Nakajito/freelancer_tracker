@@ -5,7 +5,7 @@
     {% if messages %}
     <div class="fixed top-4 right-4 z-[100] flex flex-col gap-2 max-w-sm">
         {% for message in messages %}
-        <div class="px-4 py-3 rounded-lg border shadow-sm flex items-start gap-2
+        <div class="px-4 py-3 rounded-lg border shadow-xs flex items-start gap-2
             {% if message.tags == 'success' %}bg-primary-container text-on-primary-container border-primary{% elif message.tags == 'error' %}bg-error-container text-on-error-container border-error{% else %}bg-secondary-container text-on-secondary-container border-secondary{% endif %}">
             <span class="material-symbols-outlined text-[20px]">
                 {% if message.tags == 'success' %}check_circle{% elif message.tags == 'error' %}error{% else %}info{% endif %}
@@ -27,19 +27,19 @@
             </div>
             <div class="flex items-center gap-unit">
                 {% if user.is_authenticated %}
-                <a href="{% url 'dashboard' %}" class="px-4 py-2 font-label-md text-label-md bg-primary text-on-primary rounded hover:bg-primary-container transition-colors shadow-sm">Dashboard</a>
+                <a href="{% url 'dashboard' %}" class="px-4 py-2 font-label-md text-label-md bg-primary text-on-primary rounded hover:bg-primary-container transition-colors shadow-xs">Dashboard</a>
                 {% else %}
                 <a href="{% url 'account_login' %}" class="hidden sm:block px-4 py-2 font-label-md text-label-md text-secondary border border-outline-variant rounded hover:bg-surface-container-highest transition-colors">Log In</a>
-                <a href="{% url 'account_signup' %}" class="px-4 py-2 font-label-md text-label-md bg-primary text-on-primary rounded hover:bg-primary-container transition-colors shadow-sm">Get Started</a>
+                <a href="{% url 'account_signup' %}" class="px-4 py-2 font-label-md text-label-md bg-primary text-on-primary rounded hover:bg-primary-container transition-colors shadow-xs">Get Started</a>
                 {% endif %}
             </div>
         </div>
     </nav>
 
     <div class="flex-1 flex items-center justify-center p-container-padding">
-        <main class="w-full max-w-[440px] bg-surface-container-lowest border border-outline-variant rounded-xl shadow-sm p-stack-lg flex flex-col gap-stack-md">
+        <main class="w-full max-w-[440px] bg-surface-container-lowest border border-outline-variant rounded-xl shadow-xs p-stack-lg flex flex-col gap-stack-md">
             <header class="text-center flex flex-col gap-stack-sm items-center mb-2">
-                <div class="w-12 h-12 bg-primary rounded-lg flex items-center justify-center shadow-sm mb-1">
+                <div class="w-12 h-12 bg-primary rounded-lg flex items-center justify-center shadow-xs mb-1">
                     <span class="material-symbols-outlined text-on-primary text-[28px] fill">view_kanban</span>
                 </div>
                 <span class="font-h2 text-h2 font-black text-primary tracking-tight">PropoTrack</span>

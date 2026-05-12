@@ -19,11 +19,11 @@
 </div>
 
 <!-- Filter Bar -->
-<form method="get" class="mb-stack-md flex flex-col sm:flex-row gap-4 items-end bg-surface-container-lowest p-4 rounded-xl border border-outline-variant shadow-sm">
+<form method="get" class="mb-stack-md flex flex-col sm:flex-row gap-4 items-end bg-surface-container-lowest p-4 rounded-xl border border-outline-variant shadow-xs">
     <div class="flex flex-col gap-1 flex-1">
         <label for="period" class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Period</label>
         <div class="relative">
-            <select name="period" id="period" class="w-full appearance-none bg-surface border border-outline-variant rounded-lg py-2 pl-4 pr-10 font-body-sm text-body-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer">
+            <select name="period" id="period" class="w-full appearance-none bg-surface border border-outline-variant rounded-lg py-2 pl-4 pr-10 font-body-sm text-body-sm text-on-surface focus:outline-hidden focus:ring-2 focus:ring-primary cursor-pointer">
                 <option value="30" {% if period == "30" %}selected{% endif %}>Last 30 Days</option>
                 <option value="90" {% if period == "90" or not period %}selected{% endif %}>Last 90 Days</option>
                 <option value="year" {% if period == "year" %}selected{% endif %}>This Year</option>
@@ -33,29 +33,29 @@
     </div>
     <div class="flex flex-col gap-1" id="year-wrapper" {% if period != "year" %}style="display:none"{% endif %}>
         <label for="year" class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Year</label>
-        <input type="number" name="year" id="year" value="{{ year }}" class="bg-surface border border-outline-variant rounded-lg py-2 px-4 font-body-sm text-body-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary">
+        <input type="number" name="year" id="year" value="{{ year }}" class="bg-surface border border-outline-variant rounded-lg py-2 px-4 font-body-sm text-body-sm text-on-surface focus:outline-hidden focus:ring-2 focus:ring-primary">
     </div>
-    <button type="submit" class="bg-primary text-on-primary px-5 py-2 rounded-lg font-label-md text-label-md hover:bg-primary-container transition-colors shadow-sm">View</button>
+    <button type="submit" class="bg-primary text-on-primary px-5 py-2 rounded-lg font-label-md text-label-md hover:bg-primary-container transition-colors shadow-xs">View</button>
 </form>
 
 <!-- KPIs -->
 <div class="grid grid-cols-1 md:grid-cols-4 gap-gutter mb-stack-lg">
-    <div class="bg-surface-container-lowest p-container-padding rounded-xl border border-outline-variant shadow-sm flex flex-col justify-between">
+    <div class="bg-surface-container-lowest p-container-padding rounded-xl border border-outline-variant shadow-xs flex flex-col justify-between">
         <p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-2">Total Revenue</p>
         <h3 class="font-display text-display text-on-surface">${{ summary.total_amount|floatformat:0 }}</h3>
         <span class="font-body-sm text-body-sm text-on-surface-variant mt-2">{{ summary.period_label }}</span>
     </div>
-    <div class="bg-surface-container-lowest p-container-padding rounded-xl border border-outline-variant shadow-sm flex flex-col justify-between">
+    <div class="bg-surface-container-lowest p-container-padding rounded-xl border border-outline-variant shadow-xs flex flex-col justify-between">
         <p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-2">Proposals Sent</p>
         <h3 class="font-display text-display text-on-surface">{{ summary.proposals_sent }}</h3>
         <span class="font-body-sm text-body-sm text-on-surface-variant mt-2">total in period</span>
     </div>
-    <div class="bg-surface-container-lowest p-container-padding rounded-xl border border-outline-variant shadow-sm flex flex-col justify-between">
+    <div class="bg-surface-container-lowest p-container-padding rounded-xl border border-outline-variant shadow-xs flex flex-col justify-between">
         <p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-2">Win Rate</p>
         <h3 class="font-display text-display text-on-surface">{{ summary.win_rate }}%</h3>
         <span class="font-body-sm text-body-sm text-on-surface-variant mt-2">accepted / sent</span>
     </div>
-    <div class="bg-surface-container-lowest p-container-padding rounded-xl border border-outline-variant shadow-sm flex flex-col justify-between">
+    <div class="bg-surface-container-lowest p-container-padding rounded-xl border border-outline-variant shadow-xs flex flex-col justify-between">
         <p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-2">Avg. Hourly Rate</p>
         <h3 class="font-display text-display text-on-surface">${{ hourly_rate|floatformat:0 }}</h3>
         <span class="font-body-sm text-body-sm text-on-surface-variant mt-2">effective rate</span>
@@ -64,13 +64,13 @@
 
 <!-- Charts -->
 <div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter mb-stack-lg">
-    <div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm p-container-padding lg:col-span-2 flex flex-col">
+    <div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-xs p-container-padding lg:col-span-2 flex flex-col">
         <div class="flex justify-between items-center mb-6">
             <h3 class="font-h3 text-h3 text-on-surface">Earnings Forecast</h3>
         </div>
         <canvas id="forecastChart" class="min-h-[250px]" data-labels="{{ chart_labels }}" data-data="{{ chart_data }}"></canvas>
     </div>
-    <div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm p-container-padding flex flex-col">
+    <div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-xs p-container-padding flex flex-col">
         <h3 class="font-h3 text-h3 text-on-surface mb-stack-md">Platform Conversion</h3>
         <div class="flex flex-col gap-4">
             {% for p in platform_conversion %}
@@ -91,7 +91,7 @@
 </div>
 
 <!-- Stats Table -->
-<div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm overflow-hidden">
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-xs overflow-hidden">
     <div class="p-container-padding border-b border-outline-variant">
         <h3 class="font-h3 text-h3 text-on-surface">Platform Statistics Overview</h3>
         <p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Detailed breakdown across all client acquisition channels.</p>

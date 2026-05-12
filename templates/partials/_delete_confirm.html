@@ -9,7 +9,7 @@ Delete-confirm card. Params via {% include with %}:
   submit_label      — submit button text (default "Delete")
 {% endcomment %}
 <div class="max-w-[560px] mx-auto">
-    <div class="bg-surface-container-lowest border border-outline-variant rounded-xl shadow-sm p-stack-lg flex flex-col gap-stack-md">
+    <div class="bg-surface-container-lowest border border-outline-variant rounded-xl shadow-xs p-stack-lg flex flex-col gap-stack-md">
         <div class="flex flex-col items-center text-center gap-2">
             <div class="w-14 h-14 rounded-full bg-error-container flex items-center justify-center">
                 <span class="material-symbols-outlined text-on-error-container text-[28px]">delete</span>
@@ -31,7 +31,7 @@ Delete-confirm card. Params via {% include with %}:
             <a href="{{ cancel_url }}" class="w-full sm:w-auto px-6 py-3 rounded-lg border border-outline bg-transparent text-secondary hover:bg-surface-container transition-colors font-label-md text-label-md text-center">
                 Cancel
             </a>
-            <button type="submit" class="w-full sm:w-auto px-6 py-3 rounded-lg bg-error text-on-error hover:opacity-90 transition-all font-label-md text-label-md shadow-sm flex items-center justify-center gap-2">
+            <button type="submit" class="w-full sm:w-auto px-6 py-3 rounded-lg bg-error text-on-error hover:opacity-90 transition-all font-label-md text-label-md shadow-xs flex items-center justify-center gap-2">
                 <span class="material-symbols-outlined text-[18px]">delete</span>
                 {{ submit_label|default:"Delete" }}
             </button>
