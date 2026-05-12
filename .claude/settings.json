@@ -113,11 +113,20 @@
       "Bash(git add *)",
       "Bash(git commit -m ' *)",
       "Bash(tailwindcss --version)",
-      "Bash(bin/build-css.sh)"
+      "Bash(bin/build-css.sh)",
+      "Bash(grep -v \"^--$\")",
+      "Bash(grep -v '^$')",
+      "Bash(python3 -c \"from fontTools.ttLib import TTFont; t = TTFont\\('/home/nakajito/proyectos/freelancer_tracker/static/fonts/material-symbols/material-symbols-outlined-subset.woff2'\\); cmap = t.getBestCmap\\(\\); print\\('Total glyphs:', len\\(cmap\\)\\); t.close\\(\\)\")",
+      "Bash(python3)",
+      "Bash(grep -v '^{%\\\\|^{{\\\\|^$')",
+      "Bash(pyftsubset --help)",
+      "Bash(python3 -m fontTools.subset --help)",
+      "Bash(cp /tmp/material-symbols-new.woff2 /home/nakajito/proyectos/freelancer_tracker/static/fonts/material-symbols/material-symbols-outlined-subset.woff2 *)"
     ],
     "additionalDirectories": [
       "/home/nakajito/proyectos/freelancer_tracker",
-      "/tmp/stitch_html"
+      "/tmp/stitch_html",
+      "/tmp"
     ]
   }
 }
