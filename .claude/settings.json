@@ -111,7 +111,9 @@
       "Bash(.venv/bin/tailwindcss --version)",
       "Bash(.venv/bin/tailwindcss -i static/css/src/app.css -o static/css/app.css --minify)",
       "Bash(git add *)",
-      "Bash(git commit -m ' *)"
+      "Bash(git commit -m ' *)",
+      "Bash(tailwindcss --version)",
+      "Bash(bin/build-css.sh)"
     ],
     "additionalDirectories": [
       "/home/nakajito/proyectos/freelancer_tracker",
