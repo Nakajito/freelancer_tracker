@@ -1,8 +1,8 @@
 @import "tailwindcss";
 @import "./fonts.css";
 
-@source "../../../templates";
-@source "../../../apps";
+@source "../../templates";
+@source "../../apps";
 
 @theme {
   --color-primary: #00685f;

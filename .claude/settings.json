@@ -121,7 +121,14 @@
       "Bash(grep -v '^{%\\\\|^{{\\\\|^$')",
       "Bash(pyftsubset --help)",
       "Bash(python3 -m fontTools.subset --help)",
-      "Bash(cp /tmp/material-symbols-new.woff2 /home/nakajito/proyectos/freelancer_tracker/static/fonts/material-symbols/material-symbols-outlined-subset.woff2 *)"
+      "Bash(cp /tmp/material-symbols-new.woff2 /home/nakajito/proyectos/freelancer_tracker/static/fonts/material-symbols/material-symbols-outlined-subset.woff2 *)",
+      "Bash(python3 -c \"import csp; print\\(csp.__version__\\)\")",
+      "Bash(DJANGO_SETTINGS_MODULE=config.settings.prod DJANGO_SECRET_KEY=test-key ALLOWED_HOSTS=localhost RESEND_API_KEY=test uv run python manage.py collectstatic --noinput)",
+      "Bash(DJANGO_SETTINGS_MODULE=config.settings.prod DJANGO_SECRET_KEY=test ALLOWED_HOSTS=localhost RESEND_API_KEY=test uv run python3 -c ' *)",
+      "Bash(DJANGO_SETTINGS_MODULE=config.settings.prod DJANGO_SECRET_KEY=test ALLOWED_HOSTS=localhost RESEND_API_KEY=test DATABASE_URL=sqlite:///test.db uv run python manage.py collectstatic --noinput --verbosity=2)",
+      "Bash(DJANGO_SETTINGS_MODULE=config.settings.prod DJANGO_SECRET_KEY=test ALLOWED_HOSTS=localhost RESEND_API_KEY=test DATABASE_URL=sqlite:///test.db uv run python manage.py collectstatic --noinput --clear)",
+      "Bash(DJANGO_SETTINGS_MODULE=config.settings.prod DJANGO_SECRET_KEY=test ALLOWED_HOSTS=localhost RESEND_API_KEY=test DATABASE_URL=sqlite:///test.db uv run python3 -c ' *)",
+      "Bash(grep -A 3 '^name = \"django\"$' uv.lock)"
     ],
     "additionalDirectories": [
       "/home/nakajito/proyectos/freelancer_tracker",

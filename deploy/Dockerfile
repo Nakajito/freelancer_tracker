@@ -26,6 +26,7 @@ COPY apps/ ./apps/
 COPY config/ ./config/
 COPY templates/ ./templates/
 COPY static/ ./static/
+COPY src/ ./src/
 COPY manage.py ./
 COPY bin/ ./bin/
 COPY deploy/entrypoint.sh ./
