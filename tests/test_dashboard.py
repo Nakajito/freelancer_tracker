@@ -37,6 +37,23 @@ class TestFunnelMetrics:
         m = DashboardService.get_funnel_metrics(user)
         assert m.accepted_amount == Decimal("0")
 
+    def test_status_counts_include_every_status_with_zeroes(self, user, client_model):
+        Proposal.objects.create(
+            owner=user,
+            title="Viewed",
+            client=client_model,
+            status=ProposalStatus.VIEWED,
+            amount=Decimal("100"),
+            sent_date=date.today() - timedelta(days=1),
+        )
+
+        m = DashboardService.get_funnel_metrics(user)
+        by_value = {row["value"]: row for row in m.status_counts}
+
+        assert set(by_value) == {value for value, _label in ProposalStatus.choices}
+        assert by_value[ProposalStatus.VIEWED]["count"] == 1
+        assert by_value[ProposalStatus.ARCHIVED]["count"] == 0
+
 
 @pytest.mark.django_db
 class TestUrgentFollowups:
@@ -133,7 +150,9 @@ class TestEarningsChart:
             sent_date=date(2025, 1, 10),
             actual_response_date=date(2025, 1, 15),
         )
-        chart = DashboardService.get_earnings_chart(user, months=3, anchor_date=date(2025, 2, 1))
+        chart = DashboardService.get_earnings_chart(
+            user, months=3, anchor_date=date(2025, 2, 1)
+        )
         assert "Jan 2025" in chart["labels"]
         assert sum(chart["data"]) == 1200.0
 
@@ -157,13 +176,17 @@ class TestPlatformConversion:
                 amount=Decimal("100"),
             )
         start = date(today.year, today.month, 1)
-        end = date(today.year + (1 if today.month == 12 else 0), today.month % 12 + 1, 1)
+        end = date(
+            today.year + (1 if today.month == 12 else 0), today.month % 12 + 1, 1
+        )
         rows = DashboardService.get_platform_conversion(user, start, end)
         upwork = next(r for r in rows if r["name"] == "Upwork")
         assert upwork["rate"] == pytest.approx(33.3, abs=0.1)
 
     def test_skips_empty_platforms(self, user):
-        rows = DashboardService.get_platform_conversion(user, date(2026, 1, 1), date(2026, 2, 1))
+        rows = DashboardService.get_platform_conversion(
+            user, date(2026, 1, 1), date(2026, 2, 1)
+        )
         assert rows == []
 
 
@@ -182,7 +205,9 @@ class TestPlatformStats:
             actual_response_date=today,
         )
         start = date(today.year, today.month, 1)
-        end = date(today.year + (1 if today.month == 12 else 0), today.month % 12 + 1, 1)
+        end = date(
+            today.year + (1 if today.month == 12 else 0), today.month % 12 + 1, 1
+        )
         rows = DashboardService.get_platform_stats(user, start, end)
         linkedin = next(r for r in rows if r["name"] == "LinkedIn")
         assert linkedin["sent"] == 1
@@ -247,11 +272,15 @@ class TestMonthlySummaryViewPeriodFilter:
             sent_date=sent_date,
         )
 
-    def test_period_year_filters_to_correct_year(self, authed_client, user, client_model):
+    def test_period_year_filters_to_correct_year(
+        self, authed_client, user, client_model
+    ):
         self._proposal(user, client_model, date(2025, 6, 1), "1000")
         self._proposal(user, client_model, date(2026, 1, 15), "2000")
 
-        response = authed_client.get(reverse("monthly-summary") + "?period=year&year=2025")
+        response = authed_client.get(
+            reverse("monthly-summary") + "?period=year&year=2025"
+        )
         assert response.status_code == 200
         summary = response.context["summary"]
         assert summary["proposals_sent"] == 1
@@ -261,7 +290,9 @@ class TestMonthlySummaryViewPeriodFilter:
         self._proposal(user, client_model, date(2025, 6, 1), "999")
         self._proposal(user, client_model, date.today() - timedelta(days=5), "300")
 
-        response = authed_client.get(reverse("monthly-summary") + "?period=30&year=2025")
+        response = authed_client.get(
+            reverse("monthly-summary") + "?period=30&year=2025"
+        )
         assert response.status_code == 200
         summary = response.context["summary"]
         assert summary["total_amount"] == Decimal("300")
@@ -270,7 +301,9 @@ class TestMonthlySummaryViewPeriodFilter:
         self._proposal(user, client_model, date(2025, 6, 1), "888")
         self._proposal(user, client_model, date.today() - timedelta(days=15), "400")
 
-        response = authed_client.get(reverse("monthly-summary") + "?period=90&year=2025")
+        response = authed_client.get(
+            reverse("monthly-summary") + "?period=90&year=2025"
+        )
         assert response.status_code == 200
         summary = response.context["summary"]
         assert summary["total_amount"] == Decimal("400")
@@ -284,9 +317,12 @@ class TestMonthlySummaryViewPeriodFilter:
         # Oct 2025 falls within the 6-month window ending Dec 2025
         self._proposal(user, client_model, date(2025, 10, 15), "750")
 
-        response = authed_client.get(reverse("monthly-summary") + "?period=year&year=2025")
+        response = authed_client.get(
+            reverse("monthly-summary") + "?period=year&year=2025"
+        )
         assert response.status_code == 200
         import json
+
         chart_labels = json.loads(response.context["chart_labels"])
         chart_data = json.loads(response.context["chart_data"])
         # Last label must be Dec 2025 (anchor = Dec 31 2025), not a 2026 month

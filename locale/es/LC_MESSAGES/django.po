@@ -1,0 +1,114 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PropoTrack 0.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-19 00:00+0000\n"
+"PO-Revision-Date: 2026-05-19 00:00+0000\n"
+"Last-Translator: PropoTrack\n"
+"Language-Team: Spanish\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Dashboard"
+msgstr "Panel"
+
+msgid "Proposals"
+msgstr "Propuestas"
+
+msgid "Clients"
+msgstr "Clientes"
+
+msgid "Follow-ups"
+msgstr "Seguimientos"
+
+msgid "Time Tracking"
+msgstr "Registro de tiempo"
+
+msgid "Templates"
+msgstr "Plantillas"
+
+msgid "Analytics"
+msgstr "Analítica"
+
+msgid "Profile"
+msgstr "Perfil"
+
+msgid "Sign Out"
+msgstr "Cerrar sesión"
+
+msgid "Theme"
+msgstr "Tema"
+
+msgid "System"
+msgstr "Sistema"
+
+msgid "Light"
+msgstr "Claro"
+
+msgid "Dark"
+msgstr "Oscuro"
+
+msgid "Language"
+msgstr "Idioma"
+
+msgid "Open profile"
+msgstr "Abrir perfil"
+
+msgid "Dismiss notification"
+msgstr "Descartar notificación"
+
+msgid "All Statuses"
+msgstr "Todos los estados"
+
+msgid "All Platforms"
+msgstr "Todas las plataformas"
+
+msgid "New client name"
+msgstr "Nombre del nuevo cliente"
+
+msgid "New client email"
+msgstr "Email del nuevo cliente"
+
+msgid "Leave Client empty to create a new client from these fields."
+msgstr "Deja Cliente vacío para crear un cliente con estos campos."
+
+msgid "User Profile"
+msgstr "Perfil de usuario"
+
+msgid "Manage your identity, preferences, and account access."
+msgstr "Administra tu identidad, preferencias y acceso a la cuenta."
+
+msgid "Change password"
+msgstr "Cambiar contraseña"
+
+msgid "Save Profile"
+msgstr "Guardar perfil"
+
+msgid "Deactivate account"
+msgstr "Desactivar cuenta"
+
+msgid "This signs you out and disables future access while preserving your history."
+msgstr "Esto cierra tu sesión y deshabilita el acceso futuro, conservando tu historial."
+
+msgid "Deactivate Account"
+msgstr "Desactivar cuenta"
+
+msgid "First name"
+msgstr "Nombre"
+
+msgid "Last name"
+msgstr "Apellido"
+
+msgid "Email"
+msgstr "Email"
+
+msgid "Profile image"
+msgstr "Imagen de perfil"
+
+msgid "Password"
+msgstr "Contraseña"
+
+msgid "Enter your current password to continue."
+msgstr "Ingresa tu contraseña actual para continuar."

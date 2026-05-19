@@ -5,12 +5,15 @@ A Django web application for freelancers to track proposals, clients, follow-ups
 ## Features
 
 - **Proposal Management**: Create, track, and manage freelance proposals across platforms (Upwork, Fiverr, LinkedIn, Direct Clients)
+- **Inline Client Creation**: Create a new client directly while drafting a proposal
 - **Client Management**: Track client information and associated proposals
 - **Follow-ups**: Schedule and track follow-up tasks for proposals
 - **Time Tracking**: Log hours spent on projects with billable/non-billable tracking
 - **Templates**: Reusable proposal templates with variable placeholders
-- **Dashboard**: Real-time metrics on proposal funnel, conversion rates, and forecasts
+- **Dashboard**: Real-time metrics on proposal funnel, conversion rates, and forecasts, including every proposal status
 - **Analytics**: Monthly summaries, platform statistics, earnings forecasts
+- **Preferences**: Light/dark/system theme support and English/Spanish language switching
+- **User Profile**: Edit name, email, avatar, preferences, change password, and deactivate the account while preserving history
 
 ## Tech Stack
 
@@ -41,6 +44,9 @@ uv run python manage.py seed_demo
 
 # Start development server
 uv run python manage.py runserver
+
+# Rebuild CSS after template/style changes
+bin/build-css.sh
 ```
 
 Then open http://localhost:8000 in your browser.
@@ -92,6 +98,10 @@ uv run python manage.py showmigrations  # Show migration status
 # Management commands
 uv run python manage.py send_digest              # Daily follow-up digest
 uv run python manage.py generate_retainer_entries  # Recurring retainer entries
+
+# Assets and i18n
+bin/build-css.sh                                # Rebuild Tailwind CSS bundle
+uv run python manage.py compilemessages         # Compile translation catalogs
 ```
 
 ## Design System
@@ -102,6 +112,18 @@ The project uses **Tailwind CSS** with custom design tokens:
 - **Fonts**: Geist (headlines), Inter (body)
 - **Border Radius**: 8px default
 - **Shadows**: Soft shadows for cards
+- **Theme Modes**: `system`, `light`, and `dark`, stored per user and applied from `<html data-theme="...">`
+- **Forms**: Form controls use CSS variables so light/dark themes stay consistent
+
+## User Preferences & Account
+
+Authenticated users can manage their account at:
+
+- `/accounts/profile/` - profile, avatar, theme, language, and password link
+- `/accounts/preferences/` - POST endpoint used by the topbar selectors
+- `/accounts/deactivate/` - password-confirmed account deactivation (`is_active=False`)
+
+Language switching uses Django i18n with English and Spanish catalogs. The current language is stored in the Django language cookie and mirrored in `User.language_preference`.
 
 ## API Endpoints
 

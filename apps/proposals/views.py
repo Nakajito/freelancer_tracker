@@ -10,7 +10,7 @@ from django.views.generic import (
 
 from apps.core.mixins import OwnerQuerysetMixin
 from apps.proposals.forms import ProposalForm
-from apps.proposals.models import Client, Proposal
+from apps.proposals.models import Client, Platform, Proposal, ProposalStatus
 
 
 class ProposalListView(OwnerQuerysetMixin, ListView):
@@ -29,6 +29,12 @@ class ProposalListView(OwnerQuerysetMixin, ListView):
             qs = qs.filter(platform=platform)
         return qs
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["status_choices"] = list(ProposalStatus.choices)
+        context["platform_choices"] = list(Platform.choices)
+        return context
+
 
 class ProposalDetailView(OwnerQuerysetMixin, DetailView):
     model = Proposal
@@ -39,6 +45,11 @@ class ProposalCreateView(LoginRequiredMixin, CreateView):
     model = Proposal
     form_class = ProposalForm
     template_name = "proposals/proposal_form.html"
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["user"] = self.request.user
+        return kwargs
 
     def form_valid(self, form):
         form.instance.owner = self.request.user
@@ -52,6 +63,11 @@ class ProposalUpdateView(OwnerQuerysetMixin, UpdateView):
     model = Proposal
     form_class = ProposalForm
     template_name = "proposals/proposal_form.html"
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["user"] = self.request.user
+        return kwargs
 
     def get_success_url(self):
         return reverse_lazy("proposal-detail", kwargs={"pk": self.object.pk})

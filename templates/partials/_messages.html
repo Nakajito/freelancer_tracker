@@ -1,0 +1,18 @@
+{% load i18n %}
+{% if messages %}
+<div class="notification-stack fixed top-4 right-4 z-[100] flex flex-col gap-2 max-w-sm" role="status" aria-live="polite">
+    {% for message in messages %}
+    <div class="notification px-4 py-3 rounded-lg border shadow-xs flex items-start gap-2 transition-all
+        {% if message.tags == 'success' %}bg-primary-container text-on-primary-container border-primary{% elif message.tags == 'error' %}bg-error-container text-on-error-container border-error{% else %}bg-secondary-container text-on-secondary-container border-secondary{% endif %}"
+        data-auto-dismiss="5000">
+        <span class="material-symbols-outlined text-[20px]" aria-hidden="true">
+            {% if message.tags == 'success' %}check_circle{% elif message.tags == 'error' %}error{% else %}info{% endif %}
+        </span>
+        <span class="font-body-sm text-body-sm flex-1">{{ message }}</span>
+        <button type="button" class="notification-close text-current opacity-70 hover:opacity-100 transition-opacity" aria-label="{% trans 'Dismiss notification' %}">
+            <span class="material-symbols-outlined text-[18px]" aria-hidden="true">close</span>
+        </button>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}

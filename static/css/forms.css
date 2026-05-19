@@ -8,17 +8,18 @@ input[type=url],
 input[type=date],
 input[type=email],
 input[type=password],
+input[type=file],
 select,
 textarea {
     width: 100%;
-    background-color: #f0f5f2;
-    border: 1px solid #bcc9c6;
+    background-color: var(--color-surface-container-low);
+    border: 1px solid var(--color-outline-variant);
     border-radius: 0.5rem;
     padding: 0.75rem 1rem;
     font-family: 'Inter', sans-serif;
     font-size: 16px;
     line-height: 1.6;
-    color: #171d1c;
+    color: var(--color-on-surface);
     transition: all 0.2s;
     outline: none;
 }
@@ -26,8 +27,8 @@ textarea {
 input:focus,
 select:focus,
 textarea:focus {
-    background-color: #ffffff;
-    border-color: #00685f;
+    background-color: var(--color-surface-container-lowest);
+    border-color: var(--color-primary);
     box-shadow: 0 0 0 2px rgba(0, 104, 95, 0.2);
 }
 
@@ -55,5 +56,9 @@ select {
 input[type=checkbox] {
     width: 18px;
     height: 18px;
-    accent-color: #00685f;
+    accent-color: var(--color-primary);
+}
+
+.currency-field .currency-input {
+    padding-left: 2.25rem;
 }

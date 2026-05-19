@@ -1,4 +1,5 @@
 from django import forms
+from django.db import transaction
 
 from apps.core.forms import date_input_widget
 from apps.proposals.models import Client, Platform, Proposal, ProposalStatus
@@ -18,6 +19,28 @@ class ProposalFilterForm(forms.Form):
 
 
 class ProposalForm(forms.ModelForm):
+    new_client_name = forms.CharField(
+        required=False,
+        label="New client name",
+        help_text="Use this when the client is not in your list yet.",
+    )
+    new_client_email = forms.EmailField(
+        required=False,
+        label="New client email",
+    )
+
+    def __init__(self, *args, user=None, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.user = user
+        if user is not None:
+            self.fields["client"].queryset = Client.objects.filter(owner=user)
+            self.fields["tags"].queryset = self.fields["tags"].queryset.filter(
+                owner=user
+            )
+        self.fields["amount"].widget.attrs["class"] = (
+            self.fields["amount"].widget.attrs.get("class", "") + " currency-input"
+        ).strip()
+
     class Meta:
         model = Proposal
         fields = [
@@ -32,11 +55,38 @@ class ProposalForm(forms.ModelForm):
             "job_url",
             "proposal_url",
             "tags",
+            "new_client_name",
+            "new_client_email",
         ]
         widgets = {
             "sent_date": date_input_widget(),
             "expected_response_date": date_input_widget(),
         }
+
+    @transaction.atomic
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+        selected_client = self.cleaned_data.get("client")
+        new_client_name = (self.cleaned_data.get("new_client_name") or "").strip()
+        new_client_email = (self.cleaned_data.get("new_client_email") or "").strip()
+
+        if selected_client:
+            instance.client = selected_client
+        elif new_client_name and self.user is not None:
+            client, created = Client.objects.get_or_create(
+                owner=self.user,
+                name=new_client_name,
+                defaults={"email": new_client_email},
+            )
+            if not created and new_client_email and not client.email:
+                client.email = new_client_email
+                client.save(update_fields=["email"])
+            instance.client = client
+
+        if commit:
+            instance.save()
+            self.save_m2m()
+        return instance
 
 
 class ClientForm(forms.ModelForm):

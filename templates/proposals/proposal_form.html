@@ -1,4 +1,5 @@
 {% extends "app_base.html" %}
+{% load i18n %}
 
 {% block title %}{% if object %}Edit Proposal{% else %}Create New Proposal{% endif %} - PropoTrack{% endblock %}
 {% block active_nav %}proposals{% endblock %}
@@ -38,7 +39,7 @@
                 <label class="font-label-md text-label-md text-on-surface-variant flex items-center gap-1" for="id_amount">
                     Amount (USD) <span class="text-error">*</span>
                 </label>
-                <div class="relative">
+                <div class="relative currency-field">
                     <span class="absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant font-label-md z-10">$</span>
                     {{ form.amount }}
                 </div>
@@ -57,7 +58,20 @@
             <div class="col-span-12 md:col-span-6 flex flex-col gap-2">
                 <label class="font-label-md text-label-md text-on-surface-variant" for="id_client">Client</label>
                 {{ form.client }}
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-2">
+                    <div class="flex flex-col gap-2">
+                        <label class="font-label-sm text-label-sm text-on-surface-variant" for="id_new_client_name">{% trans "New client name" %}</label>
+                        {{ form.new_client_name }}
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <label class="font-label-sm text-label-sm text-on-surface-variant" for="id_new_client_email">{% trans "New client email" %}</label>
+                        {{ form.new_client_email }}
+                    </div>
+                </div>
+                <p class="font-body-sm text-body-sm text-on-surface-variant">{% trans "Leave Client empty to create a new client from these fields." %}</p>
                 {% if form.client.errors %}<p class="font-body-sm text-body-sm text-error">{{ form.client.errors.0 }}</p>{% endif %}
+                {% if form.new_client_name.errors %}<p class="font-body-sm text-body-sm text-error">{{ form.new_client_name.errors.0 }}</p>{% endif %}
+                {% if form.new_client_email.errors %}<p class="font-body-sm text-body-sm text-error">{{ form.new_client_email.errors.0 }}</p>{% endif %}
             </div>
 
             <!-- Status -->
@@ -114,4 +128,3 @@
     </div>
 </div>
 {% endblock %}
-

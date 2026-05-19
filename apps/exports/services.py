@@ -109,11 +109,17 @@ class MonthlySummaryGenerator:
 
     @staticmethod
     def generate(user, start_date, end_date, period_label: str) -> dict:
-        proposals = Proposal.objects.for_user(user).exclude(
-            status=ProposalStatus.DRAFT
-        ).filter(
-            Q(sent_date__gte=start_date, sent_date__lt=end_date)
-            | Q(sent_date__isnull=True, created_at__date__gte=start_date, created_at__date__lt=end_date)
+        proposals = (
+            Proposal.objects.for_user(user)
+            .exclude(status=ProposalStatus.DRAFT)
+            .filter(
+                Q(sent_date__gte=start_date, sent_date__lt=end_date)
+                | Q(
+                    sent_date__isnull=True,
+                    created_at__date__gte=start_date,
+                    created_at__date__lt=end_date,
+                )
+            )
         )
         time_entries = TimeEntry.objects.filter(
             proposal__owner=user,
@@ -121,7 +127,9 @@ class MonthlySummaryGenerator:
             date__lt=end_date,
         )
 
-        total_hours = time_entries.aggregate(total=Sum("hours"))["total"] or Decimal("0")
+        total_hours = time_entries.aggregate(total=Sum("hours"))["total"] or Decimal(
+            "0"
+        )
         billable_hours = time_entries.filter(billable=True).aggregate(
             total=Sum("hours")
         )["total"] or Decimal("0")

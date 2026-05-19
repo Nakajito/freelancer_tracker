@@ -116,6 +116,73 @@
 }
 
 @layer base {
+  :root[data-theme="dark"],
+  :root[data-theme-resolved="dark"] {
+    --color-primary: #6bd8cb;
+    --color-on-primary: #00201d;
+    --color-primary-container: #004f48;
+    --color-on-primary-container: #d7fff7;
+    --color-on-primary-fixed-variant: #89f5e7;
+    --color-secondary: #b8c8e0;
+    --color-on-secondary: #203145;
+    --color-secondary-container: #38485d;
+    --color-on-secondary-container: #d8e6ff;
+    --color-tertiary: #ffb59a;
+    --color-tertiary-container: #773215;
+    --color-error: #ffb4ab;
+    --color-on-error: #690005;
+    --color-error-container: #93000a;
+    --color-on-error-container: #ffdad6;
+    --color-background: #101414;
+    --color-on-background: #e0e3e1;
+    --color-surface: #101414;
+    --color-on-surface: #e0e3e1;
+    --color-on-surface-variant: #c0c9c6;
+    --color-surface-container-lowest: #0b0f0e;
+    --color-surface-container-low: #191f1e;
+    --color-surface-container: #1d2322;
+    --color-surface-container-high: #27302e;
+    --color-surface-container-highest: #323b39;
+    --color-inverse-surface: #e0e3e1;
+    --color-inverse-on-surface: #2c3130;
+    --color-outline: #879390;
+    --color-outline-variant: #3f4b48;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root[data-theme="system"] {
+      --color-primary: #6bd8cb;
+      --color-on-primary: #00201d;
+      --color-primary-container: #004f48;
+      --color-on-primary-container: #d7fff7;
+      --color-on-primary-fixed-variant: #89f5e7;
+      --color-secondary: #b8c8e0;
+      --color-on-secondary: #203145;
+      --color-secondary-container: #38485d;
+      --color-on-secondary-container: #d8e6ff;
+      --color-tertiary: #ffb59a;
+      --color-tertiary-container: #773215;
+      --color-error: #ffb4ab;
+      --color-on-error: #690005;
+      --color-error-container: #93000a;
+      --color-on-error-container: #ffdad6;
+      --color-background: #101414;
+      --color-on-background: #e0e3e1;
+      --color-surface: #101414;
+      --color-on-surface: #e0e3e1;
+      --color-on-surface-variant: #c0c9c6;
+      --color-surface-container-lowest: #0b0f0e;
+      --color-surface-container-low: #191f1e;
+      --color-surface-container: #1d2322;
+      --color-surface-container-high: #27302e;
+      --color-surface-container-highest: #323b39;
+      --color-inverse-surface: #e0e3e1;
+      --color-inverse-on-surface: #2c3130;
+      --color-outline: #879390;
+      --color-outline-variant: #3f4b48;
+    }
+  }
+
   *, ::after, ::before, ::backdrop, ::file-selector-button {
     border-color: var(--color-outline-variant, currentColor);
   }

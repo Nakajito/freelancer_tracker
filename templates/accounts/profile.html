@@ -1,0 +1,64 @@
+{% extends "app_base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Profile" %} - PropoTrack{% endblock %}
+{% block active_nav %}profile{% endblock %}
+
+{% block app_content %}
+<div class="max-w-[1000px] mx-auto">
+    <div class="mb-stack-lg">
+        <h1 class="font-h1 text-h1 text-on-surface">{% trans "User Profile" %}</h1>
+        <p class="font-body-md text-body-md text-on-surface-variant mt-1">{% trans "Manage your identity, preferences, and account access." %}</p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter">
+        <section class="lg:col-span-2 bg-surface-container-lowest border border-outline-variant shadow-xs rounded-xl p-container-padding">
+            <form method="post" enctype="multipart/form-data" class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
+                {% csrf_token %}
+                <div class="md:col-span-2 flex items-center gap-4">
+                    <div class="h-16 w-16 rounded-full bg-secondary-container overflow-hidden border border-outline-variant flex items-center justify-center">
+                        {% if user.avatar %}
+                        <img src="{{ user.avatar.url }}" alt="" class="h-full w-full object-cover">
+                        {% else %}
+                        <span class="font-h2 text-h2 text-on-secondary-container uppercase">{{ user.email|slice:":1"|default:"?" }}</span>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <h2 class="font-h3 text-h3 text-on-surface">{{ user.get_full_name|default:user.email }}</h2>
+                        <a href="{% url 'account_change_password' %}" class="font-label-md text-label-md text-primary hover:text-primary-container transition-colors">{% trans "Change password" %}</a>
+                    </div>
+                </div>
+
+                {% for field in form %}
+                <div class="{% if field.name == 'avatar' %}md:col-span-2{% endif %} flex flex-col gap-2">
+                    <label class="font-label-md text-label-md text-on-surface-variant" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.errors %}<p class="font-body-sm text-body-sm text-error">{{ field.errors.0 }}</p>{% endif %}
+                </div>
+                {% endfor %}
+
+                <div class="md:col-span-2 border-t border-outline-variant pt-stack-md flex justify-end">
+                    <button type="submit" class="px-6 py-3 rounded-lg bg-primary text-on-primary hover:bg-on-primary-fixed-variant transition-colors font-label-md text-label-md shadow-xs flex items-center gap-2">
+                        <span class="material-symbols-outlined text-[18px]">save</span>
+                        {% trans "Save Profile" %}
+                    </button>
+                </div>
+            </form>
+        </section>
+
+        <aside class="bg-surface-container-lowest border border-outline-variant shadow-xs rounded-xl p-container-padding h-fit">
+            <h2 class="font-h3 text-h3 text-on-surface mb-2">{% trans "Deactivate account" %}</h2>
+            <p class="font-body-sm text-body-sm text-on-surface-variant mb-stack-md">{% trans "This signs you out and disables future access while preserving your history." %}</p>
+            <form method="post" action="{% url 'account-deactivate' %}" class="flex flex-col gap-3">
+                {% csrf_token %}
+                <label class="font-label-md text-label-md text-on-surface-variant" for="{{ deactivate_form.password.id_for_label }}">{{ deactivate_form.password.label }}</label>
+                {{ deactivate_form.password }}
+                {% if deactivate_form.password.errors %}<p class="font-body-sm text-body-sm text-error">{{ deactivate_form.password.errors.0 }}</p>{% endif %}
+                <button type="submit" class="px-4 py-3 rounded-lg bg-error text-on-error hover:opacity-90 transition-colors font-label-md text-label-md">
+                    {% trans "Deactivate Account" %}
+                </button>
+            </form>
+        </aside>
+    </div>
+</div>
+{% endblock %}

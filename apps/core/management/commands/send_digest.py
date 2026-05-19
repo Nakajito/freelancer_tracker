@@ -31,7 +31,18 @@ class Command(BaseCommand):
             return
 
         today = date.today()
-        month_summary = MonthlySummaryGenerator.generate(user, today.year, today.month)
+        start_date = today.replace(day=1)
+        if today.month == 12:
+            end_date = today.replace(year=today.year + 1, month=1, day=1)
+        else:
+            end_date = today.replace(month=today.month + 1, day=1)
+        period_label = today.strftime("%B %Y")
+        month_summary = MonthlySummaryGenerator.generate(
+            user,
+            start_date,
+            end_date,
+            period_label,
+        )
 
         context = {
             "user": user,

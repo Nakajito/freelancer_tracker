@@ -1,4 +1,5 @@
 {% extends "app_base.html" %}
+{% load i18n %}
 
 {% block title %}Proposals - PropoTrack{% endblock %}
 {% block active_nav %}proposals{% endblock %}
@@ -23,24 +24,19 @@
     <div class="flex flex-col sm:flex-row w-full md:w-auto gap-4">
         <div class="relative min-w-[180px]">
             <select name="status" class="w-full appearance-none bg-surface border border-outline-variant rounded-lg py-2 pl-4 pr-10 font-body-sm text-body-sm text-on-surface focus:outline-hidden focus:ring-2 focus:ring-primary cursor-pointer">
-                <option value="">All Statuses</option>
-                <option value="draft" {% if request.GET.status == 'draft' %}selected{% endif %}>Draft</option>
-                <option value="sent" {% if request.GET.status == 'sent' %}selected{% endif %}>Sent</option>
-                <option value="viewed" {% if request.GET.status == 'viewed' %}selected{% endif %}>Viewed</option>
-                <option value="negotiating" {% if request.GET.status == 'negotiating' %}selected{% endif %}>Negotiating</option>
-                <option value="accepted" {% if request.GET.status == 'accepted' %}selected{% endif %}>Accepted</option>
-                <option value="rejected" {% if request.GET.status == 'rejected' %}selected{% endif %}>Rejected</option>
+                <option value="">{% trans "All Statuses" %}</option>
+                {% for value,label in status_choices %}
+                <option value="{{ value }}" {% if request.GET.status == value %}selected{% endif %}>{{ label }}</option>
+                {% endfor %}
             </select>
             <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant">arrow_drop_down</span>
         </div>
         <div class="relative min-w-[180px]">
             <select name="platform" class="w-full appearance-none bg-surface border border-outline-variant rounded-lg py-2 pl-4 pr-10 font-body-sm text-body-sm text-on-surface focus:outline-hidden focus:ring-2 focus:ring-primary cursor-pointer">
-                <option value="">All Platforms</option>
-                <option value="upwork" {% if request.GET.platform == 'upwork' %}selected{% endif %}>Upwork</option>
-                <option value="linkedin" {% if request.GET.platform == 'linkedin' %}selected{% endif %}>LinkedIn</option>
-                <option value="fiverr" {% if request.GET.platform == 'fiverr' %}selected{% endif %}>Fiverr</option>
-                <option value="direct" {% if request.GET.platform == 'direct' %}selected{% endif %}>Direct Client</option>
-                <option value="other" {% if request.GET.platform == 'other' %}selected{% endif %}>Other</option>
+                <option value="">{% trans "All Platforms" %}</option>
+                {% for value,label in platform_choices %}
+                <option value="{{ value }}" {% if request.GET.platform == value %}selected{% endif %}>{{ label }}</option>
+                {% endfor %}
             </select>
             <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant">arrow_drop_down</span>
         </div>

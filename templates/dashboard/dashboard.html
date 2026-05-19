@@ -1,4 +1,5 @@
 {% extends "app_base.html" %}
+{% load i18n %}
 
 {% block title %}Dashboard - PropoTrack{% endblock %}
 {% block active_nav %}dashboard{% endblock %}
@@ -85,43 +86,18 @@
             <a href="{% url 'proposal-list' %}" class="text-primary hover:text-primary-container font-label-md text-label-md transition-colors">View Detailed Report</a>
         </div>
         <div class="flex-1 flex flex-col justify-center gap-4 py-4">
-            {% with sent=funnel.sent|default:0 viewed=funnel.viewed|default:0 responded=funnel.responded|default:0 accepted=funnel.accepted|default:0 %}
+            {% with total=funnel.total|default:0 %}
+            {% for status in funnel.status_counts %}
             <div class="relative">
                 <div class="flex items-center justify-between mb-1">
-                    <span class="font-label-md text-label-md text-on-surface">Sent</span>
-                    <span class="font-body-sm text-body-sm text-on-surface-variant">{{ sent }}</span>
+                    <span class="font-label-md text-label-md text-on-surface">{{ status.label }}</span>
+                    <span class="font-body-sm text-body-sm text-on-surface-variant">{{ status.count }}</span>
                 </div>
                 <div class="w-full bg-surface-container-high rounded-full h-3">
-                    <div class="bg-primary h-3 rounded-full" style="width: 100%"></div>
+                    <div class="bg-primary h-3 rounded-full" style="width: {% if total %}{% widthratio status.count total 100 %}{% else %}0{% endif %}%"></div>
                 </div>
             </div>
-            <div class="relative">
-                <div class="flex items-center justify-between mb-1">
-                    <span class="font-label-md text-label-md text-on-surface">Viewed</span>
-                    <span class="font-body-sm text-body-sm text-on-surface-variant">{{ viewed }}</span>
-                </div>
-                <div class="w-full bg-surface-container-high rounded-full h-3">
-                    <div class="bg-primary h-3 rounded-full opacity-80" style="width: {% if sent %}{% widthratio viewed sent 100 %}{% else %}0{% endif %}%"></div>
-                </div>
-            </div>
-            <div class="relative">
-                <div class="flex items-center justify-between mb-1">
-                    <span class="font-label-md text-label-md text-on-surface">Responded</span>
-                    <span class="font-body-sm text-body-sm text-on-surface-variant">{{ responded }}</span>
-                </div>
-                <div class="w-full bg-surface-container-high rounded-full h-3">
-                    <div class="bg-primary h-3 rounded-full opacity-60" style="width: {% if sent %}{% widthratio responded sent 100 %}{% else %}0{% endif %}%"></div>
-                </div>
-            </div>
-            <div class="relative">
-                <div class="flex items-center justify-between mb-1">
-                    <span class="font-label-md text-label-md text-on-surface">Accepted</span>
-                    <span class="font-body-sm text-body-sm text-on-surface-variant">{{ accepted }}</span>
-                </div>
-                <div class="w-full bg-surface-container-high rounded-full h-3">
-                    <div class="bg-primary h-3 rounded-full opacity-40" style="width: {% if sent %}{% widthratio accepted sent 100 %}{% else %}0{% endif %}%"></div>
-                </div>
-            </div>
+            {% endfor %}
             {% endwith %}
         </div>
     </div>

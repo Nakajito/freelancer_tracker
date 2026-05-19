@@ -46,7 +46,9 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = "resend"
 EMAIL_HOST_PASSWORD = env("RESEND_API_KEY")  # noqa: F405
-DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL", default="noreply@freelancer-tracker.dabg.dev")  # noqa: F405
+DEFAULT_FROM_EMAIL = env(  # noqa: F405
+    "DEFAULT_FROM_EMAIL", default="noreply@freelancer-tracker.dabg.dev"
+)
 SERVER_EMAIL = DEFAULT_FROM_EMAIL
 
 CONTENT_SECURITY_POLICY = {

@@ -1,6 +1,6 @@
-{% load static %}
+{% load static i18n %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ active_language|default:'en' }}" data-theme="{{ active_theme|default:'system' }}">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,29 +22,14 @@
     </head>
     <body class="bg-background text-on-background font-body-md antialiased">
         {% block body %}
-            {% if messages %}
-                <div class="fixed top-4 right-4 z-[100] flex flex-col gap-2 max-w-sm">
-                    {% for message in messages %}
-                        <div class="px-4 py-3 rounded-lg border shadow-xs flex items-start gap-2 {% if message.tags == 'success' %}bg-primary-container text-on-primary-container border-primary{% elif message.tags == 'error' %}bg-error-container text-on-error-container border-error{% else %}bg-secondary-container text-on-secondary-container border-secondary{% endif %}">
-                            <span class="material-symbols-outlined text-[20px]">
-                                {% if message.tags == 'success' %}
-                                    check_circle
-                                {% elif message.tags == 'error' %}
-                                    error
-                                {% else %}
-                                    info
-                                {% endif %}
-                            </span>
-                            <span class="font-body-sm text-body-sm">{{ message }}</span>
-                        </div>
-                    {% endfor %}
-                </div>
-            {% endif %}
+            {% include "partials/_messages.html" %}
             <main>
                 {% block content %}{% endblock %}
             </main>
         {% endblock %}
         <script src="{% static 'vendor/htmx-1.9.10.min.js' %}" defer></script>
+        <script src="{% static 'js/preferences.js' %}" defer></script>
+        <script src="{% static 'js/notifications.js' %}" defer></script>
         {% block extra_js %}{% endblock %}
     </body>
 </html>

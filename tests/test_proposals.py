@@ -1,8 +1,10 @@
 import pytest
 from decimal import Decimal
 from datetime import date
+from django.urls import reverse
 
-from apps.proposals.models import Client, Proposal, Tag, ProposalStatus
+from apps.proposals.forms import ProposalForm
+from apps.proposals.models import Client, Platform, Proposal, Tag, ProposalStatus
 
 
 @pytest.mark.django_db
@@ -75,3 +77,86 @@ class TestProposalQuerySet:
     def test_accepted_filter(self, user, client_model, accepted_proposal):
         accepted = Proposal.objects.accepted()
         assert accepted_proposal in accepted
+
+
+@pytest.mark.django_db
+class TestProposalForm:
+    def test_filters_clients_and_tags_by_user(self, user, other_user, client_model):
+        other_client = Client.objects.create(owner=other_user, name="Other Client")
+        own_tag = Tag.objects.create(owner=user, name="Django", slug="django")
+        other_tag = Tag.objects.create(owner=other_user, name="React", slug="react")
+
+        form = ProposalForm(user=user)
+
+        assert client_model in form.fields["client"].queryset
+        assert other_client not in form.fields["client"].queryset
+        assert own_tag in form.fields["tags"].queryset
+        assert other_tag not in form.fields["tags"].queryset
+
+    def test_creates_new_client_when_no_existing_client_selected(self, user):
+        form = ProposalForm(
+            user=user,
+            data={
+                "title": "New Proposal",
+                "platform": Platform.UPWORK,
+                "client": "",
+                "new_client_name": "Acme",
+                "new_client_email": "hello@acme.test",
+                "amount": "500.00",
+                "status": ProposalStatus.DRAFT,
+                "proposal_text": "",
+                "sent_date": "",
+                "expected_response_date": "",
+                "job_url": "",
+                "proposal_url": "",
+                "tags": [],
+            },
+        )
+
+        assert form.is_valid(), form.errors
+        proposal = form.save(commit=False)
+        proposal.owner = user
+        proposal = form.save()
+
+        assert proposal.client.name == "Acme"
+        assert proposal.client.owner == user
+
+    def test_existing_client_takes_precedence_over_new_client_fields(
+        self, user, client_model
+    ):
+        form = ProposalForm(
+            user=user,
+            data={
+                "title": "New Proposal",
+                "platform": Platform.UPWORK,
+                "client": client_model.pk,
+                "new_client_name": "Ignored Client",
+                "new_client_email": "ignored@example.com",
+                "amount": "500.00",
+                "status": ProposalStatus.DRAFT,
+                "proposal_text": "",
+                "sent_date": "",
+                "expected_response_date": "",
+                "job_url": "",
+                "proposal_url": "",
+                "tags": [],
+            },
+        )
+
+        assert form.is_valid(), form.errors
+        proposal = form.save(commit=False)
+        proposal.owner = user
+        proposal = form.save()
+
+        assert proposal.client == client_model
+        assert not Client.objects.filter(owner=user, name="Ignored Client").exists()
+
+
+@pytest.mark.django_db
+class TestProposalListTemplateChoices:
+    def test_filters_use_model_choices(self, authed_client):
+        response = authed_client.get(reverse("proposal-list"))
+
+        assert response.status_code == 200
+        assert response.context["status_choices"] == list(ProposalStatus.choices)
+        assert response.context["platform_choices"] == list(Platform.choices)

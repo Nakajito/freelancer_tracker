@@ -21,3 +21,13 @@
 **Rule — null sent_date**: `Proposal.sent_date` is optional. All analytics queries must use a Q filter fallback: `Q(sent_date__gte=start, sent_date__lt=end) | Q(sent_date__isnull=True, created_at__date__gte=start, created_at__date__lt=end)`.
 
 **TDD**: Write tests for each period combination before implementing. The three required cases are `period=year&year=X`, `period=30&year=X` (year ignored), `period=90&year=X` (year ignored).
+
+## UI preferences, static manifest, and service signatures
+
+**Pattern**: Adding shared JS assets to templates while tests use manifest static storage can fail before `collectstatic` knows about the new files.
+
+**Rule — test settings**: Use `django.contrib.staticfiles.storage.StaticFilesStorage` for `STORAGES["staticfiles"]` in tests so template rendering does not depend on a production manifest.
+
+**Rule — CSS build**: `bin/build-css.sh` must invoke the Tailwind binary through `uv run` so the project-local dependency is available in clean shells and CI.
+
+**Rule — service calls**: When a service signature changes to explicit date ranges, update every caller. `MonthlySummaryGenerator.generate()` requires `start_date`, `end_date`, and `period_label`; management commands must compute those values instead of passing year/month fragments.

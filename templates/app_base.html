@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block body %}
 <div class="h-screen flex overflow-hidden">
@@ -29,43 +30,49 @@
                 <li>
                     <a href="{% url 'dashboard' %}" class="flex items-center gap-3 px-4 py-3 rounded-r-lg transition-colors {% if active == 'dashboard' %}bg-secondary-container text-on-secondary-container border-l-4 border-primary{% else %}text-on-surface-variant hover:bg-surface-container-high{% endif %}">
                         <span class="material-symbols-outlined text-[24px]{% if active == 'dashboard' %} fill text-primary{% endif %}">dashboard</span>
-                        <span class="font-label-md text-label-md{% if active == 'dashboard' %} font-bold{% endif %}">Dashboard</span>
+                        <span class="font-label-md text-label-md{% if active == 'dashboard' %} font-bold{% endif %}">{% trans "Dashboard" %}</span>
                     </a>
                 </li>
                 <li>
                     <a href="{% url 'proposal-list' %}" class="flex items-center gap-3 px-4 py-3 rounded-r-lg transition-colors {% if active == 'proposals' %}bg-secondary-container text-on-secondary-container border-l-4 border-primary{% else %}text-on-surface-variant hover:bg-surface-container-high{% endif %}">
                         <span class="material-symbols-outlined text-[24px]{% if active == 'proposals' %} fill text-primary{% endif %}">description</span>
-                        <span class="font-label-md text-label-md{% if active == 'proposals' %} font-bold{% endif %}">Proposals</span>
+                        <span class="font-label-md text-label-md{% if active == 'proposals' %} font-bold{% endif %}">{% trans "Proposals" %}</span>
                     </a>
                 </li>
                 <li>
                     <a href="{% url 'client-list' %}" class="flex items-center gap-3 px-4 py-3 rounded-r-lg transition-colors {% if active == 'clients' %}bg-secondary-container text-on-secondary-container border-l-4 border-primary{% else %}text-on-surface-variant hover:bg-surface-container-high{% endif %}">
                         <span class="material-symbols-outlined text-[24px]{% if active == 'clients' %} fill text-primary{% endif %}">groups</span>
-                        <span class="font-label-md text-label-md{% if active == 'clients' %} font-bold{% endif %}">Clients</span>
+                        <span class="font-label-md text-label-md{% if active == 'clients' %} font-bold{% endif %}">{% trans "Clients" %}</span>
                     </a>
                 </li>
                 <li>
                     <a href="{% url 'followup-list' %}" class="flex items-center gap-3 px-4 py-3 rounded-r-lg transition-colors {% if active == 'followups' %}bg-secondary-container text-on-secondary-container border-l-4 border-primary{% else %}text-on-surface-variant hover:bg-surface-container-high{% endif %}">
                         <span class="material-symbols-outlined text-[24px]{% if active == 'followups' %} fill text-primary{% endif %}">forward_to_inbox</span>
-                        <span class="font-label-md text-label-md{% if active == 'followups' %} font-bold{% endif %}">Follow-ups</span>
+                        <span class="font-label-md text-label-md{% if active == 'followups' %} font-bold{% endif %}">{% trans "Follow-ups" %}</span>
                     </a>
                 </li>
                 <li>
                     <a href="{% url 'timeentry-list' %}" class="flex items-center gap-3 px-4 py-3 rounded-r-lg transition-colors {% if active == 'time' %}bg-secondary-container text-on-secondary-container border-l-4 border-primary{% else %}text-on-surface-variant hover:bg-surface-container-high{% endif %}">
                         <span class="material-symbols-outlined text-[24px]{% if active == 'time' %} fill text-primary{% endif %}">schedule</span>
-                        <span class="font-label-md text-label-md{% if active == 'time' %} font-bold{% endif %}">Time Tracking</span>
+                        <span class="font-label-md text-label-md{% if active == 'time' %} font-bold{% endif %}">{% trans "Time Tracking" %}</span>
                     </a>
                 </li>
                 <li>
                     <a href="{% url 'template-list' %}" class="flex items-center gap-3 px-4 py-3 rounded-r-lg transition-colors {% if active == 'templates' %}bg-secondary-container text-on-secondary-container border-l-4 border-primary{% else %}text-on-surface-variant hover:bg-surface-container-high{% endif %}">
                         <span class="material-symbols-outlined text-[24px]{% if active == 'templates' %} fill text-primary{% endif %}">article</span>
-                        <span class="font-label-md text-label-md{% if active == 'templates' %} font-bold{% endif %}">Templates</span>
+                        <span class="font-label-md text-label-md{% if active == 'templates' %} font-bold{% endif %}">{% trans "Templates" %}</span>
                     </a>
                 </li>
                 <li>
                     <a href="{% url 'monthly-summary' %}" class="flex items-center gap-3 px-4 py-3 rounded-r-lg transition-colors {% if active == 'analytics' %}bg-secondary-container text-on-secondary-container border-l-4 border-primary{% else %}text-on-surface-variant hover:bg-surface-container-high{% endif %}">
                         <span class="material-symbols-outlined text-[24px]{% if active == 'analytics' %} fill text-primary{% endif %}">analytics</span>
-                        <span class="font-label-md text-label-md{% if active == 'analytics' %} font-bold{% endif %}">Analytics</span>
+                        <span class="font-label-md text-label-md{% if active == 'analytics' %} font-bold{% endif %}">{% trans "Analytics" %}</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'account-profile' %}" class="flex items-center gap-3 px-4 py-3 rounded-r-lg transition-colors {% if active == 'profile' %}bg-secondary-container text-on-secondary-container border-l-4 border-primary{% else %}text-on-surface-variant hover:bg-surface-container-high{% endif %}">
+                        <span class="material-symbols-outlined text-[24px]{% if active == 'profile' %} fill text-primary{% endif %}">account_circle</span>
+                        <span class="font-label-md text-label-md{% if active == 'profile' %} font-bold{% endif %}">{% trans "Profile" %}</span>
                     </a>
                 </li>
                 {% endwith %}
@@ -79,7 +86,7 @@
                         {% csrf_token %}
                         <button type="submit" class="w-full flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg">
                             <span class="material-symbols-outlined text-[24px]">logout</span>
-                            <span class="font-label-md text-label-md">Sign Out</span>
+                            <span class="font-label-md text-label-md">{% trans "Sign Out" %}</span>
                         </button>
                     </form>
                 </li>
@@ -99,31 +106,37 @@
             </div>
             <div class="flex items-center gap-gutter ml-auto">
                 {% block topbar_actions %}{% endblock %}
+                <form method="post" action="{% url 'account-preferences' %}" class="hidden lg:flex items-center gap-2">
+                    {% csrf_token %}
+                    <label class="sr-only" for="topbar-theme">{% trans "Theme" %}</label>
+                    <select id="topbar-theme" name="theme_preference" data-auto-submit class="w-auto min-w-[120px] bg-surface-container-low border border-outline-variant rounded-full py-2 pl-3 pr-8 font-body-sm text-body-sm text-on-surface">
+                        <option value="system" {% if user.theme_preference == 'system' %}selected{% endif %}>{% trans "System" %}</option>
+                        <option value="light" {% if user.theme_preference == 'light' %}selected{% endif %}>{% trans "Light" %}</option>
+                        <option value="dark" {% if user.theme_preference == 'dark' %}selected{% endif %}>{% trans "Dark" %}</option>
+                    </select>
+                    <label class="sr-only" for="topbar-language">{% trans "Language" %}</label>
+                    <select id="topbar-language" name="language_preference" data-auto-submit class="w-auto min-w-[110px] bg-surface-container-low border border-outline-variant rounded-full py-2 pl-3 pr-8 font-body-sm text-body-sm text-on-surface">
+                        <option value="en" {% if user.language_preference == 'en' %}selected{% endif %}>English</option>
+                        <option value="es" {% if user.language_preference == 'es' %}selected{% endif %}>Español</option>
+                    </select>
+                </form>
                 <button class="p-2 text-on-surface-variant hover:text-primary hover:bg-surface-container rounded-full transition-all">
                     <span class="material-symbols-outlined">notifications</span>
                 </button>
-                <div class="h-8 w-8 rounded-full bg-secondary-container overflow-hidden ml-2 flex-shrink-0 border border-outline-variant flex items-center justify-center">
+                <a href="{% url 'account-profile' %}" class="h-8 w-8 rounded-full bg-secondary-container overflow-hidden ml-2 flex-shrink-0 border border-outline-variant flex items-center justify-center" aria-label="{% trans 'Open profile' %}">
+                    {% if user.avatar %}
+                    <img src="{{ user.avatar.url }}" alt="" class="h-full w-full object-cover">
+                    {% else %}
                     <span class="font-label-md text-label-md text-on-secondary-container uppercase">{{ user.email|slice:":1"|default:"?" }}</span>
-                </div>
+                    {% endif %}
+                </a>
             </div>
         </header>
 
         <!-- Main Canvas -->
         <main class="flex-1 overflow-y-auto pt-24 pb-stack-lg px-container-padding bg-background">
             <div class="max-w-[1440px] mx-auto">
-                {% if messages %}
-                <div class="mb-stack-md flex flex-col gap-2">
-                    {% for message in messages %}
-                    <div class="px-4 py-3 rounded-lg border flex items-start gap-2
-                        {% if message.tags == 'success' %}bg-primary-container/20 text-on-primary-container border-primary/30{% elif message.tags == 'error' %}bg-error-container text-on-error-container border-error/30{% else %}bg-secondary-container text-on-secondary-container border-secondary/30{% endif %}">
-                        <span class="material-symbols-outlined text-[20px]">
-                            {% if message.tags == 'success' %}check_circle{% elif message.tags == 'error' %}error{% else %}info{% endif %}
-                        </span>
-                        <span class="font-body-sm text-body-sm">{{ message }}</span>
-                    </div>
-                    {% endfor %}
-                </div>
-                {% endif %}
+                {% include "partials/_messages.html" %}
                 {% block app_content %}{% endblock %}
             </div>
         </main>

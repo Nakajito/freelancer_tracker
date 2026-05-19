@@ -24,6 +24,7 @@ class FunnelMetrics:
         responded: int,
         accepted: int,
         accepted_amount: Decimal,
+        status_counts: list[dict] | None = None,
     ):
         self.total = total
         self.sent = sent
@@ -31,6 +32,7 @@ class FunnelMetrics:
         self.responded = responded
         self.accepted = accepted
         self.accepted_amount = accepted_amount
+        self.status_counts = status_counts or []
         self.conversion_rate = round((accepted / sent * 100), 2) if sent > 0 else 0
 
 
@@ -76,9 +78,21 @@ class DashboardService:
         accepted_amount = accepted_qs.aggregate(total=models.Sum("amount"))[
             "total"
         ] or Decimal("0")
+        status_counts = []
+        baseline = proposals.count()
+        for value, label in ProposalStatus.choices:
+            count = proposals.filter(status=value).count()
+            status_counts.append(
+                {
+                    "value": value,
+                    "label": label,
+                    "count": count,
+                    "percentage": round((count / baseline) * 100, 2) if baseline else 0,
+                }
+            )
 
         return FunnelMetrics(
-            total=proposals.count(),
+            total=baseline,
             sent=proposals.exclude(status=ProposalStatus.DRAFT).count(),
             viewed=proposals.filter(status=ProposalStatus.VIEWED).count(),
             responded=proposals.filter(
@@ -86,6 +100,7 @@ class DashboardService:
             ).count(),
             accepted=accepted_qs.count(),
             accepted_amount=accepted_amount,
+            status_counts=status_counts,
         )
 
     @staticmethod
@@ -184,7 +199,9 @@ class DashboardService:
         )
 
     @staticmethod
-    def get_earnings_chart(user, months: int = 6, anchor_date: date | None = None) -> dict:
+    def get_earnings_chart(
+        user, months: int = 6, anchor_date: date | None = None
+    ) -> dict:
         """Return labels/data arrays of accepted revenue per month for charting.
 
         Args:
@@ -254,7 +271,11 @@ class DashboardService:
                 .exclude(status=ProposalStatus.DRAFT)
                 .filter(
                     Q(sent_date__gte=start, sent_date__lt=end)
-                    | Q(sent_date__isnull=True, created_at__date__gte=start, created_at__date__lt=end)
+                    | Q(
+                        sent_date__isnull=True,
+                        created_at__date__gte=start,
+                        created_at__date__lt=end,
+                    )
                 )
             )
             sent_count = sent_qs.count()
@@ -280,7 +301,11 @@ class DashboardService:
                 .exclude(status=ProposalStatus.DRAFT)
                 .filter(
                     Q(sent_date__gte=start, sent_date__lt=end)
-                    | Q(sent_date__isnull=True, created_at__date__gte=start, created_at__date__lt=end)
+                    | Q(
+                        sent_date__isnull=True,
+                        created_at__date__gte=start,
+                        created_at__date__lt=end,
+                    )
                 )
             )
             sent_count = sent_qs.count()
