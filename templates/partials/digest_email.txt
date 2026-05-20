@@ -1,0 +1,22 @@
+{% load i18n %}{% trans "Hi" %} {{ user.get_full_name|default:user.email }},
+
+{% trans "Here is your daily digest from PropoTrack." %}
+
+{% if overdue %}
+=== {% trans "Overdue Follow-ups" %} ===
+{% for followup in overdue %}
+- {{ followup.proposal.title }} ({% trans "due" %}: {{ followup.due_date }})
+{% endfor %}
+{% endif %}
+{% if upcoming %}
+=== {% trans "Upcoming Follow-ups" %} ===
+{% for followup in upcoming %}
+- {{ followup.proposal.title }} ({% trans "due" %}: {{ followup.due_date }})
+{% endfor %}
+{% endif %}
+=== {% trans "Monthly Summary" %}: {{ month_summary.period_label }} ===
+{% trans "Proposals sent" %}: {{ month_summary.total_proposals }}
+{% trans "Won" %}: {{ month_summary.won }}
+{% trans "Total earnings" %}: ${{ month_summary.total_earnings }}
+
+{% trans "Log in to PropoTrack to take action." %}

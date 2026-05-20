@@ -4,6 +4,7 @@ from django.core.management.base import BaseCommand
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.conf import settings
+from django.utils import translation
 
 from apps.accounts.models import User
 from apps.exports.services import MonthlySummaryGenerator
@@ -51,11 +52,14 @@ class Command(BaseCommand):
             "month_summary": month_summary,
         }
 
-        message = render_to_string("partials/digest_email.txt", context)
+        lang = getattr(user, "language_preference", "en") or "en"
+        with translation.override(lang):
+            message = render_to_string("partials/digest_email.txt", context)
+            subject = f"Digest - {today.strftime('%Y-%m-%d')}"
 
         if not dry_run:
             send_mail(
-                subject=f"Digest - {today.strftime('%Y-%m-%d')}",
+                subject=subject,
                 message=message,
                 from_email=settings.DEFAULT_FROM_EMAIL,
                 recipient_list=[user.email],

@@ -112,3 +112,33 @@ msgstr "Contraseña"
 
 msgid "Enter your current password to continue."
 msgstr "Ingresa tu contraseña actual para continuar."
+
+msgid "Hi"
+msgstr "Hola"
+
+msgid "Here is your daily digest from PropoTrack."
+msgstr "Aquí está tu resumen diario de PropoTrack."
+
+msgid "Overdue Follow-ups"
+msgstr "Seguimientos vencidos"
+
+msgid "Upcoming Follow-ups"
+msgstr "Próximos seguimientos"
+
+msgid "due"
+msgstr "vence"
+
+msgid "Monthly Summary"
+msgstr "Resumen mensual"
+
+msgid "Proposals sent"
+msgstr "Propuestas enviadas"
+
+msgid "Won"
+msgstr "Ganadas"
+
+msgid "Total earnings"
+msgstr "Ganancias totales"
+
+msgid "Log in to PropoTrack to take action."
+msgstr "Ingresa a PropoTrack para tomar acción."
