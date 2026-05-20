@@ -1,0 +1,120 @@
+<h2>Icon-buttons que ciclan — diseño propuesto</h2>
+<p class="subtitle">Reemplazan los &lt;select&gt; actuales en topbar (logueados) y nueva navbar pública</p>
+
+<div class="section">
+  <h3>Comportamiento de ciclo</h3>
+  <div style="display:flex;gap:24px;flex-wrap:wrap;margin-top:12px">
+    <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:16px;min-width:200px">
+      <div class="label">Tema (3 estados)</div>
+      <div style="display:flex;align-items:center;gap:8px;margin-top:8px;font-size:13px">
+        <span style="background:#fff;border:1px solid #cbd5e1;border-radius:999px;padding:5px 12px;display:inline-flex;align-items:center;gap:4px">
+          <span style="font-size:16px">☀️</span> Light
+        </span>
+        <span style="color:#64748b">→ click →</span>
+        <span style="background:#fff;border:1px solid #cbd5e1;border-radius:999px;padding:5px 12px;display:inline-flex;align-items:center;gap:4px">
+          <span style="font-size:16px">🌙</span> Dark
+        </span>
+        <span style="color:#64748b">→ click →</span>
+        <span style="background:#fff;border:1px solid #cbd5e1;border-radius:999px;padding:5px 12px;display:inline-flex;align-items:center;gap:4px">
+          <span style="font-size:16px">⚙️</span> System
+        </span>
+      </div>
+    </div>
+    <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:16px;min-width:200px">
+      <div class="label">Idioma (2 estados)</div>
+      <div style="display:flex;align-items:center;gap:8px;margin-top:8px;font-size:13px">
+        <span style="background:#fff;border:1px solid #cbd5e1;border-radius:999px;padding:5px 12px;font-weight:600">EN</span>
+        <span style="color:#64748b">⇌ toggle ⇌</span>
+        <span style="background:#fff;border:1px solid #cbd5e1;border-radius:999px;padding:5px 12px;font-weight:600">ES</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h3>Icono Material Symbols a usar</h3>
+  <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:8px;font-size:12px;color:#334155">
+    <div style="text-align:center;background:#f1f5f9;padding:12px 16px;border-radius:8px">
+      <div style="font-size:22px;font-family:serif">☀</div>
+      <div style="margin-top:4px"><code>light_mode</code></div>
+    </div>
+    <div style="text-align:center;background:#f1f5f9;padding:12px 16px;border-radius:8px">
+      <div style="font-size:22px;font-family:serif">🌙</div>
+      <div style="margin-top:4px"><code>dark_mode</code></div>
+    </div>
+    <div style="text-align:center;background:#f1f5f9;padding:12px 16px;border-radius:8px">
+      <div style="font-size:22px;font-family:serif">☰</div>
+      <div style="margin-top:4px"><code>display_settings</code></div>
+    </div>
+    <div style="text-align:center;background:#f1f5f9;padding:12px 16px;border-radius:8px">
+      <div style="font-size:22px;font-family:serif">🌐</div>
+      <div style="margin-top:4px"><code>translate</code></div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h3>Vista previa en navbar (usuarios logueados — topbar)</h3>
+  <div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;overflow:hidden">
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 16px;border-bottom:1px solid #e2e8f0;font-size:13px">
+      <div style="background:#f1f5f9;border-radius:999px;padding:6px 12px;display:inline-flex;align-items:center;gap:6px;max-width:240px;width:100%">
+        <span style="color:#94a3b8;font-size:16px">🔍</span>
+        <span style="color:#94a3b8;font-size:12px">Search proposals, clients...</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <!-- Theme button -->
+        <button style="border:1px solid #cbd5e1;border-radius:999px;padding:5px 12px;display:inline-flex;align-items:center;gap:4px;background:#f8fafc;cursor:pointer;font-size:12px">
+          <span style="font-size:16px">☀️</span>
+          <span>Light</span>
+        </button>
+        <!-- Language button -->
+        <button style="border:1px solid #cbd5e1;border-radius:999px;padding:5px 12px;display:inline-flex;align-items:center;gap:4px;background:#f8fafc;cursor:pointer;font-size:12px;font-weight:600">
+          <span style="font-size:14px">🌐</span>
+          <span>EN</span>
+        </button>
+        <button style="padding:6px;border-radius:50%;border:none;background:transparent;cursor:pointer;font-size:18px">🔔</button>
+        <div style="width:28px;height:28px;border-radius:50%;background:#e2e8f0;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600">D</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h3>Vista previa en navbar pública (login / signup)</h3>
+  <div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;overflow:hidden">
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 16px;border-bottom:1px solid #e2e8f0;font-size:13px">
+      <strong style="color:#00685f;font-size:15px">PropoTrack</strong>
+      <span style="color:#64748b;font-size:12px">Features · Advantages · Solutions · Pricing</span>
+      <div style="display:flex;align-items:center;gap:8px">
+        <button style="border:1px solid #cbd5e1;border-radius:999px;padding:5px 12px;display:inline-flex;align-items:center;gap:4px;background:#f8fafc;cursor:pointer;font-size:12px">
+          <span style="font-size:16px">⚙️</span>
+          <span>System</span>
+        </button>
+        <button style="border:1px solid #cbd5e1;border-radius:999px;padding:5px 12px;display:inline-flex;align-items:center;gap:4px;background:#f8fafc;cursor:pointer;font-size:12px;font-weight:600">
+          <span style="font-size:14px">🌐</span>
+          <span>EN</span>
+        </button>
+        <span style="background:#e2e8f0;width:1px;height:20px;display:inline-block"></span>
+        <a style="font-size:12px;border:1px solid #cbd5e1;padding:5px 12px;border-radius:4px;text-decoration:none;color:#334155">Log In</a>
+        <a style="font-size:12px;background:#00685f;color:#fff;padding:5px 12px;border-radius:4px;text-decoration:none">Get Started</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="options">
+  <div class="option" data-choice="icon-label" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Icono + etiqueta (☀️ Light)</h3>
+      <p>Más descriptivo, fácil de entender sin conocer los iconos. Ocupa más espacio horizontal.</p>
+    </div>
+  </div>
+  <div class="option" data-choice="icon-only" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Solo icono (☀️)</h3>
+      <p>Más compacto. Menos espacio. Requiere tooltip para claridad. Ideal en mobile.</p>
+    </div>
+  </div>
+</div>

@@ -12,7 +12,7 @@ A Django web application for freelancers to track proposals, clients, follow-ups
 - **Templates**: Reusable proposal templates with variable placeholders
 - **Dashboard**: Real-time metrics on proposal funnel, conversion rates, and forecasts, including every proposal status
 - **Analytics**: Monthly summaries, platform statistics, earnings forecasts
-- **Preferences**: Light/dark/system theme support and English/Spanish language switching
+- **Preferences**: Light/dark/system theme and English/Spanish language switching — available to all users, including guests
 - **User Profile**: Edit name, email, avatar, preferences, change password, and deactivate the account while preserving history
 
 ## Tech Stack
@@ -117,13 +117,22 @@ The project uses **Tailwind CSS** with custom design tokens:
 
 ## User Preferences & Account
 
-Authenticated users can manage their account at:
+Theme (light/dark/system) and language (English/Español) controls are available to **all users**:
+
+| User type | Theme persistence | Language persistence |
+|---|---|---|
+| Guest | `localStorage` key `ft_theme` + inline anti-flash script | Django language cookie via `/i18n/set_language/` |
+| Authenticated | `User.theme_preference` (DB) | `User.language_preference` (DB) + language cookie |
+
+Controls appear as icon-button pills in the navbar on all pages. Clicking cycles through states (theme: System → Light → Dark; language: EN ↔ ES).
+
+Authenticated users can also manage their account at:
 
 - `/accounts/profile/` - profile, avatar, theme, language, and password link
-- `/accounts/preferences/` - POST endpoint used by the topbar selectors
+- `/accounts/preferences/` - POST endpoint used by the topbar icon-buttons
 - `/accounts/deactivate/` - password-confirmed account deactivation (`is_active=False`)
 
-Language switching uses Django i18n with English and Spanish catalogs. The current language is stored in the Django language cookie and mirrored in `User.language_preference`.
+Language switching uses Django i18n with English and Spanish catalogs.
 
 ## API Endpoints
 

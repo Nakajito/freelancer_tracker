@@ -1,158 +1,162 @@
 {% extends "base.html" %}
-{% block title %}Terms of Service{% endblock %}
-{% block meta_description %}PropoTrack Terms of Service — rules and conditions for using the platform.{% endblock %}
+{% load i18n %}
+{% block title %}{% trans "Terms of Service" %}{% endblock %}
+{% block meta_description %}{% trans "PropoTrack Terms of Service — rules and conditions for using the platform." %}{% endblock %}
 
 {% block content %}
 <div class="max-w-3xl mx-auto px-4 py-12 space-y-8">
     <header class="border-b border-outline pb-6">
-        <h1 class="font-headline-lg text-headline-lg font-display-md">Terms of Service</h1>
-        <p class="text-body-sm text-on-background-variant mt-2">Effective: May 11, 2026</p>
+        <h1 class="font-headline-lg text-headline-lg font-display-md">{% trans "Terms of Service" %}</h1>
+        <p class="text-body-sm text-on-background-variant mt-2">{% trans "Effective: May 11, 2026" %}</p>
     </header>
 
     <section class="space-y-6">
-        <h2 class="font-title-lg text-title-lg">1. Introduction</h2>
+        <h2 class="font-title-lg text-title-lg">{% trans "1. Introduction" %}</h2>
         <p class="text-body-md text-on-background-variant leading-relaxed">
-            By accessing or using PropoTrack ("the Service"), you ("you" or "the User") agree to be bound by these Terms of Service ("Terms"). If you do not agree to these Terms, do not use the Service. PropoTrack is a proposal and client management tool operated for freelancers. You must be 18 years of age or older (or have the legal capacity under your local law) to use the Service.
+            {% blocktrans %}By accessing or using PropoTrack ("the Service"), you ("you" or "the User") agree to be bound by these Terms of Service ("Terms"). If you do not agree to these Terms, do not use the Service. PropoTrack is a proposal and client management tool operated for freelancers. You must be 18 years of age or older (or have the legal capacity under your local law) to use the Service.{% endblocktrans %}
         </p>
     </section>
 
     <section class="space-y-6">
-        <h2 class="font-title-lg text-title-lg">2. Definitions</h2>
+        <h2 class="font-title-lg text-title-lg">{% trans "2. Definitions" %}</h2>
         <ul class="list-disc list-inside text-body-md text-on-background-variant space-y-1">
-            <li><strong>Service</strong> — the PropoTrack web application and all related features.</li>
-            <li><strong>User</strong> — any person who creates an account and accesses the Service.</li>
-            <li><strong>Account</strong> — the registered user profile associated with your email address.</li>
-            <li><strong>Content</strong> — proposals, client information, time entries, follow-up records, templates, and any other data you submit through the Service.</li>
+            <li><strong>{% trans "Service" %}</strong> — {% trans "the PropoTrack web application and all related features." %}</li>
+            <li><strong>{% trans "User" %}</strong> — {% trans "any person who creates an account and accesses the Service." %}</li>
+            <li><strong>{% trans "Account" %}</strong> — {% trans "the registered user profile associated with your email address." %}</li>
+            <li><strong>{% trans "Content" %}</strong> — {% trans "proposals, client information, time entries, follow-up records, templates, and any other data you submit through the Service." %}</li>
         </ul>
     </section>
 
     <section class="space-y-6">
-        <h2 class="font-title-lg text-title-lg">3. Account Registration</h2>
+        <h2 class="font-title-lg text-title-lg">{% trans "3. Account Registration" %}</h2>
         <p class="text-body-md text-on-background-variant leading-relaxed">
-            Accounts are created via email and password through <code>django-allauth</code>. You are responsible for maintaining the confidentiality of your login credentials and for all activity that occurs under your Account. Each person may maintain only one account. You agree to provide accurate and truthful information when registering and to keep your information current.
+            {% blocktrans %}Accounts are created via email and password through <code>django-allauth</code>. You are responsible for maintaining the confidentiality of your login credentials and for all activity that occurs under your Account. Each person may maintain only one account. You agree to provide accurate and truthful information when registering and to keep your information current.{% endblocktrans %}
         </p>
     </section>
 
     <section class="space-y-6">
-        <h2 class="font-title-lg text-title-lg">4. Acceptable Use</h2>
-        <p class="text-body-md text-on-background-variant leading-relaxed">You agree not to use the Service to:</p>
+        <h2 class="font-title-lg text-title-lg">{% trans "4. Acceptable Use" %}</h2>
+        <p class="text-body-md text-on-background-variant leading-relaxed">{% trans "You agree not to use the Service to:" %}</p>
         <ul class="list-disc list-inside text-body-md text-on-background-variant space-y-1">
-            <li>Scraping, automated querying, or bulk data extraction</li>
-            <li>Reverse-engineering the application or its APIs</li>
-            <li>Reselling or redistributing access to the Service</li>
-            <li>Uploading or transmitting illegal, infringing, or malicious content</li>
-            <li>Impersonating any person or entity</li>
-            <li>Attempting to access or exfiltrate another user's data</li>
-            <li>Bypassing per-user data isolation mechanisms</li>
-            <li>Overloading or disrupting the infrastructure</li>
+            <li>{% trans "Scraping, automated querying, or bulk data extraction" %}</li>
+            <li>{% trans "Reverse-engineering the application or its APIs" %}</li>
+            <li>{% trans "Reselling or redistributing access to the Service" %}</li>
+            <li>{% trans "Uploading or transmitting illegal, infringing, or malicious content" %}</li>
+            <li>{% trans "Impersonating any person or entity" %}</li>
+            <li>{% trans "Attempting to access or exfiltrate another user's data" %}</li>
+            <li>{% trans "Bypassing per-user data isolation mechanisms" %}</li>
+            <li>{% trans "Overloading or disrupting the infrastructure" %}</li>
         </ul>
     </section>
 
     <section class="space-y-6">
-        <h2 class="font-title-lg text-title-lg">5. User Content &amp; Ownership</h2>
+        <h2 class="font-title-lg text-title-lg">{% trans "5. User Content &amp; Ownership" %}</h2>
         <p class="text-body-md text-on-background-variant leading-relaxed">
-            You retain full ownership of all Content you submit through PropoTrack. By submitting Content, you grant PropoTrack a limited, revocable, non-exclusive license to store, process, and display your Content solely for the purpose of operating the Service on your behalf. Your Content is never used to train machine learning models. Your Content is never shared with or sold to third parties.
+            {% blocktrans %}You retain full ownership of all Content you submit through PropoTrack. By submitting Content, you grant PropoTrack a limited, revocable, non-exclusive license to store, process, and display your Content solely for the purpose of operating the Service on your behalf. Your Content is never used to train machine learning models. Your Content is never shared with or sold to third parties.{% endblocktrans %}
         </p>
     </section>
 
     <section class="space-y-6">
-        <h2 class="font-title-lg text-title-lg">6. Intellectual Property</h2>
+        <h2 class="font-title-lg text-title-lg">{% trans "6. Intellectual Property" %}</h2>
         <p class="text-body-md text-on-background-variant leading-relaxed">
-            The name "PropoTrack," the application's user interface, source code, visual design, and branding are the intellectual property of the operator. You receive a limited, revocable, non-exclusive license to use the Service for your personal freelance management activities. No trademark rights are granted beyond this license.
+            {% blocktrans %}The name "PropoTrack," the application's user interface, source code, visual design, and branding are the intellectual property of the operator. You receive a limited, revocable, non-exclusive license to use the Service for your personal freelance management activities. No trademark rights are granted beyond this license.{% endblocktrans %}
         </p>
     </section>
 
     <section class="space-y-6">
-        <h2 class="font-title-lg text-title-lg">7. DMCA / IP Infringement</h2>
+        <h2 class="font-title-lg text-title-lg">{% trans "7. DMCA / IP Infringement" %}</h2>
         <p class="text-body-md text-on-background-variant leading-relaxed">
-            PropoTrack respects intellectual property rights and responds to valid takedown notices under the DMCA framework. To report alleged infringement, contact us at <a href="mailto:noreply@freelancer-tracker.dabg.dev" class="text-link underline">noreply@freelancer-tracker.dabg.dev</a> with:
+            {% blocktrans %}PropoTrack respects intellectual property rights and responds to valid takedown notices under the DMCA framework. To report alleged infringement, contact us at <a href="mailto:noreply@freelancer-tracker.dabg.dev" class="text-link underline">noreply@freelancer-tracker.dabg.dev</a> with:{% endblocktrans %}
         </p>
         <ul class="list-disc list-inside text-body-md text-on-background-variant space-y-1">
-            <li>Identification of the copyrighted work or intellectual property claimed infringed</li>
-            <li>Location of the infringing material within the Service</li>
-            <li>Your contact information</li>
-            <li>A statement of good-faith belief that the use is not authorized</li>
-            <li>A physical or electronic signature of the rights holder or authorized representative</li>
+            <li>{% trans "Identification of the copyrighted work or intellectual property claimed infringed" %}</li>
+            <li>{% trans "Location of the infringing material within the Service" %}</li>
+            <li>{% trans "Your contact information" %}</li>
+            <li>{% trans "A statement of good-faith belief that the use is not authorized" %}</li>
+            <li>{% trans "A physical or electronic signature of the rights holder or authorized representative" %}</li>
         </ul>
         <p class="text-body-md text-on-background-variant leading-relaxed">
-            Counter-notice procedures are available upon written request. Accounts that are repeat infringers will be terminated.
+            {% trans "Counter-notice procedures are available upon written request. Accounts that are repeat infringers will be terminated." %}
         </p>
     </section>
 
     <section class="space-y-6">
-        <h2 class="font-title-lg text-title-lg">8. Beta / No-Warranty Disclaimer</h2>
+        <h2 class="font-title-lg text-title-lg">{% trans "8. Beta / No-Warranty Disclaimer" %}</h2>
         <p class="text-body-md text-on-background-variant leading-relaxed">
-            The Service is provided <strong>"AS IS"</strong> and <strong>"AS AVAILABLE"</strong> without warranty of any kind. We disclaim all warranties, express or implied, including but not limited to implied warranties of merchantability, fitness for a particular purpose, accuracy, and uninterrupted availability. We do not guarantee that follow-up reminders, digest emails, or analytics features will be timely, accurate, or uninterrupted. Analytics and reports are for informational purposes only and do not constitute financial, legal, or business advice.
+            {% blocktrans %}The Service is provided <strong>"AS IS"</strong> and <strong>"AS AVAILABLE"</strong> without warranty of any kind. We disclaim all warranties, express or implied, including but not limited to implied warranties of merchantability, fitness for a particular purpose, accuracy, and uninterrupted availability. We do not guarantee that follow-up reminders, digest emails, or analytics features will be timely, accurate, or uninterrupted. Analytics and reports are for informational purposes only and do not constitute financial, legal, or business advice.{% endblocktrans %}
         </p>
     </section>
 
     <section class="space-y-6">
-        <h2 class="font-title-lg text-title-lg">9. Limitation of Liability</h2>
+        <h2 class="font-title-lg text-title-lg">{% trans "9. Limitation of Liability" %}</h2>
         <p class="text-body-md text-on-background-variant leading-relaxed">
-            To the maximum extent permitted by applicable law, PropoTrack shall not be liable for any indirect, incidental, consequential, special, or punitive damages — including but not limited to loss of data, loss of revenue, loss of profits, or loss of business opportunities — arising out of or related to your use of the Service. Aggregate liability is limited to <strong>USD $0</strong> (as this is a free service) or the amount, if any, paid by you in the 12 months preceding the claim, whichever is greater.
+            {% blocktrans %}To the maximum extent permitted by applicable law, PropoTrack shall not be liable for any indirect, incidental, consequential, special, or punitive damages — including but not limited to loss of data, loss of revenue, loss of profits, or loss of business opportunities — arising out of or related to your use of the Service. Aggregate liability is limited to <strong>USD $0</strong> (as this is a free service) or the amount, if any, paid by you in the 12 months preceding the claim, whichever is greater.{% endblocktrans %}
         </p>
     </section>
 
     <section class="space-y-6">
-        <h2 class="font-title-lg text-title-lg">10. Indemnification</h2>
+        <h2 class="font-title-lg text-title-lg">{% trans "10. Indemnification" %}</h2>
         <p class="text-body-md text-on-background-variant leading-relaxed">
-            You agree to indemnify, defend, and hold harmless PropoTrack, its operator, and affiliates from and against any claims, liabilities, damages, losses, or expenses (including reasonable legal fees) arising out of or related to your Content, your violation of these Terms, or your violation of any applicable law.
+            {% blocktrans %}You agree to indemnify, defend, and hold harmless PropoTrack, its operator, and affiliates from and against any claims, liabilities, damages, losses, or expenses (including reasonable legal fees) arising out of or related to your Content, your violation of these Terms, or your violation of any applicable law.{% endblocktrans %}
         </p>
     </section>
 
     <section class="space-y-6">
-        <h2 class="font-title-lg text-title-lg">11. Account Suspension &amp; Termination</h2>
+        <h2 class="font-title-lg text-title-lg">{% trans "11. Account Suspension &amp; Termination" %}</h2>
         <p class="text-body-md text-on-background-variant leading-relaxed">
-            PropoTrack may suspend or terminate your account for: violation of these Terms, violation of the Acceptable Use policy, suspected fraud, legal compliance requirements, or prolonged inactivity (longer than 24 months). You may delete your account at any time via your account settings or by contacting <a href="mailto:noreply@freelancer-tracker.dabg.dev" class="text-link underline">noreply@freelancer-tracker.dabg.dev</a>. Upon termination, your data is deleted within 30 days as described in our <a href="{% url 'privacy_policy' %}" class="text-link underline">Privacy Policy</a>.
+            {% url 'privacy_policy' as privacy_url %}
+            {% blocktrans with privacy_url=privacy_url %}PropoTrack may suspend or terminate your account for: violation of these Terms, violation of the Acceptable Use policy, suspected fraud, legal compliance requirements, or prolonged inactivity (longer than 24 months). You may delete your account at any time via your account settings or by contacting <a href="mailto:noreply@freelancer-tracker.dabg.dev" class="text-link underline">noreply@freelancer-tracker.dabg.dev</a>. Upon termination, your data is deleted within 30 days as described in our <a href="{{ privacy_url }}" class="text-link underline">Privacy Policy</a>.{% endblocktrans %}
         </p>
     </section>
 
     <section class="space-y-6">
-        <h2 class="font-title-lg text-title-lg">12. Service Availability &amp; Changes</h2>
+        <h2 class="font-title-lg text-title-lg">{% trans "12. Service Availability &amp; Changes" %}</h2>
         <p class="text-body-md text-on-background-variant leading-relaxed">
-            PropoTrack aims to maintain service availability on a best-effort basis but does not guarantee any uptime SLA. Features, functionality, and user interface elements may be added, modified, or removed at any time. Material changes affecting your use of the Service will be communicated via in-app notice or email to your registered address.
+            {% blocktrans %}PropoTrack aims to maintain service availability on a best-effort basis but does not guarantee any uptime SLA. Features, functionality, and user interface elements may be added, modified, or removed at any time. Material changes affecting your use of the Service will be communicated via in-app notice or email to your registered address.{% endblocktrans %}
         </p>
     </section>
 
     <section class="space-y-6">
-        <h2 class="font-title-lg text-title-lg">13. Third-Party Services</h2>
+        <h2 class="font-title-lg text-title-lg">{% trans "13. Third-Party Services" %}</h2>
         <p class="text-body-md text-on-background-variant leading-relaxed">
-            The Service runs on infrastructure provided by third parties (Coolify hosting, PostgreSQL database, SMTP email delivery). Their respective terms of service and privacy policies may apply to the extent relevant. PropoTrack does not embed third-party tracking scripts or advertising cookies, as documented in our <a href="{% url 'privacy_policy' %}" class="text-link underline">Privacy Policy</a>.
+            {% url 'privacy_policy' as privacy_url %}
+            {% blocktrans with privacy_url=privacy_url %}The Service runs on infrastructure provided by third parties (Coolify hosting, PostgreSQL database, SMTP email delivery). Their respective terms of service and privacy policies may apply to the extent relevant. PropoTrack does not embed third-party tracking scripts or advertising cookies, as documented in our <a href="{{ privacy_url }}" class="text-link underline">Privacy Policy</a>.{% endblocktrans %}
         </p>
     </section>
 
     <section class="space-y-6">
-        <h2 class="font-title-lg text-title-lg">14. Privacy</h2>
+        <h2 class="font-title-lg text-title-lg">{% trans "14. Privacy" %}</h2>
         <p class="text-body-md text-on-background-variant leading-relaxed">
-            The collection, use, and protection of your personal data is governed by the <a href="{% url 'privacy_policy' %}" class="text-link underline">PropoTrack Privacy Policy</a>, which is incorporated into these Terms by reference.
+            {% url 'privacy_policy' as privacy_url %}
+            {% blocktrans with privacy_url=privacy_url %}The collection, use, and protection of your personal data is governed by the <a href="{{ privacy_url }}" class="text-link underline">PropoTrack Privacy Policy</a>, which is incorporated into these Terms by reference.{% endblocktrans %}
         </p>
     </section>
 
     <section class="space-y-6">
-        <h2 class="font-title-lg text-title-lg">15. Governing Law</h2>
+        <h2 class="font-title-lg text-title-lg">{% trans "15. Governing Law" %}</h2>
         <p class="text-body-md text-on-background-variant leading-relaxed">
-            These Terms are governed by the laws of the country of your habitual residence in Latin America. Disputes shall be resolved in the courts of competent jurisdiction in that country, except where mandatory consumer protection laws provide otherwise.
+            {% blocktrans %}These Terms are governed by the laws of the country of your habitual residence in Latin America. Disputes shall be resolved in the courts of competent jurisdiction in that country, except where mandatory consumer protection laws provide otherwise.{% endblocktrans %}
         </p>
     </section>
 
     <section class="space-y-6">
-        <h2 class="font-title-lg text-title-lg">16. Changes to Terms</h2>
+        <h2 class="font-title-lg text-title-lg">{% trans "16. Changes to Terms" %}</h2>
         <p class="text-body-md text-on-background-variant leading-relaxed">
-            PropoTrack may revise these Terms at any time. The revised version will be posted on this page with an updated effective date. Your continued use of the Service after any revision constitutes acceptance of the updated Terms.
+            {% blocktrans %}PropoTrack may revise these Terms at any time. The revised version will be posted on this page with an updated effective date. Your continued use of the Service after any revision constitutes acceptance of the updated Terms.{% endblocktrans %}
         </p>
     </section>
 
     <section class="space-y-6">
-        <h2 class="font-title-lg text-title-lg">17. Severability</h2>
+        <h2 class="font-title-lg text-title-lg">{% trans "17. Severability" %}</h2>
         <p class="text-body-md text-on-background-variant leading-relaxed">
-            If any provision of these Terms is found to be unenforceable or invalid, that provision shall be limited or severed to the minimum extent necessary, and the remaining provisions shall continue in full force and effect.
+            {% blocktrans %}If any provision of these Terms is found to be unenforceable or invalid, that provision shall be limited or severed to the minimum extent necessary, and the remaining provisions shall continue in full force and effect.{% endblocktrans %}
         </p>
     </section>
 
     <section class="space-y-6">
-        <h2 class="font-title-lg text-title-lg">18. Contact</h2>
+        <h2 class="font-title-lg text-title-lg">{% trans "18. Contact" %}</h2>
         <p class="text-body-md text-on-background-variant leading-relaxed">
-            For questions regarding these Terms of Service, contact us at:<br>
+            {% trans "For questions regarding these Terms of Service, contact us at:" %}<br>
             <a href="mailto:noreply@freelancer-tracker.dabg.dev" class="text-link underline">noreply@freelancer-tracker.dabg.dev</a>
         </p>
     </section>

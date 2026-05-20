@@ -1,23 +1,24 @@
 {% extends "base.html" %}
-{% block title %}Apoya a PropoTrack{% endblock %}
-{% block meta_description %}Apoya el crecimiento de PropoTrack — proyecto impulsado por la comunidad de freelancers.{% endblock %}
+{% load i18n %}
+{% block title %}{% trans "Support PropoTrack" %}{% endblock %}
+{% block meta_description %}{% trans "Support the growth of PropoTrack — a community-driven project for freelancers." %}{% endblock %}
 
 {% block content %}
 <nav class="bg-surface/80 backdrop-blur-md sticky top-0 z-50 border-b border-outline-variant/30">
     <div class="flex justify-between items-center px-container-padding py-4 max-w-[1440px] mx-auto w-full">
         <a href="{% url 'landing' %}" class="font-display text-h2 font-bold text-primary tracking-tight">PropoTrack</a>
         <div class="hidden md:flex items-center gap-gutter">
-            <a href="{% url 'landing' %}#features" class="text-on-secondary-fixed-variant hover:text-primary transition-colors font-label-md text-label-md">Features</a>
-            <a href="{% url 'landing' %}#advantages" class="text-on-secondary-fixed-variant hover:text-primary transition-colors font-label-md text-label-md">Advantages</a>
-            <a href="{% url 'landing' %}#solutions" class="text-on-secondary-fixed-variant hover:text-primary transition-colors font-label-md text-label-md">Solutions</a>
-            <a href="{% url 'landing' %}#pricing" class="text-on-secondary-fixed-variant hover:text-primary transition-colors font-label-md text-label-md">Pricing</a>
+            <a href="{% url 'landing' %}#features" class="text-on-secondary-fixed-variant hover:text-primary transition-colors font-label-md text-label-md">{% trans "Features" %}</a>
+            <a href="{% url 'landing' %}#advantages" class="text-on-secondary-fixed-variant hover:text-primary transition-colors font-label-md text-label-md">{% trans "Advantages" %}</a>
+            <a href="{% url 'landing' %}#solutions" class="text-on-secondary-fixed-variant hover:text-primary transition-colors font-label-md text-label-md">{% trans "Solutions" %}</a>
+            <a href="{% url 'landing' %}#pricing" class="text-on-secondary-fixed-variant hover:text-primary transition-colors font-label-md text-label-md">{% trans "Pricing" %}</a>
         </div>
         <div class="flex items-center gap-unit">
             {% if user.is_authenticated %}
-            <a href="{% url 'dashboard' %}" class="px-4 py-2 font-label-md text-label-md bg-primary text-on-primary rounded hover:bg-primary-container transition-colors shadow-xs">Dashboard</a>
+            <a href="{% url 'dashboard' %}" class="px-4 py-2 font-label-md text-label-md bg-primary text-on-primary rounded hover:bg-primary-container transition-colors shadow-xs">{% trans "Dashboard" %}</a>
             {% else %}
-            <a href="{% url 'account_login' %}" class="hidden sm:block px-4 py-2 font-label-md text-label-md text-secondary border border-outline-variant rounded hover:bg-surface-container-highest transition-colors">Log In</a>
-            <a href="{% url 'account_signup' %}" class="px-4 py-2 font-label-md text-label-md bg-primary text-on-primary rounded hover:bg-primary-container transition-colors shadow-xs">Get Started</a>
+            <a href="{% url 'account_login' %}" class="hidden sm:block px-4 py-2 font-label-md text-label-md text-secondary border border-outline-variant rounded hover:bg-surface-container-highest transition-colors">{% trans "Log In" %}</a>
+            <a href="{% url 'account_signup' %}" class="px-4 py-2 font-label-md text-label-md bg-primary text-on-primary rounded hover:bg-primary-container transition-colors shadow-xs">{% trans "Get Started" %}</a>
             {% endif %}
         </div>
     </div>
@@ -25,23 +26,23 @@
 
 <main class="max-w-[1200px] mx-auto px-container-padding py-stack-lg">
     <section class="text-center mb-16 max-w-3xl mx-auto">
-        <span class="bg-secondary-container text-on-secondary-container px-4 py-1 rounded-full font-label-sm text-label-sm uppercase tracking-wider mb-6 inline-block">Comunidad</span>
-        <h1 class="font-display text-display text-on-surface mb-6">Apoya el crecimiento de PropoTrack</h1>
+        <span class="bg-secondary-container text-on-secondary-container px-4 py-1 rounded-full font-label-sm text-label-sm uppercase tracking-wider mb-6 inline-block">{% trans "Community" %}</span>
+        <h1 class="font-display text-display text-on-surface mb-6">{% trans "Support the growth of PropoTrack" %}</h1>
         <p class="font-body-lg text-body-lg text-on-surface-variant">
-            Somos un proyecto impulsado por la comunidad. Tu donación nos ayuda a mantener los servidores activos y a seguir desarrollando nuevas funcionalidades gratuitas para todos.
+            {% blocktrans %}We are a community-driven project. Your donation helps us keep the servers running and continue developing new free features for everyone.{% endblocktrans %}
         </p>
     </section>
 
     <form method="get" action="{% url 'donate_confirm' %}" class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
         <div class="lg:col-span-8 bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-8 shadow-[0_2px_4px_rgba(15,23,42,0.05)]">
             <div class="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
-                <h2 class="font-h2 text-h2 text-primary">Haz una donación</h2>
+                <h2 class="font-h2 text-h2 text-primary">{% trans "Make a donation" %}</h2>
                 <div class="flex items-center bg-surface-container-low p-1 rounded-lg" role="tablist">
                     <label class="px-4 py-2 text-label-md rounded-md cursor-pointer has-[:checked]:bg-white has-[:checked]:shadow-xs has-[:checked]:text-primary has-[:checked]:font-bold text-on-surface-variant">
-                        <input type="radio" name="frequency" value="one_time" class="sr-only" checked>Única
+                        <input type="radio" name="frequency" value="one_time" class="sr-only" checked>{% trans "One-time" %}
                     </label>
                     <label class="px-4 py-2 text-label-md rounded-md cursor-pointer has-[:checked]:bg-white has-[:checked]:shadow-xs has-[:checked]:text-primary has-[:checked]:font-bold text-on-surface-variant">
-                        <input type="radio" name="frequency" value="monthly" class="sr-only">Mensual
+                        <input type="radio" name="frequency" value="monthly" class="sr-only">{% trans "Monthly" %}
                     </label>
                 </div>
             </div>
@@ -56,17 +57,17 @@
                 {% endfor %}
                 <div class="col-span-2 sm:col-span-2 border-2 border-outline-variant rounded-xl flex items-center px-6 focus-within:border-primary transition-all">
                     <span class="text-on-surface-variant font-h3 text-h3 pr-4">$</span>
-                    <input class="w-full bg-transparent border-none focus:ring-0 font-body-md text-on-surface py-6" placeholder="Cantidad personalizada" type="number" min="1" step="1" name="custom_amount">
+                    <input class="w-full bg-transparent border-none focus:ring-0 font-body-md text-on-surface py-6" placeholder="{% trans "Custom amount" %}" type="number" min="1" step="1" name="custom_amount">
                 </div>
             </div>
 
             <div class="mb-10">
-                <p class="font-label-md text-label-md text-on-surface-variant mb-4 uppercase tracking-widest">Método de pago</p>
+                <p class="font-label-md text-label-md text-on-surface-variant mb-4 uppercase tracking-widest">{% trans "Payment method" %}</p>
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
                     <label class="flex items-center justify-center gap-3 border border-outline-variant/50 p-4 rounded-lg cursor-pointer hover:bg-surface-container transition-colors has-[:checked]:border-primary has-[:checked]:bg-primary-container/5">
                         <input type="radio" name="method" value="card" class="sr-only" checked>
                         <span class="material-symbols-outlined text-primary">credit_card</span>
-                        <span class="font-label-md">Tarjeta</span>
+                        <span class="font-label-md">{% trans "Card" %}</span>
                     </label>
                     <label class="flex items-center justify-center gap-3 border border-outline-variant/50 p-4 rounded-lg cursor-pointer hover:bg-surface-container transition-colors has-[:checked]:border-primary has-[:checked]:bg-primary-container/5">
                         <input type="radio" name="method" value="paypal" class="sr-only">
@@ -82,33 +83,33 @@
             </div>
 
             <button type="submit" class="w-full bg-primary text-on-primary py-5 rounded-xl font-h3 text-h3 hover:opacity-95 transition-all shadow-lg shadow-primary/20 flex items-center justify-center gap-3">
-                Continuar con la donación
+                {% trans "Continue with donation" %}
                 <span class="material-symbols-outlined">arrow_forward</span>
             </button>
 
             <div class="mt-8 flex flex-wrap justify-center gap-8 border-t border-outline-variant/20 pt-8">
                 <div class="flex items-center gap-2 text-on-surface-variant">
                     <span class="material-symbols-outlined text-[18px] text-primary" style="font-variation-settings: 'FILL' 1;">lock</span>
-                    <span class="font-label-sm text-label-sm">Transacción segura y encriptada</span>
+                    <span class="font-label-sm text-label-sm">{% trans "Secure and encrypted transaction" %}</span>
                 </div>
                 <div class="flex items-center gap-2 text-on-surface-variant">
                     <span class="material-symbols-outlined text-[18px] text-primary" style="font-variation-settings: 'FILL' 1;">verified</span>
-                    <span class="font-label-sm text-label-sm">Sin compromisos, cancela cuando quieras</span>
+                    <span class="font-label-sm text-label-sm">{% trans "No commitments, cancel anytime" %}</span>
                 </div>
             </div>
         </div>
 
         <aside class="lg:col-span-4 space-y-gutter">
             <div class="bg-primary text-on-primary p-8 rounded-xl shadow-[0_2px_4px_rgba(15,23,42,0.05)]">
-                <h3 class="font-h3 text-h3 mb-6">Tu impacto</h3>
+                <h3 class="font-h3 text-h3 mb-6">{% trans "Your impact" %}</h3>
                 <ul class="space-y-6">
                     <li class="flex items-start gap-4">
                         <span class="bg-primary-container text-on-primary-container p-2 rounded-lg">
                             <span class="material-symbols-outlined">dns</span>
                         </span>
                         <div>
-                            <p class="font-label-md font-bold">Servidores 24/7</p>
-                            <p class="font-body-sm text-on-primary/80">Mantén la infraestructura funcionando sin interrupciones para miles de usuarios.</p>
+                            <p class="font-label-md font-bold">{% trans "24/7 Servers" %}</p>
+                            <p class="font-body-sm text-on-primary/80">{% trans "Keep the infrastructure running without interruption for thousands of users." %}</p>
                         </div>
                     </li>
                     <li class="flex items-start gap-4">
@@ -116,8 +117,8 @@
                             <span class="material-symbols-outlined">code</span>
                         </span>
                         <div>
-                            <p class="font-label-md font-bold">Desarrollo continuo</p>
-                            <p class="font-body-sm text-on-primary/80">Nuevas funciones gratuitas diseñadas por y para la comunidad.</p>
+                            <p class="font-label-md font-bold">{% trans "Continuous development" %}</p>
+                            <p class="font-body-sm text-on-primary/80">{% trans "New free features designed by and for the community." %}</p>
                         </div>
                     </li>
                     <li class="flex items-start gap-4">
@@ -125,14 +126,14 @@
                             <span class="material-symbols-outlined">support_agent</span>
                         </span>
                         <div>
-                            <p class="font-label-md font-bold">Soporte prioritario</p>
-                            <p class="font-body-sm text-on-primary/80">Atención rápida por email para resolver tus dudas técnicas.</p>
+                            <p class="font-label-md font-bold">{% trans "Priority support" %}</p>
+                            <p class="font-body-sm text-on-primary/80">{% trans "Fast email support to resolve your technical questions." %}</p>
                         </div>
                     </li>
                 </ul>
             </div>
             <div class="relative h-64 rounded-xl overflow-hidden bg-surface-container-low border border-outline-variant/30 flex items-end p-6">
-                <p class="text-on-surface font-label-md text-label-md italic">"PropoTrack cambió mi forma de trabajar. Donar es mi forma de asegurar que siga creciendo." — Elena G.</p>
+                <p class="text-on-surface font-label-md text-label-md italic">{% trans '"PropoTrack changed the way I work. Donating is my way of making sure it keeps growing." — Elena G.' %}</p>
             </div>
         </aside>
     </form>
@@ -142,10 +143,10 @@
     <div class="w-full px-container-padding py-stack-lg max-w-[1440px] mx-auto flex flex-col md:flex-row justify-between items-center gap-gutter">
         <div class="font-h3 text-h3 font-bold text-on-surface">PropoTrack</div>
         <div class="flex flex-wrap justify-center gap-6">
-            <a href="{% url 'privacy_policy' %}" class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-all">Privacy Policy</a>
-            <a href="{% url 'terms_of_service' %}" class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-all">Terms of Service</a>
-            <a href="{% url 'security' %}" class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-all">Security</a>
-            <a href="{% url 'donate' %}" class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-all">Donate</a>
+            <a href="{% url 'privacy_policy' %}" class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-all">{% trans "Privacy Policy" %}</a>
+            <a href="{% url 'terms_of_service' %}" class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-all">{% trans "Terms of Service" %}</a>
+            <a href="{% url 'security' %}" class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-all">{% trans "Security" %}</a>
+            <a href="{% url 'donate' %}" class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-all">{% trans "Donate" %}</a>
         </div>
         <div class="font-body-sm text-body-sm text-on-surface-variant">© {% now "Y" %} PropoTrack.</div>
     </div>

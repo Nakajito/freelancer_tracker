@@ -88,3 +88,37 @@ def test_i18n_settings_are_configured():
         < middleware.index("django.middleware.locale.LocaleMiddleware")
         < middleware.index("django.middleware.common.CommonMiddleware")
     )
+
+
+@pytest.mark.django_db
+class TestPublicNavbarPreferenceToggles:
+    def test_login_page_has_theme_button(self, client):
+        response = client.get(reverse("account_login"))
+        assert response.status_code == 200
+        assert b"data-theme-btn" in response.content
+
+    def test_login_page_has_language_button(self, client):
+        response = client.get(reverse("account_login"))
+        assert response.status_code == 200
+        assert b"data-lang-btn" in response.content
+
+    def test_signup_page_has_theme_button(self, client):
+        response = client.get(reverse("account_signup"))
+        assert response.status_code == 200
+        assert b"data-theme-btn" in response.content
+
+    def test_signup_page_has_language_button(self, client):
+        response = client.get(reverse("account_signup"))
+        assert response.status_code == 200
+        assert b"data-lang-btn" in response.content
+
+
+@pytest.mark.django_db
+class TestContextProcessorAnonymous:
+    def test_anonymous_user_gets_system_theme(self, client):
+        response = client.get(reverse("account_login"))
+        assert response.context["active_theme"] == "system"
+
+    def test_anonymous_user_gets_default_language(self, client):
+        response = client.get(reverse("account_login"))
+        assert response.context["active_language"] in ("en", "es")

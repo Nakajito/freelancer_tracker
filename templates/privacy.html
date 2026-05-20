@@ -1,138 +1,139 @@
 {% extends "base.html" %}
-{% block title %}Privacy Policy{% endblock %}
-{% block meta_description %}PropoTrack Privacy Policy — learn how we collect, use, and protect your data.{% endblock %}
+{% load i18n %}
+{% block title %}{% trans "Privacy Policy" %}{% endblock %}
+{% block meta_description %}{% trans "PropoTrack Privacy Policy — learn how we collect, use, and protect your data." %}{% endblock %}
 
 {% block content %}
 <div class="max-w-3xl mx-auto px-4 py-12 space-y-8">
     <header class="border-b border-outline pb-6">
-        <h1 class="font-headline-lg text-headline-lg font-display-md">Privacy Policy</h1>
-        <p class="text-body-sm text-on-background-variant mt-2">Effective: May 11, 2026</p>
+        <h1 class="font-headline-lg text-headline-lg font-display-md">{% trans "Privacy Policy" %}</h1>
+        <p class="text-body-sm text-on-background-variant mt-2">{% trans "Effective: May 11, 2026" %}</p>
     </header>
 
     <section class="space-y-6">
-        <h2 class="font-title-lg text-title-lg">1. Introduction</h2>
+        <h2 class="font-title-lg text-title-lg">{% trans "1. Introduction" %}</h2>
         <p class="text-body-md text-on-background-variant leading-relaxed">
-            PropoTrack ("we", "our", or "us") is a proposal and client management tool for freelancers. This Privacy Policy explains what personal data we collect, how we use it, and what rights you have regarding your information. This policy applies to all users of PropoTrack.
+            {% blocktrans %}PropoTrack ("we", "our", or "us") is a proposal and client management tool for freelancers. This Privacy Policy explains what personal data we collect, how we use it, and what rights you have regarding your information. This policy applies to all users of PropoTrack.{% endblocktrans %}
         </p>
     </section>
 
     <section class="space-y-6">
-        <h2 class="font-title-lg text-title-lg">2. Data We Collect</h2>
+        <h2 class="font-title-lg text-title-lg">{% trans "2. Data We Collect" %}</h2>
         <p class="text-body-md text-on-background-variant leading-relaxed">
-            We collect the following data, which you provide directly when using PropoTrack:
+            {% trans "We collect the following data, which you provide directly when using PropoTrack:" %}
         </p>
         <ul class="list-disc list-inside text-body-md text-on-background-variant space-y-1">
-            <li><strong>Account</strong> — email address and name</li>
-            <li><strong>Proposals</strong> — title, platform (Upwork/Fiverr/Freelancer/Workana/LinkedIn/Other), amount, status, job URL, proposal URL, sent date, expected and actual response dates</li>
-            <li><strong>Clients</strong> — client name</li>
-            <li><strong>Follow-ups</strong> — description, due date, completed status, completion timestamp, notes</li>
-            <li><strong>Time entries</strong> — hours logged, description, date, billable flag</li>
-            <li><strong>Proposal templates</strong> — name and body content</li>
-            <li><strong>Activity logs</strong> — actions taken within the platform (status changes, follow-up completions)</li>
+            <li><strong>{% trans "Account" %}</strong> — {% trans "email address and name" %}</li>
+            <li><strong>{% trans "Proposals" %}</strong> — {% trans "title, platform (Upwork/Fiverr/Freelancer/Workana/LinkedIn/Other), amount, status, job URL, proposal URL, sent date, expected and actual response dates" %}</li>
+            <li><strong>{% trans "Clients" %}</strong> — {% trans "client name" %}</li>
+            <li><strong>{% trans "Follow-ups" %}</strong> — {% trans "description, due date, completed status, completion timestamp, notes" %}</li>
+            <li><strong>{% trans "Time entries" %}</strong> — {% trans "hours logged, description, date, billable flag" %}</li>
+            <li><strong>{% trans "Proposal templates" %}</strong> — {% trans "name and body content" %}</li>
+            <li><strong>{% trans "Activity logs" %}</strong> — {% trans "actions taken within the platform (status changes, follow-up completions)" %}</li>
         </ul>
         <p class="text-body-md text-on-background-variant leading-relaxed">
-            We do <strong>not</strong> collect payment card data. All financial amounts are stored as decimal values you manually enter.
+            {% blocktrans %}We do <strong>not</strong> collect payment card data. All financial amounts are stored as decimal values you manually enter.{% endblocktrans %}
         </p>
     </section>
 
     <section class="space-y-6">
-        <h2 class="font-title-lg text-title-lg">3. How We Use Your Data</h2>
-        <p class="text-body-md text-on-background-variant leading-relaxed">We use your data to:</p>
+        <h2 class="font-title-lg text-title-lg">{% trans "3. How We Use Your Data" %}</h2>
+        <p class="text-body-md text-on-background-variant leading-relaxed">{% trans "We use your data to:" %}</p>
         <ul class="list-disc list-inside text-body-md text-on-background-variant space-y-1">
-            <li>Manage proposals and track their lifecycle</li>
-            <li>Schedule and track follow-up reminders</li>
-            <li>Log time entries and generate billing summaries</li>
-            <li>Send follow-up digest notifications</li>
-            <li>Generate export files (CSV, JSON, monthly HTML summary)</li>
-            <li>Display dashboard analytics and charts</li>
-            <li>Detect potential duplicate proposals</li>
+            <li>{% trans "Manage proposals and track their lifecycle" %}</li>
+            <li>{% trans "Schedule and track follow-up reminders" %}</li>
+            <li>{% trans "Log time entries and generate billing summaries" %}</li>
+            <li>{% trans "Send follow-up digest notifications" %}</li>
+            <li>{% trans "Generate export files (CSV, JSON, monthly HTML summary)" %}</li>
+            <li>{% trans "Display dashboard analytics and charts" %}</li>
+            <li>{% trans "Detect potential duplicate proposals" %}</li>
         </ul>
     </section>
 
     <section class="space-y-6">
-        <h2 class="font-title-lg text-title-lg">4. Cookies</h2>
-        <p class="text-body-md text-on-background-variant leading-relaxed">PropoTrack uses only the cookies necessary for platform functionality:</p>
+        <h2 class="font-title-lg text-title-lg">{% trans "4. Cookies" %}</h2>
+        <p class="text-body-md text-on-background-variant leading-relaxed">{% trans "PropoTrack uses only the cookies necessary for platform functionality:" %}</p>
         <table class="w-full text-body-sm text-on-background-variant border border-outline rounded-lg overflow-hidden">
             <thead class="bg-surface text-on-surface">
                 <tr>
-                    <th class="px-4 py-2 text-left font-medium">Cookie</th>
-                    <th class="px-4 py-2 text-left font-medium">Purpose</th>
-                    <th class="px-4 py-2 text-left font-medium">Duration</th>
+                    <th class="px-4 py-2 text-left font-medium">{% trans "Cookie" %}</th>
+                    <th class="px-4 py-2 text-left font-medium">{% trans "Purpose" %}</th>
+                    <th class="px-4 py-2 text-left font-medium">{% trans "Duration" %}</th>
                 </tr>
             </thead>
             <tbody class="divide-y divide-outline">
                 <tr>
                     <td class="px-4 py-2"><code>sessionid</code></td>
-                    <td class="px-4 py-2">Django session authentication</td>
-                    <td class="px-4 py-2">Session</td>
+                    <td class="px-4 py-2">{% trans "Django session authentication" %}</td>
+                    <td class="px-4 py-2">{% trans "Session" %}</td>
                 </tr>
                 <tr>
                     <td class="px-4 py-2"><code>csrftoken</code></td>
-                    <td class="px-4 py-2">Cross-Site Request Forgery protection</td>
-                    <td class="px-4 py-2">1 year</td>
+                    <td class="px-4 py-2">{% trans "Cross-Site Request Forgery protection" %}</td>
+                    <td class="px-4 py-2">{% trans "1 year" %}</td>
                 </tr>
                 <tr>
                     <td class="px-4 py-2"><code>Htmx-Request</code></td>
-                    <td class="px-4 py-2">HTMX progressive enhancement header (not a cookie — processed server-side)</td>
-                    <td class="px-4 py-2">Per request</td>
+                    <td class="px-4 py-2">{% trans "HTMX progressive enhancement header (not a cookie — processed server-side)" %}</td>
+                    <td class="px-4 py-2">{% trans "Per request" %}</td>
                 </tr>
             </tbody>
         </table>
         <p class="text-body-sm text-on-background-variant leading-relaxed">
-            We do not use advertising or tracking cookies. No third-party analytics or marketing scripts are loaded.
+            {% trans "We do not use advertising or tracking cookies. No third-party analytics or marketing scripts are loaded." %}
         </p>
     </section>
 
     <section class="space-y-6">
-        <h2 class="font-title-lg text-title-lg">5. Data Storage</h2>
+        <h2 class="font-title-lg text-title-lg">{% trans "5. Data Storage" %}</h2>
         <p class="text-body-md text-on-background-variant leading-relaxed">
-            Your data is stored in a relational database. In development environments, SQLite is used. In production, PostgreSQL 16 is used. All database connections are secured via environment-configured credentials. Authentication is handled by <code>django-allauth</code> with session-based (not token-based) authentication.
+            {% blocktrans %}Your data is stored in a relational database. In development environments, SQLite is used. In production, PostgreSQL 16 is used. All database connections are secured via environment-configured credentials. Authentication is handled by <code>django-allauth</code> with session-based (not token-based) authentication.{% endblocktrans %}
         </p>
         <p class="text-body-md text-on-background-variant leading-relaxed">
-            Data is isolated per user account — you can only access your own proposals, clients, time entries, and related records.
-        </p>
-    </section>
-
-    <section class="space-y-6">
-        <h2 class="font-title-lg text-title-lg">6. Data Retention</h2>
-        <p class="text-body-md text-on-background-variant leading-relaxed">
-            We retain your data for as long as your account is active. You may request deletion of your account and all associated data at any time (see Section 7). After account deletion, data is removed from the active database within 30 days.
+            {% trans "Data is isolated per user account — you can only access your own proposals, clients, time entries, and related records." %}
         </p>
     </section>
 
     <section class="space-y-6">
-        <h2 class="font-title-lg text-title-lg">7. Your Rights (GDPR &amp; CCPA)</h2>
-        <p class="text-body-md text-on-background-variant leading-relaxed">You have the right to:</p>
+        <h2 class="font-title-lg text-title-lg">{% trans "6. Data Retention" %}</h2>
+        <p class="text-body-md text-on-background-variant leading-relaxed">
+            {% blocktrans %}We retain your data for as long as your account is active. You may request deletion of your account and all associated data at any time (see Section 7). After account deletion, data is removed from the active database within 30 days.{% endblocktrans %}
+        </p>
+    </section>
+
+    <section class="space-y-6">
+        <h2 class="font-title-lg text-title-lg">{% trans "7. Your Rights (GDPR &amp; CCPA)" %}</h2>
+        <p class="text-body-md text-on-background-variant leading-relaxed">{% trans "You have the right to:" %}</p>
         <ul class="list-disc list-inside text-body-md text-on-background-variant space-y-1">
-            <li><strong>Access</strong> — request a copy of all data we hold about you</li>
-            <li><strong>Rectification</strong> — correct or update any inaccurate data</li>
-            <li><strong>Erasure</strong> — request deletion of your account and all data</li>
-            <li><strong>Portability</strong> — export your data in JSON or CSV format</li>
-            <li><strong>Objection</strong> — object to specific processing activities</li>
+            <li><strong>{% trans "Access" %}</strong> — {% trans "request a copy of all data we hold about you" %}</li>
+            <li><strong>{% trans "Rectification" %}</strong> — {% trans "correct or update any inaccurate data" %}</li>
+            <li><strong>{% trans "Erasure" %}</strong> — {% trans "request deletion of your account and all data" %}</li>
+            <li><strong>{% trans "Portability" %}</strong> — {% trans "export your data in JSON or CSV format" %}</li>
+            <li><strong>{% trans "Objection" %}</strong> — {% trans "object to specific processing activities" %}</li>
         </ul>
         <p class="text-body-md text-on-background-variant leading-relaxed">
-            To exercise any of these rights, contact us at <a href="mailto:noreply@freelancer-tracker.dabg.dev" class="text-link underline">noreply@freelancer-tracker.dabg.dev</a>. We will respond within 30 days.
+            {% blocktrans %}To exercise any of these rights, contact us at <a href="mailto:noreply@freelancer-tracker.dabg.dev" class="text-link underline">noreply@freelancer-tracker.dabg.dev</a>. We will respond within 30 days.{% endblocktrans %}
         </p>
     </section>
 
     <section class="space-y-6">
-        <h2 class="font-title-lg text-title-lg">8. Data Security</h2>
+        <h2 class="font-title-lg text-title-lg">{% trans "8. Data Security" %}</h2>
         <p class="text-body-md text-on-background-variant leading-relaxed">
-            We implement standard security practices including HTTPS enforcement in production, CSRF protection, session security, and per-user data isolation at the database query level. No data is shared with third parties.
+            {% blocktrans %}We implement standard security practices including HTTPS enforcement in production, CSRF protection, session security, and per-user data isolation at the database query level. No data is shared with third parties.{% endblocktrans %}
         </p>
     </section>
 
     <section class="space-y-6">
-        <h2 class="font-title-lg text-title-lg">9. Changes to This Policy</h2>
+        <h2 class="font-title-lg text-title-lg">{% trans "9. Changes to This Policy" %}</h2>
         <p class="text-body-md text-on-background-variant leading-relaxed">
-            We may update this Privacy Policy from time to time. Any changes will be posted on this page with an updated effective date. We encourage you to review this policy periodically.
+            {% blocktrans %}We may update this Privacy Policy from time to time. Any changes will be posted on this page with an updated effective date. We encourage you to review this policy periodically.{% endblocktrans %}
         </p>
     </section>
 
     <section class="space-y-6">
-        <h2 class="font-title-lg text-title-lg">10. Contact</h2>
+        <h2 class="font-title-lg text-title-lg">{% trans "10. Contact" %}</h2>
         <p class="text-body-md text-on-background-variant leading-relaxed">
-            For privacy-related questions or to submit a data request, contact us at:<br>
+            {% trans "For privacy-related questions or to submit a data request, contact us at:" %}<br>
             <a href="mailto:noreply@freelancer-tracker.dabg.dev" class="text-link underline">noreply@freelancer-tracker.dabg.dev</a>
         </p>
     </section>

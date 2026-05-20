@@ -1,9 +1,10 @@
+{% load i18n %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>500 - Server Error | PropoTrack</title>
+<title>{% trans "500 - Server Error | PropoTrack" %}</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet"/>
@@ -78,20 +79,20 @@
       </div>
     </div>
     <div class="space-y-stack-sm">
-      <div class="font-label-sm text-label-sm text-primary uppercase tracking-widest">Error 500</div>
-      <h1 class="font-display text-display text-on-background leading-tight">Something went wrong on our end.</h1>
+      <div class="font-label-sm text-label-sm text-primary uppercase tracking-widest">{% trans "Error 500" %}</div>
+      <h1 class="font-display text-display text-on-background leading-tight">{% trans "Something went wrong on our end." %}</h1>
       <p class="font-body-lg text-body-lg text-on-surface-variant max-w-lg mx-auto">
-        We're working on fixing it. Please try refreshing the page or come back later.
+        {% trans "We're working on fixing it. Please try refreshing the page or come back later." %}
       </p>
     </div>
     <div class="flex flex-col sm:flex-row items-center justify-center gap-stack-md pt-stack-md">
       <a href="javascript:location.reload()" class="w-full sm:w-auto px-8 py-3.5 bg-primary text-on-primary font-label-md text-label-md rounded-lg shadow-xs hover:opacity-90 active:scale-95 transition-all flex items-center justify-center gap-unit">
         <span class="material-symbols-outlined text-[20px]">refresh</span>
-        Retry Page
+        {% trans "Retry Page" %}
       </a>
       <a href="/" class="w-full sm:w-auto px-8 py-3.5 bg-surface text-secondary border border-outline-variant font-label-md text-label-md rounded-lg hover:bg-surface-container-low active:scale-95 transition-all flex items-center justify-center gap-unit">
         <span class="material-symbols-outlined text-[20px]">dashboard</span>
-        Go to Dashboard
+        {% trans "Go to Dashboard" %}
       </a>
     </div>
     <div class="pt-stack-lg flex justify-center">
@@ -100,8 +101,8 @@
           <span class="material-symbols-outlined text-primary text-[20px]">info</span>
         </div>
         <div>
-          <div class="font-label-md text-label-md text-on-surface font-semibold">Technical Assistance</div>
-          <p class="font-body-sm text-body-sm text-on-surface-variant">If this issue persists, please contact our support team.</p>
+          <div class="font-label-md text-label-md text-on-surface font-semibold">{% trans "Technical Assistance" %}</div>
+          <p class="font-body-sm text-body-sm text-on-surface-variant">{% trans "If this issue persists, please contact our support team." %}</p>
         </div>
       </div>
     </div>
@@ -111,7 +112,7 @@
   <div class="w-full px-container-padding py-stack-lg max-w-[1440px] mx-auto flex flex-col md:flex-row justify-between items-center gap-gutter">
     <div class="flex flex-col gap-2 items-center md:items-start">
       <div class="font-h3 text-h3 font-bold text-on-surface">PropoTrack</div>
-      <p class="font-body-sm text-body-sm text-on-surface-variant">© 2025 PropoTrack. Precision tracking for professional growth.</p>
+      <p class="font-body-sm text-body-sm text-on-surface-variant">© 2025 PropoTrack. {% trans "Precision tracking for professional growth." %}</p>
     </div>
   </div>
 </footer>

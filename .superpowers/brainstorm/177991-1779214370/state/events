@@ -1,0 +1,3 @@
+{"type":"click","text":"A\n    \n      Icono + etiqueta (☀️ Light)\n      Más descriptivo, fácil de entender sin conocer los iconos. Ocupa más espacio horizontal.","choice":"icon-label","id":null,"timestamp":1779215172549}
+{"type":"click","text":"B\n    \n      Solo icono (☀️)\n      Más compacto. Menos espacio. Requiere tooltip para claridad. Ideal en mobile.","choice":"icon-only","id":null,"timestamp":1779215177900}
+{"type":"click","text":"A\n    \n      Icono + etiqueta (☀️ Light)\n      Más descriptivo, fácil de entender sin conocer los iconos. Ocupa más espacio horizontal.","choice":"icon-label","id":null,"timestamp":1779215178875}

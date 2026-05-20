@@ -1,9 +1,10 @@
+{% load i18n %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>404 - Page Not Found | PropoTrack</title>
+<title>{% trans "404 - Page Not Found | PropoTrack" %}</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Geist:wght@500;600;700&display=swap" rel="stylesheet"/>
@@ -81,29 +82,29 @@
       <div class="absolute inset-0 bg-gradient-to-t from-surface-container-low to-transparent"></div>
     </div>
     <div class="space-y-stack-md">
-      <span class="inline-block px-3 py-1 rounded-full bg-primary/10 text-primary font-label-sm text-label-sm tracking-wider">ERROR 404</span>
-      <h1 class="font-display text-display text-on-background">Lost your tracking?</h1>
+      <span class="inline-block px-3 py-1 rounded-full bg-primary/10 text-primary font-label-sm text-label-sm tracking-wider">{% trans "ERROR 404" %}</span>
+      <h1 class="font-display text-display text-on-background">{% trans "Lost your tracking?" %}</h1>
       <p class="font-body-lg text-body-lg text-on-surface-variant max-w-md mx-auto">
-        The page you're looking for has moved or doesn't exist. Let's get your professional growth back on track.
+        {% trans "The page you're looking for has moved or doesn't exist. Let's get your professional growth back on track." %}
       </p>
     </div>
     <div class="flex flex-col sm:flex-row items-center justify-center gap-gutter pt-4">
       <a href="/" class="w-full sm:w-auto flex items-center justify-center gap-2 bg-primary text-on-primary px-8 py-3.5 rounded-lg font-label-md text-label-md shadow-xs hover:shadow-md transition-all active:scale-95">
         <span class="material-symbols-outlined">dashboard</span>
-        Back to Dashboard
+        {% trans "Back to Dashboard" %}
       </a>
     </div>
     <div class="pt-stack-lg border-t border-outline-variant/20">
-      <p class="font-label-sm text-label-sm text-outline mb-stack-md uppercase tracking-widest">Common Destinations</p>
+      <p class="font-label-sm text-label-sm text-outline mb-stack-md uppercase tracking-widest">{% trans "Common Destinations" %}</p>
       <div class="flex flex-wrap justify-center gap-x-8 gap-y-4">
         <a href="/proposals/" class="text-on-surface-variant font-body-sm hover:text-primary transition-colors flex items-center gap-1">
-          <span class="material-symbols-outlined text-[18px]">description</span>Proposals
+          <span class="material-symbols-outlined text-[18px]">description</span>{% trans "Proposals" %}
         </a>
         <a href="/timetracking/" class="text-on-surface-variant font-body-sm hover:text-primary transition-colors flex items-center gap-1">
-          <span class="material-symbols-outlined text-[18px]">schedule</span>Time Tracking
+          <span class="material-symbols-outlined text-[18px]">schedule</span>{% trans "Time Tracking" %}
         </a>
         <a href="/accounts/login/" class="text-on-surface-variant font-body-sm hover:text-primary transition-colors flex items-center gap-1">
-          <span class="material-symbols-outlined text-[18px]">login</span>Sign In
+          <span class="material-symbols-outlined text-[18px]">login</span>{% trans "Sign In" %}
         </a>
       </div>
     </div>
@@ -113,7 +114,7 @@
   <div class="w-full px-container-padding py-stack-lg max-w-[1440px] mx-auto flex flex-col md:flex-row justify-between items-center gap-gutter">
     <div class="flex flex-col items-center md:items-start gap-2">
       <div class="font-h3 text-h3 font-bold text-on-surface">PropoTrack</div>
-      <p class="font-body-sm text-body-sm text-on-surface-variant">© 2025 PropoTrack. Precision tracking for professional growth.</p>
+      <p class="font-body-sm text-body-sm text-on-surface-variant">© 2025 PropoTrack. {% trans "Precision tracking for professional growth." %}</p>
     </div>
   </div>
 </footer>
