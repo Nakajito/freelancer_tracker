@@ -1,20 +1,20 @@
 {% extends "app_base.html" %}
 {% load i18n %}
 
-{% block title %}Dashboard - PropoTrack{% endblock %}
+{% block title %}{% trans "Dashboard" %} - PropoTrack{% endblock %}
 {% block active_nav %}dashboard{% endblock %}
 
 {% block app_content %}
 <div class="mb-stack-lg">
-    <h2 class="font-display text-display text-on-surface">Dashboard Overview</h2>
-    <p class="font-body-lg text-body-lg text-on-surface-variant mt-1">Here is what's happening with your freelance business today.</p>
+    <h2 class="font-display text-display text-on-surface">{% trans "Dashboard Overview" %}</h2>
+    <p class="font-body-lg text-body-lg text-on-surface-variant mt-1">{% trans "Here is what's happening with your freelance business today." %}</p>
 </div>
 
 <!-- Metrics Bento Grid -->
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter mb-stack-lg">
     <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-container-padding shadow-xs flex flex-col justify-between">
         <div class="flex items-center justify-between mb-4">
-            <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Active Proposals</span>
+            <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">{% trans "Active Proposals" %}</span>
             <div class="p-2 bg-secondary-container rounded-lg text-on-secondary-container">
                 <span class="material-symbols-outlined text-[20px]">description</span>
             </div>
@@ -23,14 +23,14 @@
             <div class="font-h1 text-h1 text-on-surface">{{ funnel.total|default:0 }}</div>
             <div class="flex items-center gap-1 mt-2 font-body-sm text-body-sm text-on-surface-variant">
                 <span class="material-symbols-outlined text-[16px] text-primary">trending_up</span>
-                <span class="text-primary font-medium">{{ funnel.sent|default:0 }}</span> sent
+                <span class="text-primary font-medium">{{ funnel.sent|default:0 }}</span> {% trans "sent" %}
             </div>
         </div>
     </div>
 
     <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-container-padding shadow-xs flex flex-col justify-between">
         <div class="flex items-center justify-between mb-4">
-            <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Conversion Rate</span>
+            <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">{% trans "Conversion Rate" %}</span>
             <div class="p-2 bg-secondary-container rounded-lg text-on-secondary-container">
                 <span class="material-symbols-outlined text-[20px]">swap_calls</span>
             </div>
@@ -39,14 +39,14 @@
             <div class="font-h1 text-h1 text-on-surface">{{ funnel.conversion_rate|default:0 }}%</div>
             <div class="flex items-center gap-1 mt-2 font-body-sm text-body-sm text-on-surface-variant">
                 <span class="material-symbols-outlined text-[16px] text-primary">trending_up</span>
-                <span class="text-primary font-medium">{{ funnel.accepted|default:0 }}</span> accepted
+                <span class="text-primary font-medium">{{ funnel.accepted|default:0 }}</span> {% trans "accepted" %}
             </div>
         </div>
     </div>
 
     <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-container-padding shadow-xs flex flex-col justify-between">
         <div class="flex items-center justify-between mb-4">
-            <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Total Earned</span>
+            <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">{% trans "Total Earned" %}</span>
             <div class="p-2 bg-secondary-container rounded-lg text-on-secondary-container">
                 <span class="material-symbols-outlined text-[20px]">payments</span>
             </div>
@@ -55,14 +55,14 @@
             <div class="font-h1 text-h1 text-on-surface">${{ funnel.accepted_amount|floatformat:0 }}</div>
             <div class="flex items-center gap-1 mt-2 font-body-sm text-body-sm text-on-surface-variant">
                 <span class="material-symbols-outlined text-[16px] text-primary">trending_up</span>
-                <span class="text-primary font-medium">${{ forecast.expected_amount|floatformat:0 }}</span> expected
+                <span class="text-primary font-medium">${{ forecast.expected_amount|floatformat:0 }}</span> {% trans "expected" %}
             </div>
         </div>
     </div>
 
     <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-container-padding shadow-xs flex flex-col justify-between">
         <div class="flex items-center justify-between mb-4">
-            <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Logged Hours</span>
+            <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">{% trans "Logged Hours" %}</span>
             <div class="p-2 bg-secondary-container rounded-lg text-on-secondary-container">
                 <span class="material-symbols-outlined text-[20px]">schedule</span>
             </div>
@@ -71,7 +71,7 @@
             <div class="font-h1 text-h1 text-on-surface">{{ hourly_rate.total_hours|floatformat:0 }}h</div>
             <div class="flex items-center gap-1 mt-2 font-body-sm text-body-sm text-on-surface-variant">
                 <span class="material-symbols-outlined text-[16px] text-on-surface-variant">paid</span>
-                <span class="font-medium">${{ hourly_rate.hourly_rate|floatformat:0 }}</span>/hr effective
+                <span class="font-medium">${{ hourly_rate.hourly_rate|floatformat:0 }}</span>{% trans "/hr effective" %}
             </div>
         </div>
     </div>
@@ -82,8 +82,8 @@
     <!-- Proposal Funnel -->
     <div class="lg:col-span-2 bg-surface-container-lowest border border-outline-variant rounded-xl shadow-xs p-container-padding flex flex-col">
         <div class="flex justify-between items-center mb-6">
-            <h3 class="font-h3 text-h3 text-on-surface">Proposal Funnel</h3>
-            <a href="{% url 'proposal-list' %}" class="text-primary hover:text-primary-container font-label-md text-label-md transition-colors">View Detailed Report</a>
+            <h3 class="font-h3 text-h3 text-on-surface">{% trans "Proposal Funnel" %}</h3>
+            <a href="{% url 'proposal-list' %}" class="text-primary hover:text-primary-container font-label-md text-label-md transition-colors">{% trans "View Detailed Report" %}</a>
         </div>
         <div class="flex-1 flex flex-col justify-center gap-4 py-4">
             {% with total=funnel.total|default:0 %}
@@ -105,7 +105,7 @@
     <!-- Upcoming Follow-ups -->
     <div class="bg-surface-container-lowest border border-outline-variant rounded-xl shadow-xs p-container-padding flex flex-col">
         <div class="flex justify-between items-center mb-6">
-            <h3 class="font-h3 text-h3 text-on-surface">Urgent Follow-ups</h3>
+            <h3 class="font-h3 text-h3 text-on-surface">{% trans "Urgent Follow-ups" %}</h3>
         </div>
         <ul class="flex flex-col gap-4">
             {% for fu in urgent_followups %}
@@ -122,28 +122,28 @@
             {% empty %}
             <li class="text-center py-8 text-on-surface-variant font-body-sm text-body-sm">
                 <span class="material-symbols-outlined text-[40px] text-outline-variant mb-2 block">inbox</span>
-                No urgent follow-ups.
+                {% trans "No urgent follow-ups." %}
             </li>
             {% endfor %}
         </ul>
-        <a href="{% url 'followup-list' %}" class="mt-auto pt-4 w-full text-center font-label-md text-label-md text-primary hover:text-primary-container transition-colors">View All Tasks</a>
+        <a href="{% url 'followup-list' %}" class="mt-auto pt-4 w-full text-center font-label-md text-label-md text-primary hover:text-primary-container transition-colors">{% trans "View All Tasks" %}</a>
     </div>
 </div>
 
 <!-- Forecast -->
 <div class="mt-stack-lg bg-surface-container-lowest border border-outline-variant rounded-xl shadow-xs p-container-padding">
-    <h3 class="font-h3 text-h3 text-on-surface mb-stack-md">Forecast</h3>
+    <h3 class="font-h3 text-h3 text-on-surface mb-stack-md">{% trans "Forecast" %}</h3>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
         <div class="flex flex-col">
-            <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Expected Wins</span>
+            <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">{% trans "Expected Wins" %}</span>
             <span class="font-h2 text-h2 text-on-surface mt-1">{{ forecast.expected_wins|default:0 }}</span>
         </div>
         <div class="flex flex-col">
-            <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Expected Amount</span>
+            <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">{% trans "Expected Amount" %}</span>
             <span class="font-h2 text-h2 text-on-surface mt-1">${{ forecast.expected_amount|floatformat:0 }}</span>
         </div>
         <div class="flex flex-col">
-            <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Win Rate</span>
+            <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">{% trans "Win Rate" %}</span>
             <span class="font-h2 text-h2 text-on-surface mt-1">{{ conversion.win_rate|default:0 }}%</span>
         </div>
     </div>

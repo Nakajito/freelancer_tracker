@@ -1,19 +1,20 @@
 {% extends "app_base.html" %}
+{% load i18n %}
 {% load static %}
 
-{% block title %}Analytics & Reports - PropoTrack{% endblock %}
+{% block title %}{% trans "Analytics & Reports" %} - PropoTrack{% endblock %}
 {% block active_nav %}analytics{% endblock %}
 
 {% block app_content %}
 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-stack-lg">
     <div>
-        <h2 class="font-display text-display text-on-background">Analytics &amp; Reports</h2>
-        <p class="font-body-md text-body-md text-on-surface-variant mt-1">Track your freelance business performance.</p>
+        <h2 class="font-display text-display text-on-background">{% trans "Analytics & Reports" %}</h2>
+        <p class="font-body-md text-body-md text-on-surface-variant mt-1">{% trans "Track your freelance business performance." %}</p>
     </div>
     <div class="flex gap-2">
         <a href="{% url 'proposal-export-csv' %}" class="flex items-center gap-2 px-4 py-2 border border-outline-variant rounded-lg text-secondary font-label-md text-label-md hover:bg-surface-container-low transition-colors bg-surface-container-lowest">
             <span class="material-symbols-outlined text-[18px]">download</span>
-            Export CSV
+            {% trans "Export CSV" %}
         </a>
     </div>
 </div>
@@ -21,44 +22,44 @@
 <!-- Filter Bar -->
 <form method="get" class="mb-stack-md flex flex-col sm:flex-row gap-4 items-end bg-surface-container-lowest p-4 rounded-xl border border-outline-variant shadow-xs">
     <div class="flex flex-col gap-1 flex-1">
-        <label for="period" class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Period</label>
+        <label for="period" class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">{% trans "Period" %}</label>
         <div class="relative">
             <select name="period" id="period" class="w-full appearance-none bg-surface border border-outline-variant rounded-lg py-2 pl-4 pr-10 font-body-sm text-body-sm text-on-surface focus:outline-hidden focus:ring-2 focus:ring-primary cursor-pointer">
-                <option value="30" {% if period == "30" %}selected{% endif %}>Last 30 Days</option>
-                <option value="90" {% if period == "90" or not period %}selected{% endif %}>Last 90 Days</option>
-                <option value="year" {% if period == "year" %}selected{% endif %}>This Year</option>
+                <option value="30" {% if period == "30" %}selected{% endif %}>{% trans "Last 30 Days" %}</option>
+                <option value="90" {% if period == "90" or not period %}selected{% endif %}>{% trans "Last 90 Days" %}</option>
+                <option value="year" {% if period == "year" %}selected{% endif %}>{% trans "This Year" %}</option>
             </select>
             <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant">arrow_drop_down</span>
         </div>
     </div>
     <div class="flex flex-col gap-1" id="year-wrapper" {% if period != "year" %}style="display:none"{% endif %}>
-        <label for="year" class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Year</label>
+        <label for="year" class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">{% trans "Year" %}</label>
         <input type="number" name="year" id="year" value="{{ year }}" class="bg-surface border border-outline-variant rounded-lg py-2 px-4 font-body-sm text-body-sm text-on-surface focus:outline-hidden focus:ring-2 focus:ring-primary">
     </div>
-    <button type="submit" class="bg-primary text-on-primary px-5 py-2 rounded-lg font-label-md text-label-md hover:bg-primary-container transition-colors shadow-xs">View</button>
+    <button type="submit" class="bg-primary text-on-primary px-5 py-2 rounded-lg font-label-md text-label-md hover:bg-primary-container transition-colors shadow-xs">{% trans "View" %}</button>
 </form>
 
 <!-- KPIs -->
 <div class="grid grid-cols-1 md:grid-cols-4 gap-gutter mb-stack-lg">
     <div class="bg-surface-container-lowest p-container-padding rounded-xl border border-outline-variant shadow-xs flex flex-col justify-between">
-        <p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-2">Total Revenue</p>
+        <p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-2">{% trans "Total Revenue" %}</p>
         <h3 class="font-display text-display text-on-surface">${{ summary.total_amount|floatformat:0 }}</h3>
         <span class="font-body-sm text-body-sm text-on-surface-variant mt-2">{{ summary.period_label }}</span>
     </div>
     <div class="bg-surface-container-lowest p-container-padding rounded-xl border border-outline-variant shadow-xs flex flex-col justify-between">
-        <p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-2">Proposals Sent</p>
+        <p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-2">{% trans "Proposals Sent" %}</p>
         <h3 class="font-display text-display text-on-surface">{{ summary.proposals_sent }}</h3>
-        <span class="font-body-sm text-body-sm text-on-surface-variant mt-2">total in period</span>
+        <span class="font-body-sm text-body-sm text-on-surface-variant mt-2">{% trans "total in period" %}</span>
     </div>
     <div class="bg-surface-container-lowest p-container-padding rounded-xl border border-outline-variant shadow-xs flex flex-col justify-between">
-        <p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-2">Win Rate</p>
+        <p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-2">{% trans "Win Rate" %}</p>
         <h3 class="font-display text-display text-on-surface">{{ summary.win_rate }}%</h3>
-        <span class="font-body-sm text-body-sm text-on-surface-variant mt-2">accepted / sent</span>
+        <span class="font-body-sm text-body-sm text-on-surface-variant mt-2">{% trans "accepted / sent" %}</span>
     </div>
     <div class="bg-surface-container-lowest p-container-padding rounded-xl border border-outline-variant shadow-xs flex flex-col justify-between">
-        <p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-2">Avg. Hourly Rate</p>
+        <p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-2">{% trans "Avg. Hourly Rate" %}</p>
         <h3 class="font-display text-display text-on-surface">${{ hourly_rate|floatformat:0 }}</h3>
-        <span class="font-body-sm text-body-sm text-on-surface-variant mt-2">effective rate</span>
+        <span class="font-body-sm text-body-sm text-on-surface-variant mt-2">{% trans "effective rate" %}</span>
     </div>
 </div>
 
@@ -66,12 +67,12 @@
 <div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter mb-stack-lg">
     <div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-xs p-container-padding lg:col-span-2 flex flex-col">
         <div class="flex justify-between items-center mb-6">
-            <h3 class="font-h3 text-h3 text-on-surface">Earnings Forecast</h3>
+            <h3 class="font-h3 text-h3 text-on-surface">{% trans "Earnings Forecast" %}</h3>
         </div>
         <canvas id="forecastChart" class="min-h-[250px]" data-labels="{{ chart_labels }}" data-data="{{ chart_data }}"></canvas>
     </div>
     <div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-xs p-container-padding flex flex-col">
-        <h3 class="font-h3 text-h3 text-on-surface mb-stack-md">Platform Conversion</h3>
+        <h3 class="font-h3 text-h3 text-on-surface mb-stack-md">{% trans "Platform Conversion" %}</h3>
         <div class="flex flex-col gap-4">
             {% for p in platform_conversion %}
             <div>
@@ -84,7 +85,7 @@
                 </div>
             </div>
             {% empty %}
-            <p class="font-body-sm text-body-sm text-on-surface-variant">No platform data yet.</p>
+            <p class="font-body-sm text-body-sm text-on-surface-variant">{% trans "No platform data yet." %}</p>
             {% endfor %}
         </div>
     </div>
@@ -93,18 +94,18 @@
 <!-- Stats Table -->
 <div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-xs overflow-hidden">
     <div class="p-container-padding border-b border-outline-variant">
-        <h3 class="font-h3 text-h3 text-on-surface">Platform Statistics Overview</h3>
-        <p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Detailed breakdown across all client acquisition channels.</p>
+        <h3 class="font-h3 text-h3 text-on-surface">{% trans "Platform Statistics Overview" %}</h3>
+        <p class="font-body-sm text-body-sm text-on-surface-variant mt-1">{% trans "Detailed breakdown across all client acquisition channels." %}</p>
     </div>
     <div class="overflow-x-auto">
         <table class="w-full text-left border-collapse min-w-[800px]">
             <thead>
                 <tr class="bg-surface-container-low border-b border-outline-variant">
-                    <th class="font-label-sm text-label-sm text-secondary uppercase tracking-wider py-4 px-6">Platform</th>
-                    <th class="font-label-sm text-label-sm text-secondary uppercase tracking-wider py-4 px-6 text-right">Sent</th>
-                    <th class="font-label-sm text-label-sm text-secondary uppercase tracking-wider py-4 px-6 text-right">Success</th>
-                    <th class="font-label-sm text-label-sm text-secondary uppercase tracking-wider py-4 px-6 text-right">Earned</th>
-                    <th class="font-label-sm text-label-sm text-secondary uppercase tracking-wider py-4 px-6 text-right">Avg. Response</th>
+                    <th class="font-label-sm text-label-sm text-secondary uppercase tracking-wider py-4 px-6">{% trans "Platform" %}</th>
+                    <th class="font-label-sm text-label-sm text-secondary uppercase tracking-wider py-4 px-6 text-right">{% trans "Sent" %}</th>
+                    <th class="font-label-sm text-label-sm text-secondary uppercase tracking-wider py-4 px-6 text-right">{% trans "Success" %}</th>
+                    <th class="font-label-sm text-label-sm text-secondary uppercase tracking-wider py-4 px-6 text-right">{% trans "Earned" %}</th>
+                    <th class="font-label-sm text-label-sm text-secondary uppercase tracking-wider py-4 px-6 text-right">{% trans "Avg. Response" %}</th>
                 </tr>
             </thead>
             <tbody class="font-body-md text-body-md text-on-surface divide-y divide-outline-variant">
@@ -125,7 +126,7 @@
                 <tr>
                     <td colspan="5" class="py-12 text-center text-on-surface-variant font-body-sm text-body-sm">
                         <span class="material-symbols-outlined text-[40px] text-outline-variant mb-2 block">bar_chart</span>
-                        No platform statistics yet.
+                        {% trans "No platform statistics yet." %}
                     </td>
                 </tr>
                 {% endfor %}

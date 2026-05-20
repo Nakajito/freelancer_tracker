@@ -1,6 +1,7 @@
 {% extends "app_base.html" %}
+{% load i18n %}
 
-{% block title %}{% if object %}Edit Retainer{% else %}New Retainer{% endif %} - PropoTrack{% endblock %}
+{% block title %}{% if object %}{% trans "Edit Retainer" %}{% else %}{% trans "New Retainer" %}{% endif %} - PropoTrack{% endblock %}
 {% block active_nav %}time{% endblock %}
 
 {% block app_content %}
@@ -8,10 +9,10 @@
     <div class="mb-stack-lg">
         <a href="{% url 'retainer-list' %}" class="inline-flex items-center gap-1 text-on-surface-variant hover:text-primary transition-colors font-label-sm text-label-sm mb-2">
             <span class="material-symbols-outlined text-[16px]">arrow_back</span>
-            Back to Retainers
+            {% trans "Back to Retainers" %}
         </a>
-        <h1 class="font-h1 text-h1 text-on-surface">{% if object %}Edit{% else %}Create{% endif %} Retainer</h1>
-        <p class="font-body-md text-body-md text-on-surface-variant mt-1">Set up recurring hours for a proposal.</p>
+        <h1 class="font-h1 text-h1 text-on-surface">{% if object %}{% trans "Edit" %}{% else %}{% trans "Create" %}{% endif %} {% trans "Retainer" %}</h1>
+        <p class="font-body-md text-body-md text-on-surface-variant mt-1">{% trans "Set up recurring hours for a proposal." %}</p>
     </div>
 
     <form method="post" class="bg-surface-container-lowest border border-outline-variant shadow-xs rounded-xl p-container-padding md:p-stack-lg flex flex-col gap-stack-md">
@@ -24,36 +25,35 @@
         {% endif %}
 
         <div class="flex flex-col gap-2">
-            <label class="font-label-md text-label-md text-on-surface-variant" for="id_proposal">Proposal <span class="text-error">*</span></label>
+            <label class="font-label-md text-label-md text-on-surface-variant" for="id_proposal">{% trans "Proposal" %} <span class="text-error">*</span></label>
             {{ form.proposal }}
         </div>
 
         <div class="grid grid-cols-2 gap-gutter">
             <div class="flex flex-col gap-2">
-                <label class="font-label-md text-label-md text-on-surface-variant" for="id_monthly_hours">Monthly Hours</label>
+                <label class="font-label-md text-label-md text-on-surface-variant" for="id_monthly_hours">{% trans "Monthly Hours" %}</label>
                 {{ form.monthly_hours }}
             </div>
             <div class="flex flex-col gap-2">
-                <label class="font-label-md text-label-md text-on-surface-variant" for="id_day_of_month">Day of Month</label>
+                <label class="font-label-md text-label-md text-on-surface-variant" for="id_day_of_month">{% trans "Day of Month" %}</label>
                 {{ form.day_of_month }}
             </div>
         </div>
 
         <div class="flex items-center gap-3 mt-2">
             {{ form.active }}
-            <label class="font-body-sm text-body-sm text-on-surface-variant" for="id_active">Active retainer</label>
+            <label class="font-body-sm text-body-sm text-on-surface-variant" for="id_active">{% trans "Active retainer" %}</label>
         </div>
 
         <div class="border-t border-outline-variant pt-stack-md flex flex-col-reverse sm:flex-row items-center justify-end gap-3">
             <a href="{% url 'retainer-list' %}" class="w-full sm:w-auto px-6 py-3 rounded-lg border border-outline bg-transparent text-secondary hover:bg-surface-container transition-colors font-label-md text-label-md text-center">
-                Cancel
+                {% trans "Cancel" %}
             </a>
             <button type="submit" class="w-full sm:w-auto px-6 py-3 rounded-lg bg-primary text-on-primary hover:bg-on-primary-fixed-variant transition-colors font-label-md text-label-md shadow-xs flex items-center justify-center gap-2">
                 <span class="material-symbols-outlined text-[18px]">save</span>
-                Save Retainer
+                {% trans "Save Retainer" %}
             </button>
         </div>
     </form>
 </div>
 {% endblock %}
-

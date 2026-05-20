@@ -1,4 +1,5 @@
 {% extends "app_base.html" %}
+{% load i18n %}
 
 {% block title %}{{ proposal.title }} - PropoTrack{% endblock %}
 {% block active_nav %}proposals{% endblock %}
@@ -7,7 +8,7 @@
 <div class="mb-stack-lg">
     <a href="{% url 'proposal-list' %}" class="inline-flex items-center gap-1 text-on-surface-variant hover:text-primary transition-colors font-label-sm text-label-sm mb-2">
         <span class="material-symbols-outlined text-[16px]">arrow_back</span>
-        Back to Proposals
+        {% trans "Back to Proposals" %}
     </a>
     <div class="flex flex-col sm:flex-row justify-between items-start gap-4">
         <div>
@@ -25,17 +26,17 @@
                 {% endwith %}
             </div>
             <p class="font-body-md text-body-md text-on-surface-variant">
-                {{ proposal.client.name|default:"No client" }} • Sent {{ proposal.sent_date|date:"M d, Y"|default:"—" }}
+                {{ proposal.client.name|default:"No client" }} • {% trans "Sent" %} {{ proposal.sent_date|date:"M d, Y"|default:"—" }}
             </p>
         </div>
         <div class="flex gap-3">
             <a href="{% url 'proposal-delete' proposal.pk %}" class="flex items-center gap-2 px-4 py-2 border border-outline-variant rounded-lg font-label-md text-label-md text-error hover:bg-error-container/30 transition-colors">
                 <span class="material-symbols-outlined text-[18px]">delete</span>
-                Delete
+                {% trans "Delete" %}
             </a>
             <a href="{% url 'proposal-update' proposal.pk %}" class="flex items-center gap-2 px-4 py-2 bg-primary text-on-primary rounded-lg font-label-md text-label-md hover:bg-on-primary-fixed-variant transition-colors shadow-xs">
                 <span class="material-symbols-outlined text-[18px]">edit</span>
-                Edit
+                {% trans "Edit" %}
             </a>
         </div>
     </div>
@@ -47,25 +48,25 @@
         <!-- Summary Strip -->
         <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-container-padding shadow-xs grid grid-cols-1 sm:grid-cols-3 gap-6">
             <div>
-                <p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-1">Client</p>
+                <p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-1">{% trans "Client" %}</p>
                 <p class="font-body-md text-body-md font-medium text-on-surface">{{ proposal.client.name|default:"—" }}</p>
             </div>
             <div>
-                <p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-1">Platform</p>
+                <p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-1">{% trans "Platform" %}</p>
                 <p class="font-body-md text-body-md font-medium text-on-surface flex items-center gap-1">
                     <span class="material-symbols-outlined text-[16px] text-on-surface-variant">work</span>
                     {{ proposal.get_platform_display }}
                 </p>
             </div>
             <div>
-                <p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-1">Amount</p>
+                <p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-1">{% trans "Amount" %}</p>
                 <p class="font-h3 text-h3 text-on-surface">${{ proposal.amount|default:"—" }}</p>
             </div>
         </div>
 
         <!-- Cover Letter -->
         <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-container-padding shadow-xs">
-            <h3 class="font-h3 text-h3 text-on-surface mb-stack-md">Cover Letter</h3>
+            <h3 class="font-h3 text-h3 text-on-surface mb-stack-md">{% trans "Cover Letter" %}</h3>
             <div class="prose max-w-none font-body-md text-body-md text-on-surface-variant leading-relaxed">
                 {{ proposal.proposal_text|linebreaks|default:"No proposal text provided." }}
             </div>
@@ -77,13 +78,13 @@
             {% if proposal.job_url %}
             <a href="{{ proposal.job_url }}" target="_blank" rel="noopener" class="flex items-center gap-2 px-4 py-2 border border-outline-variant rounded-lg font-label-md text-label-md text-on-surface hover:bg-surface-container-low transition-colors">
                 <span class="material-symbols-outlined text-[18px]">link</span>
-                Job Posting
+                {% trans "Job Posting" %}
             </a>
             {% endif %}
             {% if proposal.proposal_url %}
             <a href="{{ proposal.proposal_url }}" target="_blank" rel="noopener" class="flex items-center gap-2 px-4 py-2 border border-outline-variant rounded-lg font-label-md text-label-md text-on-surface hover:bg-surface-container-low transition-colors">
                 <span class="material-symbols-outlined text-[18px]">description</span>
-                Proposal Document
+                {% trans "Proposal Document" %}
             </a>
             {% endif %}
         </div>
@@ -94,24 +95,24 @@
     <div class="col-span-12 lg:col-span-4 flex flex-col gap-stack-md">
         <!-- Insights -->
         <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-container-padding shadow-xs">
-            <h3 class="font-h3 text-h3 text-on-surface mb-stack-md">Proposal Insights</h3>
+            <h3 class="font-h3 text-h3 text-on-surface mb-stack-md">{% trans "Proposal Insights" %}</h3>
             <div class="flex flex-col gap-4">
                 <div class="flex justify-between items-center">
-                    <span class="font-body-md text-body-md text-on-surface-variant">Days since sent</span>
+                    <span class="font-body-md text-body-md text-on-surface-variant">{% trans "Days since sent" %}</span>
                     <span class="font-h3 text-h3 text-on-surface" id="days-since-sent" data-sent-date="{% if proposal.sent_date %}{{ proposal.sent_date|date:'Y-m-d' }}{% endif %}">{% if proposal.sent_date %}{{ proposal.sent_date|timesince }}{% else %}—{% endif %}</span>
                 </div>
                 <div class="w-full h-px bg-outline-variant"></div>
                 <div class="flex justify-between items-center">
-                    <span class="font-body-md text-body-md text-on-surface-variant">Response</span>
+                    <span class="font-body-md text-body-md text-on-surface-variant">{% trans "Response" %}</span>
                     <span class="font-body-md text-body-md font-medium {% if proposal.actual_response_date %}text-primary{% else %}text-tertiary-container{% endif %}">
-                        {% if proposal.actual_response_date %}Received{% else %}Pending{% endif %}
+                        {% if proposal.actual_response_date %}{% trans "Received" %}{% else %}{% trans "Pending" %}{% endif %}
                     </span>
                 </div>
                 <div class="w-full h-px bg-outline-variant"></div>
                 <div class="flex justify-between items-center">
-                    <span class="font-body-md text-body-md text-on-surface-variant">Paid</span>
+                    <span class="font-body-md text-body-md text-on-surface-variant">{% trans "Paid" %}</span>
                     <span class="font-body-md text-body-md font-medium {% if proposal.paid %}text-primary{% else %}text-on-surface-variant{% endif %}">
-                        {% if proposal.paid %}Yes{% else %}No{% endif %}
+                        {% if proposal.paid %}{% trans "Yes" %}{% else %}{% trans "No" %}{% endif %}
                     </span>
                 </div>
             </div>
@@ -119,18 +120,18 @@
 
         <!-- Key Dates -->
         <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-container-padding shadow-xs">
-            <h3 class="font-h3 text-h3 text-on-surface mb-stack-md">Key Dates</h3>
+            <h3 class="font-h3 text-h3 text-on-surface mb-stack-md">{% trans "Key Dates" %}</h3>
             <div class="flex flex-col gap-3">
                 <div class="flex justify-between items-center">
-                    <span class="font-body-sm text-body-sm text-on-surface-variant">Sent</span>
+                    <span class="font-body-sm text-body-sm text-on-surface-variant">{% trans "Sent" %}</span>
                     <span class="font-label-md text-label-md text-on-surface">{{ proposal.sent_date|date:"M d, Y"|default:"—" }}</span>
                 </div>
                 <div class="flex justify-between items-center">
-                    <span class="font-body-sm text-body-sm text-on-surface-variant">Expected response</span>
+                    <span class="font-body-sm text-body-sm text-on-surface-variant">{% trans "Expected response" %}</span>
                     <span class="font-label-md text-label-md text-on-surface">{{ proposal.expected_response_date|date:"M d, Y"|default:"—" }}</span>
                 </div>
                 <div class="flex justify-between items-center">
-                    <span class="font-body-sm text-body-sm text-on-surface-variant">Actual response</span>
+                    <span class="font-body-sm text-body-sm text-on-surface-variant">{% trans "Actual response" %}</span>
                     <span class="font-label-md text-label-md text-on-surface">{{ proposal.actual_response_date|date:"M d, Y"|default:"—" }}</span>
                 </div>
             </div>
@@ -138,17 +139,17 @@
 
         <!-- Next Action -->
         <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-container-padding shadow-xs bg-gradient-to-br from-surface-container-lowest to-surface-container-low">
-            <h3 class="font-h3 text-h3 text-on-surface mb-unit">Next Action</h3>
-            <p class="font-body-sm text-body-sm text-on-surface-variant mb-stack-md">Schedule a follow-up to keep this proposal moving.</p>
+            <h3 class="font-h3 text-h3 text-on-surface mb-unit">{% trans "Next Action" %}</h3>
+            <p class="font-body-sm text-body-sm text-on-surface-variant mb-stack-md">{% trans "Schedule a follow-up to keep this proposal moving." %}</p>
             <a href="{% url 'followup-create' %}?proposal={{ proposal.pk }}" class="w-full py-2 border border-outline-variant rounded-lg font-label-md text-label-md text-on-surface hover:bg-surface-container transition-colors flex items-center justify-center gap-2">
                 <span class="material-symbols-outlined text-[18px]">mail</span>
-                Draft Follow-up
+                {% trans "Draft Follow-up" %}
             </a>
         </div>
 
         {% if proposal.tags.all %}
         <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-container-padding shadow-xs">
-            <h3 class="font-h3 text-h3 text-on-surface mb-stack-md">Tags</h3>
+            <h3 class="font-h3 text-h3 text-on-surface mb-stack-md">{% trans "Tags" %}</h3>
             <div class="flex flex-wrap gap-2">
                 {% for tag in proposal.tags.all %}
                 <span class="inline-flex items-center bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full font-label-sm text-label-sm">{{ tag.name }}</span>

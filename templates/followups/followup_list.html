@@ -1,32 +1,33 @@
 {% extends "app_base.html" %}
+{% load i18n %}
 
-{% block title %}Follow-ups - PropoTrack{% endblock %}
+{% block title %}{% trans "Follow-ups" %} - PropoTrack{% endblock %}
 {% block active_nav %}followups{% endblock %}
 
 {% block app_content %}
 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-stack-lg">
     <div>
-        <h2 class="font-display text-display text-on-background">Follow-ups</h2>
-        <p class="font-body-md text-body-md text-on-surface-variant mt-1">Track and complete your follow-up tasks.</p>
+        <h2 class="font-display text-display text-on-background">{% trans "Follow-ups" %}</h2>
+        <p class="font-body-md text-body-md text-on-surface-variant mt-1">{% trans "Track and complete your follow-up tasks." %}</p>
     </div>
     <a href="{% url 'followup-create' %}" class="bg-primary text-on-primary font-label-md text-label-md py-2.5 px-5 rounded-lg flex items-center gap-2 hover:bg-primary-container shadow-xs transition-all">
         <span class="material-symbols-outlined text-[20px]">add</span>
-        Add Follow-up
+        {% trans "Add Follow-up" %}
     </a>
 </div>
 
 <!-- Filter Tabs -->
 <form method="get" class="bg-surface-container-lowest border border-outline-variant rounded-xl p-4 mb-stack-md shadow-xs flex items-center gap-2 flex-wrap">
     <a href="?filter=upcoming" class="px-4 py-2 rounded-lg font-label-md text-label-md transition-colors flex items-center gap-2 {% if current_filter == 'upcoming' %}bg-primary text-on-primary{% else %}bg-surface-container text-on-surface-variant hover:bg-surface-container-high{% endif %}">
-        Upcoming
+        {% trans "Upcoming" %}
         <span class="px-2 py-0.5 rounded-full text-xs {% if current_filter == 'upcoming' %}bg-on-primary/20{% else %}bg-surface-container-high{% endif %}">{{ upcoming_count }}</span>
     </a>
     <a href="?filter=overdue" class="px-4 py-2 rounded-lg font-label-md text-label-md transition-colors flex items-center gap-2 {% if current_filter == 'overdue' %}bg-primary text-on-primary{% else %}bg-surface-container text-on-surface-variant hover:bg-surface-container-high{% endif %}">
-        Overdue
+        {% trans "Overdue" %}
         <span class="px-2 py-0.5 rounded-full text-xs {% if current_filter == 'overdue' %}bg-on-primary/20{% elif overdue_count > 0 %}bg-error-container text-on-error-container{% else %}bg-surface-container-high{% endif %}">{{ overdue_count }}</span>
     </a>
     <a href="?filter=completed" class="px-4 py-2 rounded-lg font-label-md text-label-md transition-colors flex items-center gap-2 {% if current_filter == 'completed' %}bg-primary text-on-primary{% else %}bg-surface-container text-on-surface-variant hover:bg-surface-container-high{% endif %}">
-        Completed
+        {% trans "Completed" %}
         <span class="px-2 py-0.5 rounded-full text-xs {% if current_filter == 'completed' %}bg-on-primary/20{% else %}bg-surface-container-high{% endif %}">{{ completed_count }}</span>
     </a>
 </form>
@@ -36,11 +37,11 @@
         <table class="w-full text-left border-collapse">
             <thead>
                 <tr class="bg-surface-container-low border-b border-outline-variant">
-                    <th class="font-label-sm text-label-sm text-secondary py-4 px-6 uppercase tracking-wider">Proposal</th>
-                    <th class="font-label-sm text-label-sm text-secondary py-4 px-6 uppercase tracking-wider">Description</th>
-                    <th class="font-label-sm text-label-sm text-secondary py-4 px-6 uppercase tracking-wider">Due Date</th>
-                    <th class="font-label-sm text-label-sm text-secondary py-4 px-6 uppercase tracking-wider">Status</th>
-                    <th class="font-label-sm text-label-sm text-secondary py-4 px-6 uppercase tracking-wider text-right">Actions</th>
+                    <th class="font-label-sm text-label-sm text-secondary py-4 px-6 uppercase tracking-wider">{% trans "Proposal" %}</th>
+                    <th class="font-label-sm text-label-sm text-secondary py-4 px-6 uppercase tracking-wider">{% trans "Description" %}</th>
+                    <th class="font-label-sm text-label-sm text-secondary py-4 px-6 uppercase tracking-wider">{% trans "Due Date" %}</th>
+                    <th class="font-label-sm text-label-sm text-secondary py-4 px-6 uppercase tracking-wider">{% trans "Status" %}</th>
+                    <th class="font-label-sm text-label-sm text-secondary py-4 px-6 uppercase tracking-wider text-right">{% trans "Actions" %}</th>
                 </tr>
             </thead>
             <tbody class="divide-y divide-outline-variant">
@@ -75,11 +76,11 @@
                                 {% csrf_token %}
                                 <button type="submit" class="inline-flex items-center gap-1 px-3 py-1.5 text-primary hover:bg-primary/10 rounded-lg font-label-md text-label-md transition-colors">
                                     <span class="material-symbols-outlined text-[16px]">check</span>
-                                    Complete
+                                    {% trans "Complete" %}
                                 </button>
                             </form>
                             {% endif %}
-                            <a href="{% url 'followup-delete' followup.pk %}" class="p-1.5 text-on-surface-variant hover:text-error hover:bg-error-container rounded-md opacity-0 group-hover:opacity-100 transition-opacity" title="Delete">
+                            <a href="{% url 'followup-delete' followup.pk %}" class="p-1.5 text-on-surface-variant hover:text-error hover:bg-error-container rounded-md opacity-0 group-hover:opacity-100 transition-opacity" title="{% trans 'Delete' %}">
                                 <span class="material-symbols-outlined text-[18px]">delete</span>
                             </a>
                         </div>
@@ -89,8 +90,8 @@
                 <tr>
                     <td colspan="5" class="py-16 text-center">
                         <span class="material-symbols-outlined text-[48px] text-primary mb-3 block">check_circle</span>
-                        <h3 class="font-h3 text-h3 text-on-surface mb-1">All caught up!</h3>
-                        <p class="font-body-md text-body-md text-on-surface-variant">No follow-ups pending.</p>
+                        <h3 class="font-h3 text-h3 text-on-surface mb-1">{% trans "All caught up!" %}</h3>
+                        <p class="font-body-md text-body-md text-on-surface-variant">{% trans "No follow-ups pending." %}</p>
                     </td>
                 </tr>
                 {% endfor %}

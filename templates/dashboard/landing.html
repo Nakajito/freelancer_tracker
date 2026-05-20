@@ -1,8 +1,9 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% load static %}
-{% block title %}PropoTrack - Professional Proposal Tracking{% endblock %}
+{% block title %}PropoTrack - {% trans "Professional Proposal Tracking" %}{% endblock %}
 {% block meta_description %}
-    Win more freelance work — proposal tracking, follow-up reminders, time entries, and revenue analytics for solo consultants.
+    {% trans "Win more freelance work — proposal tracking, follow-up reminders, time entries, and revenue analytics for solo consultants." %}
 {% endblock %}
 {% block content %}
     <!-- TopNavBar -->
@@ -12,23 +13,23 @@
                class="font-display text-h2 font-bold text-primary tracking-tight">PropoTrack</a>
             <div class="hidden md:flex items-center gap-gutter">
                 <a href="#features"
-                   class="text-on-secondary-fixed-variant hover:text-primary transition-colors font-label-md text-label-md">Features</a>
+                   class="text-on-secondary-fixed-variant hover:text-primary transition-colors font-label-md text-label-md">{% trans "Features" %}</a>
                 <a href="#advantages"
-                   class="text-on-secondary-fixed-variant hover:text-primary transition-colors font-label-md text-label-md">Advantages</a>
+                   class="text-on-secondary-fixed-variant hover:text-primary transition-colors font-label-md text-label-md">{% trans "Advantages" %}</a>
                 <a href="#solutions"
-                   class="text-on-secondary-fixed-variant hover:text-primary transition-colors font-label-md text-label-md">Solutions</a>
+                   class="text-on-secondary-fixed-variant hover:text-primary transition-colors font-label-md text-label-md">{% trans "Solutions" %}</a>
                 <a href="#pricing"
-                   class="text-on-secondary-fixed-variant hover:text-primary transition-colors font-label-md text-label-md">Pricing</a>
+                   class="text-on-secondary-fixed-variant hover:text-primary transition-colors font-label-md text-label-md">{% trans "Pricing" %}</a>
             </div>
             <div class="flex items-center gap-unit">
                 {% if user.is_authenticated %}
                     <a href="{% url 'dashboard' %}"
-                       class="px-4 py-2 font-label-md text-label-md bg-primary text-on-primary rounded hover:bg-primary-container transition-colors shadow-xs">Dashboard</a>
+                       class="px-4 py-2 font-label-md text-label-md bg-primary text-on-primary rounded hover:bg-primary-container transition-colors shadow-xs">{% trans "Dashboard" %}</a>
                 {% else %}
                     <a href="{% url 'account_login' %}"
-                       class="hidden sm:block px-4 py-2 font-label-md text-label-md text-secondary border border-outline-variant rounded hover:bg-surface-container-highest transition-colors">Log In</a>
+                       class="hidden sm:block px-4 py-2 font-label-md text-label-md text-secondary border border-outline-variant rounded hover:bg-surface-container-highest transition-colors">{% trans "Log In" %}</a>
                     <a href="{% url 'account_signup' %}"
-                       class="px-4 py-2 font-label-md text-label-md bg-primary text-on-primary rounded hover:bg-primary-container transition-colors shadow-xs">Get Started</a>
+                       class="px-4 py-2 font-label-md text-label-md bg-primary text-on-primary rounded hover:bg-primary-container transition-colors shadow-xs">{% trans "Get Started" %}</a>
                 {% endif %}
             </div>
         </div>
@@ -37,24 +38,24 @@
     <section class="px-container-padding py-24 md:py-32 max-w-[1440px] mx-auto grid md:grid-cols-2 gap-12 items-center">
         <div class="space-y-stack-lg">
             <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface-container-low border border-outline-variant/50 text-secondary font-label-sm text-label-sm">
-                <span class="w-2 h-2 rounded-full bg-primary"></span> Professional Freelance Management
+                <span class="w-2 h-2 rounded-full bg-primary"></span> {% trans "Professional Freelance Management" %}
             </div>
             <h1 class="font-display text-[48px] md:text-[64px] leading-[1.1] font-bold tracking-tight text-on-background">
-                Win More Work with Professional Proposal Tracking.
+                {% trans "Win More Work with Professional Proposal Tracking." %}
             </h1>
             <p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl">
-                PropoTrack helps freelancers manage pitches, log hours, and analyze performance in one sleek dashboard.
+                {% trans "PropoTrack helps freelancers manage pitches, log hours, and analyze performance in one sleek dashboard." %}
             </p>
             <div class="flex flex-col sm:flex-row gap-4 pt-4">
                 <a href="{% url 'account_signup' %}"
-                   class="px-8 py-4 bg-primary text-on-primary rounded font-label-md text-label-md hover:bg-primary-container transition-colors shadow-xs text-center">Get Started for Free</a>
+                   class="px-8 py-4 bg-primary text-on-primary rounded font-label-md text-label-md hover:bg-primary-container transition-colors shadow-xs text-center">{% trans "Get Started for Free" %}</a>
                 <a href="#features"
-                   class="px-8 py-4 border border-outline-variant text-on-surface rounded font-label-md text-label-md hover:bg-surface-container-low transition-colors text-center">View Demo</a>
+                   class="px-8 py-4 border border-outline-variant text-on-surface rounded font-label-md text-label-md hover:bg-surface-container-low transition-colors text-center">{% trans "View Demo" %}</a>
             </div>
         </div>
         <div class="relative h-[400px] md:h-[600px] w-full rounded-xl overflow-hidden border border-outline-variant shadow-[0_10px_20px_rgba(15,23,42,0.1)] bg-surface-container-low flex items-center justify-center">
             <img src="{% static 'images/hero-dashboard.png' %}"
-                 alt="PropoTrack dashboard preview"
+                 alt="{% trans 'PropoTrack dashboard preview' %}"
                  class="w-full h-full object-cover">
         </div>
     </section>
@@ -62,9 +63,9 @@
     <section id="features"
              class="px-container-padding py-24 max-w-[1440px] mx-auto">
         <div class="text-center mb-stack-lg">
-            <h2 class="font-display text-display text-on-background mb-4">Everything to manage your pipeline</h2>
+            <h2 class="font-display text-display text-on-background mb-4">{% trans "Everything to manage your pipeline" %}</h2>
             <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">
-                From sent proposal to won deal, PropoTrack keeps every step measurable.
+                {% trans "From sent proposal to won deal, PropoTrack keeps every step measurable." %}
             </p>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
@@ -72,27 +73,27 @@
                 <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-stack-md">
                     <span class="material-symbols-outlined text-primary text-[28px]">description</span>
                 </div>
-                <h3 class="font-h3 text-h3 text-on-surface mb-2">Proposal Tracking</h3>
+                <h3 class="font-h3 text-h3 text-on-surface mb-2">{% trans "Proposal Tracking" %}</h3>
                 <p class="font-body-md text-body-md text-on-surface-variant">
-                    Funnel view from Sent to Accepted with conversion metrics built in.
+                    {% trans "Funnel view from Sent to Accepted with conversion metrics built in." %}
                 </p>
             </div>
             <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-container-padding shadow-xs">
                 <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-stack-md">
                     <span class="material-symbols-outlined text-primary text-[28px]">schedule</span>
                 </div>
-                <h3 class="font-h3 text-h3 text-on-surface mb-2">Time Logging</h3>
+                <h3 class="font-h3 text-h3 text-on-surface mb-2">{% trans "Time Logging" %}</h3>
                 <p class="font-body-md text-body-md text-on-surface-variant">
-                    Track billable hours, retainers, and effective hourly rate per project.
+                    {% trans "Track billable hours, retainers, and effective hourly rate per project." %}
                 </p>
             </div>
             <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-container-padding shadow-xs">
                 <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-stack-md">
                     <span class="material-symbols-outlined text-primary text-[28px]">analytics</span>
                 </div>
-                <h3 class="font-h3 text-h3 text-on-surface mb-2">Analytics & Forecast</h3>
+                <h3 class="font-h3 text-h3 text-on-surface mb-2">{% trans "Analytics & Forecast" %}</h3>
                 <p class="font-body-md text-body-md text-on-surface-variant">
-                    Win-rate, expected revenue, and platform-level insights at a glance.
+                    {% trans "Win-rate, expected revenue, and platform-level insights at a glance." %}
                 </p>
             </div>
         </div>
@@ -103,13 +104,13 @@
         <div class="text-center max-w-4xl mx-auto mb-stack-lg">
             <div class="inline-flex items-center gap-2 bg-secondary-container text-on-secondary-container px-4 py-1.5 rounded-full mb-6">
                 <span class="material-symbols-outlined text-[18px]">verified</span>
-                <span class="font-label-sm text-label-sm uppercase">The Freelance Advantage</span>
+                <span class="font-label-sm text-label-sm uppercase">{% trans "The Freelance Advantage" %}</span>
             </div>
             <h2 class="font-display text-display text-on-background mb-4">
-                Elevate your career with <span class="text-primary">strategic tracking.</span>
+                {% trans "Elevate your career with" %} <span class="text-primary">{% trans "strategic tracking." %}</span>
             </h2>
             <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">
-                Stop guessing, start growing. Precision tools to outpace the competition and scale your independent business through data.
+                {% trans "Stop guessing, start growing. Precision tools to outpace the competition and scale your independent business through data." %}
             </p>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
@@ -117,14 +118,14 @@
             <div class="md:col-span-7 bg-surface-container-lowest border border-outline-variant p-stack-lg rounded-xl shadow-xs flex flex-col justify-between overflow-hidden relative">
                 <div class="relative z-10">
                     <span class="material-symbols-outlined text-primary text-[40px] mb-4">trending_up</span>
-                    <h3 class="font-h2 text-h2 mb-4">Increase Win Rates</h3>
+                    <h3 class="font-h2 text-h2 mb-4">{% trans "Increase Win Rates" %}</h3>
                     <p class="font-body-md text-body-md text-on-surface-variant max-w-md">
-                        Track every proposal's status in real time and identify which strategies convert prospects into loyal clients.
+                        {% trans "Track every proposal's status in real time and identify which strategies convert prospects into loyal clients." %}
                     </p>
                 </div>
                 <div class="mt-12 -mx-stack-lg -mb-stack-lg bg-surface-container-high p-6 rounded-t-xl border-t border-x border-outline-variant">
                     <div class="flex items-center justify-between mb-4 px-4">
-                        <span class="font-label-sm text-label-sm text-on-surface-variant">MONTHLY CONVERSION RATE</span>
+                        <span class="font-label-sm text-label-sm text-on-surface-variant">{% trans "MONTHLY CONVERSION RATE" %}</span>
                         <span class="text-primary font-bold">+14.2%</span>
                     </div>
                     <div class="h-32 w-full flex items-end gap-2 px-4">
@@ -141,59 +142,59 @@
             <!-- Time Savings -->
             <div class="md:col-span-5 bg-primary text-on-primary p-stack-lg rounded-xl shadow-xs flex flex-col">
                 <span class="material-symbols-outlined text-[40px] mb-4">speed</span>
-                <h3 class="font-h2 text-h2 mb-4">Unmatched Time Savings</h3>
+                <h3 class="font-h2 text-h2 mb-4">{% trans "Unmatched Time Savings" %}</h3>
                 <p class="font-body-md text-body-md opacity-90 mb-8">
-                    Reusable template engine deploys world-class proposals in minutes, not hours.
+                    {% trans "Reusable template engine deploys world-class proposals in minutes, not hours." %}
                 </p>
                 <div class="mt-auto space-y-3">
                     <div class="bg-on-primary/10 border border-on-primary/20 p-4 rounded-lg flex items-center gap-4">
                         <span class="material-symbols-outlined">description</span>
-                        <span class="font-label-md text-label-md">Web Design Template</span>
+                        <span class="font-label-md text-label-md">{% trans "Web Design Template" %}</span>
                     </div>
                     <div class="bg-on-primary/10 border border-on-primary/20 p-4 rounded-lg flex items-center gap-4">
                         <span class="material-symbols-outlined">description</span>
-                        <span class="font-label-md text-label-md">SEO Audit Proposal</span>
+                        <span class="font-label-md text-label-md">{% trans "SEO Audit Proposal" %}</span>
                     </div>
                     <div class="bg-on-primary/20 border border-on-primary/30 p-4 rounded-lg flex items-center gap-4">
                         <span class="material-symbols-outlined">add</span>
-                        <span class="font-label-md text-label-md">Create New Template</span>
+                        <span class="font-label-md text-label-md">{% trans "Create New Template" %}</span>
                     </div>
                 </div>
             </div>
             <!-- Data-Driven Growth -->
             <div class="md:col-span-4 bg-surface-container-low border border-outline-variant p-stack-lg rounded-xl shadow-xs">
                 <span class="material-symbols-outlined text-tertiary text-[40px] mb-4">analytics</span>
-                <h3 class="font-h3 text-h3 mb-3">Data-Driven Growth</h3>
+                <h3 class="font-h3 text-h3 mb-3">{% trans "Data-Driven Growth" %}</h3>
                 <p class="font-body-sm text-body-sm text-on-surface-variant mb-6">
-                    Analyze your earnings trajectory and seasonal trends to forecast your next big move with confidence.
+                    {% trans "Analyze your earnings trajectory and seasonal trends to forecast your next big move with confidence." %}
                 </p>
                 <div class="bg-surface-container-lowest p-4 rounded-lg border border-outline-variant/50">
                     <div class="text-[24px] font-bold text-on-surface">$12,450.00</div>
-                    <div class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Projected Q4 Revenue</div>
+                    <div class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">{% trans "Projected Q4 Revenue" %}</div>
                 </div>
             </div>
             <!-- Micro-Level Tracking -->
             <div class="md:col-span-8 bg-surface-container-lowest border border-outline-variant p-stack-lg rounded-xl shadow-xs grid md:grid-cols-2 gap-8 items-center">
                 <div>
                     <span class="material-symbols-outlined text-secondary text-[40px] mb-4">biotech</span>
-                    <h3 class="font-h2 text-h2 mb-4">Micro-Level Tracking</h3>
+                    <h3 class="font-h2 text-h2 mb-4">{% trans "Micro-Level Tracking" %}</h3>
                     <p class="font-body-md text-body-md text-on-surface-variant">
-                        Know exactly when a client opens your proposal, how long they review pricing, and when they share it with stakeholders.
+                        {% trans "Know exactly when a client opens your proposal, how long they review pricing, and when they share it with stakeholders." %}
                     </p>
                 </div>
                 <div class="space-y-4">
                     <div class="flex items-center gap-3 p-3 bg-surface rounded-lg border border-outline-variant/30">
                         <div class="w-2 h-2 rounded-full bg-primary"></div>
                         <div class="flex-1">
-                            <p class="font-body-sm text-body-sm font-medium">Proposal Viewed</p>
-                            <p class="font-label-sm text-label-sm text-on-surface-variant">2 minutes ago · San Francisco, CA</p>
+                            <p class="font-body-sm text-body-sm font-medium">{% trans "Proposal Viewed" %}</p>
+                            <p class="font-label-sm text-label-sm text-on-surface-variant">{% trans "2 minutes ago · San Francisco, CA" %}</p>
                         </div>
                     </div>
                     <div class="flex items-center gap-3 p-3 bg-surface rounded-lg border border-outline-variant/30">
                         <div class="w-2 h-2 rounded-full bg-secondary"></div>
                         <div class="flex-1">
-                            <p class="font-body-sm text-body-sm font-medium">Link Clicked: "Portfolio"</p>
-                            <p class="font-label-sm text-label-sm text-on-surface-variant">1 hour ago · London, UK</p>
+                            <p class="font-body-sm text-body-sm font-medium">{% trans 'Link Clicked: "Portfolio"' %}</p>
+                            <p class="font-label-sm text-label-sm text-on-surface-variant">{% trans "1 hour ago · London, UK" %}</p>
                         </div>
                     </div>
                 </div>
@@ -205,32 +206,32 @@
              class="px-container-padding py-24 bg-surface-container-low border-t border-outline-variant/30">
         <div class="max-w-[1440px] mx-auto">
             <div class="text-center mb-stack-lg">
-                <span class="font-label-sm text-label-sm uppercase tracking-widest text-primary mb-4 inline-block">Tailored Solutions</span>
-                <h2 class="font-display text-display text-on-background mb-4">Designed for the way you win business.</h2>
+                <span class="font-label-sm text-label-sm uppercase tracking-widest text-primary mb-4 inline-block">{% trans "Tailored Solutions" %}</span>
+                <h2 class="font-display text-display text-on-background mb-4">{% trans "Designed for the way you win business." %}</h2>
                 <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">
-                    Whether you're a one-person powerhouse or a growing agency, PropoTrack streamlines your proposal funnel and maximizes billable growth.
+                    {% trans "Whether you're a one-person powerhouse or a growing agency, PropoTrack streamlines your proposal funnel and maximizes billable growth." %}
                 </p>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter mb-stack-lg">
                 <div class="group p-8 bg-surface-container-lowest rounded-xl border border-outline-variant/40 hover:border-primary transition-all">
                     <span class="material-symbols-outlined text-primary text-4xl mb-4">person</span>
-                    <h3 class="font-h3 text-h3 mb-2 group-hover:text-primary">Solo Freelancers</h3>
+                    <h3 class="font-h3 text-h3 mb-2 group-hover:text-primary">{% trans "Solo Freelancers" %}</h3>
                     <p class="font-body-sm text-body-sm text-on-surface-variant">
-                        Master your pipeline and track every minute of your expertise.
+                        {% trans "Master your pipeline and track every minute of your expertise." %}
                     </p>
                 </div>
                 <div class="group p-8 bg-surface-container-lowest rounded-xl border border-outline-variant/40 hover:border-primary transition-all">
                     <span class="material-symbols-outlined text-primary text-4xl mb-4">groups</span>
-                    <h3 class="font-h3 text-h3 mb-2 group-hover:text-primary">Small Agencies</h3>
+                    <h3 class="font-h3 text-h3 mb-2 group-hover:text-primary">{% trans "Small Agencies" %}</h3>
                     <p class="font-body-sm text-body-sm text-on-surface-variant">
-                        Consolidate client relationships and scale team productivity.
+                        {% trans "Consolidate client relationships and scale team productivity." %}
                     </p>
                 </div>
                 <div class="group p-8 bg-surface-container-lowest rounded-xl border border-outline-variant/40 hover:border-primary transition-all">
                     <span class="material-symbols-outlined text-primary text-4xl mb-4">auto_awesome</span>
-                    <h3 class="font-h3 text-h3 mb-2 group-hover:text-primary">Creative Professionals</h3>
+                    <h3 class="font-h3 text-h3 mb-2 group-hover:text-primary">{% trans "Creative Professionals" %}</h3>
                     <p class="font-body-sm text-body-sm text-on-surface-variant">
-                        Transform complex pitches into high-converting narratives.
+                        {% trans "Transform complex pitches into high-converting narratives." %}
                     </p>
                 </div>
             </div>
@@ -240,11 +241,11 @@
                     <div>
                         <div class="flex items-center gap-3 mb-6">
                             <span class="material-symbols-outlined text-primary">track_changes</span>
-                            <span class="font-label-md text-label-md uppercase text-primary">Proposal Funnel</span>
+                            <span class="font-label-md text-label-md uppercase text-primary">{% trans "Proposal Funnel" %}</span>
                         </div>
-                        <h3 class="font-h2 text-h2 mb-4">Visual Pipeline Management</h3>
+                        <h3 class="font-h2 text-h2 mb-4">{% trans "Visual Pipeline Management" %}</h3>
                         <p class="font-body-md text-body-md text-on-surface-variant max-w-md">
-                            Drag bids through custom stages. Never miss a follow-up with automated status alerts.
+                            {% trans "Drag bids through custom stages. Never miss a follow-up with automated status alerts." %}
                         </p>
                     </div>
                     <div class="mt-8 flex gap-4 overflow-hidden">
@@ -268,9 +269,9 @@
                 <div class="md:col-span-4 bg-primary text-on-primary rounded-xl p-stack-lg flex flex-col justify-between">
                     <span class="material-symbols-outlined text-4xl">timer</span>
                     <div>
-                        <h3 class="font-h2 text-h2 mb-4">Single-Click Hours</h3>
+                        <h3 class="font-h2 text-h2 mb-4">{% trans "Single-Click Hours" %}</h3>
                         <p class="font-body-sm text-body-sm opacity-90">
-                            Time tracking linked directly to project proposals for seamless invoicing.
+                            {% trans "Time tracking linked directly to project proposals for seamless invoicing." %}
                         </p>
                     </div>
                     <div class="font-display text-[36px] font-bold mt-4">02:45:12</div>
@@ -278,32 +279,32 @@
                 <div class="md:col-span-4 bg-surface-container-lowest border border-outline-variant/50 rounded-xl p-stack-lg">
                     <div class="flex items-center gap-2 mb-2">
                         <span class="material-symbols-outlined text-secondary">trending_up</span>
-                        <span class="font-label-sm text-label-sm text-on-surface-variant">Growth Index</span>
+                        <span class="font-label-sm text-label-sm text-on-surface-variant">{% trans "Growth Index" %}</span>
                     </div>
                     <div class="font-h1 text-h1 text-primary">+24%</div>
-                    <p class="font-body-sm text-body-sm text-on-surface-variant mt-2">Conversion increase since last quarter.</p>
+                    <p class="font-body-sm text-body-sm text-on-surface-variant mt-2">{% trans "Conversion increase since last quarter." %}</p>
                 </div>
                 <div class="md:col-span-8 bg-surface-container-lowest border border-outline-variant/50 rounded-xl p-6 overflow-hidden">
                     <table class="w-full text-left">
                         <thead>
                             <tr class="border-b border-outline-variant/30">
-                                <th class="pb-3 font-label-sm text-label-sm text-on-surface-variant uppercase">Client</th>
-                                <th class="pb-3 font-label-sm text-label-sm text-on-surface-variant uppercase">Status</th>
-                                <th class="pb-3 font-label-sm text-label-sm text-on-surface-variant uppercase">Value</th>
+                                <th class="pb-3 font-label-sm text-label-sm text-on-surface-variant uppercase">{% trans "Client" %}</th>
+                                <th class="pb-3 font-label-sm text-label-sm text-on-surface-variant uppercase">{% trans "Status" %}</th>
+                                <th class="pb-3 font-label-sm text-label-sm text-on-surface-variant uppercase">{% trans "Value" %}</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr class="hover:bg-surface-container-low transition-colors">
                                 <td class="py-4 font-body-md text-body-md font-semibold">Stark Industries</td>
                                 <td class="py-4">
-                                    <span class="px-3 py-1 bg-primary/10 text-primary rounded-full font-label-sm text-label-sm">Accepted</span>
+                                    <span class="px-3 py-1 bg-primary/10 text-primary rounded-full font-label-sm text-label-sm">{% trans "Accepted" %}</span>
                                 </td>
                                 <td class="py-4 font-body-md text-body-md">$12,400</td>
                             </tr>
                             <tr class="hover:bg-surface-container-low transition-colors">
                                 <td class="py-4 font-body-md text-body-md font-semibold">Wayne Corp</td>
                                 <td class="py-4">
-                                    <span class="px-3 py-1 bg-secondary/10 text-secondary rounded-full font-label-sm text-label-sm">Negotiating</span>
+                                    <span class="px-3 py-1 bg-secondary/10 text-secondary rounded-full font-label-sm text-label-sm">{% trans "Negotiating" %}</span>
                                 </td>
                                 <td class="py-4 font-body-md text-body-md">$8,200</td>
                             </tr>
@@ -314,31 +315,31 @@
             <!-- Creative Professionals strip -->
             <div class="bg-inverse-surface text-inverse-on-surface rounded-xl p-stack-lg">
                 <div class="text-center max-w-3xl mx-auto mb-stack-lg">
-                    <h3 class="font-h1 text-h1 mb-4">Elevate the Creative Pitch</h3>
-                    <p class="font-body-md text-body-md opacity-80">Turn complex project scopes into clear, winning narratives.</p>
+                    <h3 class="font-h1 text-h1 mb-4">{% trans "Elevate the Creative Pitch" %}</h3>
+                    <p class="font-body-md text-body-md opacity-80">{% trans "Turn complex project scopes into clear, winning narratives." %}</p>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter">
                     <div class="bg-white/5 p-6 rounded-xl border border-white/10">
                         <span class="material-symbols-outlined text-inverse-primary text-3xl mb-3">edit_note</span>
-                        <h4 class="font-h3 text-h3 mb-2">Narrative Proposals</h4>
-                        <p class="font-body-sm text-body-sm opacity-70">Rich text and visual embeds to tell the story behind your solution.</p>
+                        <h4 class="font-h3 text-h3 mb-2">{% trans "Narrative Proposals" %}</h4>
+                        <p class="font-body-sm text-body-sm opacity-70">{% trans "Rich text and visual embeds to tell the story behind your solution." %}</p>
                     </div>
                     <div class="bg-white/5 p-6 rounded-xl border border-white/10">
                         <span class="material-symbols-outlined text-inverse-primary text-3xl mb-3">account_tree</span>
-                        <h4 class="font-h3 text-h3 mb-2">Tiered Packaging</h4>
+                        <h4 class="font-h3 text-h3 mb-2">{% trans "Tiered Packaging" %}</h4>
                         <p class="font-body-sm text-body-sm opacity-70">
-                            Multiple scope options so clients pick their ideal engagement level.
+                            {% trans "Multiple scope options so clients pick their ideal engagement level." %}
                         </p>
                     </div>
                     <div class="bg-white/5 p-6 rounded-xl border border-white/10">
                         <span class="material-symbols-outlined text-inverse-primary text-3xl mb-3">history_edu</span>
-                        <h4 class="font-h3 text-h3 mb-2">Version History</h4>
-                        <p class="font-body-sm text-body-sm opacity-70">Track every iteration from first draft to final signature.</p>
+                        <h4 class="font-h3 text-h3 mb-2">{% trans "Version History" %}</h4>
+                        <p class="font-body-sm text-body-sm opacity-70">{% trans "Track every iteration from first draft to final signature." %}</p>
                     </div>
                     <div class="bg-white/5 p-6 rounded-xl border border-white/10">
                         <span class="material-symbols-outlined text-inverse-primary text-3xl mb-3">notifications_active</span>
-                        <h4 class="font-h3 text-h3 mb-2">Smart Reminders</h4>
-                        <p class="font-body-sm text-body-sm opacity-70">Automated nudges for stakeholders who haven't reviewed yet.</p>
+                        <h4 class="font-h3 text-h3 mb-2">{% trans "Smart Reminders" %}</h4>
+                        <p class="font-body-sm text-body-sm opacity-70">{% trans "Automated nudges for stakeholders who haven't reviewed yet." %}</p>
                     </div>
                 </div>
             </div>
@@ -348,89 +349,89 @@
     <section id="pricing"
              class="px-container-padding py-24 max-w-[1440px] mx-auto">
         <div class="text-center mb-stack-lg">
-            <h2 class="font-display text-display text-on-background mb-4">Transparent pricing for your growth</h2>
+            <h2 class="font-display text-display text-on-background mb-4">{% trans "Transparent pricing for your growth" %}</h2>
             <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">
-                Open access to quality tools. Choose how you'd like to start.
+                {% trans "Open access to quality tools. Choose how you'd like to start." %}
             </p>
         </div>
         <div class="max-w-[1000px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-gutter items-stretch">
             <!-- Free Plan -->
             <div class="bg-surface-container-lowest border border-outline-variant p-stack-lg rounded-xl flex flex-col h-full hover:shadow-md transition-shadow">
                 <div class="mb-8">
-                    <span class="font-label-sm text-label-sm uppercase text-on-surface-variant tracking-widest">Free</span>
+                    <span class="font-label-sm text-label-sm uppercase text-on-surface-variant tracking-widest">{% trans "Free" %}</span>
                     <div class="mt-4 flex items-baseline">
                         <span class="font-display text-[48px] leading-none">$0</span>
-                        <span class="font-body-sm text-body-sm text-on-surface-variant ml-2">/forever</span>
+                        <span class="font-body-sm text-body-sm text-on-surface-variant ml-2">{% trans "/forever" %}</span>
                     </div>
-                    <p class="font-body-sm text-body-sm text-on-surface-variant mt-4">Full access to every PropoTrack tool.</p>
+                    <p class="font-body-sm text-body-sm text-on-surface-variant mt-4">{% trans "Full access to every PropoTrack tool." %}</p>
                 </div>
                 <div class="space-y-4 mb-10 flex-grow">
                     <div class="flex items-center gap-3">
                         <span class="material-symbols-outlined text-primary text-[20px]">check_circle</span>
-                        <span class="font-body-sm text-body-sm text-on-surface">Full features unlocked</span>
+                        <span class="font-body-sm text-body-sm text-on-surface">{% trans "Full features unlocked" %}</span>
                     </div>
                     <div class="flex items-center gap-3">
                         <span class="material-symbols-outlined text-primary text-[20px]">check_circle</span>
-                        <span class="font-body-sm text-body-sm text-on-surface">Unlimited proposals</span>
+                        <span class="font-body-sm text-body-sm text-on-surface">{% trans "Unlimited proposals" %}</span>
                     </div>
                     <div class="flex items-center gap-3">
                         <span class="material-symbols-outlined text-primary text-[20px]">check_circle</span>
-                        <span class="font-body-sm text-body-sm text-on-surface">Time tracking</span>
+                        <span class="font-body-sm text-body-sm text-on-surface">{% trans "Time tracking" %}</span>
                     </div>
                 </div>
                 <a href="{% url 'account_signup' %}"
-                   class="block text-center w-full py-3 px-6 border border-outline text-primary font-label-md text-label-md rounded-lg hover:bg-surface-container transition-colors">Start now</a>
+                   class="block text-center w-full py-3 px-6 border border-outline text-primary font-label-md text-label-md rounded-lg hover:bg-surface-container transition-colors">{% trans "Start now" %}</a>
             </div>
             <!-- Support Plan -->
             <div class="bg-surface-container-lowest border-2 border-primary p-stack-lg rounded-xl flex flex-col h-full relative shadow-md">
                 <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary text-on-primary px-4 py-1 rounded-full font-label-sm text-label-sm">
-                    RECOMMENDED
+                    {% trans "RECOMMENDED" %}
                 </div>
                 <div class="mb-8">
-                    <span class="font-label-sm text-label-sm uppercase text-primary tracking-widest">Support with donation</span>
+                    <span class="font-label-sm text-label-sm uppercase text-primary tracking-widest">{% trans "Support with donation" %}</span>
                     <div class="mt-4 flex items-baseline">
-                        <span class="font-display text-[48px] leading-none">Voluntary</span>
+                        <span class="font-display text-[48px] leading-none">{% trans "Voluntary" %}</span>
                     </div>
                     <p class="font-body-sm text-body-sm text-on-surface-variant mt-4">
-                        Keep the project alive and get the same full features.
+                        {% trans "Keep the project alive and get the same full features." %}
                     </p>
                 </div>
                 <div class="space-y-4 mb-10 flex-grow">
                     <div class="flex items-center gap-3">
                         <span class="material-symbols-outlined text-primary text-[20px] fill">check_circle</span>
-                        <span class="font-body-sm text-body-sm text-on-surface font-semibold">Full features unlocked</span>
+                        <span class="font-body-sm text-body-sm text-on-surface font-semibold">{% trans "Full features unlocked" %}</span>
                     </div>
                     <div class="flex items-center gap-3">
                         <span class="material-symbols-outlined text-primary text-[20px] fill">check_circle</span>
-                        <span class="font-body-sm text-body-sm text-on-surface">Priority support</span>
+                        <span class="font-body-sm text-body-sm text-on-surface">{% trans "Priority support" %}</span>
                     </div>
                     <div class="flex items-center gap-3">
                         <span class="material-symbols-outlined text-primary text-[20px] fill">check_circle</span>
-                        <span class="font-body-sm text-body-sm text-on-surface">Contribute to development</span>
+                        <span class="font-body-sm text-body-sm text-on-surface">{% trans "Contribute to development" %}</span>
                     </div>
                 </div>
                 <a href="{% url 'donate' %}"
-                   class="block text-center w-full py-3 px-6 bg-primary text-on-primary font-label-md text-label-md rounded-lg hover:bg-primary-container transition-all">Donate</a>
+                   class="block text-center w-full py-3 px-6 bg-primary text-on-primary font-label-md text-label-md rounded-lg hover:bg-primary-container transition-all">{% trans "Donate" %}</a>
             </div>
         </div>
         <!-- Comparison Table -->
         <div class="max-w-[800px] mx-auto mt-24 hidden md:block">
-            <h3 class="font-h2 text-h2 text-center mb-16">Plan comparison</h3>
+            <h3 class="font-h2 text-h2 text-center mb-16">{% trans "Plan comparison" %}</h3>
             <table class="w-full border-collapse">
                 <thead>
                     <tr class="border-b border-outline-variant/30">
                         <th class="py-4 text-left font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest w-1/3">
-                            Feature
+                            {% trans "Feature" %}
                         </th>
                         <th class="py-4 text-center font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest w-1/3">
-                            Free
+                            {% trans "Free" %}
                         </th>
-                        <th class="py-4 text-center font-label-sm text-label-sm text-primary uppercase tracking-widest w-1/3">Donation</th>
+                        <th class="py-4 text-center font-label-sm text-label-sm text-primary uppercase tracking-widest w-1/3">{% trans "Donation" %}</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr class="border-b border-outline-variant/10">
-                        <td class="py-6 font-body-md text-body-md text-on-surface">Full features unlocked</td>
+                        <td class="py-6 font-body-md text-body-md text-on-surface">{% trans "Full features unlocked" %}</td>
                         <td class="py-6 text-center text-primary">
                             <span class="material-symbols-outlined">check</span>
                         </td>
@@ -439,12 +440,12 @@
                         </td>
                     </tr>
                     <tr class="border-b border-outline-variant/10">
-                        <td class="py-6 font-body-md text-body-md text-on-surface">Active proposals</td>
-                        <td class="py-6 text-center font-body-sm text-body-sm">Unlimited</td>
-                        <td class="py-6 text-center font-body-sm text-body-sm">Unlimited</td>
+                        <td class="py-6 font-body-md text-body-md text-on-surface">{% trans "Active proposals" %}</td>
+                        <td class="py-6 text-center font-body-sm text-body-sm">{% trans "Unlimited" %}</td>
+                        <td class="py-6 text-center font-body-sm text-body-sm">{% trans "Unlimited" %}</td>
                     </tr>
                     <tr class="border-b border-outline-variant/10">
-                        <td class="py-6 font-body-md text-body-md text-on-surface">API access</td>
+                        <td class="py-6 font-body-md text-body-md text-on-surface">{% trans "API access" %}</td>
                         <td class="py-6 text-center text-primary">
                             <span class="material-symbols-outlined">check</span>
                         </td>
@@ -453,9 +454,9 @@
                         </td>
                     </tr>
                     <tr class="border-b border-outline-variant/10">
-                        <td class="py-6 font-body-md text-body-md text-on-surface">Technical support</td>
-                        <td class="py-6 text-center font-body-sm text-body-sm">Standard</td>
-                        <td class="py-6 text-center font-body-sm text-body-sm font-semibold">Priority</td>
+                        <td class="py-6 font-body-md text-body-md text-on-surface">{% trans "Technical support" %}</td>
+                        <td class="py-6 text-center font-body-sm text-body-sm">{% trans "Standard" %}</td>
+                        <td class="py-6 text-center font-body-sm text-body-sm font-semibold">{% trans "Priority" %}</td>
                     </tr>
                 </tbody>
             </table>
@@ -464,13 +465,13 @@
     <!-- CTA Section -->
     <section class="px-container-padding py-24 bg-surface-container-low">
         <div class="max-w-3xl mx-auto text-center">
-            <h2 class="font-display text-display text-on-background mb-4">Ready to get started?</h2>
+            <h2 class="font-display text-display text-on-background mb-4">{% trans "Ready to get started?" %}</h2>
             <p class="font-body-lg text-body-lg text-on-surface-variant mb-stack-lg">
-                Join independent professionals streamlining their freelance business.
+                {% trans "Join independent professionals streamlining their freelance business." %}
             </p>
             <a href="{% url 'account_signup' %}"
                class="inline-flex items-center gap-2 px-8 py-4 bg-primary text-on-primary rounded font-label-md text-label-md hover:bg-primary-container transition-colors shadow-xs">
-                Get Started for Free
+                {% trans "Get Started for Free" %}
                 <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
             </a>
         </div>
@@ -481,17 +482,17 @@
             <div class="font-h3 text-h3 font-bold text-on-surface">PropoTrack</div>
             <div class="flex flex-wrap justify-center gap-6">
                 <a href="{% url 'privacy_policy' %}"
-                   class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-all">Privacy Policy</a>
+                   class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-all">{% trans "Privacy Policy" %}</a>
                 <a href="{% url 'terms_of_service' %}"
-                   class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-all">Terms of Service</a>
+                   class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-all">{% trans "Terms of Service" %}</a>
                 <a href="{% url 'security' %}"
-                   class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-all">Security</a>
+                   class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-all">{% trans "Security" %}</a>
                 <a href="{% url 'donate' %}"
-                   class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-all">Donate</a>
+                   class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-all">{% trans "Donate" %}</a>
                 <a href="#"
-                   class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-all">Status</a>
+                   class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-all">{% trans "Status" %}</a>
                 <a href="#"
-                   class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-all">API Docs</a>
+                   class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-all">{% trans "API Docs" %}</a>
             </div>
             <div class="font-body-sm text-body-sm text-on-surface-variant">© {% now "Y" %} PropoTrack.</div>
         </div>

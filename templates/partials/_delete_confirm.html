@@ -8,14 +8,15 @@ Delete-confirm card. Params via {% include with %}:
   cancel_url        — URL of the Cancel button (required)
   submit_label      — submit button text (default "Delete")
 {% endcomment %}
+{% load i18n %}
 <div class="max-w-[560px] mx-auto">
     <div class="bg-surface-container-lowest border border-outline-variant rounded-xl shadow-xs p-stack-lg flex flex-col gap-stack-md">
         <div class="flex flex-col items-center text-center gap-2">
             <div class="w-14 h-14 rounded-full bg-error-container flex items-center justify-center">
                 <span class="material-symbols-outlined text-on-error-container text-[28px]">delete</span>
             </div>
-            <h1 class="font-h2 text-h2 text-on-surface">Delete this {{ entity_type }}?</h1>
-            <p class="font-body-md text-body-md text-on-surface-variant">This action cannot be undone.</p>
+            <h1 class="font-h2 text-h2 text-on-surface">{% blocktrans with type=entity_type %}Delete this {{ type }}?{% endblocktrans %}</h1>
+            <p class="font-body-md text-body-md text-on-surface-variant">{% trans "This action cannot be undone." %}</p>
         </div>
 
         <div class="bg-surface-container-low border border-outline-variant rounded-lg p-4">
@@ -29,7 +30,7 @@ Delete-confirm card. Params via {% include with %}:
         <form method="post" class="flex flex-col-reverse sm:flex-row items-center justify-end gap-3 border-t border-outline-variant pt-stack-md">
             {% csrf_token %}
             <a href="{{ cancel_url }}" class="w-full sm:w-auto px-6 py-3 rounded-lg border border-outline bg-transparent text-secondary hover:bg-surface-container transition-colors font-label-md text-label-md text-center">
-                Cancel
+                {% trans "Cancel" %}
             </a>
             <button type="submit" class="w-full sm:w-auto px-6 py-3 rounded-lg bg-error text-on-error hover:opacity-90 transition-all font-label-md text-label-md shadow-xs flex items-center justify-center gap-2">
                 <span class="material-symbols-outlined text-[18px]">delete</span>

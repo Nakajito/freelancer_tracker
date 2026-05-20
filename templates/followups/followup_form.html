@@ -1,6 +1,7 @@
 {% extends "app_base.html" %}
+{% load i18n %}
 
-{% block title %}{% if object %}Edit Follow-up{% else %}New Follow-up{% endif %} - PropoTrack{% endblock %}
+{% block title %}{% if object %}{% trans "Edit Follow-up" %}{% else %}{% trans "New Follow-up" %}{% endif %} - PropoTrack{% endblock %}
 {% block active_nav %}followups{% endblock %}
 
 {% block app_content %}
@@ -8,10 +9,10 @@
     <div class="mb-stack-lg">
         <a href="{% url 'followup-list' %}" class="inline-flex items-center gap-1 text-on-surface-variant hover:text-primary transition-colors font-label-sm text-label-sm mb-2">
             <span class="material-symbols-outlined text-[16px]">arrow_back</span>
-            Back to Follow-ups
+            {% trans "Back to Follow-ups" %}
         </a>
-        <h1 class="font-h1 text-h1 text-on-surface">{% if object %}Edit{% else %}Create{% endif %} Follow-up</h1>
-        <p class="font-body-md text-body-md text-on-surface-variant mt-1">Schedule a follow-up task for a proposal.</p>
+        <h1 class="font-h1 text-h1 text-on-surface">{% if object %}{% trans "Edit" %}{% else %}{% trans "Create" %}{% endif %} {% trans "Follow-up" %}</h1>
+        <p class="font-body-md text-body-md text-on-surface-variant mt-1">{% trans "Schedule a follow-up task for a proposal." %}</p>
     </div>
 
     <form method="post" class="bg-surface-container-lowest border border-outline-variant shadow-xs rounded-xl p-container-padding md:p-stack-lg flex flex-col gap-stack-md">
@@ -24,32 +25,31 @@
         {% endif %}
 
         <div class="flex flex-col gap-2">
-            <label class="font-label-md text-label-md text-on-surface-variant" for="id_proposal">Proposal <span class="text-error">*</span></label>
+            <label class="font-label-md text-label-md text-on-surface-variant" for="id_proposal">{% trans "Proposal" %} <span class="text-error">*</span></label>
             {{ form.proposal }}
             {% if form.proposal.errors %}<p class="font-body-sm text-body-sm text-error">{{ form.proposal.errors.0 }}</p>{% endif %}
         </div>
 
         <div class="flex flex-col gap-2">
-            <label class="font-label-md text-label-md text-on-surface-variant" for="id_description">Description</label>
+            <label class="font-label-md text-label-md text-on-surface-variant" for="id_description">{% trans "Description" %}</label>
             {{ form.description }}
         </div>
 
         <div class="flex flex-col gap-2 max-w-xs">
-            <label class="font-label-md text-label-md text-on-surface-variant" for="id_due_date">Due Date <span class="text-error">*</span></label>
+            <label class="font-label-md text-label-md text-on-surface-variant" for="id_due_date">{% trans "Due Date" %} <span class="text-error">*</span></label>
             {{ form.due_date }}
             {% if form.due_date.errors %}<p class="font-body-sm text-body-sm text-error">{{ form.due_date.errors.0 }}</p>{% endif %}
         </div>
 
         <div class="border-t border-outline-variant pt-stack-md flex flex-col-reverse sm:flex-row items-center justify-end gap-3">
             <a href="{% url 'followup-list' %}" class="w-full sm:w-auto px-6 py-3 rounded-lg border border-outline bg-transparent text-secondary hover:bg-surface-container transition-colors font-label-md text-label-md text-center">
-                Cancel
+                {% trans "Cancel" %}
             </a>
             <button type="submit" class="w-full sm:w-auto px-6 py-3 rounded-lg bg-primary text-on-primary hover:bg-on-primary-fixed-variant transition-colors font-label-md text-label-md shadow-xs flex items-center justify-center gap-2">
                 <span class="material-symbols-outlined text-[18px]">save</span>
-                Save Follow-up
+                {% trans "Save Follow-up" %}
             </button>
         </div>
     </form>
 </div>
 {% endblock %}
-

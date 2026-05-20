@@ -1,6 +1,7 @@
 {% extends "app_base.html" %}
+{% load i18n %}
 
-{% block title %}Clients - PropoTrack{% endblock %}
+{% block title %}{% trans "Clients" %} - PropoTrack{% endblock %}
 {% block active_nav %}clients{% endblock %}
 
 {% block app_content %}
@@ -12,10 +13,10 @@
         <table class="w-full text-left border-collapse">
             <thead>
                 <tr class="bg-surface-container-low border-b border-outline-variant">
-                    <th class="font-label-sm text-label-sm text-secondary py-4 px-6 uppercase tracking-wider">Name</th>
-                    <th class="font-label-sm text-label-sm text-secondary py-4 px-6 uppercase tracking-wider">Email</th>
-                    <th class="font-label-sm text-label-sm text-secondary py-4 px-6 uppercase tracking-wider">Notes</th>
-                    <th class="font-label-sm text-label-sm text-secondary py-4 px-6 uppercase tracking-wider text-right">Actions</th>
+                    <th class="font-label-sm text-label-sm text-secondary py-4 px-6 uppercase tracking-wider">{% trans "Name" %}</th>
+                    <th class="font-label-sm text-label-sm text-secondary py-4 px-6 uppercase tracking-wider">{% trans "Email" %}</th>
+                    <th class="font-label-sm text-label-sm text-secondary py-4 px-6 uppercase tracking-wider">{% trans "Notes" %}</th>
+                    <th class="font-label-sm text-label-sm text-secondary py-4 px-6 uppercase tracking-wider text-right">{% trans "Actions" %}</th>
                 </tr>
             </thead>
             <tbody class="divide-y divide-outline-variant">
@@ -33,8 +34,8 @@
                     <td class="py-4 px-6 font-body-sm text-body-sm text-on-surface-variant">{{ client.notes|truncatechars:60|default:"—" }}</td>
                     <td class="py-4 px-6 text-right">
                         <div class="flex items-center justify-end gap-2">
-                            <span class="font-body-sm text-body-sm text-on-surface-variant">{{ client.proposal_set.count|default:0 }} proposals</span>
-                            <a href="{% url 'client-delete' client.pk %}" class="opacity-0 group-hover:opacity-100 transition-opacity p-1.5 text-error hover:bg-error-container rounded-md" title="Delete">
+                            <span class="font-body-sm text-body-sm text-on-surface-variant">{% blocktrans with count=client.proposal_set.count|default:0 %}{{ count }} proposals{% endblocktrans %}</span>
+                            <a href="{% url 'client-delete' client.pk %}" class="opacity-0 group-hover:opacity-100 transition-opacity p-1.5 text-error hover:bg-error-container rounded-md" title="{% trans 'Delete' %}">
                                 <span class="material-symbols-outlined text-[18px]">delete</span>
                             </a>
                         </div>

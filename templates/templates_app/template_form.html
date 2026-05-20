@@ -1,6 +1,7 @@
 {% extends "app_base.html" %}
+{% load i18n %}
 
-{% block title %}{% if object %}Edit Template{% else %}Create Template{% endif %} - PropoTrack{% endblock %}
+{% block title %}{% if object %}{% trans "Edit Template" %}{% else %}{% trans "Create Template" %}{% endif %} - PropoTrack{% endblock %}
 {% block active_nav %}templates{% endblock %}
 
 {% block app_content %}
@@ -8,10 +9,10 @@
     <div class="mb-stack-lg">
         <a href="{% url 'template-list' %}" class="inline-flex items-center gap-1 text-on-surface-variant hover:text-primary transition-colors font-label-sm text-label-sm mb-2">
             <span class="material-symbols-outlined text-[16px]">arrow_back</span>
-            Back to Templates
+            {% trans "Back to Templates" %}
         </a>
-        <h1 class="font-h1 text-h1 text-on-surface">{% if object %}Edit{% else %}Create New{% endif %} Template</h1>
-        <p class="font-body-md text-body-md text-on-surface-variant mt-1">Build a reusable proposal structure with placeholders.</p>
+        <h1 class="font-h1 text-h1 text-on-surface">{% if object %}{% trans "Edit" %}{% else %}{% trans "Create New" %}{% endif %} {% trans "Template" %}</h1>
+        <p class="font-body-md text-body-md text-on-surface-variant mt-1">{% trans "Build a reusable proposal structure with placeholders." %}</p>
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter">
@@ -25,25 +26,25 @@
                 {% endif %}
 
                 <div class="flex flex-col gap-2">
-                    <label class="font-label-md text-label-md text-on-surface-variant" for="id_name">Template Name <span class="text-error">*</span></label>
+                    <label class="font-label-md text-label-md text-on-surface-variant" for="id_name">{% trans "Template Name" %} <span class="text-error">*</span></label>
                     {{ form.name }}
                     {% if form.name.errors %}<p class="font-body-sm text-body-sm text-error">{{ form.name.errors.0 }}</p>{% endif %}
                 </div>
 
                 <div class="flex flex-col gap-2">
-                    <label class="font-label-md text-label-md text-on-surface-variant" for="id_body">Body <span class="text-error">*</span></label>
+                    <label class="font-label-md text-label-md text-on-surface-variant" for="id_body">{% trans "Body" %} <span class="text-error">*</span></label>
                     {{ form.body }}
-                    <p class="font-body-sm text-body-sm text-on-surface-variant">Use placeholders like <code class="bg-surface-container px-1.5 py-0.5 rounded text-on-surface">{client}</code>, <code class="bg-surface-container px-1.5 py-0.5 rounded text-on-surface">{project}</code>, <code class="bg-surface-container px-1.5 py-0.5 rounded text-on-surface">{amount}</code>.</p>
+                    <p class="font-body-sm text-body-sm text-on-surface-variant">{% blocktrans %}Use placeholders like <code class="bg-surface-container px-1.5 py-0.5 rounded text-on-surface">{client}</code>, <code class="bg-surface-container px-1.5 py-0.5 rounded text-on-surface">{project}</code>, <code class="bg-surface-container px-1.5 py-0.5 rounded text-on-surface">{amount}</code>.{% endblocktrans %}</p>
                     {% if form.body.errors %}<p class="font-body-sm text-body-sm text-error">{{ form.body.errors.0 }}</p>{% endif %}
                 </div>
 
                 <div class="border-t border-outline-variant pt-stack-md flex flex-col-reverse sm:flex-row items-center justify-end gap-3">
                     <a href="{% url 'template-list' %}" class="w-full sm:w-auto px-6 py-3 rounded-lg border border-outline bg-transparent text-secondary hover:bg-surface-container transition-colors font-label-md text-label-md text-center">
-                        Cancel
+                        {% trans "Cancel" %}
                     </a>
                     <button type="submit" class="w-full sm:w-auto px-6 py-3 rounded-lg bg-primary text-on-primary hover:bg-on-primary-fixed-variant transition-colors font-label-md text-label-md shadow-xs flex items-center justify-center gap-2">
                         <span class="material-symbols-outlined text-[18px]">save</span>
-                        Save Template
+                        {% trans "Save Template" %}
                     </button>
                 </div>
             </form>
@@ -52,24 +53,23 @@
         <div class="bg-surface-container-lowest border border-outline-variant rounded-xl shadow-xs p-container-padding">
             <h3 class="font-h3 text-h3 text-on-surface mb-stack-md flex items-center gap-2">
                 <span class="material-symbols-outlined text-primary">tips_and_updates</span>
-                Template Tips
+                {% trans "Template Tips" %}
             </h3>
             <ul class="flex flex-col gap-stack-sm">
                 <li class="flex items-start gap-2">
                     <span class="material-symbols-outlined text-primary text-[18px] mt-0.5">check_circle</span>
-                    <span class="font-body-sm text-body-sm text-on-surface-variant">Use placeholders to fill client and project context dynamically.</span>
+                    <span class="font-body-sm text-body-sm text-on-surface-variant">{% trans "Use placeholders to fill client and project context dynamically." %}</span>
                 </li>
                 <li class="flex items-start gap-2">
                     <span class="material-symbols-outlined text-primary text-[18px] mt-0.5">check_circle</span>
-                    <span class="font-body-sm text-body-sm text-on-surface-variant">Structure for scanning — clients skim proposals.</span>
+                    <span class="font-body-sm text-body-sm text-on-surface-variant">{% trans "Structure for scanning — clients skim proposals." %}</span>
                 </li>
                 <li class="flex items-start gap-2">
                     <span class="material-symbols-outlined text-primary text-[18px] mt-0.5">check_circle</span>
-                    <span class="font-body-sm text-body-sm text-on-surface-variant">Keep deliverables crisp and bullet-listed.</span>
+                    <span class="font-body-sm text-body-sm text-on-surface-variant">{% trans "Keep deliverables crisp and bullet-listed." %}</span>
                 </li>
             </ul>
         </div>
     </div>
 </div>
 {% endblock %}
-

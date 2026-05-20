@@ -1,40 +1,41 @@
 {% extends "app_base.html" %}
+{% load i18n %}
 
-{% block title %}Preview: {{ template.name }} - PropoTrack{% endblock %}
+{% block title %}{% trans "Preview" %}: {{ template.name }} - PropoTrack{% endblock %}
 {% block active_nav %}templates{% endblock %}
 
 {% block app_content %}
 <div class="mb-stack-lg">
     <a href="{% url 'template-list' %}" class="inline-flex items-center gap-1 text-on-surface-variant hover:text-primary transition-colors font-label-sm text-label-sm mb-2">
         <span class="material-symbols-outlined text-[16px]">arrow_back</span>
-        Back to Templates
+        {% trans "Back to Templates" %}
     </a>
-    <h1 class="font-h1 text-h1 text-on-surface">Preview: {{ template.name }}</h1>
-    <p class="font-body-md text-body-md text-on-surface-variant mt-1">Test your template with sample data.</p>
+    <h1 class="font-h1 text-h1 text-on-surface">{% trans "Preview" %}: {{ template.name }}</h1>
+    <p class="font-body-md text-body-md text-on-surface-variant mt-1">{% trans "Test your template with sample data." %}</p>
 </div>
 
 <form method="get" class="bg-surface-container-lowest border border-outline-variant rounded-xl p-container-padding shadow-xs flex flex-col md:flex-row gap-4 items-end mb-stack-md">
     <div class="flex flex-col gap-2 flex-1">
-        <label class="font-label-md text-label-md text-on-surface-variant" for="client">Client Name</label>
-        <input type="text" name="client" id="client" placeholder="Acme Corp" value="{{ request.GET.client }}" class="w-full bg-surface-container-low border border-outline-variant rounded-lg px-4 py-3 font-body-md text-body-md text-on-surface focus:outline-hidden focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all">
+        <label class="font-label-md text-label-md text-on-surface-variant" for="client">{% trans "Client Name" %}</label>
+        <input type="text" name="client" id="client" placeholder="{% trans 'Acme Corp' %}" value="{{ request.GET.client }}" class="w-full bg-surface-container-low border border-outline-variant rounded-lg px-4 py-3 font-body-md text-body-md text-on-surface focus:outline-hidden focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all">
     </div>
     <div class="flex flex-col gap-2 flex-1">
-        <label class="font-label-md text-label-md text-on-surface-variant" for="project">Project Title</label>
-        <input type="text" name="project" id="project" placeholder="Website Redesign" value="{{ request.GET.project }}" class="w-full bg-surface-container-low border border-outline-variant rounded-lg px-4 py-3 font-body-md text-body-md text-on-surface focus:outline-hidden focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all">
+        <label class="font-label-md text-label-md text-on-surface-variant" for="project">{% trans "Project Title" %}</label>
+        <input type="text" name="project" id="project" placeholder="{% trans 'Website Redesign' %}" value="{{ request.GET.project }}" class="w-full bg-surface-container-low border border-outline-variant rounded-lg px-4 py-3 font-body-md text-body-md text-on-surface focus:outline-hidden focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all">
     </div>
     <div class="flex flex-col gap-2 w-full md:w-40">
-        <label class="font-label-md text-label-md text-on-surface-variant" for="amount">Amount</label>
+        <label class="font-label-md text-label-md text-on-surface-variant" for="amount">{% trans "Amount" %}</label>
         <input type="text" name="amount" id="amount" placeholder="$2,500" value="{{ request.GET.amount }}" class="w-full bg-surface-container-low border border-outline-variant rounded-lg px-4 py-3 font-body-md text-body-md text-on-surface focus:outline-hidden focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all">
     </div>
     <button type="submit" class="bg-primary text-on-primary px-5 py-3 rounded-lg font-label-md text-label-md hover:bg-primary-container transition-colors shadow-xs flex items-center gap-2">
         <span class="material-symbols-outlined text-[18px]">refresh</span>
-        Update
+        {% trans "Update" %}
     </button>
 </form>
 
 <div class="bg-surface-container-lowest border border-outline-variant rounded-xl shadow-xs overflow-hidden">
     <div class="px-container-padding py-4 border-b border-outline-variant">
-        <h3 class="font-h3 text-h3 text-on-surface">Rendered Template</h3>
+        <h3 class="font-h3 text-h3 text-on-surface">{% trans "Rendered Template" %}</h3>
     </div>
     <div class="p-container-padding bg-surface-container-low font-body-md text-body-md text-on-surface leading-relaxed">
         {{ rendered|linebreaks }}

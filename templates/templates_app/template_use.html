@@ -1,16 +1,17 @@
 {% extends "app_base.html" %}
+{% load i18n %}
 
-{% block title %}Use Template: {{ template.name }} - PropoTrack{% endblock %}
+{% block title %}{% trans "Use Template" %}: {{ template.name }} - PropoTrack{% endblock %}
 {% block active_nav %}templates{% endblock %}
 
 {% block app_content %}
 <div class="mb-stack-lg">
     <a href="{% url 'template-list' %}" class="inline-flex items-center gap-1 text-on-surface-variant hover:text-primary transition-colors font-label-sm text-label-sm mb-2">
         <span class="material-symbols-outlined text-[16px]">arrow_back</span>
-        Back to Templates
+        {% trans "Back to Templates" %}
     </a>
-    <h1 class="font-h1 text-h1 text-on-surface">Use Template: {{ template.name }}</h1>
-    <p class="font-body-md text-body-md text-on-surface-variant mt-1">Pick a client to spin up a new proposal pre-filled with this template.</p>
+    <h1 class="font-h1 text-h1 text-on-surface">{% trans "Use Template" %}: {{ template.name }}</h1>
+    <p class="font-body-md text-body-md text-on-surface-variant mt-1">{% trans "Pick a client to spin up a new proposal pre-filled with this template." %}</p>
 </div>
 
 <div class="bg-surface-container-lowest border border-outline-variant rounded-xl shadow-xs overflow-hidden">
@@ -18,9 +19,9 @@
         <table class="w-full text-left border-collapse">
             <thead>
                 <tr class="bg-surface-container-low border-b border-outline-variant">
-                    <th class="font-label-sm text-label-sm text-secondary py-4 px-6 uppercase tracking-wider">Client</th>
-                    <th class="font-label-sm text-label-sm text-secondary py-4 px-6 uppercase tracking-wider">Email</th>
-                    <th class="font-label-sm text-label-sm text-secondary py-4 px-6 uppercase tracking-wider text-right">Action</th>
+                    <th class="font-label-sm text-label-sm text-secondary py-4 px-6 uppercase tracking-wider">{% trans "Client" %}</th>
+                    <th class="font-label-sm text-label-sm text-secondary py-4 px-6 uppercase tracking-wider">{% trans "Email" %}</th>
+                    <th class="font-label-sm text-label-sm text-secondary py-4 px-6 uppercase tracking-wider text-right">{% trans "Action" %}</th>
                 </tr>
             </thead>
             <tbody class="divide-y divide-outline-variant">
@@ -36,7 +37,7 @@
                     <td class="py-4 px-6 text-right">
                         <a href="{% url 'proposal-create' %}?template={{ template.pk }}&client={{ client.pk }}" class="inline-flex items-center gap-2 px-3 py-1.5 bg-primary text-on-primary rounded-lg font-label-md text-label-md hover:bg-primary-container transition-colors">
                             <span class="material-symbols-outlined text-[16px]">play_arrow</span>
-                            Use
+                            {% trans "Use" %}
                         </a>
                     </td>
                 </tr>
@@ -44,11 +45,11 @@
                 <tr>
                     <td colspan="3" class="py-16 text-center">
                         <span class="material-symbols-outlined text-[48px] text-outline-variant mb-3 block">groups</span>
-                        <h3 class="font-h3 text-h3 text-on-surface mb-1">No clients available</h3>
-                        <p class="font-body-md text-body-md text-on-surface-variant mb-4">Create a client first to use this template.</p>
+                        <h3 class="font-h3 text-h3 text-on-surface mb-1">{% trans "No clients available" %}</h3>
+                        <p class="font-body-md text-body-md text-on-surface-variant mb-4">{% trans "Create a client first to use this template." %}</p>
                         <a href="{% url 'client-create' %}" class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-on-primary rounded-lg font-label-md text-label-md hover:bg-primary-container">
                             <span class="material-symbols-outlined text-[18px]">add</span>
-                            Create Client
+                            {% trans "Create Client" %}
                         </a>
                     </td>
                 </tr>
