@@ -12,7 +12,7 @@
                 </div>
                 <div class="flex flex-col">
                     <span class="font-h2 text-h2 font-bold text-primary">PropoTrack</span>
-                    <span class="font-label-sm text-label-sm text-on-surface-variant">Freelancer Pro</span>
+                    <span class="font-label-sm text-label-sm text-on-surface-variant">{% trans "Freelancer Pro" %}</span>
                 </div>
             </a>
         </div>
@@ -20,7 +20,7 @@
         <div class="px-container-padding mb-stack-md">
             <a href="{% url 'proposal-create' %}" class="w-full bg-primary text-on-primary font-label-md text-label-md py-3 px-4 rounded-lg flex items-center justify-center gap-2 hover:bg-on-primary-fixed-variant transition-colors shadow-xs active:scale-95 duration-150">
                 <span class="material-symbols-outlined text-[20px]">add</span>
-                New Proposal
+                {% trans "New Proposal" %}
             </a>
         </div>
 
@@ -101,25 +101,30 @@
             <div class="flex-1 max-w-md">
                 <div class="relative">
                     <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
-                    <input class="w-full bg-surface-container-low border border-outline-variant rounded-full py-2 pl-10 pr-4 font-body-sm text-body-sm text-on-surface focus:outline-hidden focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all placeholder:text-outline" placeholder="Search proposals, clients..." type="search">
+                    <input class="w-full bg-surface-container-low border border-outline-variant rounded-full py-2 pl-10 pr-4 font-body-sm text-body-sm text-on-surface focus:outline-hidden focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all placeholder:text-outline" placeholder="{% trans 'Search proposals, clients...' %}" type="search">
                 </div>
             </div>
             <div class="flex items-center gap-gutter ml-auto">
                 {% block topbar_actions %}{% endblock %}
-                <form method="post" action="{% url 'account-preferences' %}" class="hidden lg:flex items-center gap-2">
+                <form id="prefs-form" method="post" action="{% url 'account-preferences' %}" class="hidden">
                     {% csrf_token %}
-                    <label class="sr-only" for="topbar-theme">{% trans "Theme" %}</label>
-                    <select id="topbar-theme" name="theme_preference" data-auto-submit class="w-auto min-w-[120px] bg-surface-container-low border border-outline-variant rounded-full py-2 pl-3 pr-8 font-body-sm text-body-sm text-on-surface">
-                        <option value="system" {% if user.theme_preference == 'system' %}selected{% endif %}>{% trans "System" %}</option>
-                        <option value="light" {% if user.theme_preference == 'light' %}selected{% endif %}>{% trans "Light" %}</option>
-                        <option value="dark" {% if user.theme_preference == 'dark' %}selected{% endif %}>{% trans "Dark" %}</option>
-                    </select>
-                    <label class="sr-only" for="topbar-language">{% trans "Language" %}</label>
-                    <select id="topbar-language" name="language_preference" data-auto-submit class="w-auto min-w-[110px] bg-surface-container-low border border-outline-variant rounded-full py-2 pl-3 pr-8 font-body-sm text-body-sm text-on-surface">
-                        <option value="en" {% if user.language_preference == 'en' %}selected{% endif %}>English</option>
-                        <option value="es" {% if user.language_preference == 'es' %}selected{% endif %}>Español</option>
-                    </select>
+                    <input type="hidden" id="theme-input" name="theme_preference" value="{{ user.theme_preference }}">
+                    <input type="hidden" id="lang-input" name="language_preference" value="{{ user.language_preference }}">
                 </form>
+                <div class="hidden lg:flex items-center gap-2">
+                    <button type="button" data-theme-btn data-value="{{ user.theme_preference }}"
+                            class="flex items-center gap-1.5 border border-outline-variant rounded-full py-2 px-3 font-body-sm text-body-sm text-on-surface bg-surface-container-low hover:bg-surface-container transition-all cursor-pointer"
+                            aria-label="{% trans 'Toggle theme' %}">
+                        <span class="material-symbols-outlined text-[18px]" data-theme-icon>light_mode</span>
+                        <span data-theme-label>{% trans "Light" %}</span>
+                    </button>
+                    <button type="button" data-lang-btn data-value="{{ user.language_preference }}"
+                            class="flex items-center gap-1.5 border border-outline-variant rounded-full py-2 px-3 font-body-sm text-body-sm text-on-surface bg-surface-container-low hover:bg-surface-container transition-all cursor-pointer"
+                            aria-label="{% trans 'Toggle language' %}">
+                        <span class="material-symbols-outlined text-[18px]">translate</span>
+                        <span data-lang-label>EN</span>
+                    </button>
+                </div>
                 <button class="p-2 text-on-surface-variant hover:text-primary hover:bg-surface-container rounded-full transition-all">
                     <span class="material-symbols-outlined">notifications</span>
                 </button>
@@ -145,9 +150,9 @@
             <div class="max-w-[1440px] mx-auto flex flex-wrap justify-between items-center gap-gutter text-center">
                 <span class="font-label-sm text-label-sm text-on-surface-variant">© {% now "Y" %} PropoTrack</span>
                 <div class="flex gap-6">
-                    <a href="{% url 'privacy_policy' %}" class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-all">Privacy Policy</a>
-                    <a href="{% url 'terms_of_service' %}" class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-all">Terms of Service</a>
-                    <a href="{% url 'security' %}" class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-all">Security</a>
+                    <a href="{% url 'privacy_policy' %}" class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-all">{% trans "Privacy Policy" %}</a>
+                    <a href="{% url 'terms_of_service' %}" class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-all">{% trans "Terms of Service" %}</a>
+                    <a href="{% url 'security' %}" class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-all">{% trans "Security" %}</a>
                 </div>
             </div>
         </footer>

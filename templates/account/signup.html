@@ -1,8 +1,9 @@
 {% extends "auth_base.html" %}
+{% load i18n %}
 
-{% block title %}Sign Up - PropoTrack{% endblock %}
-{% block auth_title %}Create your account{% endblock %}
-{% block auth_subtitle %}Join independent professionals streamlining their freelance business.{% endblock %}
+{% block title %}{% trans "Sign Up" %} - PropoTrack{% endblock %}
+{% block auth_title %}{% trans "Create your account" %}{% endblock %}
+{% block auth_subtitle %}{% trans "Join independent professionals streamlining their freelance business." %}{% endblock %}
 
 {% block auth_content %}
 <form method="post" action="{% url 'account_signup' %}" class="flex flex-col gap-stack-md">
@@ -19,7 +20,7 @@
     {% endif %}
 
     <div class="flex flex-col gap-unit">
-        <label class="font-label-sm text-label-sm text-on-surface-variant pl-1" for="id_email">Email Address</label>
+        <label class="font-label-sm text-label-sm text-on-surface-variant pl-1" for="id_email">{% trans "Email Address" %}</label>
         <div class="relative">
             <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
                 <span class="material-symbols-outlined text-outline text-[20px]">mail</span>
@@ -29,7 +30,7 @@
     </div>
 
     <div class="flex flex-col gap-unit">
-        <label class="font-label-sm text-label-sm text-on-surface-variant pl-1" for="id_password1">Password</label>
+        <label class="font-label-sm text-label-sm text-on-surface-variant pl-1" for="id_password1">{% trans "Password" %}</label>
         <div class="relative">
             <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
                 <span class="material-symbols-outlined text-outline text-[20px]">lock</span>
@@ -39,7 +40,7 @@
     </div>
 
     <div class="flex flex-col gap-unit">
-        <label class="font-label-sm text-label-sm text-on-surface-variant pl-1" for="id_password2">Confirm Password</label>
+        <label class="font-label-sm text-label-sm text-on-surface-variant pl-1" for="id_password2">{% trans "Confirm Password" %}</label>
         <div class="relative">
             <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
                 <span class="material-symbols-outlined text-outline text-[20px]">lock</span>
@@ -49,19 +50,19 @@
     </div>
 
     <button class="w-full mt-2 bg-primary text-on-primary font-label-md text-label-md px-container-padding py-3.5 rounded-lg hover:bg-on-primary-fixed-variant active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-xs" type="submit">
-        Create Account
+        {% trans "Create Account" %}
         <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
     </button>
 </form>
 
 <div class="relative flex items-center py-2 mt-2">
     <div class="flex-grow border-t border-outline-variant"></div>
-    <span class="flex-shrink-0 px-4 font-body-sm text-body-sm text-outline">or</span>
+    <span class="flex-shrink-0 px-4 font-body-sm text-body-sm text-outline">{% trans "or" %}</span>
     <div class="flex-grow border-t border-outline-variant"></div>
 </div>
 
 <p class="text-center font-body-sm text-body-sm text-on-surface-variant">
-    Already have an account?
-    <a class="text-primary font-bold hover:text-on-primary-fixed-variant hover:underline transition-colors ml-1" href="{% url 'account_login' %}">Sign in</a>
+    {% trans "Already have an account?" %}
+    <a class="text-primary font-bold hover:text-on-primary-fixed-variant hover:underline transition-colors ml-1" href="{% url 'account_login' %}">{% trans "Sign in" %}</a>
 </p>
 {% endblock %}

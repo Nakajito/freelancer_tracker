@@ -9,17 +9,38 @@
         <div class="flex justify-between items-center px-container-padding py-4 max-w-[1440px] mx-auto w-full">
             <a href="{% url 'landing' %}" class="font-display text-h2 font-bold text-primary tracking-tight">PropoTrack</a>
             <div class="hidden md:flex items-center gap-gutter">
-                <a href="{% url 'landing' %}#features" class="text-on-secondary-fixed-variant hover:text-primary transition-colors font-label-md text-label-md">Features</a>
-                <a href="{% url 'landing' %}#advantages" class="text-on-secondary-fixed-variant hover:text-primary transition-colors font-label-md text-label-md">Advantages</a>
-                <a href="{% url 'landing' %}#solutions" class="text-on-secondary-fixed-variant hover:text-primary transition-colors font-label-md text-label-md">Solutions</a>
-                <a href="{% url 'landing' %}#pricing" class="text-on-secondary-fixed-variant hover:text-primary transition-colors font-label-md text-label-md">Pricing</a>
+                <a href="{% url 'landing' %}#features" class="text-on-secondary-fixed-variant hover:text-primary transition-colors font-label-md text-label-md">{% trans "Features" %}</a>
+                <a href="{% url 'landing' %}#advantages" class="text-on-secondary-fixed-variant hover:text-primary transition-colors font-label-md text-label-md">{% trans "Advantages" %}</a>
+                <a href="{% url 'landing' %}#solutions" class="text-on-secondary-fixed-variant hover:text-primary transition-colors font-label-md text-label-md">{% trans "Solutions" %}</a>
+                <a href="{% url 'landing' %}#pricing" class="text-on-secondary-fixed-variant hover:text-primary transition-colors font-label-md text-label-md">{% trans "Pricing" %}</a>
             </div>
             <div class="flex items-center gap-unit">
+                {% if not user.is_authenticated %}
+                <form id="lang-form" method="post" action="{% url 'set_language' %}" class="hidden">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ request.path }}">
+                    <input type="hidden" id="lang-input-public" name="language" value="{{ active_language|default:'en' }}">
+                </form>
+                <div class="hidden sm:flex items-center gap-2">
+                    <button type="button" data-theme-btn data-value="{{ active_theme|default:'system' }}"
+                            class="flex items-center gap-1.5 border border-outline-variant rounded-full py-2 px-3 font-body-sm text-body-sm text-on-surface bg-surface-container-low hover:bg-surface-container transition-all cursor-pointer"
+                            aria-label="Toggle theme">
+                        <span class="material-symbols-outlined text-[18px]" data-theme-icon>display_settings</span>
+                        <span data-theme-label>{% trans "System" %}</span>
+                    </button>
+                    <button type="button" data-lang-btn data-value="{{ active_language|default:'en' }}"
+                            class="flex items-center gap-1.5 border border-outline-variant rounded-full py-2 px-3 font-body-sm text-body-sm text-on-surface bg-surface-container-low hover:bg-surface-container transition-all cursor-pointer"
+                            aria-label="Toggle language">
+                        <span class="material-symbols-outlined text-[18px]">translate</span>
+                        <span data-lang-label>EN</span>
+                    </button>
+                </div>
+                {% endif %}
                 {% if user.is_authenticated %}
-                <a href="{% url 'dashboard' %}" class="px-4 py-2 font-label-md text-label-md bg-primary text-on-primary rounded hover:bg-primary-container transition-colors shadow-xs">Dashboard</a>
+                <a href="{% url 'dashboard' %}" class="px-4 py-2 font-label-md text-label-md bg-primary text-on-primary rounded hover:bg-primary-container transition-colors shadow-xs">{% trans "Dashboard" %}</a>
                 {% else %}
-                <a href="{% url 'account_login' %}" class="hidden sm:block px-4 py-2 font-label-md text-label-md text-secondary border border-outline-variant rounded hover:bg-surface-container-highest transition-colors">Log In</a>
-                <a href="{% url 'account_signup' %}" class="px-4 py-2 font-label-md text-label-md bg-primary text-on-primary rounded hover:bg-primary-container transition-colors shadow-xs">Get Started</a>
+                <a href="{% url 'account_login' %}" class="hidden sm:block px-4 py-2 font-label-md text-label-md text-secondary border border-outline-variant rounded hover:bg-surface-container-highest transition-colors">{% trans "Log In" %}</a>
+                <a href="{% url 'account_signup' %}" class="px-4 py-2 font-label-md text-label-md bg-primary text-on-primary rounded hover:bg-primary-container transition-colors shadow-xs">{% trans "Get Started" %}</a>
                 {% endif %}
             </div>
         </div>
@@ -46,11 +67,11 @@
         <div class="w-full px-container-padding py-stack-lg max-w-[1440px] mx-auto flex flex-col md:flex-row justify-between items-center gap-gutter">
             <div class="font-h3 text-h3 font-bold text-on-surface">PropoTrack</div>
             <div class="flex flex-wrap justify-center gap-6">
-                <a href="{% url 'privacy_policy' %}" class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-all">Privacy Policy</a>
-                <a href="{% url 'terms_of_service' %}" class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-all">Terms of Service</a>
-                <a href="{% url 'security' %}" class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-all">Security</a>
-                <a href="#" class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-all">Status</a>
-                <a href="#" class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-all">API Docs</a>
+                <a href="{% url 'privacy_policy' %}" class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-all">{% trans "Privacy Policy" %}</a>
+                <a href="{% url 'terms_of_service' %}" class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-all">{% trans "Terms of Service" %}</a>
+                <a href="{% url 'security' %}" class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-all">{% trans "Security" %}</a>
+                <a href="#" class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-all">{% trans "Status" %}</a>
+                <a href="#" class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-all">{% trans "API Docs" %}</a>
             </div>
             <div class="font-body-sm text-body-sm text-on-surface-variant">© {% now "Y" %} PropoTrack.</div>
         </div>

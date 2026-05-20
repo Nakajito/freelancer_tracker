@@ -10,7 +10,8 @@
                 PropoTrack
             {% endblock %}
         </title>
-        <meta name="description" content="{% block meta_description %}PropoTrack — track freelance proposals, follow-ups, time entries, and revenue in one place.{% endblock %}">
+        <meta name="description" content="{% block meta_description %}{% trans "PropoTrack — track freelance proposals, follow-ups, time entries, and revenue in one place." %}{% endblock %}">
+        {% if not user.is_authenticated %}<script>(function(){var t=localStorage.getItem('ft_theme');if(t)document.documentElement.dataset.theme=t;})();</script>{% endif %}
         <link rel="preload" href="{% static 'fonts/geist/geist-v4-latin.woff2' %}" as="font" type="font/woff2" crossorigin>
         <link rel="preload" href="{% static 'fonts/inter/inter-v20-latin.woff2' %}" as="font" type="font/woff2" crossorigin>
         <link rel="stylesheet" href="{% static 'css/app.css' %}">
