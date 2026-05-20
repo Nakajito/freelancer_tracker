@@ -76,23 +76,31 @@ def es_proposal_with_followup(db, es_user):
 
 @pytest.mark.django_db
 class TestSendDigestLanguageOverride:
-    def test_digest_renders_in_english_for_en_user(self, en_user, proposal_with_followup):
+    def test_digest_renders_in_english_for_en_user(
+        self, en_user, proposal_with_followup
+    ):
         with patch("apps.core.management.commands.send_digest.send_mail") as mock_send:
             call_command("send_digest")
 
         assert mock_send.called
         call_kwargs = mock_send.call_args
-        message = call_kwargs.args[1] if call_kwargs.args else call_kwargs.kwargs["message"]
+        message = (
+            call_kwargs.args[1] if call_kwargs.args else call_kwargs.kwargs["message"]
+        )
         assert "Hi" in message
         assert "Overdue Follow-ups" in message
 
-    def test_digest_renders_in_spanish_for_es_user(self, es_user, es_proposal_with_followup):
+    def test_digest_renders_in_spanish_for_es_user(
+        self, es_user, es_proposal_with_followup
+    ):
         with patch("apps.core.management.commands.send_digest.send_mail") as mock_send:
             call_command("send_digest")
 
         assert mock_send.called
         call_kwargs = mock_send.call_args
-        message = call_kwargs.args[1] if call_kwargs.args else call_kwargs.kwargs["message"]
+        message = (
+            call_kwargs.args[1] if call_kwargs.args else call_kwargs.kwargs["message"]
+        )
         assert "Hola" in message
         assert "Seguimientos vencidos" in message
 
@@ -108,18 +116,24 @@ class TestSendDigestLanguageOverride:
 
         mock_send.assert_not_called()
 
-    def test_digest_email_sent_to_correct_address(self, en_user, proposal_with_followup):
+    def test_digest_email_sent_to_correct_address(
+        self, en_user, proposal_with_followup
+    ):
         with patch("apps.core.management.commands.send_digest.send_mail") as mock_send:
             call_command("send_digest")
 
         assert mock_send.called
         call_kwargs = mock_send.call_args
         recipient_list = (
-            call_kwargs.args[3] if len(call_kwargs.args) > 3 else call_kwargs.kwargs["recipient_list"]
+            call_kwargs.args[3]
+            if len(call_kwargs.args) > 3
+            else call_kwargs.kwargs["recipient_list"]
         )
         assert en_user.email in recipient_list
 
-    def test_default_language_used_when_preference_missing(self, db, proposal_with_followup):
+    def test_default_language_used_when_preference_missing(
+        self, db, proposal_with_followup
+    ):
         """User with no explicit language_preference defaults to 'en'."""
         user = proposal_with_followup.owner
         # Simulate missing language_preference by blanking it
@@ -131,6 +145,9 @@ class TestSendDigestLanguageOverride:
 
         assert mock_send.called
         call_kwargs = mock_send.call_args
-        message = call_kwargs.args[1] if call_kwargs.args else call_kwargs.kwargs["message"]
         # Should not crash and should still render template content
-        assert "Digest" in call_kwargs.args[0] if call_kwargs.args else call_kwargs.kwargs["subject"]
+        assert (
+            "Digest" in call_kwargs.args[0]
+            if call_kwargs.args
+            else call_kwargs.kwargs["subject"]
+        )
