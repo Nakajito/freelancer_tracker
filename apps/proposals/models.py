@@ -4,6 +4,7 @@ from decimal import Decimal
 
 from django.core.validators import MinValueValidator
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 from apps.core.models import OwnedModel
 
@@ -62,25 +63,25 @@ class ProposalManager(models.Manager):
 class Platform(models.TextChoices):
     """Sourcing platform a proposal originates from."""
 
-    UPWORK = "upwork", "Upwork"
-    FIVERR = "fiverr", "Fiverr"
-    FREELANCER = "freelancer", "Freelancer"
-    WORKANA = "workana", "Workana"
-    LINKEDIN = "linkedin", "LinkedIn"
-    OTHER = "other", "Other"
+    UPWORK = "upwork", _("Upwork")
+    FIVERR = "fiverr", _("Fiverr")
+    FREELANCER = "freelancer", _("Freelancer")
+    WORKANA = "workana", _("Workana")
+    LINKEDIN = "linkedin", _("LinkedIn")
+    OTHER = "other", _("Other")
 
 
 class ProposalStatus(models.TextChoices):
     """Lifecycle states a proposal can move through."""
 
-    DRAFT = "draft", "Draft"
-    SENT = "sent", "Sent"
-    VIEWED = "viewed", "Viewed"
-    RESPONDED = "responded", "Responded"
-    NEGOTIATING = "negotiating", "Negotiating"
-    ACCEPTED = "accepted", "Accepted"
-    REJECTED = "rejected", "Rejected"
-    ARCHIVED = "archived", "Archived"
+    DRAFT = "draft", _("Draft")
+    SENT = "sent", _("Sent")
+    VIEWED = "viewed", _("Viewed")
+    RESPONDED = "responded", _("Responded")
+    NEGOTIATING = "negotiating", _("Negotiating")
+    ACCEPTED = "accepted", _("Accepted")
+    REJECTED = "rejected", _("Rejected")
+    ARCHIVED = "archived", _("Archived")
 
 
 class Client(OwnedModel):
@@ -180,5 +181,5 @@ class Proposal(OwnedModel):
 
         if self.amount and self.amount < 0:
             raise ValidationError(
-                {"amount": "Amount must be greater than or equal to 0"}
+                {"amount": _("Amount must be greater than or equal to 0")}
             )

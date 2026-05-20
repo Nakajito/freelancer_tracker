@@ -5,6 +5,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseNotAllowed
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
+from django.utils.translation import gettext_lazy as _
 from django.views import View
 from django.views.generic import UpdateView
 
@@ -29,7 +30,7 @@ class ProfileView(LoginRequiredMixin, UpdateView):
         return context
 
     def form_valid(self, form):
-        messages.success(self.request, "Profile updated.")
+        messages.success(self.request, _("Profile updated."))
         response = super().form_valid(form)
         response.set_cookie(
             settings.LANGUAGE_COOKIE_NAME,
@@ -52,10 +53,10 @@ class PreferencesView(LoginRequiredMixin, View):
                 path="/",
                 samesite="Lax",
             )
-            messages.success(request, "Preferences updated.")
+            messages.success(request, _("Preferences updated."))
             return response
 
-        messages.error(request, "Could not update preferences.")
+        messages.error(request, _("Could not update preferences."))
         return redirect(request.headers.get("referer") or "dashboard")
 
     def get(self, request):
@@ -86,5 +87,5 @@ class DeactivateAccountView(LoginRequiredMixin, View):
         user.is_active = False
         user.save(update_fields=["is_active"])
         logout(request)
-        messages.success(request, "Your account has been deactivated.")
+        messages.success(request, _("Your account has been deactivated."))
         return redirect("account_login")

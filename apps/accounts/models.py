@@ -2,19 +2,20 @@
 
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 
 class User(AbstractUser):
     """Application user; email is the canonical login identifier."""
 
     class ThemePreference(models.TextChoices):
-        SYSTEM = "system", "System"
-        LIGHT = "light", "Light"
-        DARK = "dark", "Dark"
+        SYSTEM = "system", _("System")
+        LIGHT = "light", _("Light")
+        DARK = "dark", _("Dark")
 
     class LanguagePreference(models.TextChoices):
-        EN = "en", "English"
-        ES = "es", "Español"
+        EN = "en", _("English")
+        ES = "es", _("Español")
 
     email = models.EmailField(unique=True)
     avatar = models.ImageField(upload_to="avatars/", blank=True, null=True)

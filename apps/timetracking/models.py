@@ -5,6 +5,7 @@ from decimal import Decimal
 from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 from apps.core.models import TimeStampedModel
 from apps.proposals.models import Proposal, ProposalStatus
@@ -38,8 +39,10 @@ class TimeEntry(TimeStampedModel):
         if not self.override_status_restriction:
             if self.proposal.status != ProposalStatus.ACCEPTED:
                 raise ValidationError(
-                    "Time entries can only be added to accepted proposals. "
-                    "Use override_status_restriction=True to bypass this check."
+                    _(
+                        "Time entries can only be added to accepted proposals. "
+                        "Use override_status_restriction=True to bypass this check."
+                    )
                 )
 
 

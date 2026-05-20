@@ -1,5 +1,6 @@
 from django import forms
 from django.db import transaction
+from django.utils.translation import gettext_lazy as _
 
 from apps.core.forms import date_input_widget
 from apps.proposals.models import Client, Platform, Proposal, ProposalStatus
@@ -7,26 +8,26 @@ from apps.proposals.models import Client, Platform, Proposal, ProposalStatus
 
 class ProposalFilterForm(forms.Form):
     status = forms.ChoiceField(
-        choices=[("", "All Statuses")] + list(ProposalStatus.choices),
+        choices=[("", _("All Statuses"))] + list(ProposalStatus.choices),
         required=False,
-        label="Status",
+        label=_("Status"),
     )
     platform = forms.ChoiceField(
-        choices=[("", "All Platforms")] + list(Platform.choices),
+        choices=[("", _("All Platforms"))] + list(Platform.choices),
         required=False,
-        label="Platform",
+        label=_("Platform"),
     )
 
 
 class ProposalForm(forms.ModelForm):
     new_client_name = forms.CharField(
         required=False,
-        label="New client name",
-        help_text="Use this when the client is not in your list yet.",
+        label=_("New client name"),
+        help_text=_("Use this when the client is not in your list yet."),
     )
     new_client_email = forms.EmailField(
         required=False,
-        label="New client email",
+        label=_("New client email"),
     )
 
     def __init__(self, *args, user=None, **kwargs):
