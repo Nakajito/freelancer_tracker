@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PropoTrack 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-19 00:00+0000\n"
+"POT-Creation-Date: 2026-05-20 15:33+0000\n"
 "PO-Revision-Date: 2026-05-19 00:00+0000\n"
 "Last-Translator: PropoTrack\n"
 "Language-Team: Spanish\n"
@@ -11,134 +11,2915 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-msgid "Dashboard"
-msgstr "Panel"
+#: apps/accounts/apps.py:8
+msgid "Accounts"
+msgstr "Cuentas"
 
-msgid "Proposals"
-msgstr "Propuestas"
-
-msgid "Clients"
-msgstr "Clientes"
-
-msgid "Follow-ups"
-msgstr "Seguimientos"
-
-msgid "Time Tracking"
-msgstr "Registro de tiempo"
-
-msgid "Templates"
-msgstr "Plantillas"
-
-msgid "Analytics"
-msgstr "Analítica"
-
-msgid "Profile"
-msgstr "Perfil"
-
-msgid "Sign Out"
-msgstr "Cerrar sesión"
-
-msgid "Theme"
-msgstr "Tema"
-
-msgid "System"
-msgstr "Sistema"
-
-msgid "Light"
-msgstr "Claro"
-
-msgid "Dark"
-msgstr "Oscuro"
-
-msgid "Language"
-msgstr "Idioma"
-
-msgid "Open profile"
-msgstr "Abrir perfil"
-
-msgid "Dismiss notification"
-msgstr "Descartar notificación"
-
-msgid "All Statuses"
-msgstr "Todos los estados"
-
-msgid "All Platforms"
-msgstr "Todas las plataformas"
-
-msgid "New client name"
-msgstr "Nombre del nuevo cliente"
-
-msgid "New client email"
-msgstr "Email del nuevo cliente"
-
-msgid "Leave Client empty to create a new client from these fields."
-msgstr "Deja Cliente vacío para crear un cliente con estos campos."
-
-msgid "User Profile"
-msgstr "Perfil de usuario"
-
-msgid "Manage your identity, preferences, and account access."
-msgstr "Administra tu identidad, preferencias y acceso a la cuenta."
-
-msgid "Change password"
-msgstr "Cambiar contraseña"
-
-msgid "Save Profile"
-msgstr "Guardar perfil"
-
-msgid "Deactivate account"
-msgstr "Desactivar cuenta"
-
-msgid "This signs you out and disables future access while preserving your history."
-msgstr "Esto cierra tu sesión y deshabilita el acceso futuro, conservando tu historial."
-
-msgid "Deactivate Account"
-msgstr "Desactivar cuenta"
-
+#: apps/accounts/forms.py:21
 msgid "First name"
 msgstr "Nombre"
 
+#: apps/accounts/forms.py:22
 msgid "Last name"
 msgstr "Apellido"
 
+#: apps/accounts/forms.py:23 templates/account/login.html:23
+#: templates/proposals/client_list.html:17
+#: templates/templates_app/template_use.html:23
 msgid "Email"
 msgstr "Email"
 
+#: apps/accounts/forms.py:24
 msgid "Profile image"
 msgstr "Imagen de perfil"
 
+#: apps/accounts/forms.py:25
+msgid "Theme"
+msgstr "Tema"
+
+#: apps/accounts/forms.py:26
+msgid "Language"
+msgstr "Idioma"
+
+#: apps/accounts/forms.py:38 templates/account/login.html:28
+#: templates/account/signup.html:33
 msgid "Password"
 msgstr "Contraseña"
 
+#: apps/accounts/forms.py:50
 msgid "Enter your current password to continue."
 msgstr "Ingresa tu contraseña actual para continuar."
 
+#: apps/accounts/models.py:12 templates/auth_base.html:29
+msgid "System"
+msgstr "Sistema"
+
+#: apps/accounts/models.py:13 templates/app_base.html:119
+msgid "Light"
+msgstr "Claro"
+
+#: apps/accounts/models.py:14
+msgid "Dark"
+msgstr "Oscuro"
+
+#: apps/accounts/models.py:17
+msgid "English"
+msgstr "Inglés"
+
+#: apps/accounts/models.py:18
+msgid "Español"
+msgstr "Español"
+
+#: apps/accounts/views.py:33
+msgid "Profile updated."
+msgstr "Perfil actualizado."
+
+#: apps/accounts/views.py:56
+msgid "Preferences updated."
+msgstr "Preferencias actualizadas."
+
+#: apps/accounts/views.py:59
+msgid "Could not update preferences."
+msgstr "No se pudieron actualizar las preferencias."
+
+#: apps/accounts/views.py:90
+msgid "Your account has been deactivated."
+msgstr "Tu cuenta ha sido desactivada."
+
+#: apps/core/apps.py:8
+msgid "Core"
+msgstr "Core"
+
+#: apps/dashboard/apps.py:8 templates/app_base.html:33
+#: templates/auth_base.html:40 templates/dashboard/dashboard.html:4
+#: templates/dashboard/landing.html:27 templates/donate.html:18
+#: templates/donate_confirm.html:18
+msgid "Dashboard"
+msgstr "Panel"
+
+#: apps/exports/apps.py:8
+msgid "Exports"
+msgstr "Exportaciones"
+
+#: apps/followups/apps.py:8 templates/app_base.html:51
+#: templates/followups/followup_list.html:4
+#: templates/followups/followup_list.html:10 templates/privacy.html:29
+msgid "Follow-ups"
+msgstr "Seguimientos"
+
+#: apps/proposals/apps.py:8 templates/404.html:101 templates/app_base.html:39
+#: templates/privacy.html:27 templates/proposals/proposal_list.html:4
+#: templates/proposals/proposal_list.html:11
+msgid "Proposals"
+msgstr "Propuestas"
+
+#: apps/proposals/forms.py:11 templates/proposals/proposal_list.html:27
+msgid "All Statuses"
+msgstr "Todos los estados"
+
+#: apps/proposals/forms.py:13 templates/auth_base.html:73
+#: templates/dashboard/landing.html:292 templates/dashboard/landing.html:493
+#: templates/followups/followup_list.html:43
+#: templates/proposals/proposal_form.html:79
+#: templates/proposals/proposal_list.html:59
+#: templates/timetracking/retainer_list.html:31
+msgid "Status"
+msgstr "Estado"
+
+#: apps/proposals/forms.py:16 templates/proposals/proposal_list.html:36
+msgid "All Platforms"
+msgstr "Todas las plataformas"
+
+#: apps/proposals/forms.py:18 templates/dashboard/monthly_summary.html:104
+#: templates/proposals/proposal_detail.html:55
+msgid "Platform"
+msgstr "Plataforma"
+
+#: apps/proposals/forms.py:25 templates/proposals/proposal_form.html:63
+msgid "New client name"
+msgstr "Nombre del nuevo cliente"
+
+#: apps/proposals/forms.py:26
+msgid "Use this when the client is not in your list yet."
+msgstr "Úsalo cuando el cliente aún no está en tu lista."
+
+#: apps/proposals/forms.py:30 templates/proposals/proposal_form.html:67
+msgid "New client email"
+msgstr "Email del nuevo cliente"
+
+#: apps/proposals/models.py:66
+msgid "Upwork"
+msgstr "Upwork"
+
+#: apps/proposals/models.py:67
+msgid "Fiverr"
+msgstr "Fiverr"
+
+#: apps/proposals/models.py:68
+msgid "Freelancer"
+msgstr "Freelancer"
+
+#: apps/proposals/models.py:69
+msgid "Workana"
+msgstr "Workana"
+
+#: apps/proposals/models.py:70
+msgid "LinkedIn"
+msgstr "LinkedIn"
+
+#: apps/proposals/models.py:71
+msgid "Other"
+msgstr "Otro"
+
+#: apps/proposals/models.py:77
+msgid "Draft"
+msgstr "Borrador"
+
+#: apps/proposals/models.py:78 templates/dashboard/monthly_summary.html:105
+#: templates/proposals/proposal_detail.html:29
+#: templates/proposals/proposal_detail.html:126
+msgid "Sent"
+msgstr "Enviada"
+
+#: apps/proposals/models.py:79
+msgid "Viewed"
+msgstr "Vista"
+
+#: apps/proposals/models.py:80
+msgid "Responded"
+msgstr "Respondida"
+
+#: apps/proposals/models.py:81 templates/dashboard/landing.html:307
+msgid "Negotiating"
+msgstr "Negociando"
+
+#: apps/proposals/models.py:82 templates/dashboard/landing.html:300
+msgid "Accepted"
+msgstr "Aceptada"
+
+#: apps/proposals/models.py:83
+msgid "Rejected"
+msgstr "Rechazada"
+
+#: apps/proposals/models.py:84
+msgid "Archived"
+msgstr "Archivada"
+
+#: apps/proposals/models.py:184
+msgid "Amount must be greater than or equal to 0"
+msgstr "El monto debe ser mayor o igual a 0"
+
+#: apps/templates_app/apps.py:8 templates/app_base.html:63
+#: templates/templates_app/template_list.html:4
+#: templates/templates_app/template_list.html:11
+msgid "Templates"
+msgstr "Plantillas"
+
+#: apps/timetracking/apps.py:8 templates/404.html:104
+#: templates/app_base.html:57 templates/timetracking/timeentry_list.html:4
+#: templates/timetracking/timeentry_list.html:10
+msgid "Time Tracking"
+msgstr "Registro de tiempo"
+
+#: apps/timetracking/models.py:43
+msgid ""
+"Time entries can only be added to accepted proposals. Use "
+"override_status_restriction=True to bypass this check."
+msgstr "Las entradas de tiempo solo se pueden añadir a propuestas aceptadas. Usa override_status_restriction=True para omitir esta verificación."
+
+
+#: templates/404.html:7
+msgid "404 - Page Not Found | PropoTrack"
+msgstr "404 - Página no encontrada | PropoTrack"
+
+#: templates/404.html:85
+msgid "ERROR 404"
+msgstr "ERROR 404"
+
+#: templates/404.html:86
+msgid "Lost your tracking?"
+msgstr "¿Perdiste el rastro?"
+
+#: templates/404.html:88
+msgid ""
+"The page you're looking for has moved or doesn't exist. Let's get your "
+"professional growth back on track."
+msgstr "La página que buscas se ha movido o no existe. Volvamos a encaminar tu crecimiento profesional."
+
+
+#: templates/404.html:94
+msgid "Back to Dashboard"
+msgstr "Volver al Panel"
+
+#: templates/404.html:98
+msgid "Common Destinations"
+msgstr "Destinos comunes"
+
+#: templates/404.html:107 templates/account/login.html:4
+#: templates/account/login.html:41
+msgid "Sign In"
+msgstr "Iniciar sesión"
+
+#: templates/404.html:117 templates/500.html:115
+msgid "Precision tracking for professional growth."
+msgstr "Seguimiento preciso para el crecimiento profesional."
+
+#: templates/500.html:7
+msgid "500 - Server Error | PropoTrack"
+msgstr "500 - Error del servidor | PropoTrack"
+
+#: templates/500.html:82
+msgid "Error 500"
+msgstr "Error 500"
+
+#: templates/500.html:83
+msgid "Something went wrong on our end."
+msgstr "Algo salió mal en nuestro servidor."
+
+#: templates/500.html:85
+msgid ""
+"We're working on fixing it. Please try refreshing the page or come back "
+"later."
+msgstr "Estamos trabajando para resolverlo. Por favor, intenta recargar la página o vuelve más tarde."
+
+
+#: templates/500.html:91
+msgid "Retry Page"
+msgstr "Reintentar"
+
+#: templates/500.html:95
+msgid "Go to Dashboard"
+msgstr "Ir al Panel"
+
+#: templates/500.html:104
+msgid "Technical Assistance"
+msgstr "Asistencia técnica"
+
+#: templates/500.html:105
+msgid "If this issue persists, please contact our support team."
+msgstr "Si el problema persiste, comunícate con nuestro equipo de soporte."
+
+#: templates/account/login.html:5
+msgid "Welcome back"
+msgstr "Bienvenido de nuevo"
+
+#: templates/account/login.html:6
+msgid "Please enter your details to sign in."
+msgstr "Ingresa tus datos para iniciar sesión."
+
+#: templates/account/login.html:24
+msgid "Enter your email"
+msgstr "Ingresa tu correo electrónico"
+
+#: templates/account/login.html:35
+msgid "Remember me"
+msgstr "Recuérdame"
+
+#: templates/account/login.html:37
+msgid "Forgot password?"
+msgstr "¿Olvidaste tu contraseña?"
+
+#: templates/account/login.html:48
+msgid "Don't have an account?"
+msgstr "¿No tienes una cuenta?"
+
+#: templates/account/login.html:49
+msgid "Sign up"
+msgstr "Regístrate"
+
+#: templates/account/password_reset_from_key.html:4
+msgid "Set New Password"
+msgstr "Establecer nueva contraseña"
+
+#: templates/account/password_reset_from_key.html:5
+msgid "Invalid Link"
+msgstr "Enlace inválido"
+
+#: templates/account/password_reset_from_key.html:5
+msgid "Set new password"
+msgstr "Establecer nueva contraseña"
+
+#: templates/account/password_reset_from_key.html:6
+msgid "Choose a strong password for your account."
+msgstr "Elige una contraseña segura para tu cuenta."
+
+#: templates/account/password_reset_from_key.html:14
+msgid "This link has expired or already been used."
+msgstr "Este enlace ha expirado o ya fue utilizado."
+
+#: templates/account/password_reset_from_key.html:16
+msgid "Request new link"
+msgstr "Solicitar nuevo enlace"
+
+#: templates/account/password_reset_from_key.html:36
+msgid "New Password"
+msgstr "Nueva contraseña"
+
+#: templates/account/password_reset_from_key.html:46
+#: templates/account/signup.html:43
+msgid "Confirm Password"
+msgstr "Confirmar contraseña"
+
+#: templates/account/password_reset_from_key.html:56
+msgid "Set Password"
+msgstr "Establecer contraseña"
+
+#: templates/account/password_reset_from_key_done.html:4
+msgid "Password Changed"
+msgstr "Contraseña cambiada"
+
+#: templates/account/password_reset_from_key_done.html:5
+msgid "Password changed"
+msgstr "Contraseña cambiada"
+
+#: templates/account/password_reset_from_key_done.html:12
+msgid ""
+"Your password has been updated. You can now sign in with your new password."
+msgstr "Tu contraseña ha sido actualizada. Ahora puedes iniciar sesión con tu nueva contraseña."
+
+
+#: templates/account/password_reset_from_key_done.html:14
+#: templates/account/signup.html:66
+msgid "Sign in"
+msgstr "Iniciar sesión"
+
+#: templates/account/signup.html:4
+msgid "Sign Up"
+msgstr "Registrarse"
+
+#: templates/account/signup.html:5
+msgid "Create your account"
+msgstr "Crea tu cuenta"
+
+#: templates/account/signup.html:6 templates/dashboard/landing.html:470
+msgid "Join independent professionals streamlining their freelance business."
+msgstr "Únete a profesionales independientes que optimizan su negocio freelancer."
+
+#: templates/account/signup.html:23 templates/proposals/client_form.html:35
+msgid "Email Address"
+msgstr "Dirección de correo electrónico"
+
+#: templates/account/signup.html:53
+msgid "Create Account"
+msgstr "Crear cuenta"
+
+#: templates/account/signup.html:60
+msgid "or"
+msgstr "o"
+
+#: templates/account/signup.html:65
+msgid "Already have an account?"
+msgstr "¿Ya tienes una cuenta?"
+
+#: templates/accounts/profile.html:4 templates/app_base.html:75
+msgid "Profile"
+msgstr "Perfil"
+
+#: templates/accounts/profile.html:10
+msgid "User Profile"
+msgstr "Perfil de usuario"
+
+#: templates/accounts/profile.html:11
+msgid "Manage your identity, preferences, and account access."
+msgstr "Administra tu identidad, preferencias y acceso a la cuenta."
+
+#: templates/accounts/profile.html:28
+msgid "Change password"
+msgstr "Cambiar contraseña"
+
+#: templates/accounts/profile.html:43
+msgid "Save Profile"
+msgstr "Guardar perfil"
+
+#: templates/accounts/profile.html:50
+msgid "Deactivate account"
+msgstr "Desactivar cuenta"
+
+#: templates/accounts/profile.html:51
+msgid ""
+"This signs you out and disables future access while preserving your history."
+msgstr ""
+"Esto cierra tu sesión y deshabilita el acceso futuro, conservando tu "
+"historial."
+
+#: templates/accounts/profile.html:58
+msgid "Deactivate Account"
+msgstr "Desactivar cuenta"
+
+#: templates/app_base.html:15
+msgid "Freelancer Pro"
+msgstr "Freelancer Pro"
+
+#: templates/app_base.html:23
+msgid "New Proposal"
+msgstr "Nueva propuesta"
+
+#: templates/app_base.html:45 templates/privacy.html:28
+#: templates/proposals/client_list.html:4
+msgid "Clients"
+msgstr "Clientes"
+
+#: templates/app_base.html:69
+msgid "Analytics"
+msgstr "Analítica"
+
+#: templates/app_base.html:89
+msgid "Sign Out"
+msgstr "Cerrar sesión"
+
+#: templates/app_base.html:104
+msgid "Search proposals, clients..."
+msgstr "Buscar propuestas, clientes..."
+
+#: templates/app_base.html:117
+msgid "Toggle theme"
+msgstr "Cambiar tema"
+
+#: templates/app_base.html:123
+msgid "Toggle language"
+msgstr "Cambiar idioma"
+
+#: templates/app_base.html:131
+msgid "Open profile"
+msgstr "Abrir perfil"
+
+#: templates/app_base.html:153 templates/auth_base.html:70
+#: templates/dashboard/landing.html:485 templates/donate.html:146
+#: templates/donate_confirm.html:162 templates/privacy.html:3
+#: templates/privacy.html:9
+msgid "Privacy Policy"
+msgstr "Política de privacidad"
+
+#: templates/app_base.html:154 templates/auth_base.html:71
+#: templates/dashboard/landing.html:487 templates/donate.html:147
+#: templates/donate_confirm.html:163 templates/terms.html:3
+#: templates/terms.html:9
+msgid "Terms of Service"
+msgstr "Términos de servicio"
+
+#: templates/app_base.html:155 templates/auth_base.html:72
+#: templates/dashboard/landing.html:489 templates/donate.html:148
+#: templates/donate_confirm.html:164 templates/security.html:3
+#: templates/security.html:9
+msgid "Security"
+msgstr "Seguridad"
+
+#: templates/auth_base.html:12 templates/dashboard/landing.html:16
+#: templates/donate.html:11 templates/donate_confirm.html:11
+msgid "Features"
+msgstr "Funcionalidades"
+
+#: templates/auth_base.html:13 templates/dashboard/landing.html:18
+#: templates/donate.html:12 templates/donate_confirm.html:12
+msgid "Advantages"
+msgstr "Ventajas"
+
+#: templates/auth_base.html:14 templates/dashboard/landing.html:20
+#: templates/donate.html:13 templates/donate_confirm.html:13
+msgid "Solutions"
+msgstr "Soluciones"
+
+#: templates/auth_base.html:15 templates/dashboard/landing.html:22
+#: templates/donate.html:14 templates/donate_confirm.html:14
+msgid "Pricing"
+msgstr "Precios"
+
+#: templates/auth_base.html:42 templates/dashboard/landing.html:30
+#: templates/donate.html:20 templates/donate_confirm.html:20
+msgid "Log In"
+msgstr "Iniciar sesión"
+
+#: templates/auth_base.html:43 templates/dashboard/landing.html:32
+#: templates/donate.html:21 templates/donate_confirm.html:21
+msgid "Get Started"
+msgstr "Comenzar"
+
+#: templates/auth_base.html:56
+msgid "Welcome"
+msgstr "Bienvenido"
+
+#: templates/auth_base.html:74 templates/dashboard/landing.html:495
+msgid "API Docs"
+msgstr "Documentación API"
+
+#: templates/base.html:13
+msgid ""
+"PropoTrack — track freelance proposals, follow-ups, time entries, and "
+"revenue in one place."
+msgstr "PropoTrack — gestiona propuestas, seguimientos, entradas de tiempo e ingresos en un solo lugar."
+
+
+#: templates/dashboard/dashboard.html:9
+msgid "Dashboard Overview"
+msgstr "Resumen del Panel"
+
+#: templates/dashboard/dashboard.html:10
+msgid "Here is what's happening with your freelance business today."
+msgstr "Esto es lo que está pasando con tu negocio freelancer hoy."
+
+#: templates/dashboard/dashboard.html:17
+msgid "Active Proposals"
+msgstr "Propuestas activas"
+
+#: templates/dashboard/dashboard.html:26
+msgid "sent"
+msgstr "enviadas"
+
+#: templates/dashboard/dashboard.html:33
+msgid "Conversion Rate"
+msgstr "Tasa de conversión"
+
+#: templates/dashboard/dashboard.html:42
+msgid "accepted"
+msgstr "aceptadas"
+
+#: templates/dashboard/dashboard.html:49
+msgid "Total Earned"
+msgstr "Total ganado"
+
+#: templates/dashboard/dashboard.html:58
+msgid "expected"
+msgstr "esperado"
+
+#: templates/dashboard/dashboard.html:65
+msgid "Logged Hours"
+msgstr "Horas registradas"
+
+#: templates/dashboard/dashboard.html:74
+msgid "/hr effective"
+msgstr "/h efectiva"
+
+#: templates/dashboard/dashboard.html:85 templates/dashboard/landing.html:244
+msgid "Proposal Funnel"
+msgstr "Embudo de propuestas"
+
+#: templates/dashboard/dashboard.html:86
+msgid "View Detailed Report"
+msgstr "Ver informe detallado"
+
+#: templates/dashboard/dashboard.html:108
+msgid "Urgent Follow-ups"
+msgstr "Seguimientos urgentes"
+
+#: templates/dashboard/dashboard.html:125
+msgid "No urgent follow-ups."
+msgstr "No hay seguimientos urgentes."
+
+#: templates/dashboard/dashboard.html:129
+msgid "View All Tasks"
+msgstr "Ver todas las tareas"
+
+#: templates/dashboard/dashboard.html:135
+msgid "Forecast"
+msgstr "Pronóstico"
+
+#: templates/dashboard/dashboard.html:138
+msgid "Expected Wins"
+msgstr "Ganancias esperadas"
+
+#: templates/dashboard/dashboard.html:142
+msgid "Expected Amount"
+msgstr "Monto esperado"
+
+#: templates/dashboard/dashboard.html:146
+#: templates/dashboard/monthly_summary.html:55
+msgid "Win Rate"
+msgstr "Tasa de éxito"
+
+#: templates/dashboard/landing.html:4
+msgid "Professional Proposal Tracking"
+msgstr "Seguimiento profesional de propuestas"
+
+#: templates/dashboard/landing.html:6
+msgid ""
+"Win more freelance work — proposal tracking, follow-up reminders, time "
+"entries, and revenue analytics for solo consultants."
+msgstr "Gana más proyectos freelancer — seguimiento de propuestas, recordatorios de seguimiento, entradas de tiempo y analítica de ingresos para consultores independientes."
+
+
+#: templates/dashboard/landing.html:41
+msgid "Professional Freelance Management"
+msgstr "Gestión profesional para freelancers"
+
+#: templates/dashboard/landing.html:44
+msgid "Win More Work with Professional Proposal Tracking."
+msgstr "Gana más proyectos con seguimiento profesional de propuestas."
+
+#: templates/dashboard/landing.html:47
+msgid ""
+"PropoTrack helps freelancers manage pitches, log hours, and analyze "
+"performance in one sleek dashboard."
+msgstr "PropoTrack ayuda a freelancers a gestionar propuestas, registrar horas y analizar su rendimiento en un único y elegante panel."
+
+
+#: templates/dashboard/landing.html:51 templates/dashboard/landing.html:474
+msgid "Get Started for Free"
+msgstr "Comenzar gratis"
+
+#: templates/dashboard/landing.html:53
+msgid "View Demo"
+msgstr "Ver demo"
+
+#: templates/dashboard/landing.html:58
+msgid "PropoTrack dashboard preview"
+msgstr "Vista previa del panel de PropoTrack"
+
+#: templates/dashboard/landing.html:66
+msgid "Everything to manage your pipeline"
+msgstr "Todo para gestionar tu pipeline"
+
+#: templates/dashboard/landing.html:68
+msgid "From sent proposal to won deal, PropoTrack keeps every step measurable."
+msgstr "Desde la propuesta enviada hasta el trato ganado, PropoTrack mantiene cada paso medible."
+
+#: templates/dashboard/landing.html:76
+msgid "Proposal Tracking"
+msgstr "Seguimiento de propuestas"
+
+#: templates/dashboard/landing.html:78
+msgid "Funnel view from Sent to Accepted with conversion metrics built in."
+msgstr "Vista de embudo desde Enviada hasta Aceptada con métricas de conversión integradas."
+
+#: templates/dashboard/landing.html:85
+msgid "Time Logging"
+msgstr "Registro de horas"
+
+#: templates/dashboard/landing.html:87
+msgid "Track billable hours, retainers, and effective hourly rate per project."
+msgstr "Registra horas facturables, retenciones y tarifa horaria efectiva por proyecto."
+
+#: templates/dashboard/landing.html:94
+msgid "Analytics & Forecast"
+msgstr "Analítica y pronóstico"
+
+#: templates/dashboard/landing.html:96
+msgid "Win-rate, expected revenue, and platform-level insights at a glance."
+msgstr "Tasa de éxito, ingresos esperados e información por plataforma de un vistazo."
+
+#: templates/dashboard/landing.html:107
+msgid "The Freelance Advantage"
+msgstr "La ventaja freelancer"
+
+#: templates/dashboard/landing.html:110
+msgid "Elevate your career with"
+msgstr "Eleva tu carrera con"
+
+#: templates/dashboard/landing.html:110
+msgid "strategic tracking."
+msgstr "seguimiento estratégico."
+
+#: templates/dashboard/landing.html:113
+msgid ""
+"Stop guessing, start growing. Precision tools to outpace the competition and "
+"scale your independent business through data."
+msgstr "Deja de adivinar y empieza a crecer. Herramientas de precisión para superar a la competencia y escalar tu negocio independiente con datos."
+
+
+#: templates/dashboard/landing.html:121
+msgid "Increase Win Rates"
+msgstr "Aumenta tu tasa de éxito"
+
+#: templates/dashboard/landing.html:123
+msgid ""
+"Track every proposal's status in real time and identify which strategies "
+"convert prospects into loyal clients."
+msgstr "Sigue el estado de cada propuesta en tiempo real e identifica qué estrategias convierten prospectos en clientes fieles."
+
+
+#: templates/dashboard/landing.html:128
+msgid "MONTHLY CONVERSION RATE"
+msgstr "TASA DE CONVERSIÓN MENSUAL"
+
+#: templates/dashboard/landing.html:145
+msgid "Unmatched Time Savings"
+msgstr "Ahorro de tiempo incomparable"
+
+#: templates/dashboard/landing.html:147
+msgid ""
+"Reusable template engine deploys world-class proposals in minutes, not hours."
+msgstr "El motor de plantillas reutilizables despliega propuestas de primer nivel en minutos, no en horas."
+
+
+#: templates/dashboard/landing.html:152
+msgid "Web Design Template"
+msgstr "Plantilla de diseño web"
+
+#: templates/dashboard/landing.html:156
+msgid "SEO Audit Proposal"
+msgstr "Propuesta de auditoría SEO"
+
+#: templates/dashboard/landing.html:160
+msgid "Create New Template"
+msgstr "Crear nueva plantilla"
+
+#: templates/dashboard/landing.html:167
+msgid "Data-Driven Growth"
+msgstr "Crecimiento basado en datos"
+
+#: templates/dashboard/landing.html:169
+msgid ""
+"Analyze your earnings trajectory and seasonal trends to forecast your next "
+"big move with confidence."
+msgstr "Analiza la trayectoria de tus ingresos y las tendencias estacionales para pronosticar tu próxima gran decisión con confianza."
+
+
+#: templates/dashboard/landing.html:173
+msgid "Projected Q4 Revenue"
+msgstr "Ingresos proyectados Q4"
+
+#: templates/dashboard/landing.html:180
+msgid "Micro-Level Tracking"
+msgstr "Seguimiento a nivel micro"
+
+#: templates/dashboard/landing.html:182
+msgid ""
+"Know exactly when a client opens your proposal, how long they review "
+"pricing, and when they share it with stakeholders."
+msgstr "Sabe exactamente cuándo un cliente abre tu propuesta, cuánto tiempo revisa el precio y cuándo la comparte con partes interesadas."
+
+
+#: templates/dashboard/landing.html:189
+msgid "Proposal Viewed"
+msgstr "Propuesta vista"
+
+#: templates/dashboard/landing.html:190
+msgid "2 minutes ago · San Francisco, CA"
+msgstr "Hace 2 minutos · San Francisco, CA"
+
+#: templates/dashboard/landing.html:196
+msgid "Link Clicked: \"Portfolio\""
+msgstr "Enlace clicado: \"Portafolio\""
+
+#: templates/dashboard/landing.html:197
+msgid "1 hour ago · London, UK"
+msgstr "Hace 1 hora · Londres, UK"
+
+#: templates/dashboard/landing.html:209
+msgid "Tailored Solutions"
+msgstr "Soluciones a medida"
+
+#: templates/dashboard/landing.html:210
+msgid "Designed for the way you win business."
+msgstr "Diseñado para la forma en que ganas negocios."
+
+#: templates/dashboard/landing.html:212
+msgid ""
+"Whether you're a one-person powerhouse or a growing agency, PropoTrack "
+"streamlines your proposal funnel and maximizes billable growth."
+msgstr "Ya seas un profesional independiente o una agencia en crecimiento, PropoTrack optimiza tu embudo de propuestas y maximiza el crecimiento facturable."
+
+
+#: templates/dashboard/landing.html:218
+msgid "Solo Freelancers"
+msgstr "Freelancers independientes"
+
+#: templates/dashboard/landing.html:220
+msgid "Master your pipeline and track every minute of your expertise."
+msgstr "Domina tu pipeline y registra cada minuto de tu experiencia."
+
+#: templates/dashboard/landing.html:225
+msgid "Small Agencies"
+msgstr "Agencias pequeñas"
+
+#: templates/dashboard/landing.html:227
+msgid "Consolidate client relationships and scale team productivity."
+msgstr "Consolida las relaciones con clientes y escala la productividad del equipo."
+
+#: templates/dashboard/landing.html:232
+msgid "Creative Professionals"
+msgstr "Profesionales creativos"
+
+#: templates/dashboard/landing.html:234
+msgid "Transform complex pitches into high-converting narratives."
+msgstr "Transforma propuestas complejas en narrativas de alta conversión."
+
+#: templates/dashboard/landing.html:246
+msgid "Visual Pipeline Management"
+msgstr "Gestión visual del pipeline"
+
+#: templates/dashboard/landing.html:248
+msgid ""
+"Drag bids through custom stages. Never miss a follow-up with automated "
+"status alerts."
+msgstr "Mueve propuestas por etapas personalizadas. Nunca pierdas un seguimiento con alertas de estado automatizadas."
+
+
+#: templates/dashboard/landing.html:272
+msgid "Single-Click Hours"
+msgstr "Horas con un solo clic"
+
+#: templates/dashboard/landing.html:274
+msgid ""
+"Time tracking linked directly to project proposals for seamless invoicing."
+msgstr "Registro de tiempo vinculado directamente a propuestas de proyecto para facturación sin fricciones."
+
+
+#: templates/dashboard/landing.html:282
+msgid "Growth Index"
+msgstr "Índice de crecimiento"
+
+#: templates/dashboard/landing.html:285
+msgid "Conversion increase since last quarter."
+msgstr "Aumento de conversión desde el trimestre pasado."
+
+#: templates/dashboard/landing.html:291 templates/proposals/client_form.html:14
+#: templates/proposals/proposal_detail.html:51
+#: templates/proposals/proposal_form.html:59
+#: templates/templates_app/template_use.html:22
+msgid "Client"
+msgstr "Cliente"
+
+#: templates/dashboard/landing.html:293 templates/security.html:43
+msgid "Value"
+msgstr "Valor"
+
+#: templates/dashboard/landing.html:318
+msgid "Elevate the Creative Pitch"
+msgstr "Eleva la propuesta creativa"
+
+#: templates/dashboard/landing.html:319
+msgid "Turn complex project scopes into clear, winning narratives."
+msgstr "Convierte alcances de proyecto complejos en narrativas claras y ganadoras."
+
+#: templates/dashboard/landing.html:324
+msgid "Narrative Proposals"
+msgstr "Propuestas narrativas"
+
+#: templates/dashboard/landing.html:325
+msgid "Rich text and visual embeds to tell the story behind your solution."
+msgstr "Texto enriquecido e incrustaciones visuales para contar la historia detrás de tu solución."
+
+#: templates/dashboard/landing.html:329
+msgid "Tiered Packaging"
+msgstr "Paquetes escalonados"
+
+#: templates/dashboard/landing.html:331
+msgid "Multiple scope options so clients pick their ideal engagement level."
+msgstr "Múltiples opciones de alcance para que los clientes elijan su nivel de compromiso ideal."
+
+#: templates/dashboard/landing.html:336
+msgid "Version History"
+msgstr "Historial de versiones"
+
+#: templates/dashboard/landing.html:337
+msgid "Track every iteration from first draft to final signature."
+msgstr "Sigue cada iteración desde el primer borrador hasta la firma final."
+
+#: templates/dashboard/landing.html:341
+msgid "Smart Reminders"
+msgstr "Recordatorios inteligentes"
+
+#: templates/dashboard/landing.html:342
+msgid "Automated nudges for stakeholders who haven't reviewed yet."
+msgstr "Recordatorios automáticos para partes interesadas que aún no han revisado."
+
+#: templates/dashboard/landing.html:352
+msgid "Transparent pricing for your growth"
+msgstr "Precios transparentes para tu crecimiento"
+
+#: templates/dashboard/landing.html:354
+msgid "Open access to quality tools. Choose how you'd like to start."
+msgstr "Acceso abierto a herramientas de calidad. Elige cómo quieres comenzar."
+
+#: templates/dashboard/landing.html:361 templates/dashboard/landing.html:427
+msgid "Free"
+msgstr "Gratis"
+
+#: templates/dashboard/landing.html:364
+msgid "/forever"
+msgstr "/para siempre"
+
+#: templates/dashboard/landing.html:366
+msgid "Full access to every PropoTrack tool."
+msgstr "Acceso completo a todas las herramientas de PropoTrack."
+
+#: templates/dashboard/landing.html:371 templates/dashboard/landing.html:402
+#: templates/dashboard/landing.html:434
+msgid "Full features unlocked"
+msgstr "Todas las funciones desbloqueadas"
+
+#: templates/dashboard/landing.html:375
+msgid "Unlimited proposals"
+msgstr "Propuestas ilimitadas"
+
+#: templates/dashboard/landing.html:379
+msgid "Time tracking"
+msgstr "Registro de tiempo"
+
+#: templates/dashboard/landing.html:383
+msgid "Start now"
+msgstr "Comenzar ahora"
+
+#: templates/dashboard/landing.html:388
+msgid "RECOMMENDED"
+msgstr "RECOMENDADO"
+
+#: templates/dashboard/landing.html:391
+msgid "Support with donation"
+msgstr "Apoyar con donación"
+
+#: templates/dashboard/landing.html:393
+msgid "Voluntary"
+msgstr "Voluntario"
+
+#: templates/dashboard/landing.html:396
+msgid "Keep the project alive and get the same full features."
+msgstr "Mantén el proyecto vivo y obtén las mismas funciones completas."
+
+#: templates/dashboard/landing.html:406 templates/donate.html:129
+msgid "Priority support"
+msgstr "Soporte prioritario"
+
+#: templates/dashboard/landing.html:410
+msgid "Contribute to development"
+msgstr "Contribuir al desarrollo"
+
+#: templates/dashboard/landing.html:414 templates/dashboard/landing.html:491
+#: templates/donate.html:149 templates/donate_confirm.html:165
+msgid "Donate"
+msgstr "Donar"
+
+#: templates/dashboard/landing.html:419
+msgid "Plan comparison"
+msgstr "Comparación de planes"
+
+#: templates/dashboard/landing.html:424
+msgid "Feature"
+msgstr "Función"
+
+#: templates/dashboard/landing.html:429
+msgid "Donation"
+msgstr "Donación"
+
+#: templates/dashboard/landing.html:443
+msgid "Active proposals"
+msgstr "Propuestas activas"
+
+#: templates/dashboard/landing.html:444 templates/dashboard/landing.html:445
+msgid "Unlimited"
+msgstr "Ilimitado"
+
+#: templates/dashboard/landing.html:448
+msgid "API access"
+msgstr "Acceso a API"
+
+#: templates/dashboard/landing.html:457
+msgid "Technical support"
+msgstr "Soporte técnico"
+
+#: templates/dashboard/landing.html:458
+msgid "Standard"
+msgstr "Estándar"
+
+#: templates/dashboard/landing.html:459
+msgid "Priority"
+msgstr "Prioritario"
+
+#: templates/dashboard/landing.html:468
+msgid "Ready to get started?"
+msgstr "¿Listo para comenzar?"
+
+#: templates/dashboard/monthly_summary.html:5
+#: templates/dashboard/monthly_summary.html:11
+msgid "Analytics & Reports"
+msgstr "Analítica e informes"
+
+#: templates/dashboard/monthly_summary.html:12
+msgid "Track your freelance business performance."
+msgstr "Sigue el rendimiento de tu negocio freelancer."
+
+#: templates/dashboard/monthly_summary.html:17
+msgid "Export CSV"
+msgstr "Exportar CSV"
+
+#: templates/dashboard/monthly_summary.html:25
+msgid "Period"
+msgstr "Período"
+
+#: templates/dashboard/monthly_summary.html:28
+msgid "Last 30 Days"
+msgstr "Últimos 30 días"
+
+#: templates/dashboard/monthly_summary.html:29
+msgid "Last 90 Days"
+msgstr "Últimos 90 días"
+
+#: templates/dashboard/monthly_summary.html:30
+msgid "This Year"
+msgstr "Este año"
+
+#: templates/dashboard/monthly_summary.html:36
+msgid "Year"
+msgstr "Año"
+
+#: templates/dashboard/monthly_summary.html:39
+#: templates/proposals/proposal_list.html:104
+msgid "View"
+msgstr "Ver"
+
+#: templates/dashboard/monthly_summary.html:45
+msgid "Total Revenue"
+msgstr "Ingresos totales"
+
+#: templates/dashboard/monthly_summary.html:50
+msgid "Proposals Sent"
+msgstr "Propuestas enviadas"
+
+#: templates/dashboard/monthly_summary.html:52
+msgid "total in period"
+msgstr "total en el período"
+
+#: templates/dashboard/monthly_summary.html:57
+msgid "accepted / sent"
+msgstr "aceptadas / enviadas"
+
+#: templates/dashboard/monthly_summary.html:60
+msgid "Avg. Hourly Rate"
+msgstr "Tarifa horaria promedio"
+
+#: templates/dashboard/monthly_summary.html:62
+msgid "effective rate"
+msgstr "tarifa efectiva"
+
+#: templates/dashboard/monthly_summary.html:70
+msgid "Earnings Forecast"
+msgstr "Pronóstico de ingresos"
+
+#: templates/dashboard/monthly_summary.html:75
+msgid "Platform Conversion"
+msgstr "Conversión por plataforma"
+
+#: templates/dashboard/monthly_summary.html:88
+msgid "No platform data yet."
+msgstr "Aún no hay datos de plataforma."
+
+#: templates/dashboard/monthly_summary.html:97
+msgid "Platform Statistics Overview"
+msgstr "Resumen de estadísticas por plataforma"
+
+#: templates/dashboard/monthly_summary.html:98
+msgid "Detailed breakdown across all client acquisition channels."
+msgstr "Desglose detallado en todos los canales de adquisición de clientes."
+
+#: templates/dashboard/monthly_summary.html:106
+msgid "Success"
+msgstr "Éxito"
+
+#: templates/dashboard/monthly_summary.html:107
+msgid "Earned"
+msgstr "Ganado"
+
+#: templates/dashboard/monthly_summary.html:108
+msgid "Avg. Response"
+msgstr "Resp. promedio"
+
+#: templates/dashboard/monthly_summary.html:129
+msgid "No platform statistics yet."
+msgstr "Aún no hay estadísticas de plataforma."
+
+#: templates/donate.html:3
+msgid "Support PropoTrack"
+msgstr "Apoya PropoTrack"
+
+#: templates/donate.html:4
+msgid ""
+"Support the growth of PropoTrack — a community-driven project for "
+"freelancers."
+msgstr "Apoya el crecimiento de PropoTrack, un proyecto impulsado por la comunidad para freelancers."
+
+
+#: templates/donate.html:29
+msgid "Community"
+msgstr "Comunidad"
+
+#: templates/donate.html:30
+msgid "Support the growth of PropoTrack"
+msgstr "Apoya el crecimiento de PropoTrack"
+
+#: templates/donate.html:32
+msgid ""
+"We are a community-driven project. Your donation helps us keep the servers "
+"running and continue developing new free features for everyone."
+msgstr "Somos un proyecto impulsado por la comunidad. Tu donación nos ayuda a mantener los servidores en funcionamiento y a seguir desarrollando nuevas funciones gratuitas para todos."
+
+
+#: templates/donate.html:39
+msgid "Make a donation"
+msgstr "Hacer una donación"
+
+#: templates/donate.html:42 templates/donate_confirm.html:126
+msgid "One-time"
+msgstr "Única vez"
+
+#: templates/donate.html:45
+msgid "Monthly"
+msgstr "Mensual"
+
+#: templates/donate.html:60
+msgid "Custom amount"
+msgstr "Monto personalizado"
+
+#: templates/donate.html:65 templates/donate_confirm.html:43
+msgid "Payment method"
+msgstr "Método de pago"
+
+#: templates/donate.html:70 templates/donate_confirm.html:49
+msgid "Card"
+msgstr "Tarjeta"
+
+#: templates/donate.html:86
+msgid "Continue with donation"
+msgstr "Continuar con la donación"
+
+#: templates/donate.html:93
+msgid "Secure and encrypted transaction"
+msgstr "Transacción segura y cifrada"
+
+#: templates/donate.html:97
+msgid "No commitments, cancel anytime"
+msgstr "Sin compromisos, cancela cuando quieras"
+
+#: templates/donate.html:104
+msgid "Your impact"
+msgstr "Tu impacto"
+
+#: templates/donate.html:111
+msgid "24/7 Servers"
+msgstr "Servidores 24/7"
+
+#: templates/donate.html:112
+msgid ""
+"Keep the infrastructure running without interruption for thousands of users."
+msgstr "Mantén la infraestructura en funcionamiento sin interrupciones para miles de usuarios."
+
+
+#: templates/donate.html:120
+msgid "Continuous development"
+msgstr "Desarrollo continuo"
+
+#: templates/donate.html:121
+msgid "New free features designed by and for the community."
+msgstr "Nuevas funciones gratuitas diseñadas por y para la comunidad."
+
+#: templates/donate.html:130
+msgid "Fast email support to resolve your technical questions."
+msgstr "Soporte rápido por correo electrónico para resolver tus preguntas técnicas."
+
+#: templates/donate.html:136
+msgid ""
+"\"PropoTrack changed the way I work. Donating is my way of making sure it "
+"keeps growing.\" — Elena G."
+msgstr "\"PropoTrack cambió la forma en que trabajo. Donar es mi manera de asegurarme de que siga creciendo.\" — Elena G."
+
+
+#: templates/donate_confirm.html:3
+msgid "Confirm Donation"
+msgstr "Confirmar donación"
+
+#: templates/donate_confirm.html:4
+msgid ""
+"Complete your contribution to PropoTrack — secure and encrypted checkout."
+msgstr "Completa tu contribución a PropoTrack — pago seguro y cifrado."
+
+
+#: templates/donate_confirm.html:31 templates/partials/_page_header.html:13
+msgid "Back"
+msgstr "Volver"
+
+#: templates/donate_confirm.html:33
+msgid "Complete your contribution"
+msgstr "Completa tu contribución"
+
+#: templates/donate_confirm.html:34
+msgid "Your support drives the continuous development of PropoTrack."
+msgstr "Tu apoyo impulsa el desarrollo continuo de PropoTrack."
+
+#: templates/donate_confirm.html:65
+msgid "Cardholder name"
+msgstr "Nombre del titular"
+
+#: templates/donate_confirm.html:66
+msgid "First Last"
+msgstr "Nombre Apellido"
+
+#: templates/donate_confirm.html:69
+msgid "Card number"
+msgstr "Número de tarjeta"
+
+#: templates/donate_confirm.html:77
+msgid "Expiry"
+msgstr "Vencimiento"
+
+#: templates/donate_confirm.html:91
+msgid "Billing information"
+msgstr "Información de facturación"
+
+#: templates/donate_confirm.html:95
+msgid "Address"
+msgstr "Dirección"
+
+#: templates/donate_confirm.html:96
+msgid "Street and number"
+msgstr "Calle y número"
+
+#: templates/donate_confirm.html:99 templates/donate_confirm.html:100
+msgid "City"
+msgstr "Ciudad"
+
+#: templates/donate_confirm.html:103
+msgid "Postal code"
+msgstr "Código postal"
+
+#: templates/donate_confirm.html:113
+msgid "256-bit SSL encryption"
+msgstr "Cifrado SSL de 256 bits"
+
+#: templates/donate_confirm.html:114
+msgid "Your payment data is protected and never stored on our servers."
+msgstr "Tus datos de pago están protegidos y nunca se almacenan en nuestros servidores."
+
+#: templates/donate_confirm.html:122
+msgid "Donation summary"
+msgstr "Resumen de la donación"
+
+#: templates/donate_confirm.html:125
+#: templates/proposals/proposal_detail.html:62
+#: templates/proposals/proposal_list.html:58
+#: templates/templates_app/template_preview.html:27
+msgid "Amount"
+msgstr "Monto"
+
+#: templates/donate_confirm.html:129
+msgid "Platform fee"
+msgstr "Tarifa de plataforma"
+
+#: templates/donate_confirm.html:135
+#, python-format
+msgid ""
+"100%% of your donation goes directly to infrastructure and open source "
+"development."
+msgstr "El 100%% de tu donación va directamente a la infraestructura y al desarrollo de código abierto."
+
+
+#: templates/donate_confirm.html:141
+msgid "Total to charge"
+msgstr "Total a cobrar"
+
+#: templates/donate_confirm.html:146
+msgid "Confirm and donate"
+msgstr "Confirmar y donar"
+
+#: templates/donate_confirm.html:151
+#, python-format
+msgid ""
+"By clicking \"Confirm and donate\", you accept our <a class=\"text-primary "
+"underline\" href=\"%(tos_url)s\">Donation Terms</a>."
+msgstr "Al hacer clic en \"Confirmar y donar\", aceptas nuestros <a class=\"text-primary underline\" href=\"%(tos_url)s\">Términos de donación</a>."
+
+
+#: templates/followups/followup_confirm_delete.html:4
+msgid "Delete Follow-up"
+msgstr "Eliminar seguimiento"
+
+#: templates/followups/followup_form.html:4
+msgid "Edit Follow-up"
+msgstr "Editar seguimiento"
+
+#: templates/followups/followup_form.html:4
+msgid "New Follow-up"
+msgstr "Nuevo seguimiento"
+
+#: templates/followups/followup_form.html:12
+msgid "Back to Follow-ups"
+msgstr "Volver a seguimientos"
+
+#: templates/followups/followup_form.html:14
+#: templates/proposals/client_form.html:14
+#: templates/proposals/proposal_detail.html:39
+#: templates/proposals/proposal_form.html:14
+#: templates/proposals/proposal_list.html:107
+#: templates/templates_app/template_detail.html:23
+#: templates/templates_app/template_form.html:14
+#: templates/templates_app/template_list.html:33
+#: templates/timetracking/retainer_form.html:14
+#: templates/timetracking/timeentry_list.html:74
+msgid "Edit"
+msgstr "Editar"
+
+#: templates/followups/followup_form.html:14
+#: templates/timetracking/retainer_form.html:14
+msgid "Create"
+msgstr "Crear"
+
+#: templates/followups/followup_form.html:14
+msgid "Follow-up"
+msgstr "Seguimiento"
+
+#: templates/followups/followup_form.html:15
+msgid "Schedule a follow-up task for a proposal."
+msgstr "Programa una tarea de seguimiento para una propuesta."
+
+#: templates/followups/followup_form.html:28
+#: templates/followups/followup_list.html:40
+#: templates/proposals/proposal_form.html:14
+#: templates/timetracking/retainer_form.html:28
+#: templates/timetracking/retainer_list.html:28
+#: templates/timetracking/timeentry_form.html:28
+msgid "Proposal"
+msgstr "Propuesta"
+
+#: templates/followups/followup_form.html:34
+#: templates/followups/followup_list.html:41
+#: templates/timetracking/timeentry_form.html:45
+#: templates/timetracking/timeentry_list.html:49
+msgid "Description"
+msgstr "Descripción"
+
+#: templates/followups/followup_form.html:39
+#: templates/followups/followup_list.html:42
+msgid "Due Date"
+msgstr "Fecha límite"
+
+#: templates/followups/followup_form.html:46
+#: templates/partials/_delete_confirm.html:33
+#: templates/proposals/client_form.html:47
+#: templates/proposals/proposal_form.html:120
+#: templates/templates_app/template_form.html:43
+#: templates/timetracking/retainer_form.html:50
+#: templates/timetracking/timeentry_form.html:59
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: templates/followups/followup_form.html:50
+msgid "Save Follow-up"
+msgstr "Guardar seguimiento"
+
+#: templates/followups/followup_list.html:11
+msgid "Track and complete your follow-up tasks."
+msgstr "Gestiona y completa tus tareas de seguimiento."
+
+#: templates/followups/followup_list.html:15
+msgid "Add Follow-up"
+msgstr "Agregar seguimiento"
+
+#: templates/followups/followup_list.html:22
+msgid "Upcoming"
+msgstr "Próximos"
+
+#: templates/followups/followup_list.html:26
+msgid "Overdue"
+msgstr "Vencidos"
+
+#: templates/followups/followup_list.html:30
+msgid "Completed"
+msgstr "Completados"
+
+#: templates/followups/followup_list.html:44
+#: templates/proposals/client_list.html:19
+#: templates/proposals/proposal_list.html:61
+#: templates/timetracking/retainer_list.html:32
+#: templates/timetracking/timeentry_list.html:52
+msgid "Actions"
+msgstr "Acciones"
+
+#: templates/followups/followup_list.html:79
+msgid "Complete"
+msgstr "Completar"
+
+#: templates/followups/followup_list.html:83
+#: templates/proposals/client_list.html:38
+#: templates/proposals/proposal_detail.html:35
+#: templates/proposals/proposal_list.html:110
+#: templates/templates_app/template_list.html:36
+#: templates/timetracking/timeentry_list.html:77
+msgid "Delete"
+msgstr "Eliminar"
+
+#: templates/followups/followup_list.html:93
+msgid "All caught up!"
+msgstr "¡Al día!"
+
+#: templates/followups/followup_list.html:94
+msgid "No follow-ups pending."
+msgstr "No hay seguimientos pendientes."
+
+#: templates/partials/_delete_confirm.html:18
+#, python-format
+msgid "Delete this %(type)s?"
+msgstr "¿Eliminar este/a %(type)s?"
+
+#: templates/partials/_delete_confirm.html:19
+msgid "This action cannot be undone."
+msgstr "Esta acción no se puede deshacer."
+
+#: templates/partials/_messages.html:12
+msgid "Dismiss notification"
+msgstr "Descartar notificación"
+
+#: templates/partials/digest_email.txt:1
 msgid "Hi"
 msgstr "Hola"
 
+#: templates/partials/digest_email.txt:3
 msgid "Here is your daily digest from PropoTrack."
 msgstr "Aquí está tu resumen diario de PropoTrack."
 
+#: templates/partials/digest_email.txt:6
 msgid "Overdue Follow-ups"
 msgstr "Seguimientos vencidos"
 
-msgid "Upcoming Follow-ups"
-msgstr "Próximos seguimientos"
-
+#: templates/partials/digest_email.txt:8 templates/partials/digest_email.txt:14
 msgid "due"
 msgstr "vence"
 
+#: templates/partials/digest_email.txt:12
+msgid "Upcoming Follow-ups"
+msgstr "Próximos seguimientos"
+
+#: templates/partials/digest_email.txt:17
 msgid "Monthly Summary"
 msgstr "Resumen mensual"
 
+#: templates/partials/digest_email.txt:18
 msgid "Proposals sent"
 msgstr "Propuestas enviadas"
 
+#: templates/partials/digest_email.txt:19
 msgid "Won"
 msgstr "Ganadas"
 
+#: templates/partials/digest_email.txt:20
 msgid "Total earnings"
 msgstr "Ganancias totales"
 
+#: templates/partials/digest_email.txt:22
 msgid "Log in to PropoTrack to take action."
 msgstr "Ingresa a PropoTrack para tomar acción."
+
+#: templates/privacy.html:4
+msgid ""
+"PropoTrack Privacy Policy — learn how we collect, use, and protect your data."
+msgstr "Política de privacidad de PropoTrack — aprende cómo recopilamos, usamos y protegemos tus datos."
+
+
+#: templates/privacy.html:10 templates/security.html:10 templates/terms.html:10
+msgid "Effective: May 11, 2026"
+msgstr "Vigente: 11 de mayo de 2026"
+
+#: templates/privacy.html:14 templates/security.html:14 templates/terms.html:14
+msgid "1. Introduction"
+msgstr "1. Introducción"
+
+#: templates/privacy.html:16
+msgid ""
+"PropoTrack (\"we\", \"our\", or \"us\") is a proposal and client management "
+"tool for freelancers. This Privacy Policy explains what personal data we "
+"collect, how we use it, and what rights you have regarding your information. "
+"This policy applies to all users of PropoTrack."
+msgstr "PropoTrack (\"nosotros\", \"nuestro\" o \"nos\") es una herramienta de gestión de propuestas y clientes para freelancers. Esta Política de privacidad explica qué datos personales recopilamos, cómo los usamos y qué derechos tienes sobre tu información. Esta política aplica a todos los usuarios de PropoTrack."
+
+
+#: templates/privacy.html:21
+msgid "2. Data We Collect"
+msgstr "2. Datos que recopilamos"
+
+#: templates/privacy.html:23
+msgid ""
+"We collect the following data, which you provide directly when using "
+"PropoTrack:"
+msgstr "Recopilamos los siguientes datos, que tú proporcionas directamente al usar PropoTrack:"
+
+
+#: templates/privacy.html:26 templates/terms.html:25
+msgid "Account"
+msgstr "Cuenta"
+
+#: templates/privacy.html:26
+msgid "email address and name"
+msgstr "dirección de correo electrónico y nombre"
+
+#: templates/privacy.html:27
+msgid ""
+"title, platform (Upwork/Fiverr/Freelancer/Workana/LinkedIn/Other), amount, "
+"status, job URL, proposal URL, sent date, expected and actual response dates"
+msgstr "título, plataforma (Upwork/Fiverr/Freelancer/Workana/LinkedIn/Otro), monto, estado, URL del trabajo, URL de la propuesta, fecha de envío, fechas de respuesta esperada y real"
+
+
+#: templates/privacy.html:28
+msgid "client name"
+msgstr "nombre del cliente"
+
+#: templates/privacy.html:29
+msgid "description, due date, completed status, completion timestamp, notes"
+msgstr "descripción, fecha límite, estado de completado, marca de tiempo de completado, notas"
+
+#: templates/privacy.html:30
+msgid "Time entries"
+msgstr "Entradas de tiempo"
+
+#: templates/privacy.html:30
+msgid "hours logged, description, date, billable flag"
+msgstr "horas registradas, descripción, fecha, indicador de facturable"
+
+#: templates/privacy.html:31
+msgid "Proposal templates"
+msgstr "Plantillas de propuestas"
+
+#: templates/privacy.html:31
+msgid "name and body content"
+msgstr "nombre y contenido del cuerpo"
+
+#: templates/privacy.html:32
+msgid "Activity logs"
+msgstr "Registros de actividad"
+
+#: templates/privacy.html:32
+msgid ""
+"actions taken within the platform (status changes, follow-up completions)"
+msgstr "acciones realizadas en la plataforma (cambios de estado, completado de seguimientos)"
+
+
+#: templates/privacy.html:35
+msgid ""
+"We do <strong>not</strong> collect payment card data. All financial amounts "
+"are stored as decimal values you manually enter."
+msgstr "No recopilamos datos de tarjetas de pago. Todos los montos financieros se almacenan como valores decimales que ingresas manualmente."
+
+
+#: templates/privacy.html:40
+msgid "3. How We Use Your Data"
+msgstr "3. Cómo usamos tus datos"
+
+#: templates/privacy.html:41
+msgid "We use your data to:"
+msgstr "Usamos tus datos para:"
+
+#: templates/privacy.html:43
+msgid "Manage proposals and track their lifecycle"
+msgstr "Gestionar propuestas y rastrear su ciclo de vida"
+
+#: templates/privacy.html:44
+msgid "Schedule and track follow-up reminders"
+msgstr "Programar y rastrear recordatorios de seguimiento"
+
+#: templates/privacy.html:45
+msgid "Log time entries and generate billing summaries"
+msgstr "Registrar entradas de tiempo y generar resúmenes de facturación"
+
+#: templates/privacy.html:46
+msgid "Send follow-up digest notifications"
+msgstr "Enviar notificaciones de resumen de seguimientos"
+
+#: templates/privacy.html:47
+msgid "Generate export files (CSV, JSON, monthly HTML summary)"
+msgstr "Generar archivos de exportación (CSV, JSON, resumen HTML mensual)"
+
+#: templates/privacy.html:48
+msgid "Display dashboard analytics and charts"
+msgstr "Mostrar analítica y gráficos en el panel"
+
+#: templates/privacy.html:49
+msgid "Detect potential duplicate proposals"
+msgstr "Detectar posibles propuestas duplicadas"
+
+#: templates/privacy.html:54
+msgid "4. Cookies"
+msgstr "4. Cookies"
+
+#: templates/privacy.html:55
+msgid "PropoTrack uses only the cookies necessary for platform functionality:"
+msgstr "PropoTrack usa únicamente las cookies necesarias para el funcionamiento de la plataforma:"
+
+#: templates/privacy.html:59
+msgid "Cookie"
+msgstr "Cookie"
+
+#: templates/privacy.html:60
+msgid "Purpose"
+msgstr "Propósito"
+
+#: templates/privacy.html:61
+msgid "Duration"
+msgstr "Duración"
+
+#: templates/privacy.html:67
+msgid "Django session authentication"
+msgstr "Autenticación de sesión de Django"
+
+#: templates/privacy.html:68
+msgid "Session"
+msgstr "Sesión"
+
+#: templates/privacy.html:72
+msgid "Cross-Site Request Forgery protection"
+msgstr "Protección contra falsificación de solicitudes entre sitios (CSRF)"
+
+#: templates/privacy.html:73
+msgid "1 year"
+msgstr "1 año"
+
+#: templates/privacy.html:77
+msgid ""
+"HTMX progressive enhancement header (not a cookie — processed server-side)"
+msgstr "Encabezado de mejora progresiva HTMX (no es una cookie — procesado en el servidor)"
+
+
+#: templates/privacy.html:78
+msgid "Per request"
+msgstr "Por solicitud"
+
+#: templates/privacy.html:83
+msgid ""
+"We do not use advertising or tracking cookies. No third-party analytics or "
+"marketing scripts are loaded."
+msgstr "No usamos cookies de publicidad ni de seguimiento. No se cargan scripts de analítica ni de marketing de terceros."
+
+
+#: templates/privacy.html:88
+msgid "5. Data Storage"
+msgstr "5. Almacenamiento de datos"
+
+#: templates/privacy.html:90
+msgid ""
+"Your data is stored in a relational database. In development environments, "
+"SQLite is used. In production, PostgreSQL 16 is used. All database "
+"connections are secured via environment-configured credentials. "
+"Authentication is handled by <code>django-allauth</code> with session-based "
+"(not token-based) authentication."
+msgstr "Tus datos se almacenan en una base de datos relacional. En entornos de desarrollo se usa SQLite. En producción, se usa PostgreSQL 16. Todas las conexiones de base de datos están aseguradas mediante credenciales configuradas por entorno. La autenticación es gestionada por <code>django-allauth</code> con autenticación basada en sesión (no en token)."
+
+
+#: templates/privacy.html:93
+msgid ""
+"Data is isolated per user account — you can only access your own proposals, "
+"clients, time entries, and related records."
+msgstr "Los datos están aislados por cuenta de usuario — solo puedes acceder a tus propias propuestas, clientes, entradas de tiempo y registros relacionados."
+
+
+#: templates/privacy.html:98
+msgid "6. Data Retention"
+msgstr "6. Retención de datos"
+
+#: templates/privacy.html:100
+msgid ""
+"We retain your data for as long as your account is active. You may request "
+"deletion of your account and all associated data at any time (see Section "
+"7). After account deletion, data is removed from the active database within "
+"30 days."
+msgstr "Conservamos tus datos mientras tu cuenta esté activa. Puedes solicitar la eliminación de tu cuenta y todos los datos asociados en cualquier momento (ver Sección 7). Tras la eliminación de la cuenta, los datos se eliminan de la base de datos activa en un plazo de 30 días."
+
+
+#: templates/privacy.html:105
+msgid "7. Your Rights (GDPR &amp; CCPA)"
+msgstr "7. Tus derechos (GDPR y CCPA)"
+
+#: templates/privacy.html:106
+msgid "You have the right to:"
+msgstr "Tienes el derecho de:"
+
+#: templates/privacy.html:108
+msgid "Access"
+msgstr "Acceso"
+
+#: templates/privacy.html:108
+msgid "request a copy of all data we hold about you"
+msgstr "solicitar una copia de todos los datos que tenemos sobre ti"
+
+#: templates/privacy.html:109
+msgid "Rectification"
+msgstr "Rectificación"
+
+#: templates/privacy.html:109
+msgid "correct or update any inaccurate data"
+msgstr "corregir o actualizar cualquier dato inexacto"
+
+#: templates/privacy.html:110
+msgid "Erasure"
+msgstr "Borrado"
+
+#: templates/privacy.html:110
+msgid "request deletion of your account and all data"
+msgstr "solicitar la eliminación de tu cuenta y todos los datos"
+
+#: templates/privacy.html:111
+msgid "Portability"
+msgstr "Portabilidad"
+
+#: templates/privacy.html:111
+msgid "export your data in JSON or CSV format"
+msgstr "exportar tus datos en formato JSON o CSV"
+
+#: templates/privacy.html:112
+msgid "Objection"
+msgstr "Objeción"
+
+#: templates/privacy.html:112
+msgid "object to specific processing activities"
+msgstr "objetar actividades de procesamiento específicas"
+
+#: templates/privacy.html:115
+msgid ""
+"To exercise any of these rights, contact us at <a href=\"mailto:"
+"noreply@freelancer-tracker.dabg.dev\" class=\"text-link "
+"underline\">noreply@freelancer-tracker.dabg.dev</a>. We will respond within "
+"30 days."
+msgstr "Para ejercer cualquiera de estos derechos, contáctanos en <a href=\"mailto:noreply@freelancer-tracker.dabg.dev\" class=\"text-link underline\">noreply@freelancer-tracker.dabg.dev</a>. Responderemos en un plazo de 30 días."
+
+
+#: templates/privacy.html:120
+msgid "8. Data Security"
+msgstr "8. Seguridad de datos"
+
+#: templates/privacy.html:122
+msgid ""
+"We implement standard security practices including HTTPS enforcement in "
+"production, CSRF protection, session security, and per-user data isolation "
+"at the database query level. No data is shared with third parties."
+msgstr "Implementamos prácticas de seguridad estándar que incluyen aplicación de HTTPS en producción, protección CSRF, seguridad de sesión y aislamiento de datos por usuario a nivel de consulta de base de datos. No se comparten datos con terceros."
+
+
+#: templates/privacy.html:127
+msgid "9. Changes to This Policy"
+msgstr "9. Cambios en esta política"
+
+#: templates/privacy.html:129
+msgid ""
+"We may update this Privacy Policy from time to time. Any changes will be "
+"posted on this page with an updated effective date. We encourage you to "
+"review this policy periodically."
+msgstr "Podemos actualizar esta Política de privacidad de vez en cuando. Cualquier cambio se publicará en esta página con una fecha de vigencia actualizada. Te recomendamos revisar esta política periódicamente."
+
+
+#: templates/privacy.html:134
+msgid "10. Contact"
+msgstr "10. Contacto"
+
+#: templates/privacy.html:136
+msgid ""
+"For privacy-related questions or to submit a data request, contact us at:"
+msgstr "Para preguntas relacionadas con la privacidad o para enviar una solicitud de datos, contáctanos en:"
+
+
+#: templates/proposals/client_confirm_delete.html:4
+msgid "Delete Client"
+msgstr "Eliminar cliente"
+
+#: templates/proposals/client_form.html:4
+msgid "Edit Client"
+msgstr "Editar cliente"
+
+#: templates/proposals/client_form.html:4
+msgid "New Client"
+msgstr "Nuevo cliente"
+
+#: templates/proposals/client_form.html:12
+msgid "Back to Clients"
+msgstr "Volver a clientes"
+
+#: templates/proposals/client_form.html:14
+#: templates/proposals/proposal_form.html:14
+#: templates/templates_app/template_form.html:14
+msgid "Create New"
+msgstr "Crear nuevo"
+
+#: templates/proposals/client_form.html:15
+msgid "Add a client to your roster."
+msgstr "Agrega un cliente a tu lista."
+
+#: templates/proposals/client_form.html:29
+msgid "Client / Company Name"
+msgstr "Nombre del cliente / empresa"
+
+#: templates/proposals/client_form.html:41
+#: templates/proposals/client_list.html:18
+msgid "Notes"
+msgstr "Notas"
+
+#: templates/proposals/client_form.html:51
+msgid "Save Changes"
+msgstr "Guardar cambios"
+
+#: templates/proposals/client_form.html:51
+msgid "Add Client"
+msgstr "Agregar cliente"
+
+#: templates/proposals/client_list.html:16
+msgid "Name"
+msgstr "Nombre"
+
+#: templates/proposals/client_list.html:37
+#, python-format
+msgid "%(count)s proposals"
+msgstr "%(count)s propuestas"
+
+#: templates/proposals/proposal_confirm_delete.html:4
+msgid "Delete Proposal"
+msgstr "Eliminar propuesta"
+
+#: templates/proposals/proposal_detail.html:11
+#: templates/proposals/proposal_form.html:12
+msgid "Back to Proposals"
+msgstr "Volver a propuestas"
+
+#: templates/proposals/proposal_detail.html:69
+msgid "Cover Letter"
+msgstr "Carta de presentación"
+
+#: templates/proposals/proposal_detail.html:81
+msgid "Job Posting"
+msgstr "Oferta de trabajo"
+
+#: templates/proposals/proposal_detail.html:87
+msgid "Proposal Document"
+msgstr "Documento de propuesta"
+
+#: templates/proposals/proposal_detail.html:98
+msgid "Proposal Insights"
+msgstr "Información de la propuesta"
+
+#: templates/proposals/proposal_detail.html:101
+msgid "Days since sent"
+msgstr "Días desde el envío"
+
+#: templates/proposals/proposal_detail.html:106
+msgid "Response"
+msgstr "Respuesta"
+
+#: templates/proposals/proposal_detail.html:108
+msgid "Received"
+msgstr "Recibida"
+
+#: templates/proposals/proposal_detail.html:108
+msgid "Pending"
+msgstr "Pendiente"
+
+#: templates/proposals/proposal_detail.html:113
+msgid "Paid"
+msgstr "Pagado"
+
+#: templates/proposals/proposal_detail.html:115
+msgid "Yes"
+msgstr "Sí"
+
+#: templates/proposals/proposal_detail.html:115
+msgid "No"
+msgstr "No"
+
+#: templates/proposals/proposal_detail.html:123
+msgid "Key Dates"
+msgstr "Fechas clave"
+
+#: templates/proposals/proposal_detail.html:130
+msgid "Expected response"
+msgstr "Respuesta esperada"
+
+#: templates/proposals/proposal_detail.html:134
+msgid "Actual response"
+msgstr "Respuesta real"
+
+#: templates/proposals/proposal_detail.html:142
+msgid "Next Action"
+msgstr "Próxima acción"
+
+#: templates/proposals/proposal_detail.html:143
+msgid "Schedule a follow-up to keep this proposal moving."
+msgstr "Programa un seguimiento para mantener esta propuesta en movimiento."
+
+#: templates/proposals/proposal_detail.html:146
+msgid "Draft Follow-up"
+msgstr "Crear seguimiento"
+
+#: templates/proposals/proposal_detail.html:152
+msgid "Tags"
+msgstr "Etiquetas"
+
+#: templates/proposals/proposal_form.html:4
+msgid "Edit Proposal"
+msgstr "Editar propuesta"
+
+#: templates/proposals/proposal_form.html:4
+msgid "Create New Proposal"
+msgstr "Crear nueva propuesta"
+
+#: templates/proposals/proposal_form.html:15
+msgid "Draft and finalize the details of your pitch before sending."
+msgstr "Redacta y finaliza los detalles de tu propuesta antes de enviarla."
+
+#: templates/proposals/proposal_form.html:31
+msgid "Proposal Title"
+msgstr "Título de la propuesta"
+
+#: templates/proposals/proposal_form.html:40
+msgid "Amount (USD)"
+msgstr "Monto (USD)"
+
+#: templates/proposals/proposal_form.html:53
+msgid "Platform Source"
+msgstr "Plataforma de origen"
+
+#: templates/proposals/proposal_form.html:71
+msgid "Leave Client empty to create a new client from these fields."
+msgstr "Deja Cliente vacío para crear un cliente con estos campos."
+
+#: templates/proposals/proposal_form.html:85
+msgid "Sent Date"
+msgstr "Fecha de envío"
+
+#: templates/proposals/proposal_form.html:91
+msgid "Expected Response"
+msgstr "Respuesta esperada"
+
+#: templates/proposals/proposal_form.html:97
+msgid "Job Posting Link"
+msgstr "Enlace a la oferta de trabajo"
+
+#: templates/proposals/proposal_form.html:103
+msgid "Proposal URL"
+msgstr "URL de la propuesta"
+
+#: templates/proposals/proposal_form.html:110
+msgid "Proposal Pitch"
+msgstr "Contenido de la propuesta"
+
+#: templates/proposals/proposal_form.html:113
+msgid "Be specific about deliverables and timeline."
+msgstr "Sé específico sobre los entregables y el cronograma."
+
+#: templates/proposals/proposal_form.html:124
+msgid "Save Proposal"
+msgstr "Guardar propuesta"
+
+#: templates/proposals/proposal_list.html:12
+msgid "Total"
+msgstr "Total"
+
+#: templates/proposals/proposal_list.html:14
+msgid "Manage, track, and send your project pitches."
+msgstr "Gestiona, sigue y envía tus propuestas de proyecto."
+
+#: templates/proposals/proposal_list.html:18
+#: templates/proposals/proposal_list.html:125
+msgid "Add Proposal"
+msgstr "Agregar propuesta"
+
+#: templates/proposals/proposal_list.html:46
+msgid "Filter"
+msgstr "Filtrar"
+
+#: templates/proposals/proposal_list.html:56
+msgid "Title"
+msgstr "Título"
+
+#: templates/proposals/proposal_list.html:57
+msgid "Client & Platform"
+msgstr "Cliente y plataforma"
+
+#: templates/proposals/proposal_list.html:60
+msgid "Date Sent"
+msgstr "Fecha de envío"
+
+#: templates/proposals/proposal_list.html:121
+msgid "No proposals found"
+msgstr "No se encontraron propuestas"
+
+#: templates/proposals/proposal_list.html:122
+msgid "Create your first proposal to get started."
+msgstr "Crea tu primera propuesta para comenzar."
+
+#: templates/proposals/proposal_list.html:138
+#, python-format
+msgid ""
+"Page <span class=\"font-medium text-on-surface\">%(num)s</span> of <span "
+"class=\"font-medium text-on-surface\">%(total)s</span> (%(count)s total)"
+msgstr "Página <span class=\"font-medium text-on-surface\">%(num)s</span> de <span class=\"font-medium text-on-surface\">%(total)s</span> (%(count)s en total)"
+
+
+#: templates/proposals/proposal_list.html:142
+#: templates/proposals/proposal_list.html:144
+msgid "Previous"
+msgstr "Anterior"
+
+#: templates/proposals/proposal_list.html:147
+#: templates/proposals/proposal_list.html:149
+msgid "Next"
+msgstr "Siguiente"
+
+#: templates/security.html:4
+msgid ""
+"PropoTrack Security — how we protect your data, the controls we apply, and "
+"how to report vulnerabilities."
+msgstr "Seguridad de PropoTrack — cómo protegemos tus datos, los controles que aplicamos y cómo reportar vulnerabilidades."
+
+
+#: templates/security.html:16
+msgid ""
+"PropoTrack is committed to protecting the data of freelancers who trust us "
+"with their proposals, clients, and time records. We apply layered defenses "
+"across the application, transport, and infrastructure layers. The practices "
+"described on this page reflect the current implementation and evolve "
+"continuously."
+msgstr "PropoTrack se compromete a proteger los datos de los freelancers que confían en nosotros con sus propuestas, clientes y registros de tiempo. Aplicamos defensas en capas a través de las capas de aplicación, transporte e infraestructura. Las prácticas descritas en esta página reflejan la implementación actual y evolucionan continuamente."
+
+
+#: templates/security.html:21
+msgid "2. Authentication &amp; Sessions"
+msgstr "2. Autenticación y sesiones"
+
+#: templates/security.html:23
+msgid ""
+"Accounts are created with an email address and password via <code>django-"
+"allauth</code>. Login is email-only (<code>ACCOUNT_LOGIN_METHODS = "
+"{\"email\"}</code>). Sessions are stored server-side in the database — no "
+"JWTs, no tokens in <code>localStorage</code>. Session cookies are "
+"<code>HttpOnly</code>, <code>Secure</code>, and <code>SameSite=Lax</code> in "
+"production, with an 8-hour idle timeout. Password changes are available at "
+"<a href=\"/.well-known/change-password\" class=\"text-link underline\">/."
+"well-known/change-password</a>."
+msgstr "Las cuentas se crean con una dirección de correo electrónico y contraseña mediante <code>django-allauth</code>. El inicio de sesión es solo por correo electrónico (<code>ACCOUNT_LOGIN_METHODS = {\"email\"}</code>). Las sesiones se almacenan en el servidor en la base de datos — sin JWTs, sin tokens en <code>localStorage</code>. Las cookies de sesión son <code>HttpOnly</code>, <code>Secure</code> y <code>SameSite=Lax</code> en producción, con un tiempo de espera de inactividad de 8 horas. Los cambios de contraseña están disponibles en <a href=\"/.well-known/change-password\" class=\"text-link underline\">/.well-known/change-password</a>."
+
+
+#: templates/security.html:28
+msgid "3. Password Storage"
+msgstr "3. Almacenamiento de contraseñas"
+
+#: templates/security.html:30
+msgid ""
+"Passwords are hashed with Django's default algorithm (PBKDF2-SHA256). Active "
+"validators include <code>UserAttributeSimilarityValidator</code>, "
+"<code>MinimumLengthValidator</code> (minimum 8 characters), "
+"<code>CommonPasswordValidator</code>, and <code>NumericPasswordValidator</"
+"code>. Passwords are never stored or transmitted in plaintext."
+msgstr "Las contraseñas se hashean con el algoritmo predeterminado de Django (PBKDF2-SHA256). Los validadores activos incluyen <code>UserAttributeSimilarityValidator</code>, <code>MinimumLengthValidator</code> (mínimo 8 caracteres), <code>CommonPasswordValidator</code> y <code>NumericPasswordValidator</code>. Las contraseñas nunca se almacenan ni se transmiten en texto plano."
+
+
+#: templates/security.html:35
+msgid "4. Transport Security (HTTPS/TLS)"
+msgstr "4. Seguridad de transporte (HTTPS/TLS)"
+
+#: templates/security.html:37
+msgid ""
+"HTTPS is enforced in production via <code>SECURE_SSL_REDIRECT</code>. HTTP "
+"Strict Transport Security (HSTS) is active with <code>max-age=31536000</"
+"code> (1 year), <code>includeSubDomains</code>, and <code>preload</code>. "
+"The following response headers are applied in production:"
+msgstr "HTTPS es obligatorio en producción mediante <code>SECURE_SSL_REDIRECT</code>. HTTP Strict Transport Security (HSTS) está activo con <code>max-age=31536000</code> (1 año), <code>includeSubDomains</code> y <code>preload</code>. Los siguientes encabezados de respuesta se aplican en producción:"
+
+
+#: templates/security.html:42
+msgid "Header"
+msgstr "Encabezado"
+
+#: templates/security.html:72
+msgid "5. Application-Layer Defenses"
+msgstr "5. Defensas a nivel de aplicación"
+
+#: templates/security.html:74
+msgid ""
+"Cross-Site Request Forgery tokens are present in all <code>POST</code> "
+"forms, with <code>Secure</code>, <code>HttpOnly</code>, and "
+"<code>SameSite=Lax</code> cookies. A strict Content Security Policy is "
+"applied in production: <code>default-src 'self'</code>, no arbitrary inline "
+"scripts, and <code>frame-ancestors 'none'</code>. Django templates auto-"
+"escape all output by default, preventing XSS at the rendering layer. No "
+"third-party tracking or analytics scripts are loaded."
+msgstr "Los tokens de protección CSRF están presentes en todos los formularios <code>POST</code>, con cookies <code>Secure</code>, <code>HttpOnly</code> y <code>SameSite=Lax</code>. Se aplica una política de seguridad de contenido estricta en producción: <code>default-src 'self'</code>, sin scripts en línea arbitrarios y <code>frame-ancestors 'none'</code>. Las plantillas de Django escapan automáticamente todas las salidas por defecto, previniendo XSS en la capa de renderizado. No se cargan scripts de seguimiento ni analítica de terceros."
+
+
+#: templates/security.html:79
+msgid "6. Per-User Data Isolation"
+msgstr "6. Aislamiento de datos por usuario"
+
+#: templates/security.html:81
+msgid ""
+"Every domain model inherits from <code>OwnedModel</code>, which adds a "
+"mandatory <code>owner</code> foreign key to the user. Isolation is enforced "
+"at two levels:"
+msgstr "Cada modelo de dominio hereda de <code>OwnedModel</code>, que añade una clave foránea obligatoria <code>owner</code> al usuario. El aislamiento se aplica en dos niveles:"
+
+
+#: templates/security.html:84
+msgid "QuerySet layer"
+msgstr "Capa QuerySet"
+
+#: templates/security.html:84
+msgid ""
+"all views and services filter by owner=request.user via OwnerQuerysetMixin "
+"or ProposalOwnerQuerysetMixin. A user can never query another user's "
+"proposals, clients, time entries, or templates."
+msgstr "todas las vistas y servicios filtran por owner=request.user mediante OwnerQuerysetMixin o ProposalOwnerQuerysetMixin. Un usuario nunca puede consultar las propuestas, clientes, entradas de tiempo o plantillas de otro usuario."
+
+
+#: templates/security.html:85
+msgid "API layer"
+msgstr "Capa API"
+
+#: templates/security.html:85
+msgid ""
+"all REST endpoints require IsAuthenticated permission. No public read "
+"endpoints expose user data."
+msgstr "todos los endpoints REST requieren el permiso IsAuthenticated. Ningún endpoint de lectura público expone datos de usuario."
+
+
+#: templates/security.html:88
+msgid ""
+"The <code>ActivityLog</code> model uses a generic foreign key so signals "
+"from any app can record domain events without coupling the audit table to "
+"specific models."
+msgstr "El modelo <code>ActivityLog</code> usa una clave foránea genérica para que las señales de cualquier app puedan registrar eventos de dominio sin acoplar la tabla de auditoría a modelos específicos."
+
+
+#: templates/security.html:93
+msgid "7. Data Storage"
+msgstr "7. Almacenamiento de datos"
+
+#: templates/security.html:95
+msgid ""
+"In production, data is stored in PostgreSQL 16 with credentials sourced from "
+"environment variables and connections encrypted over TLS. No payment card "
+"data is stored — financial amounts are decimal values entered manually by "
+"the user. User data is not shared with or sold to third parties. Application-"
+"level isolation (Section 6) ensures logical separation between accounts."
+msgstr "En producción, los datos se almacenan en PostgreSQL 16 con credenciales provenientes de variables de entorno y conexiones cifradas sobre TLS. No se almacenan datos de tarjetas de pago — los montos financieros son valores decimales ingresados manualmente por el usuario. Los datos de usuario no se comparten ni se venden a terceros. El aislamiento a nivel de aplicación (Sección 6) garantiza la separación lógica entre cuentas."
+
+
+#: templates/security.html:100
+msgid "8. Secrets &amp; Configuration"
+msgstr "8. Secretos y configuración"
+
+#: templates/security.html:102
+msgid ""
+"All sensitive configuration (secret keys, database credentials, SMTP "
+"credentials) is loaded via <code>django-environ</code> from environment "
+"variables. <code>DJANGO_SECRET_KEY</code> is required in production with no "
+"default value. <code>DEBUG=False</code> is enforced in production. The "
+"repository does not contain a <code>.env</code> file (only <code>.env."
+"example</code> is committed)."
+msgstr "Toda la configuración sensible (claves secretas, credenciales de base de datos, credenciales SMTP) se carga mediante <code>django-environ</code> desde variables de entorno. <code>DJANGO_SECRET_KEY</code> es obligatorio en producción sin valor predeterminado. <code>DEBUG=False</code> se aplica en producción. El repositorio no contiene un archivo <code>.env</code> (solo se confirma <code>.env.example</code>)."
+
+
+#: templates/security.html:107
+msgid "9. Webhook Integrity"
+msgstr "9. Integridad de webhooks"
+
+#: templates/security.html:109
+msgid ""
+"The webhook endpoint at <code>/api/webhooks/proposal-events/</code> "
+"validates payloads using HMAC-SHA256. The signature is compared with "
+"<code>hmac.compare_digest</code>, which is resistant to timing attacks. "
+"Requests with an invalid or missing signature are rejected with a <code>401 "
+"Unauthorized</code> response."
+msgstr "El endpoint de webhook en <code>/api/webhooks/proposal-events/</code> valida las cargas útiles usando HMAC-SHA256. La firma se compara con <code>hmac.compare_digest</code>, que es resistente a ataques de temporización. Las solicitudes con una firma inválida o faltante son rechazadas con una respuesta <code>401 Unauthorized</code>."
+
+
+#: templates/security.html:114
+msgid "10. Audit Trail"
+msgstr "10. Pista de auditoría"
+
+#: templates/security.html:116
+msgid ""
+"The <code>ActivityLog</code> model records domain events — proposal status "
+"changes and follow-up completions — via Django signals. Django security "
+"events are emitted to the <code>django.security</code> logger at the "
+"<code>WARNING</code> level and above in production, making them visible in "
+"infrastructure logs for review."
+msgstr "El modelo <code>ActivityLog</code> registra eventos de dominio — cambios de estado de propuestas y completados de seguimientos — mediante señales de Django. Los eventos de seguridad de Django se emiten al logger <code>django.security</code> en el nivel <code>WARNING</code> y superior en producción, haciéndolos visibles en los registros de infraestructura para revisión."
+
+
+#: templates/security.html:121
+msgid "11. Infrastructure"
+msgstr "11. Infraestructura"
+
+#: templates/security.html:123
+msgid ""
+"The application runs in a minimal multi-stage Docker container. The "
+"application process runs as a non-root user, reducing the escalation "
+"surface. A health check endpoint is exposed at <code>/healthz</code>. "
+"Deployments run via Coolify with <code>DJANGO_SETTINGS_MODULE=config."
+"settings.prod</code> enforced. The stack is monitored and updated on a "
+"regular schedule."
+msgstr "La aplicación se ejecuta en un contenedor Docker de varias etapas mínimo. El proceso de aplicación se ejecuta como un usuario no root, reduciendo la superficie de escalación. Se expone un endpoint de verificación de estado en <code>/healthz</code>. Los despliegues se realizan mediante Coolify con <code>DJANGO_SETTINGS_MODULE=config.settings.prod</code> aplicado. El stack es monitoreado y actualizado de forma regular."
+
+
+#: templates/security.html:128
+msgid "12. Responsible Disclosure"
+msgstr "12. Divulgación responsable"
+
+#: templates/security.html:130
+msgid ""
+"If you discover a security vulnerability, please report it to <a "
+"href=\"mailto:security@dabg.dev\" class=\"text-link "
+"underline\">security@dabg.dev</a>. The full contact details and scope are "
+"also available in the standard <a href=\"/.well-known/security.txt\" "
+"class=\"text-link underline\">security.txt</a> format. We are committed to "
+"responding within 5 business days and will not pursue legal action against "
+"good-faith security research (no destructive scanning, no accessing other "
+"users' data, no denial-of-service)."
+msgstr "Si descubres una vulnerabilidad de seguridad, repórtala en <a href=\"mailto:security@dabg.dev\" class=\"text-link underline\">security@dabg.dev</a>. Los detalles de contacto completos y el alcance también están disponibles en el formato estándar <a href=\"/.well-known/security.txt\" class=\"text-link underline\">security.txt</a>. Nos comprometemos a responder en un plazo de 5 días hábiles y no emprenderemos acciones legales contra investigaciones de seguridad de buena fe (sin escaneo destructivo, sin acceder a datos de otros usuarios, sin denegación de servicio)."
+
+#: templates/security.html:133
+msgid "Languages accepted for disclosure: Spanish, English."
+msgstr "Idiomas aceptados para divulgación: Español, Inglés."
+
+#: templates/security.html:138
+msgid "13. Continuous Improvement"
+msgstr "13. Mejora continua"
+
+#: templates/security.html:140
+msgid ""
+"We evaluate and continuously improve our security practices. This page will "
+"be updated as new controls are added. The effective date at the top of the "
+"page indicates the current version."
+msgstr "Evaluamos y mejoramos continuamente nuestras prácticas de seguridad. Esta página se actualizará a medida que se agreguen nuevos controles. La fecha de vigencia en la parte superior de la página indica la versión actual."
+
+
+#: templates/security.html:145
+msgid "14. Contact"
+msgstr "14. Contacto"
+
+#: templates/security.html:148
+#, python-format
+msgid ""
+"For vulnerability reports: <a href=\"mailto:security@dabg.dev\" class=\"text-"
+"link underline\">security@dabg.dev</a><br>\n"
+"            For general privacy or data inquiries: <a href=\"mailto:"
+"noreply@freelancer-tracker.dabg.dev\" class=\"text-link "
+"underline\">noreply@freelancer-tracker.dabg.dev</a> (see the <a "
+"href=\"%(privacy_url)s\" class=\"text-link underline\">Privacy Policy</a>)."
+msgstr ""
+"Para reportes de vulnerabilidades: <a href=\"mailto:security@dabg.dev\" class=\"text-link underline\">security@dabg.dev</a><br>\n"
+"            Para consultas generales de privacidad o datos: <a href=\"mailto:noreply@freelancer-tracker.dabg.dev\" class=\"text-link underline\">noreply@freelancer-tracker.dabg.dev</a> (ver la <a href=\"%(privacy_url)s\" class=\"text-link underline\">Política de privacidad</a>)."
+
+
+#: templates/templates_app/template_confirm_delete.html:4
+msgid "Delete Template"
+msgstr "Eliminar plantilla"
+
+#: templates/templates_app/template_detail.html:12
+#: templates/templates_app/template_form.html:12
+#: templates/templates_app/template_preview.html:11
+#: templates/templates_app/template_use.html:11
+msgid "Back to Templates"
+msgstr "Volver a plantillas"
+
+#: templates/templates_app/template_detail.html:19
+#: templates/templates_app/template_list.html:30
+#: templates/templates_app/template_preview.html:4
+#: templates/templates_app/template_preview.html:13
+msgid "Preview"
+msgstr "Vista previa"
+
+#: templates/templates_app/template_detail.html:27
+#: templates/templates_app/template_use.html:4
+#: templates/templates_app/template_use.html:13
+msgid "Use Template"
+msgstr "Usar plantilla"
+
+#: templates/templates_app/template_detail.html:34
+#: templates/templates_app/template_form.html:35
+msgid "Body"
+msgstr "Cuerpo"
+
+#: templates/templates_app/template_detail.html:41
+msgid "Placeholders"
+msgstr "Variables"
+
+#: templates/templates_app/template_form.html:4
+msgid "Edit Template"
+msgstr "Editar plantilla"
+
+#: templates/templates_app/template_form.html:4
+#: templates/templates_app/template_list.html:18
+#: templates/templates_app/template_list.html:57
+msgid "Create Template"
+msgstr "Crear plantilla"
+
+#: templates/templates_app/template_form.html:14
+msgid "Template"
+msgstr "Plantilla"
+
+#: templates/templates_app/template_form.html:15
+msgid "Build a reusable proposal structure with placeholders."
+msgstr "Construye una estructura de propuesta reutilizable con variables."
+
+#: templates/templates_app/template_form.html:29
+msgid "Template Name"
+msgstr "Nombre de la plantilla"
+
+#: templates/templates_app/template_form.html:37
+#, python-brace-format
+msgid ""
+"Use placeholders like <code class=\"bg-surface-container px-1.5 py-0.5 "
+"rounded text-on-surface\">{client}</code>, <code class=\"bg-surface-"
+"container px-1.5 py-0.5 rounded text-on-surface\">{project}</code>, <code "
+"class=\"bg-surface-container px-1.5 py-0.5 rounded text-on-surface\">{amount}"
+"</code>."
+msgstr "Usa variables como <code class=\"bg-surface-container px-1.5 py-0.5 rounded text-on-surface\">{client}</code>, <code class=\"bg-surface-container px-1.5 py-0.5 rounded text-on-surface\">{project}</code>, <code class=\"bg-surface-container px-1.5 py-0.5 rounded text-on-surface\">{amount}</code>."
+
+
+#: templates/templates_app/template_form.html:47
+msgid "Save Template"
+msgstr "Guardar plantilla"
+
+#: templates/templates_app/template_form.html:56
+msgid "Template Tips"
+msgstr "Consejos para plantillas"
+
+#: templates/templates_app/template_form.html:61
+msgid "Use placeholders to fill client and project context dynamically."
+msgstr "Usa variables para rellenar el contexto del cliente y del proyecto dinámicamente."
+
+#: templates/templates_app/template_form.html:65
+msgid "Structure for scanning — clients skim proposals."
+msgstr "Estructura para facilitar la lectura — los clientes escanean las propuestas."
+
+#: templates/templates_app/template_form.html:69
+msgid "Keep deliverables crisp and bullet-listed."
+msgstr "Mantén los entregables concisos y en lista de viñetas."
+
+#: templates/templates_app/template_list.html:14
+msgid "Reusable proposal structures to ship pitches faster."
+msgstr "Estructuras de propuesta reutilizables para enviar propuestas más rápido."
+
+#: templates/templates_app/template_list.html:44
+msgid "Last used —"
+msgstr "Último uso —"
+
+#: templates/templates_app/template_list.html:46
+#: templates/templates_app/template_use.html:40
+msgid "Use"
+msgstr "Usar"
+
+#: templates/templates_app/template_list.html:53
+msgid "No templates yet"
+msgstr "Aún no hay plantillas"
+
+#: templates/templates_app/template_list.html:54
+msgid "Create your first template to speed up proposal writing."
+msgstr "Crea tu primera plantilla para acelerar la redacción de propuestas."
+
+#: templates/templates_app/template_preview.html:14
+msgid "Test your template with sample data."
+msgstr "Prueba tu plantilla con datos de muestra."
+
+#: templates/templates_app/template_preview.html:19
+msgid "Client Name"
+msgstr "Nombre del cliente"
+
+#: templates/templates_app/template_preview.html:20
+msgid "Acme Corp"
+msgstr "Acme Corp"
+
+#: templates/templates_app/template_preview.html:23
+msgid "Project Title"
+msgstr "Título del proyecto"
+
+#: templates/templates_app/template_preview.html:24
+msgid "Website Redesign"
+msgstr "Rediseño de sitio web"
+
+#: templates/templates_app/template_preview.html:32
+msgid "Update"
+msgstr "Actualizar"
+
+#: templates/templates_app/template_preview.html:38
+msgid "Rendered Template"
+msgstr "Plantilla renderizada"
+
+#: templates/templates_app/template_use.html:14
+msgid "Pick a client to spin up a new proposal pre-filled with this template."
+msgstr "Elige un cliente para crear una nueva propuesta prellenada con esta plantilla."
+
+#: templates/templates_app/template_use.html:24
+msgid "Action"
+msgstr "Acción"
+
+#: templates/templates_app/template_use.html:48
+msgid "No clients available"
+msgstr "No hay clientes disponibles"
+
+#: templates/templates_app/template_use.html:49
+msgid "Create a client first to use this template."
+msgstr "Crea un cliente primero para usar esta plantilla."
+
+#: templates/templates_app/template_use.html:52
+msgid "Create Client"
+msgstr "Crear cliente"
+
+#: templates/terms.html:4
+msgid ""
+"PropoTrack Terms of Service — rules and conditions for using the platform."
+msgstr "Términos de servicio de PropoTrack — reglas y condiciones para usar la plataforma."
+
+
+#: templates/terms.html:16
+msgid ""
+"By accessing or using PropoTrack (\"the Service\"), you (\"you\" or \"the "
+"User\") agree to be bound by these Terms of Service (\"Terms\"). If you do "
+"not agree to these Terms, do not use the Service. PropoTrack is a proposal "
+"and client management tool operated for freelancers. You must be 18 years of "
+"age or older (or have the legal capacity under your local law) to use the "
+"Service."
+msgstr "Al acceder o usar PropoTrack (\"el Servicio\"), usted (\"usted\" o \"el Usuario\") acepta estar sujeto a estos Términos de servicio (\"Términos\"). Si no acepta estos Términos, no use el Servicio. PropoTrack es una herramienta de gestión de propuestas y clientes operada para freelancers. Debe tener 18 años o más (o tener capacidad legal según su ley local) para usar el Servicio."
+
+
+#: templates/terms.html:21
+msgid "2. Definitions"
+msgstr "2. Definiciones"
+
+#: templates/terms.html:23
+msgid "Service"
+msgstr "Servicio"
+
+#: templates/terms.html:23
+msgid "the PropoTrack web application and all related features."
+msgstr "la aplicación web PropoTrack y todas las funciones relacionadas."
+
+#: templates/terms.html:24
+msgid "User"
+msgstr "Usuario"
+
+#: templates/terms.html:24
+msgid "any person who creates an account and accesses the Service."
+msgstr "cualquier persona que crea una cuenta y accede al Servicio."
+
+#: templates/terms.html:25
+msgid "the registered user profile associated with your email address."
+msgstr "el perfil de usuario registrado asociado a tu dirección de correo electrónico."
+
+#: templates/terms.html:26
+msgid "Content"
+msgstr "Contenido"
+
+#: templates/terms.html:26
+msgid ""
+"proposals, client information, time entries, follow-up records, templates, "
+"and any other data you submit through the Service."
+msgstr "propuestas, información de clientes, entradas de tiempo, registros de seguimiento, plantillas y cualquier otro dato que envíes a través del Servicio."
+
+
+#: templates/terms.html:31
+msgid "3. Account Registration"
+msgstr "3. Registro de cuenta"
+
+#: templates/terms.html:33
+msgid ""
+"Accounts are created via email and password through <code>django-allauth</"
+"code>. You are responsible for maintaining the confidentiality of your login "
+"credentials and for all activity that occurs under your Account. Each person "
+"may maintain only one account. You agree to provide accurate and truthful "
+"information when registering and to keep your information current."
+msgstr "Las cuentas se crean mediante correo electrónico y contraseña a través de <code>django-allauth</code>. Eres responsable de mantener la confidencialidad de tus credenciales de inicio de sesión y de toda la actividad que ocurra bajo tu Cuenta. Cada persona puede mantener solo una cuenta. Aceptas proporcionar información precisa y veraz al registrarte y mantener tu información actualizada."
+
+
+#: templates/terms.html:38
+msgid "4. Acceptable Use"
+msgstr "4. Uso aceptable"
+
+#: templates/terms.html:39
+msgid "You agree not to use the Service to:"
+msgstr "Aceptas no usar el Servicio para:"
+
+#: templates/terms.html:41
+msgid "Scraping, automated querying, or bulk data extraction"
+msgstr "Raspado web, consultas automatizadas o extracción masiva de datos"
+
+#: templates/terms.html:42
+msgid "Reverse-engineering the application or its APIs"
+msgstr "Ingeniería inversa de la aplicación o sus APIs"
+
+#: templates/terms.html:43
+msgid "Reselling or redistributing access to the Service"
+msgstr "Revender o redistribuir el acceso al Servicio"
+
+#: templates/terms.html:44
+msgid "Uploading or transmitting illegal, infringing, or malicious content"
+msgstr "Cargar o transmitir contenido ilegal, infractor o malicioso"
+
+#: templates/terms.html:45
+msgid "Impersonating any person or entity"
+msgstr "Suplantar a cualquier persona o entidad"
+
+#: templates/terms.html:46
+msgid "Attempting to access or exfiltrate another user's data"
+msgstr "Intentar acceder o exfiltrar datos de otro usuario"
+
+#: templates/terms.html:47
+msgid "Bypassing per-user data isolation mechanisms"
+msgstr "Eludir los mecanismos de aislamiento de datos por usuario"
+
+#: templates/terms.html:48
+msgid "Overloading or disrupting the infrastructure"
+msgstr "Sobrecargar o interrumpir la infraestructura"
+
+#: templates/terms.html:53
+msgid "5. User Content &amp; Ownership"
+msgstr "5. Contenido del usuario y propiedad"
+
+#: templates/terms.html:55
+msgid ""
+"You retain full ownership of all Content you submit through PropoTrack. By "
+"submitting Content, you grant PropoTrack a limited, revocable, non-exclusive "
+"license to store, process, and display your Content solely for the purpose "
+"of operating the Service on your behalf. Your Content is never used to train "
+"machine learning models. Your Content is never shared with or sold to third "
+"parties."
+msgstr "Conservas la propiedad total de todo el Contenido que envíes a través de PropoTrack. Al enviar Contenido, otorgas a PropoTrack una licencia limitada, revocable y no exclusiva para almacenar, procesar y mostrar tu Contenido únicamente con el propósito de operar el Servicio en tu nombre. Tu Contenido nunca se usa para entrenar modelos de aprendizaje automático. Tu Contenido nunca se comparte ni se vende a terceros."
+
+
+#: templates/terms.html:60
+msgid "6. Intellectual Property"
+msgstr "6. Propiedad intelectual"
+
+#: templates/terms.html:62
+msgid ""
+"The name \"PropoTrack,\" the application's user interface, source code, "
+"visual design, and branding are the intellectual property of the operator. "
+"You receive a limited, revocable, non-exclusive license to use the Service "
+"for your personal freelance management activities. No trademark rights are "
+"granted beyond this license."
+msgstr "El nombre \"PropoTrack\", la interfaz de usuario de la aplicación, el código fuente, el diseño visual y la marca son propiedad intelectual del operador. Recibes una licencia limitada, revocable y no exclusiva para usar el Servicio para tus actividades personales de gestión freelancer. No se otorgan derechos de marca registrada más allá de esta licencia."
+
+
+#: templates/terms.html:67
+msgid "7. DMCA / IP Infringement"
+msgstr "7. DMCA / Infracción de propiedad intelectual"
+
+#: templates/terms.html:69
+msgid ""
+"PropoTrack respects intellectual property rights and responds to valid "
+"takedown notices under the DMCA framework. To report alleged infringement, "
+"contact us at <a href=\"mailto:noreply@freelancer-tracker.dabg.dev\" "
+"class=\"text-link underline\">noreply@freelancer-tracker.dabg.dev</a> with:"
+msgstr "PropoTrack respeta los derechos de propiedad intelectual y responde a notificaciones de eliminación válidas bajo el marco DMCA. Para reportar una infracción alegada, contáctanos en <a href=\"mailto:noreply@freelancer-tracker.dabg.dev\" class=\"text-link underline\">noreply@freelancer-tracker.dabg.dev</a> con:"
+
+
+#: templates/terms.html:72
+msgid ""
+"Identification of the copyrighted work or intellectual property claimed "
+"infringed"
+msgstr "Identificación de la obra protegida por derechos de autor o propiedad intelectual reclamada como infringida"
+
+
+#: templates/terms.html:73
+msgid "Location of the infringing material within the Service"
+msgstr "Ubicación del material infractor dentro del Servicio"
+
+#: templates/terms.html:74
+msgid "Your contact information"
+msgstr "Tu información de contacto"
+
+#: templates/terms.html:75
+msgid "A statement of good-faith belief that the use is not authorized"
+msgstr "Una declaración de buena fe de que el uso no está autorizado"
+
+#: templates/terms.html:76
+msgid ""
+"A physical or electronic signature of the rights holder or authorized "
+"representative"
+msgstr "Una firma física o electrónica del titular de los derechos o representante autorizado"
+
+
+#: templates/terms.html:79
+msgid ""
+"Counter-notice procedures are available upon written request. Accounts that "
+"are repeat infringers will be terminated."
+msgstr "Los procedimientos de contra-notificación están disponibles bajo solicitud escrita. Las cuentas de infractores reincidentes serán canceladas."
+
+
+#: templates/terms.html:84
+msgid "8. Beta / No-Warranty Disclaimer"
+msgstr "8. Beta / Renuncia de garantía"
+
+#: templates/terms.html:86
+msgid ""
+"The Service is provided <strong>\"AS IS\"</strong> and <strong>\"AS "
+"AVAILABLE\"</strong> without warranty of any kind. We disclaim all "
+"warranties, express or implied, including but not limited to implied "
+"warranties of merchantability, fitness for a particular purpose, accuracy, "
+"and uninterrupted availability. We do not guarantee that follow-up "
+"reminders, digest emails, or analytics features will be timely, accurate, or "
+"uninterrupted. Analytics and reports are for informational purposes only and "
+"do not constitute financial, legal, or business advice."
+msgstr "El Servicio se proporciona <strong>\"TAL CUAL\"</strong> y <strong>\"SEGÚN DISPONIBILIDAD\"</strong> sin garantía de ningún tipo. Renunciamos a todas las garantías, expresas o implícitas, incluyendo pero sin limitarse a garantías implícitas de comerciabilidad, idoneidad para un propósito particular, precisión y disponibilidad ininterrumpida. No garantizamos que los recordatorios de seguimiento, los correos de resumen o las funciones de analítica sean oportunos, precisos o ininterrumpidos. Los análisis e informes son únicamente con fines informativos y no constituyen asesoramiento financiero, legal o empresarial."
+
+
+#: templates/terms.html:91
+msgid "9. Limitation of Liability"
+msgstr "9. Limitación de responsabilidad"
+
+#: templates/terms.html:93
+msgid ""
+"To the maximum extent permitted by applicable law, PropoTrack shall not be "
+"liable for any indirect, incidental, consequential, special, or punitive "
+"damages — including but not limited to loss of data, loss of revenue, loss "
+"of profits, or loss of business opportunities — arising out of or related to "
+"your use of the Service. Aggregate liability is limited to <strong>USD $0</"
+"strong> (as this is a free service) or the amount, if any, paid by you in "
+"the 12 months preceding the claim, whichever is greater."
+msgstr "En la máxima medida permitida por la ley aplicable, PropoTrack no será responsable de ningún daño indirecto, incidental, consecuente, especial o punitivo — incluyendo pero sin limitarse a pérdida de datos, pérdida de ingresos, pérdida de ganancias o pérdida de oportunidades de negocio — que surja de o esté relacionado con el uso del Servicio. La responsabilidad total se limita a <strong>USD $0</strong> (ya que este es un servicio gratuito) o el monto, si lo hay, pagado por ti en los 12 meses anteriores a la reclamación, lo que sea mayor."
+
+
+#: templates/terms.html:98
+msgid "10. Indemnification"
+msgstr "10. Indemnización"
+
+#: templates/terms.html:100
+msgid ""
+"You agree to indemnify, defend, and hold harmless PropoTrack, its operator, "
+"and affiliates from and against any claims, liabilities, damages, losses, or "
+"expenses (including reasonable legal fees) arising out of or related to your "
+"Content, your violation of these Terms, or your violation of any applicable "
+"law."
+msgstr "Aceptas indemnizar, defender y eximir de responsabilidad a PropoTrack, su operador y afiliados de y contra cualquier reclamación, responsabilidad, daño, pérdida o gasto (incluidos honorarios legales razonables) que surja de o esté relacionado con tu Contenido, tu violación de estos Términos o tu violación de cualquier ley aplicable."
+
+
+#: templates/terms.html:105
+msgid "11. Account Suspension &amp; Termination"
+msgstr "11. Suspensión y cancelación de cuenta"
+
+#: templates/terms.html:108
+#, python-format
+msgid ""
+"PropoTrack may suspend or terminate your account for: violation of these "
+"Terms, violation of the Acceptable Use policy, suspected fraud, legal "
+"compliance requirements, or prolonged inactivity (longer than 24 months). "
+"You may delete your account at any time via your account settings or by "
+"contacting <a href=\"mailto:noreply@freelancer-tracker.dabg.dev\" "
+"class=\"text-link underline\">noreply@freelancer-tracker.dabg.dev</a>. Upon "
+"termination, your data is deleted within 30 days as described in our <a "
+"href=\"%(privacy_url)s\" class=\"text-link underline\">Privacy Policy</a>."
+msgstr "PropoTrack puede suspender o cancelar tu cuenta por: violación de estos Términos, violación de la política de Uso aceptable, sospecha de fraude, requisitos de cumplimiento legal, o inactividad prolongada (más de 24 meses). Puedes eliminar tu cuenta en cualquier momento a través de la configuración de tu cuenta o contactando a <a href=\"mailto:noreply@freelancer-tracker.dabg.dev\" class=\"text-link underline\">noreply@freelancer-tracker.dabg.dev</a>. Tras la cancelación, tus datos se eliminan en un plazo de 30 días, como se describe en nuestra <a href=\"%(privacy_url)s\" class=\"text-link underline\">Política de privacidad</a>."
+
+
+#: templates/terms.html:113
+msgid "12. Service Availability &amp; Changes"
+msgstr "12. Disponibilidad del servicio y cambios"
+
+#: templates/terms.html:115
+msgid ""
+"PropoTrack aims to maintain service availability on a best-effort basis but "
+"does not guarantee any uptime SLA. Features, functionality, and user "
+"interface elements may be added, modified, or removed at any time. Material "
+"changes affecting your use of the Service will be communicated via in-app "
+"notice or email to your registered address."
+msgstr "PropoTrack busca mantener la disponibilidad del servicio con base en el mejor esfuerzo, pero no garantiza ningún SLA de tiempo de actividad. Las funciones, la funcionalidad y los elementos de la interfaz de usuario pueden agregarse, modificarse o eliminarse en cualquier momento. Los cambios materiales que afecten el uso del Servicio se comunicarán mediante aviso en la aplicación o correo electrónico a tu dirección registrada."
+
+
+#: templates/terms.html:120
+msgid "13. Third-Party Services"
+msgstr "13. Servicios de terceros"
+
+#: templates/terms.html:123
+#, python-format
+msgid ""
+"The Service runs on infrastructure provided by third parties (Coolify "
+"hosting, PostgreSQL database, SMTP email delivery). Their respective terms "
+"of service and privacy policies may apply to the extent relevant. PropoTrack "
+"does not embed third-party tracking scripts or advertising cookies, as "
+"documented in our <a href=\"%(privacy_url)s\" class=\"text-link "
+"underline\">Privacy Policy</a>."
+msgstr "El Servicio se ejecuta en infraestructura proporcionada por terceros (alojamiento Coolify, base de datos PostgreSQL, entrega de correo SMTP). Sus respectivos términos de servicio y políticas de privacidad pueden aplicar en la medida en que sean relevantes. PropoTrack no incorpora scripts de seguimiento de terceros ni cookies de publicidad, como se documenta en nuestra <a href=\"%(privacy_url)s\" class=\"text-link underline\">Política de privacidad</a>."
+
+
+#: templates/terms.html:128
+msgid "14. Privacy"
+msgstr "14. Privacidad"
+
+#: templates/terms.html:131
+#, python-format
+msgid ""
+"The collection, use, and protection of your personal data is governed by the "
+"<a href=\"%(privacy_url)s\" class=\"text-link underline\">PropoTrack Privacy "
+"Policy</a>, which is incorporated into these Terms by reference."
+msgstr "La recopilación, uso y protección de tus datos personales se rigen por la <a href=\"%(privacy_url)s\" class=\"text-link underline\">Política de privacidad de PropoTrack</a>, que se incorpora a estos Términos por referencia."
+
+
+#: templates/terms.html:136
+msgid "15. Governing Law"
+msgstr "15. Ley aplicable"
+
+#: templates/terms.html:138
+msgid ""
+"These Terms are governed by the laws of the country of your habitual "
+"residence in Latin America. Disputes shall be resolved in the courts of "
+"competent jurisdiction in that country, except where mandatory consumer "
+"protection laws provide otherwise."
+msgstr "Estos Términos se rigen por las leyes del país de tu residencia habitual en América Latina. Las disputas se resolverán en los tribunales de jurisdicción competente de ese país, excepto donde las leyes obligatorias de protección al consumidor dispongan lo contrario."
+
+
+#: templates/terms.html:143
+msgid "16. Changes to Terms"
+msgstr "16. Cambios en los Términos"
+
+#: templates/terms.html:145
+msgid ""
+"PropoTrack may revise these Terms at any time. The revised version will be "
+"posted on this page with an updated effective date. Your continued use of "
+"the Service after any revision constitutes acceptance of the updated Terms."
+msgstr "PropoTrack puede revisar estos Términos en cualquier momento. La versión revisada se publicará en esta página con una fecha de vigencia actualizada. El uso continuado del Servicio después de cualquier revisión constituye la aceptación de los Términos actualizados."
+
+
+#: templates/terms.html:150
+msgid "17. Severability"
+msgstr "17. Separabilidad"
+
+#: templates/terms.html:152
+msgid ""
+"If any provision of these Terms is found to be unenforceable or invalid, "
+"that provision shall be limited or severed to the minimum extent necessary, "
+"and the remaining provisions shall continue in full force and effect."
+msgstr "Si alguna disposición de estos Términos se considera inaplicable o inválida, dicha disposición se limitará o separará en la medida mínima necesaria, y las disposiciones restantes continuarán en plena vigencia y efecto."
+
+
+#: templates/terms.html:157
+msgid "18. Contact"
+msgstr "18. Contacto"
+
+#: templates/terms.html:159
+msgid "For questions regarding these Terms of Service, contact us at:"
+msgstr "Para preguntas sobre estos Términos de servicio, contáctanos en:"
+
+#: templates/timetracking/retainer_form.html:4
+msgid "Edit Retainer"
+msgstr "Editar retención"
+
+#: templates/timetracking/retainer_form.html:4
+#: templates/timetracking/retainer_list.html:19
+#: templates/timetracking/retainer_list.html:65
+msgid "New Retainer"
+msgstr "Nueva retención"
+
+#: templates/timetracking/retainer_form.html:12
+msgid "Back to Retainers"
+msgstr "Volver a retenciones"
+
+#: templates/timetracking/retainer_form.html:14
+msgid "Retainer"
+msgstr "Retención"
+
+#: templates/timetracking/retainer_form.html:15
+msgid "Set up recurring hours for a proposal."
+msgstr "Configura horas recurrentes para una propuesta."
+
+#: templates/timetracking/retainer_form.html:34
+#: templates/timetracking/retainer_list.html:29
+msgid "Monthly Hours"
+msgstr "Horas mensuales"
+
+#: templates/timetracking/retainer_form.html:38
+#: templates/timetracking/retainer_list.html:30
+msgid "Day of Month"
+msgstr "Día del mes"
+
+#: templates/timetracking/retainer_form.html:45
+msgid "Active retainer"
+msgstr "Retención activa"
+
+#: templates/timetracking/retainer_form.html:54
+msgid "Save Retainer"
+msgstr "Guardar retención"
+
+#: templates/timetracking/retainer_list.html:4
+#: templates/timetracking/timeentry_list.html:16
+msgid "Retainers"
+msgstr "Retenciones"
+
+#: templates/timetracking/retainer_list.html:12
+#: templates/timetracking/timeentry_form.html:12
+msgid "Back to Time Tracking"
+msgstr "Volver al registro de tiempo"
+
+#: templates/timetracking/retainer_list.html:14
+msgid "Recurring Retainers"
+msgstr "Retenciones recurrentes"
+
+#: templates/timetracking/retainer_list.html:15
+msgid "Manage your monthly retainer agreements."
+msgstr "Gestiona tus acuerdos de retención mensual."
+
+#: templates/timetracking/retainer_list.html:43
+#, python-format
+msgid "Day %(day)s"
+msgstr "Día %(day)s"
+
+#: templates/timetracking/retainer_list.html:61
+msgid "No retainers yet"
+msgstr "Aún no hay retenciones"
+
+#: templates/timetracking/retainer_list.html:62
+msgid "Set up recurring monthly hours for your retainer clients."
+msgstr "Configura horas mensuales recurrentes para tus clientes de retención."
+
+#: templates/timetracking/timeentry_confirm_delete.html:4
+msgid "Delete Time Entry"
+msgstr "Eliminar entrada de tiempo"
+
+#: templates/timetracking/timeentry_form.html:4
+#: templates/timetracking/timeentry_form.html:14
+msgid "Edit Time Entry"
+msgstr "Editar entrada de tiempo"
+
+#: templates/timetracking/timeentry_form.html:4
+#: templates/timetracking/timeentry_form.html:14
+#: templates/timetracking/timeentry_list.html:20
+#: templates/timetracking/timeentry_list.html:91
+msgid "Log Hours"
+msgstr "Registrar horas"
+
+#: templates/timetracking/timeentry_form.html:15
+msgid "Track time spent on a project with billable status."
+msgstr "Registra el tiempo dedicado a un proyecto con estado facturable."
+
+#: templates/timetracking/timeentry_form.html:34
+#: templates/timetracking/timeentry_list.html:47
+msgid "Date"
+msgstr "Fecha"
+
+#: templates/timetracking/timeentry_form.html:39
+#: templates/timetracking/timeentry_list.html:50
+msgid "Hours"
+msgstr "Horas"
+
+#: templates/timetracking/timeentry_form.html:52
+msgid "Billable to client"
+msgstr "Facturable al cliente"
+
+#: templates/timetracking/timeentry_form.html:53
+msgid "Counts toward effective hourly rate calculation."
+msgstr "Cuenta para el cálculo de la tarifa horaria efectiva."
+
+#: templates/timetracking/timeentry_form.html:63
+msgid "Save Entry"
+msgstr "Guardar entrada"
+
+#: templates/timetracking/timeentry_list.html:11
+msgid "Manage and log your project hours."
+msgstr "Gestiona y registra las horas de tus proyectos."
+
+#: templates/timetracking/timeentry_list.html:28
+msgid "Total Hours (This Week)"
+msgstr "Horas totales (esta semana)"
+
+#: templates/timetracking/timeentry_list.html:32
+msgid "Billable Ratio"
+msgstr "Ratio facturable"
+
+#: templates/timetracking/timeentry_list.html:36
+msgid "Last Week"
+msgstr "Semana pasada"
+
+#: templates/timetracking/timeentry_list.html:48
+msgid "Project"
+msgstr "Proyecto"
+
+#: templates/timetracking/timeentry_list.html:51
+msgid "Billable"
+msgstr "Facturable"
+
+#: templates/timetracking/timeentry_list.html:87
+msgid "No time entries yet"
+msgstr "Aún no hay entradas de tiempo"
+
+#: templates/timetracking/timeentry_list.html:88
+msgid "Start logging your hours to track productivity."
+msgstr "Comienza a registrar tus horas para hacer seguimiento de tu productividad."
