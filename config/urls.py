@@ -2,6 +2,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.sitemaps.views import sitemap
+from django.conf.urls.i18n import i18n_patterns
 from django.urls import include, path
 from django.views.generic import TemplateView
 
@@ -11,8 +12,23 @@ from apps.core.sitemaps import StaticViewSitemap
 
 sitemaps = {"static": StaticViewSitemap}
 
+# Machine-readable routes: no language prefix
 urlpatterns = [
     path("healthz", healthz, name="healthz"),
+    path("robots.txt", robots_txt, name="robots_txt"),
+    path("sitemap.xml", sitemap, {"sitemaps": sitemaps}, name="sitemap"),
+    path(".well-known/security.txt", security_txt, name="security_txt"),
+    path(
+        ".well-known/change-password",
+        ChangePasswordRedirect.as_view(),
+        name="change_password",
+    ),
+    path("admin/", admin.site.urls),
+    path("i18n/", include("django.conf.urls.i18n")),
+]
+
+# UI routes: language-prefixed (/en/..., /es/...)
+urlpatterns += i18n_patterns(
     path(
         "privacy",
         TemplateView.as_view(template_name="privacy.html"),
@@ -46,17 +62,7 @@ urlpatterns = [
         TemplateView.as_view(template_name="donate_confirm.html"),
         name="donate_confirm",
     ),
-    path("robots.txt", robots_txt, name="robots_txt"),
-    path("sitemap.xml", sitemap, {"sitemaps": sitemaps}, name="sitemap"),
-    path(".well-known/security.txt", security_txt, name="security_txt"),
-    path(
-        ".well-known/change-password",
-        ChangePasswordRedirect.as_view(),
-        name="change_password",
-    ),
-    path("admin/", admin.site.urls),
     path("", include("apps.accounts.urls")),
-    path("i18n/", include("django.conf.urls.i18n")),
     path("accounts/", include("allauth.urls")),
     path("", include("apps.proposals.urls")),
     path("", include("apps.dashboard.urls")),
@@ -64,7 +70,8 @@ urlpatterns = [
     path("", include("apps.followups.urls")),
     path("", include("apps.timetracking.urls")),
     path("", include("apps.templates_app.urls")),
-]
+    prefix_default_language=True,
+)
 
 if settings.DEBUG:
     import debug_toolbar
