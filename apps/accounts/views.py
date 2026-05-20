@@ -4,7 +4,7 @@ from django.contrib.auth import logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseNotAllowed
 from django.shortcuts import redirect, render
-from django.urls import reverse_lazy
+from django.urls import reverse, reverse_lazy, translate_url
 from django.utils.translation import gettext_lazy as _
 from django.views import View
 from django.views.generic import UpdateView
@@ -32,9 +32,11 @@ class ProfileView(LoginRequiredMixin, UpdateView):
     def form_valid(self, form):
         messages.success(self.request, _("Profile updated."))
         response = super().form_valid(form)
+        new_lang = self.object.language_preference
+        response["Location"] = translate_url(response["Location"], new_lang)
         response.set_cookie(
             settings.LANGUAGE_COOKIE_NAME,
-            self.object.language_preference,
+            new_lang,
             path="/",
             samesite="Lax",
         )
@@ -46,10 +48,15 @@ class PreferencesView(LoginRequiredMixin, View):
         form = PreferencesForm(request.POST, instance=request.user)
         if form.is_valid():
             user = form.save()
-            response = redirect(request.headers.get("referer") or "dashboard")
+            new_lang = user.language_preference
+            referer = request.headers.get("referer") or ""
+            next_url = (
+                translate_url(referer, new_lang) if referer else reverse("dashboard")
+            )
+            response = redirect(next_url)
             response.set_cookie(
                 settings.LANGUAGE_COOKIE_NAME,
-                user.language_preference,
+                new_lang,
                 path="/",
                 samesite="Lax",
             )
@@ -57,7 +64,7 @@ class PreferencesView(LoginRequiredMixin, View):
             return response
 
         messages.error(request, _("Could not update preferences."))
-        return redirect(request.headers.get("referer") or "dashboard")
+        return redirect(request.headers.get("referer") or reverse("dashboard"))
 
     def get(self, request):
         return HttpResponseNotAllowed(["POST"])

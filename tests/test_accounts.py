@@ -114,6 +114,34 @@ class TestPublicNavbarPreferenceToggles:
 
 
 @pytest.mark.django_db
+class TestLangSwitchRedirect:
+    def test_preferences_lang_switch_redirects_to_translated_url(self, authed_client):
+        response = authed_client.post(
+            "/en/accounts/preferences/",
+            {"theme_preference": "system", "language_preference": "es"},
+            HTTP_REFERER="http://testserver/en/dashboard/",
+        )
+
+        assert response.status_code == 302
+        assert "/es/" in response["Location"]
+
+    def test_profile_lang_switch_redirects_to_translated_url(self, authed_client, user):
+        response = authed_client.post(
+            "/en/accounts/profile/",
+            {
+                "first_name": user.first_name,
+                "last_name": user.last_name,
+                "email": user.email,
+                "theme_preference": "system",
+                "language_preference": "es",
+            },
+        )
+
+        assert response.status_code == 302
+        assert "/es/" in response["Location"]
+
+
+@pytest.mark.django_db
 class TestContextProcessorAnonymous:
     def test_anonymous_user_gets_system_theme(self, client):
         response = client.get(reverse("account_login"))

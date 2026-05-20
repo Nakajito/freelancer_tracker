@@ -8,6 +8,8 @@
 
 3. **Missing middleware**: Forgot to add allauth.account.middleware.AccountMiddleware which is required by django-allauth 0.64+.
 
+4. **LocaleMiddleware URL-prefix priority**: When using `i18n_patterns(prefix_default_language=True)`, `LocaleMiddleware` activates language from the URL prefix *before* the cookie. Redirecting to a raw Referer URL (e.g. `/en/dashboard/`) after saving a new language preference re-activates the old language, making the switch appear broken. Rule: always call `translate_url(url, new_lang)` (from `django.urls`) before redirecting after a language change. Note: in Django 6, `translate_url` lives in `django.urls`, NOT `django.utils.translation`.
+
 4. **Migrations directories**: Had to manually create migrations directories and __init__.py files for each app before running makemigrations.
 
 ## Analytics filter coupling (period + year params)
