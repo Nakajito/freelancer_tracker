@@ -249,7 +249,10 @@ class TestProposalListPeriodFilter:
     def test_year_month_filter_created_at(self, authed_client, user, client_model):
         self._proposal(user, client_model)  # created now, no sent_date
         today = date.today()
-        url = reverse("proposal-list") + f"?year={today.year}&month={today.month}&date_field=created_at"
+        url = (
+            reverse("proposal-list")
+            + f"?year={today.year}&month={today.month}&date_field=created_at"
+        )
         response = authed_client.get(url)
         assert len(list(response.context["proposals"])) >= 1
 
@@ -257,11 +260,16 @@ class TestProposalListPeriodFilter:
         # proposal with no sent_date → should match via created_at
         p = self._proposal(user, client_model)  # sent_date=None
         today = date.today()
-        url = reverse("proposal-list") + f"?year={today.year}&month={today.month}&date_field=sent_date"
+        url = (
+            reverse("proposal-list")
+            + f"?year={today.year}&month={today.month}&date_field=sent_date"
+        )
         response = authed_client.get(url)
         assert p in list(response.context["proposals"])
 
-    def test_no_period_params_returns_all(self, authed_client, user, client_model, proposal):
+    def test_no_period_params_returns_all(
+        self, authed_client, user, client_model, proposal
+    ):
         response = authed_client.get(reverse("proposal-list"))
         assert response.status_code == 200
         assert proposal in list(response.context["proposals"])
@@ -274,10 +282,19 @@ class TestProposalListPeriodFilter:
         assert len(ctx["month_choices"]) == 12
         assert len(ctx["year_choices"]) == 5
 
-    def test_period_combines_with_status_filter(self, authed_client, user, client_model):
-        self._proposal(user, client_model, sent_date=date(2026, 5, 1), status=ProposalStatus.SENT)
-        self._proposal(user, client_model, sent_date=date(2026, 5, 2), status=ProposalStatus.DRAFT)
-        url = reverse("proposal-list") + "?year=2026&month=5&date_field=sent_date&status=sent"
+    def test_period_combines_with_status_filter(
+        self, authed_client, user, client_model
+    ):
+        self._proposal(
+            user, client_model, sent_date=date(2026, 5, 1), status=ProposalStatus.SENT
+        )
+        self._proposal(
+            user, client_model, sent_date=date(2026, 5, 2), status=ProposalStatus.DRAFT
+        )
+        url = (
+            reverse("proposal-list")
+            + "?year=2026&month=5&date_field=sent_date&status=sent"
+        )
         response = authed_client.get(url)
         proposals = list(response.context["proposals"])
         assert len(proposals) == 1

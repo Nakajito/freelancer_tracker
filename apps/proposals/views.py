@@ -41,7 +41,7 @@ class ProposalListView(OwnerQuerysetMixin, ListView):
         if year and month:
             try:
                 y, m = int(year), int(month)
-            except (ValueError, TypeError):
+            except ValueError, TypeError:
                 return qs
             if date_field == "sent_date":
                 qs = qs.filter(

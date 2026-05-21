@@ -296,7 +296,7 @@ class TestMonthlySummaryViewPeriodFilter:
 
     def test_period_quarterly_q4_boundary(self, authed_client, user, client_model):
         self._proposal(user, client_model, date(2026, 12, 31), "300")  # Q4
-        self._proposal(user, client_model, date(2027, 1, 1), "400")   # next year
+        self._proposal(user, client_model, date(2027, 1, 1), "400")  # next year
         response = authed_client.get(
             reverse("monthly-summary") + "?period=quarterly&year=2026&quarter=4"
         )
@@ -357,5 +357,6 @@ class TestMonthlySummaryViewPeriodFilter:
         )
         assert response.status_code == 200
         import json
+
         chart_labels = json.loads(response.context["chart_labels"])
         assert chart_labels[-1] == "Dec 2025"
