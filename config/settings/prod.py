@@ -54,14 +54,19 @@ SERVER_EMAIL = DEFAULT_FROM_EMAIL
 CONTENT_SECURITY_POLICY = {
     "DIRECTIVES": {
         "default-src": ["'self'"],
-        "script-src": ["'self'"],
+        # Stripe.js required for donate/confirm page
+        "script-src": ["'self'", "https://js.stripe.com"],
         "style-src": ["'self'", "'unsafe-inline'"],
         "font-src": ["'self'"],
-        "img-src": ["'self'", "data:"],
-        "connect-src": ["'self'"],
+        "img-src": ["'self'", "data:", "https://*.stripe.com"],
+        "connect-src": ["'self'", "https://api.stripe.com"],
+        "frame-src": ["https://js.stripe.com", "https://hooks.stripe.com"],
         "frame-ancestors": ["'none'"],
         "base-uri": ["'self'"],
-        "form-action": ["'self'"],
+        # MP uses redirect so no extra CSP needed; allow self + stripe hosted pages
+        "form-action": ["'self'", "https://www.mercadopago.com", "https://www.mercadopago.com.ar",
+                        "https://www.mercadopago.com.br", "https://www.mercadopago.com.mx",
+                        "https://www.mercadopago.cl", "https://www.mercadopago.com.co"],
     },
 }
 

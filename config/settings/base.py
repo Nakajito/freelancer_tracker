@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     "apps.templates_app",
     "apps.dashboard",
     "apps.exports",
+    "apps.donations",
 ]
 
 MIDDLEWARE = [
@@ -148,6 +149,12 @@ MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# Payment providers
+STRIPE_PUBLIC_KEY = env("STRIPE_PUBLIC_KEY", default="")
+STRIPE_SECRET_KEY = env("STRIPE_SECRET_KEY", default="")
+STRIPE_WEBHOOK_SECRET = env("STRIPE_WEBHOOK_SECRET", default="")
+MERCADOPAGO_ACCESS_TOKEN = env("MERCADOPAGO_ACCESS_TOKEN", default="")
 
 LOGGING = {
     "version": 1,

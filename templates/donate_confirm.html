@@ -34,7 +34,14 @@
         <p class="font-body-md text-body-md text-on-surface-variant">{% trans "Your support drives the continuous development of Pipelancer." %}</p>
     </div>
 
-    <form method="post" class="grid grid-cols-1 lg:grid-cols-12 gap-gutter lg:gap-stack-lg items-start">
+    {# Stripe: create-intent endpoint; MP: create-preference endpoint — JS picks correct action #}
+    <form id="donate-confirm-form" method="post" class="grid grid-cols-1 lg:grid-cols-12 gap-gutter lg:gap-stack-lg items-start"
+          data-stripe-url="{% url 'donate_stripe_intent' %}"
+          data-mp-url="{% url 'donate_mp_preference' %}"
+          data-stripe-pk="{{ stripe_public_key }}"
+          data-provider="{{ donation_provider }}"
+          data-amount="{{ donation_amount|default:'10.00' }}"
+          data-frequency="{{ donation_frequency|default:'one_time' }}">
         {% csrf_token %}
         <div class="lg:col-span-8 space-y-gutter">
             <section class="bg-surface-container-lowest rounded-xl border border-outline-variant p-stack-lg shadow-[0_2px_4px_rgba(15,23,42,0.05)]">
@@ -44,71 +51,37 @@
                 </div>
                 <div class="flex flex-wrap gap-stack-md mb-stack-lg">
                     <label class="flex-1 flex items-center justify-center gap-2 py-4 border-2 rounded-lg cursor-pointer font-label-md text-label-md text-on-surface-variant has-[:checked]:border-primary has-[:checked]:bg-primary-container/10 has-[:checked]:text-primary border-outline-variant">
-                        <input type="radio" name="provider" value="card" class="sr-only" checked>
+                        <input type="radio" name="provider" value="stripe" class="sr-only" {% if donation_provider == 'stripe' %}checked{% endif %}>
                         <span class="material-symbols-outlined">credit_card</span>
-                        {% trans "Card" %}
+                        {% trans "Card (Stripe)" %}
                     </label>
                     <label class="flex-1 flex items-center justify-center gap-2 py-4 border-2 rounded-lg cursor-pointer font-label-md text-label-md text-on-surface-variant has-[:checked]:border-primary has-[:checked]:bg-primary-container/10 has-[:checked]:text-primary border-outline-variant">
-                        <input type="radio" name="provider" value="paypal" class="sr-only">
+                        <input type="radio" name="provider" value="mercadopago" class="sr-only" {% if donation_provider == 'mercadopago' %}checked{% endif %}>
                         <span class="material-symbols-outlined">account_balance_wallet</span>
-                        PayPal
-                    </label>
-                    <label class="flex-1 flex items-center justify-center gap-2 py-4 border-2 rounded-lg cursor-pointer font-label-md text-label-md text-on-surface-variant has-[:checked]:border-primary has-[:checked]:bg-primary-container/10 has-[:checked]:text-primary border-outline-variant">
-                        <input type="radio" name="provider" value="stripe" class="sr-only">
-                        <span class="material-symbols-outlined">account_balance</span>
-                        Stripe
+                        Mercado Pago
                     </label>
                 </div>
 
-                <div class="space-y-stack-md">
-                    <div class="space-y-2">
-                        <label class="font-label-md text-label-md text-on-surface-variant" for="cardholder">{% trans "Cardholder name" %}</label>
-                        <input id="cardholder" name="cardholder" type="text" placeholder="{% trans "First Last" %}" class="w-full bg-surface-container-low border border-outline-variant rounded-lg px-4 py-3 focus:outline-hidden focus:ring-2 focus:ring-primary focus:border-transparent transition-all">
-                    </div>
-                    <div class="space-y-2">
-                        <label class="font-label-md text-label-md text-on-surface-variant" for="card_number">{% trans "Card number" %}</label>
-                        <div class="relative">
-                            <input id="card_number" name="card_number" type="text" inputmode="numeric" autocomplete="cc-number" placeholder="0000 0000 0000 0000" class="w-full bg-surface-container-low border border-outline-variant rounded-lg px-4 py-3 focus:outline-hidden focus:ring-2 focus:ring-primary focus:border-transparent transition-all">
-                            <span class="material-symbols-outlined text-outline absolute right-3 top-1/2 -translate-y-1/2">credit_card</span>
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-2 gap-stack-md">
-                        <div class="space-y-2">
-                            <label class="font-label-md text-label-md text-on-surface-variant" for="expiry">{% trans "Expiry" %}</label>
-                            <input id="expiry" name="expiry" type="text" autocomplete="cc-exp" placeholder="MM/YY" class="w-full bg-surface-container-low border border-outline-variant rounded-lg px-4 py-3 focus:outline-hidden focus:ring-2 focus:ring-primary focus:border-transparent transition-all">
-                        </div>
-                        <div class="space-y-2">
-                            <label class="font-label-md text-label-md text-on-surface-variant" for="cvc">CVC</label>
-                            <input id="cvc" name="cvc" type="text" inputmode="numeric" autocomplete="cc-csc" placeholder="123" class="w-full bg-surface-container-low border border-outline-variant rounded-lg px-4 py-3 focus:outline-hidden focus:ring-2 focus:ring-primary focus:border-transparent transition-all">
-                        </div>
-                    </div>
+                {# --- Stripe Elements panel --- #}
+                <div id="stripe-panel">
+                    <div id="stripe-payment-element" class="min-h-[120px]"></div>
+                    <div id="stripe-error" class="hidden mt-3 text-error font-body-sm text-body-sm"></div>
                 </div>
-            </section>
 
-            <section class="bg-surface-container-lowest rounded-xl border border-outline-variant p-stack-lg shadow-[0_2px_4px_rgba(15,23,42,0.05)]">
-                <div class="flex items-center gap-stack-sm mb-stack-md">
-                    <span class="material-symbols-outlined text-primary">location_on</span>
-                    <h2 class="font-h2 text-h2">{% trans "Billing information" %}</h2>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-stack-md">
-                    <div class="space-y-2 md:col-span-2">
-                        <label class="font-label-md text-label-md text-on-surface-variant" for="street">{% trans "Address" %}</label>
-                        <input id="street" name="street" type="text" placeholder="{% trans "Street and number" %}" class="w-full bg-surface-container-low border border-outline-variant rounded-lg px-4 py-3 focus:outline-hidden focus:ring-2 focus:ring-primary transition-all">
-                    </div>
-                    <div class="space-y-2">
-                        <label class="font-label-md text-label-md text-on-surface-variant" for="city">{% trans "City" %}</label>
-                        <input id="city" name="city" type="text" placeholder="{% trans "City" %}" class="w-full bg-surface-container-low border border-outline-variant rounded-lg px-4 py-3 focus:outline-hidden focus:ring-2 focus:ring-primary transition-all">
-                    </div>
-                    <div class="space-y-2">
-                        <label class="font-label-md text-label-md text-on-surface-variant" for="postal">{% trans "Postal code" %}</label>
-                        <input id="postal" name="postal" type="text" placeholder="00000" class="w-full bg-surface-container-low border border-outline-variant rounded-lg px-4 py-3 focus:outline-hidden focus:ring-2 focus:ring-primary transition-all">
+                {# --- Mercado Pago redirect panel --- #}
+                <div id="mp-panel" class="hidden">
+                    <div class="flex items-start gap-3 bg-primary-container/10 border border-primary/20 rounded-xl p-stack-md">
+                        <span class="material-symbols-outlined text-primary shrink-0">open_in_new</span>
+                        <p class="font-body-md text-body-md text-on-surface-variant">
+                            {% trans "You will be redirected to Mercado Pago to complete your payment securely. Your card and bank details are handled entirely by Mercado Pago." %}
+                        </p>
                     </div>
                 </div>
             </section>
 
             <div class="flex flex-col md:flex-row items-center justify-between gap-gutter p-stack-md bg-secondary-container/10 border border-secondary/20 rounded-xl">
                 <div class="flex items-center gap-stack-sm">
-                    <span class="material-symbols-outlined text-primary text-[32px]" style="font-variation-settings: 'FILL' 1;">lock</span>
+                    <span class="material-symbols-outlined text-primary text-[32px] fill-icon">lock</span>
                     <div class="text-on-secondary-container">
                         <p class="font-label-md text-label-md font-bold">{% trans "256-bit SSL encryption" %}</p>
                         <p class="font-body-sm text-body-sm opacity-80">{% trans "Your payment data is protected and never stored on our servers." %}</p>
@@ -123,7 +96,7 @@
                 <div class="space-y-stack-md pb-stack-lg border-b border-outline-variant">
                     <div class="flex justify-between items-center">
                         <span class="font-body-md text-on-surface-variant">{% trans "Amount" %}</span>
-                        <span class="font-label-md text-label-md text-on-surface">${{ donation_amount|default:"10.00" }} ({{ donation_frequency|default:_("One-time") }})</span>
+                        <span class="font-label-md text-label-md text-on-surface">${{ donation_amount|default:"10.00" }} USD ({{ donation_frequency|default:_("One-time") }})</span>
                     </div>
                     <div class="flex justify-between items-center">
                         <span class="font-body-md text-on-surface-variant">{% trans "Platform fee" %}</span>
@@ -139,12 +112,12 @@
                 <div class="py-stack-lg">
                     <div class="flex justify-between items-baseline">
                         <span class="font-h3 text-h3 text-on-surface">{% trans "Total to charge" %}</span>
-                        <span class="font-display text-h2 text-primary">${{ donation_amount|default:"10.00" }}</span>
+                        <span class="font-display text-h2 text-primary">${{ donation_amount|default:"10.00" }} <span class="font-label-sm text-label-sm">USD</span></span>
                     </div>
                 </div>
-                <button type="submit" class="w-full bg-primary text-on-primary font-label-md text-label-md py-4 rounded-xl hover:opacity-95 active:scale-[0.98] transition-all flex items-center justify-center gap-stack-sm">
+                <button type="submit" id="donate-submit-btn" class="w-full bg-primary text-on-primary font-label-md text-label-md py-4 rounded-xl hover:opacity-95 active:scale-[0.98] transition-all flex items-center justify-center gap-stack-sm">
                     {% trans "Confirm and donate" %}
-                    <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">favorite</span>
+                    <span class="material-symbols-outlined fill-icon">favorite</span>
                 </button>
                 <p class="text-center font-body-sm text-body-sm text-on-surface-variant mt-stack-md">
                     {% url 'terms_of_service' as tos_url %}
@@ -153,6 +126,119 @@
             </div>
         </aside>
     </form>
+
+    <script src="https://js.stripe.com/v3/"></script>
+    <script>
+    (function () {
+        const form = document.getElementById('donate-confirm-form');
+        const stripePanel = document.getElementById('stripe-panel');
+        const mpPanel = document.getElementById('mp-panel');
+        const submitBtn = document.getElementById('donate-submit-btn');
+        const stripeError = document.getElementById('stripe-error');
+
+        const stripePk = form.dataset.stripePk;
+        const stripeUrl = form.dataset.stripeUrl;
+        const mpUrl = form.dataset.mpUrl;
+        const amount = form.dataset.amount;
+        const frequency = form.dataset.frequency;
+
+        let stripe = null;
+        let elements = null;
+        let paymentElement = null;
+        let currentProvider = form.dataset.provider || 'stripe';
+
+        function getCSRF() {
+            return document.querySelector('[name=csrfmiddlewaretoken]').value;
+        }
+
+        function showPanel(provider) {
+            currentProvider = provider;
+            if (provider === 'stripe') {
+                stripePanel.classList.remove('hidden');
+                mpPanel.classList.add('hidden');
+                initStripe();
+            } else {
+                mpPanel.classList.remove('hidden');
+                stripePanel.classList.add('hidden');
+            }
+        }
+
+        async function initStripe() {
+            if (!stripePk || elements) return;
+            stripe = Stripe(stripePk);
+            const resp = await fetch(stripeUrl, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': getCSRF(),
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams({ amount, frequency }),
+            });
+            if (!resp.ok) {
+                showError('{% trans "Error connecting to payment provider." %}');
+                return;
+            }
+            const data = await resp.json();
+            if (data.error) { showError(data.error); return; }
+
+            form.dataset.donationId = data.donation_id;
+            elements = stripe.elements({ clientSecret: data.client_secret, appearance: { theme: 'stripe' } });
+            paymentElement = elements.create('payment');
+            paymentElement.mount('#stripe-payment-element');
+        }
+
+        function showError(msg) {
+            stripeError.textContent = msg;
+            stripeError.classList.remove('hidden');
+        }
+
+        // Provider radio switch
+        document.querySelectorAll('input[name="provider"]').forEach(radio => {
+            radio.addEventListener('change', () => showPanel(radio.value));
+        });
+
+        // Form submit
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            submitBtn.disabled = true;
+
+            if (currentProvider === 'mercadopago') {
+                const resp = await fetch(mpUrl, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': getCSRF(),
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: new URLSearchParams({ amount, frequency, currency: 'ARS' }),
+                    redirect: 'follow',
+                });
+                if (resp.redirected) {
+                    window.location.href = resp.url;
+                } else {
+                    showError('{% trans "Error connecting to Mercado Pago." %}');
+                    submitBtn.disabled = false;
+                }
+                return;
+            }
+
+            // Stripe
+            if (!stripe || !elements) { submitBtn.disabled = false; return; }
+            const { error } = await stripe.confirmPayment({
+                elements,
+                confirmParams: {
+                    return_url: window.location.origin + '{% url "donate_success" %}?donation_id=' + (form.dataset.donationId || ''),
+                },
+            });
+            if (error) {
+                showError(error.message || '{% trans "Payment error." %}');
+                submitBtn.disabled = false;
+            }
+        });
+
+        // Init on load
+        showPanel(currentProvider);
+    })();
+    </script>
 </main>
 
 <footer class="bg-surface-container-low border-t border-outline-variant/50 mt-16">

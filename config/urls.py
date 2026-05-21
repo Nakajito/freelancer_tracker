@@ -8,6 +8,7 @@ from django.views.generic import TemplateView
 
 from apps.core.views_health import healthz
 from apps.core.views_seo import robots_txt, security_txt, ChangePasswordRedirect
+from apps.donations.urls import i18n_urlpatterns as donations_i18n, webhook_urlpatterns as donations_webhooks
 from apps.core.sitemaps import StaticViewSitemap
 
 sitemaps = {"static": StaticViewSitemap}
@@ -25,6 +26,7 @@ urlpatterns = [
     ),
     path("admin/", admin.site.urls),
     path("i18n/", include("django.conf.urls.i18n")),
+    *donations_webhooks,
 ]
 
 # UI routes: language-prefixed (/en/..., /es/...)
@@ -42,26 +44,7 @@ urlpatterns += i18n_patterns(
     path(
         "security", TemplateView.as_view(template_name="security.html"), name="security"
     ),
-    path(
-        "donate/",
-        TemplateView.as_view(
-            template_name="donate.html",
-            extra_context={
-                "donation_tiers": [
-                    {"label": "Mínimo", "amount": 5, "recommended": False},
-                    {"label": "Recomendado", "amount": 10, "recommended": True},
-                    {"label": "Apoyo", "amount": 25, "recommended": False},
-                    {"label": "Socio", "amount": 50, "recommended": False},
-                ],
-            },
-        ),
-        name="donate",
-    ),
-    path(
-        "donate/confirm/",
-        TemplateView.as_view(template_name="donate_confirm.html"),
-        name="donate_confirm",
-    ),
+    *donations_i18n,
     path("", include("apps.accounts.urls")),
     path("accounts/", include("allauth.urls")),
     path("", include("apps.proposals.urls")),

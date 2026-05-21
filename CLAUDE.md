@@ -22,6 +22,9 @@ uv run mypy apps config                              # Type check
 uv run python manage.py send_digest                  # Trigger follow-up digest email
 uv run python manage.py generate_retainer_entries    # Generate monthly retainer time entries
 docker compose -f deploy/docker-compose.yml up --build  # Local Docker stack
+
+python bin/check-icons.py                            # Verify all template icons exist in font subset
+python bin/check-icons.py --patch                    # Auto-patch missing icons (needs /tmp/material-symbols-full.ttf)
 ```
 
 ## Architecture
@@ -80,6 +83,17 @@ All other UX is Django Forms + HTMX.
 
 Key fixtures: `user`, `other_user`, `authed_client`, `client_model`, `proposal` (DRAFT), `accepted_proposal`.
 
+### Material Symbols icons (CRITICAL)
+
+Icons use a **local woff2 subset** (`static/fonts/material-symbols/material-symbols-outlined-subset.vN.woff2`), NOT Google Fonts CDN. Only icons explicitly included in the subset render correctly.
+
+**When adding a new icon:**
+1. Run `python bin/check-icons.py` — it reports any icon missing from the font subset.
+2. If missing: download the full font from Google Fonts (TTF URL from `fonts.googleapis.com/css2?family=Material+Symbols+Outlined`) to `/tmp/material-symbols-full.ttf`, then run `python bin/check-icons.py --patch`.
+3. Update `static/css/icons.css` to reference the new `vN+1` font file.
+
+**Never add an icon without verifying it renders** — missing icons show as text, not glyphs.
+
 ## Key constraints
 
 - `sent_date` is optional (`null=True`) on `Proposal` — analytics must handle null via `created_at` fallback.
@@ -124,6 +138,7 @@ Key fixtures: `user`, `other_user`, `authed_client`, `client_model`, `proposal` 
 - Simplicidad: cambios mínimos.
 - Sin parches temporales: encuentra causa raíz.
 - Impacto mínimo: solo toca lo necesario.
+- Realiza preguntas si tienes dudas para realizar las tareas y realiza propuestas.
 
 ## TDD
 - Usa TDD siempre.

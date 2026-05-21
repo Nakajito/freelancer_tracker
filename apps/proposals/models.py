@@ -37,6 +37,13 @@ class ProposalQuerySet(models.QuerySet):
         """Restrict to proposals with status ``ACCEPTED``."""
         return self.filter(status=ProposalStatus.ACCEPTED)
 
+    def search(self, q: str):
+        return self.filter(
+            models.Q(title__icontains=q)
+            | models.Q(client__name__icontains=q)
+            | models.Q(proposal_text__icontains=q)
+        )
+
 
 class ProposalManager(models.Manager):
     """Default manager that exposes ``ProposalQuerySet`` filters."""

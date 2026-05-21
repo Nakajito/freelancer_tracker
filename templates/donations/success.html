@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Thank you!" %}{% endblock title %}
+{% block meta_description %}{% trans "Your donation to Pipelancer was received successfully." %}{% endblock meta_description %}
+
+{% block content %}
+<main class="max-w-[600px] mx-auto px-container-padding py-stack-lg text-center">
+    <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-container-padding shadow-xs flex flex-col items-center gap-stack-md">
+        <span class="material-symbols-outlined text-primary text-[64px]">favorite</span>
+        <h1 class="font-h1 text-h1 text-on-surface">{% trans "Thank you for your support!" %}</h1>
+        <p class="font-body-lg text-body-lg text-on-surface-variant">
+            {% trans "Your donation has been received and helps keep Pipelancer growing for the entire freelancer community." %}
+        </p>
+
+        {% if donation %}
+        <div class="w-full bg-surface-container-low rounded-xl p-stack-md flex flex-col gap-2 text-left mt-2">
+            <div class="flex justify-between items-center">
+                <span class="font-label-md text-label-md text-on-surface-variant">{% trans "Amount" %}</span>
+                <span class="font-label-md text-label-md text-on-surface">${{ donation.amount }}</span>
+            </div>
+            <div class="flex justify-between items-center">
+                <span class="font-label-md text-label-md text-on-surface-variant">{% trans "Provider" %}</span>
+                <span class="font-label-md text-label-md text-on-surface">{{ donation.get_provider_display }}</span>
+            </div>
+            <div class="flex justify-between items-center">
+                <span class="font-label-md text-label-md text-on-surface-variant">{% trans "Status" %}</span>
+                <span class="font-label-md text-label-md text-primary">{{ donation.get_status_display }}</span>
+            </div>
+        </div>
+        {% endif %}
+
+        <a href="{% url 'landing' %}" class="mt-2 px-6 py-3 bg-primary text-on-primary rounded-lg font-label-md text-label-md hover:opacity-90 transition-colors shadow-xs">
+            {% trans "Back to Pipelancer" %}
+        </a>
+    </div>
+</main>
+{% endblock content %}

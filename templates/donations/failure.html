@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Payment not completed" %}{% endblock title %}
+{% block meta_description %}{% trans "Your donation could not be processed. Please try again." %}{% endblock meta_description %}
+
+{% block content %}
+<main class="max-w-[600px] mx-auto px-container-padding py-stack-lg text-center">
+    <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-container-padding shadow-xs flex flex-col items-center gap-stack-md">
+        <span class="material-symbols-outlined text-error text-[64px]">error</span>
+        <h1 class="font-h1 text-h1 text-on-surface">{% trans "Payment not completed" %}</h1>
+        <p class="font-body-lg text-body-lg text-on-surface-variant">
+            {% trans "Something went wrong while processing your donation. No charge was made. Please try again or choose a different payment method." %}
+        </p>
+
+        {% if donation %}
+        <div class="w-full bg-surface-container-low rounded-xl p-stack-md flex flex-col gap-2 text-left mt-2">
+            <div class="flex justify-between items-center">
+                <span class="font-label-md text-label-md text-on-surface-variant">{% trans "Amount" %}</span>
+                <span class="font-label-md text-label-md text-on-surface">${{ donation.amount }}</span>
+            </div>
+            <div class="flex justify-between items-center">
+                <span class="font-label-md text-label-md text-on-surface-variant">{% trans "Status" %}</span>
+                <span class="font-label-md text-label-md text-error">{{ donation.get_status_display }}</span>
+            </div>
+        </div>
+        {% endif %}
+
+        <a href="{% url 'donate' %}" class="mt-2 px-6 py-3 bg-primary text-on-primary rounded-lg font-label-md text-label-md hover:opacity-90 transition-colors shadow-xs">
+            {% trans "Try again" %}
+        </a>
+    </div>
+</main>
+{% endblock content %}

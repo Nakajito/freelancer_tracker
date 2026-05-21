@@ -49,6 +49,18 @@
         <aside class="bg-surface-container-lowest border border-outline-variant shadow-xs rounded-xl p-container-padding h-fit">
             <h2 class="font-h3 text-h3 text-on-surface mb-2">{% trans "Deactivate account" %}</h2>
             <p class="font-body-sm text-body-sm text-on-surface-variant mb-stack-md">{% trans "This signs you out and disables future access while preserving your history." %}</p>
+            <div class="bg-error-container rounded-lg p-3 mb-stack-md flex gap-2">
+                <span class="material-symbols-outlined text-on-error-container text-[18px] mt-0.5 shrink-0">schedule</span>
+                <p class="font-body-sm text-body-sm text-on-error-container">
+                    {% blocktrans trimmed %}
+                        <strong>Your data will be permanently deleted after 15 days.</strong>
+                        During this period your account is suspended and inaccessible, but all your information
+                        (proposals, clients, time entries and settings) is retained to allow us to complete
+                        pending backups, resolve any billing or support issues, and comply with applicable
+                        legal obligations. After 15 days, deletion is irreversible and no recovery is possible.
+                    {% endblocktrans %}
+                </p>
+            </div>
             <form method="post" action="{% url 'account-deactivate' %}" class="flex flex-col gap-3">
                 {% csrf_token %}
                 <label class="font-label-md text-label-md text-on-surface-variant" for="{{ deactivate_form.password.id_for_label }}">{{ deactivate_form.password.label }}</label>

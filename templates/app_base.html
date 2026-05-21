@@ -112,13 +112,28 @@
             <!-- TopAppBar -->
             <header class="bg-surface-container-lowest flex justify-between items-center px-container-padding h-16 z-40 fixed top-0 right-0 w-full md:w-[calc(100%-280px)] border-b border-outline-variant shadow-xs">
                 <div class="flex-1 max-w-md">
-                    <div class="relative">
+                    <div class="relative" id="search-wrapper">
                         <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
                         <input class="w-full bg-surface-container-low border border-outline-variant rounded-full py-2 pl-10 pr-4 font-body-sm text-body-sm text-on-surface focus:outline-hidden focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all placeholder:text-outline"
                                placeholder="{% trans 'Search proposals, clients...' %}"
-                               type="search">
+                               type="search"
+                               name="q"
+                               autocomplete="off"
+                               hx-get="{% url 'search' %}"
+                               hx-trigger="keyup changed delay:300ms, search"
+                               hx-target="#search-results"
+                               hx-swap="innerHTML">
+                        <div id="search-results"></div>
                     </div>
                 </div>
+                <script>
+                  document.addEventListener('click', function(e) {
+                    var wrapper = document.getElementById('search-wrapper');
+                    if (wrapper && !wrapper.contains(e.target)) {
+                      document.getElementById('search-results').innerHTML = '';
+                    }
+                  });
+                </script>
                 <div class="flex items-center gap-gutter ml-auto">
                     {% block topbar_actions %}{% endblock %}
                     {% if is_demo %}

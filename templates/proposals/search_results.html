@@ -1,0 +1,55 @@
+{% load i18n %}
+{% if q|length >= 2 %}
+  {% if proposals or clients %}
+    <div class="absolute top-full left-0 right-0 mt-1 bg-surface-container-lowest border border-outline-variant rounded-xl shadow-lg z-50 overflow-hidden">
+      {% if proposals %}
+        <div class="px-4 pt-3 pb-1">
+          <p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wide">{% trans "Proposals" %}</p>
+        </div>
+        <ul>
+          {% for proposal in proposals %}
+            <li>
+              <a href="{% url 'proposal-detail' proposal.pk %}"
+                 class="flex items-center gap-3 px-4 py-2.5 hover:bg-surface-container transition-colors">
+                <span class="material-symbols-outlined text-[18px] text-on-surface-variant">description</span>
+                <div class="min-w-0">
+                  <p class="font-body-sm text-body-sm text-on-surface truncate">{{ proposal.title }}</p>
+                  {% if proposal.client %}
+                    <p class="font-body-sm text-body-sm text-on-surface-variant truncate">{{ proposal.client.name }}</p>
+                  {% endif %}
+                </div>
+                <span class="ml-auto font-label-sm text-label-sm text-outline shrink-0">{{ proposal.get_status_display }}</span>
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+      {% if clients %}
+        <div class="px-4 pt-3 pb-1 {% if proposals %}border-t border-outline-variant{% endif %}">
+          <p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wide">{% trans "Clients" %}</p>
+        </div>
+        <ul>
+          {% for client in clients %}
+            <li>
+              <a href="{% url 'client-list' %}?q={{ q }}"
+                 class="flex items-center gap-3 px-4 py-2.5 hover:bg-surface-container transition-colors">
+                <span class="material-symbols-outlined text-[18px] text-on-surface-variant">person</span>
+                <div class="min-w-0">
+                  <p class="font-body-sm text-body-sm text-on-surface truncate">{{ client.name }}</p>
+                  {% if client.email %}
+                    <p class="font-body-sm text-body-sm text-on-surface-variant truncate">{{ client.email }}</p>
+                  {% endif %}
+                </div>
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </div>
+  {% else %}
+    <div class="absolute top-full left-0 right-0 mt-1 bg-surface-container-lowest border border-outline-variant rounded-xl shadow-lg z-50 px-4 py-6 text-center">
+      <span class="material-symbols-outlined text-[32px] text-outline block mb-1">search_off</span>
+      <p class="font-body-sm text-body-sm text-on-surface-variant">{% trans "No results for" %} &ldquo;{{ q }}&rdquo;</p>
+    </div>
+  {% endif %}
+{% endif %}
