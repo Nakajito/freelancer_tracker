@@ -1,5 +1,6 @@
 {% extends "app_base.html" %}
 {% load i18n %}
+{% load l10n %}
 {% load static %}
 
 {% block title %}{% trans "Analytics & Reports" %} - Pipelancer{% endblock %}
@@ -25,17 +26,63 @@
         <label for="period" class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">{% trans "Period" %}</label>
         <div class="relative">
             <select name="period" id="period" class="w-full appearance-none bg-surface border border-outline-variant rounded-lg py-2 pl-4 pr-10 font-body-sm text-body-sm text-on-surface focus:outline-hidden focus:ring-2 focus:ring-primary cursor-pointer">
-                <option value="30" {% if period == "30" %}selected{% endif %}>{% trans "Last 30 Days" %}</option>
-                <option value="90" {% if period == "90" or not period %}selected{% endif %}>{% trans "Last 90 Days" %}</option>
-                <option value="year" {% if period == "year" %}selected{% endif %}>{% trans "This Year" %}</option>
+                <option value="monthly" {% if period == "monthly" %}selected{% endif %}>{% trans "Monthly" %}</option>
+                <option value="quarterly" {% if period == "quarterly" or not period %}selected{% endif %}>{% trans "Quarterly" %}</option>
+                <option value="semi-annual" {% if period == "semi-annual" %}selected{% endif %}>{% trans "Semi-annual" %}</option>
+                <option value="annual" {% if period == "annual" %}selected{% endif %}>{% trans "Annual" %}</option>
             </select>
             <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant">arrow_drop_down</span>
         </div>
     </div>
-    <div class="flex flex-col gap-1" id="year-wrapper" {% if period != "year" %}style="display:none"{% endif %}>
+
+    <div class="flex flex-col gap-1">
         <label for="year" class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">{% trans "Year" %}</label>
-        <input type="number" name="year" id="year" value="{{ year }}" class="bg-surface border border-outline-variant rounded-lg py-2 px-4 font-body-sm text-body-sm text-on-surface focus:outline-hidden focus:ring-2 focus:ring-primary">
+        <div class="relative">
+            <select name="year" id="year" class="appearance-none bg-surface border border-outline-variant rounded-lg py-2 pl-4 pr-10 font-body-sm text-body-sm text-on-surface focus:outline-hidden focus:ring-2 focus:ring-primary cursor-pointer">
+                {% for y in year_choices %}
+                <option value="{{ y }}" {% if year == y %}selected{% endif %}>{{ y }}</option>
+                {% endfor %}
+            </select>
+            <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant">arrow_drop_down</span>
+        </div>
     </div>
+
+    <div class="flex flex-col gap-1" id="month-wrapper" style="display:none">
+        <label for="month-select" class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">{% trans "Month" %}</label>
+        <div class="relative">
+            <select name="month" id="month-select" class="appearance-none bg-surface border border-outline-variant rounded-lg py-2 pl-4 pr-10 font-body-sm text-body-sm text-on-surface focus:outline-hidden focus:ring-2 focus:ring-primary cursor-pointer">
+                {% for num,name in month_choices %}
+                <option value="{{ num }}" {% if month == num %}selected{% endif %}>{{ name }}</option>
+                {% endfor %}
+            </select>
+            <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant">arrow_drop_down</span>
+        </div>
+    </div>
+
+    <div class="flex flex-col gap-1" id="quarter-wrapper" style="display:none">
+        <label for="quarter-select" class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">{% trans "Quarter" %}</label>
+        <div class="relative">
+            <select name="quarter" id="quarter-select" class="appearance-none bg-surface border border-outline-variant rounded-lg py-2 pl-4 pr-10 font-body-sm text-body-sm text-on-surface focus:outline-hidden focus:ring-2 focus:ring-primary cursor-pointer">
+                <option value="1" {% if quarter == 1 %}selected{% endif %}>Q1 ({% trans "Jan–Mar" %})</option>
+                <option value="2" {% if quarter == 2 %}selected{% endif %}>Q2 ({% trans "Apr–Jun" %})</option>
+                <option value="3" {% if quarter == 3 %}selected{% endif %}>Q3 ({% trans "Jul–Sep" %})</option>
+                <option value="4" {% if quarter == 4 %}selected{% endif %}>Q4 ({% trans "Oct–Dec" %})</option>
+            </select>
+            <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant">arrow_drop_down</span>
+        </div>
+    </div>
+
+    <div class="flex flex-col gap-1" id="half-wrapper" style="display:none">
+        <label for="half-select" class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">{% trans "Half" %}</label>
+        <div class="relative">
+            <select name="half" id="half-select" class="appearance-none bg-surface border border-outline-variant rounded-lg py-2 pl-4 pr-10 font-body-sm text-body-sm text-on-surface focus:outline-hidden focus:ring-2 focus:ring-primary cursor-pointer">
+                <option value="1" {% if half == 1 %}selected{% endif %}>H1 ({% trans "Jan–Jun" %})</option>
+                <option value="2" {% if half == 2 %}selected{% endif %}>H2 ({% trans "Jul–Dec" %})</option>
+            </select>
+            <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant">arrow_drop_down</span>
+        </div>
+    </div>
+
     <button type="submit" class="bg-primary text-on-primary px-5 py-2 rounded-lg font-label-md text-label-md hover:bg-primary-container transition-colors shadow-xs">{% trans "View" %}</button>
 </form>
 
@@ -81,7 +128,7 @@
                     <span>{{ p.rate }}%</span>
                 </div>
                 <div class="h-3 w-full bg-surface-container rounded-full overflow-hidden">
-                    <div class="h-full bg-primary rounded-full" style="width: {{ p.rate }}%;"></div>
+                    <div class="h-full bg-primary rounded-full" style="width: {{ p.rate|unlocalize }}%;"></div>
                 </div>
             </div>
             {% empty %}
@@ -142,12 +189,19 @@
 <script>
 (function () {
     var periodSelect = document.getElementById("period");
-    var yearWrapper = document.getElementById("year-wrapper");
-    function syncYear() {
-        yearWrapper.style.display = periodSelect.value === "year" ? "" : "none";
+    var monthWrapper = document.getElementById("month-wrapper");
+    var quarterWrapper = document.getElementById("quarter-wrapper");
+    var halfWrapper = document.getElementById("half-wrapper");
+
+    function syncSecondary() {
+        var v = periodSelect.value;
+        monthWrapper.style.display = v === "monthly" ? "" : "none";
+        quarterWrapper.style.display = v === "quarterly" ? "" : "none";
+        halfWrapper.style.display = v === "semi-annual" ? "" : "none";
     }
-    periodSelect.addEventListener("change", syncYear);
-    syncYear();
+
+    periodSelect.addEventListener("change", syncSecondary);
+    syncSecondary();
 })();
 </script>
 {% endblock %}
