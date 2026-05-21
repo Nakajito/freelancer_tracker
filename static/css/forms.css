@@ -1,22 +1,24 @@
 /* PropoTrack form widget styles. Loaded globally via base.html so every
    ModelForm-rendered field gets Material Design 3 visual treatment without
-   requiring per-template <style> blocks. */
+   requiring per-template <style> blocks.
+   Auth pages hand-roll their inputs and mark them with .auth-field to
+   prevent this file from overriding their padding/border/background. */
 
-input[type=text],
-input[type=number],
-input[type=url],
-input[type=date],
-input[type=email],
-input[type=password],
-input[type=file],
-select,
+input[type=text]:not(.auth-field),
+input[type=number]:not(.auth-field),
+input[type=url]:not(.auth-field),
+input[type=date]:not(.auth-field),
+input[type=email]:not(.auth-field),
+input[type=password]:not(.auth-field),
+input[type=file]:not(.auth-field),
+select:not(.auth-field),
 textarea {
     width: 100%;
     background-color: var(--color-surface-container-low);
     border: 1px solid var(--color-outline-variant);
     border-radius: 0.5rem;
     padding: 0.75rem 1rem;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-size: 16px;
     line-height: 1.6;
     color: var(--color-on-surface);
@@ -24,12 +26,12 @@ textarea {
     outline: none;
 }
 
-input:focus,
-select:focus,
+input:not(.auth-field):focus,
+select:not(.auth-field):focus,
 textarea:focus {
     background-color: var(--color-surface-container-lowest);
     border-color: var(--color-primary);
-    box-shadow: 0 0 0 2px rgba(0, 104, 95, 0.2);
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.15);
 }
 
 textarea {
@@ -44,9 +46,9 @@ textarea.code,
     font-size: 14px;
 }
 
-select {
+select:not(.auth-field) {
     appearance: none;
-    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%233d4947'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23000000'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
     background-repeat: no-repeat;
     background-position: right 0.75rem center;
     background-size: 20px;

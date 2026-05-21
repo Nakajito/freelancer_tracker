@@ -14,7 +14,6 @@ class ProfileForm(forms.ModelForm):
             "last_name",
             "email",
             "avatar",
-            "theme_preference",
             "language_preference",
         ]
         labels = {
@@ -22,7 +21,6 @@ class ProfileForm(forms.ModelForm):
             "last_name": _("Last name"),
             "email": _("Email"),
             "avatar": _("Profile image"),
-            "theme_preference": _("Theme"),
             "language_preference": _("Language"),
         }
 
@@ -30,7 +28,7 @@ class ProfileForm(forms.ModelForm):
 class PreferencesForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ["theme_preference", "language_preference"]
+        fields = ["language_preference"]
 
 
 class DeactivateAccountForm(forms.Form):

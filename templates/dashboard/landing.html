@@ -23,6 +23,24 @@
             </div>
             <div class="flex items-center gap-unit">
                 {% if user.is_authenticated %}
+                    <form id="prefs-form" method="post" action="{% url 'account-preferences' %}" class="hidden">
+                        {% csrf_token %}
+                        <input type="hidden" id="lang-input" name="language_preference" value="{{ user.language_preference }}">
+                    </form>
+                {% else %}
+                    <form id="lang-form" method="post" action="{% url 'set_language' %}" class="hidden">
+                        {% csrf_token %}
+                        <input type="hidden" name="next" value="{{ request.path }}">
+                        <input type="hidden" id="lang-input-public" name="language" value="{{ active_language|default:'en' }}">
+                    </form>
+                {% endif %}
+                <button type="button" data-lang-btn data-value="{{ active_language|default:'en' }}"
+                        class="flex items-center gap-1.5 border border-outline-variant rounded-full py-2 px-3 font-body-sm text-body-sm text-on-surface bg-surface-container-low hover:bg-surface-container transition-all cursor-pointer"
+                        aria-label="{% trans 'Toggle language' %}">
+                    <span class="material-symbols-outlined text-[18px]">translate</span>
+                    <span data-lang-label>{{ active_language|default:'en'|upper }}</span>
+                </button>
+                {% if user.is_authenticated %}
                     <a href="{% url 'dashboard' %}"
                        class="px-4 py-2 font-label-md text-label-md bg-primary text-on-primary rounded hover:bg-primary-container transition-colors shadow-xs">{% trans "Dashboard" %}</a>
                 {% else %}

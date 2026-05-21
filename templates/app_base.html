@@ -108,16 +108,9 @@
                 {% block topbar_actions %}{% endblock %}
                 <form id="prefs-form" method="post" action="{% url 'account-preferences' %}" class="hidden">
                     {% csrf_token %}
-                    <input type="hidden" id="theme-input" name="theme_preference" value="{{ user.theme_preference }}">
                     <input type="hidden" id="lang-input" name="language_preference" value="{{ user.language_preference }}">
                 </form>
-                <div class="hidden lg:flex items-center gap-2">
-                    <button type="button" data-theme-btn data-value="{{ user.theme_preference }}"
-                            class="flex items-center gap-1.5 border border-outline-variant rounded-full py-2 px-3 font-body-sm text-body-sm text-on-surface bg-surface-container-low hover:bg-surface-container transition-all cursor-pointer"
-                            aria-label="{% trans 'Toggle theme' %}">
-                        <span class="material-symbols-outlined text-[18px]" data-theme-icon>light_mode</span>
-                        <span data-theme-label>{% trans "Light" %}</span>
-                    </button>
+                <div class="flex items-center gap-2">
                     <button type="button" data-lang-btn data-value="{{ user.language_preference }}"
                             class="flex items-center gap-1.5 border border-outline-variant rounded-full py-2 px-3 font-body-sm text-body-sm text-on-surface bg-surface-container-low hover:bg-surface-container transition-all cursor-pointer"
                             aria-label="{% trans 'Toggle language' %}">

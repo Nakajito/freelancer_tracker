@@ -106,30 +106,30 @@ uv run python manage.py compilemessages         # Compile translation catalogs
 
 ## Design System
 
-The project uses **Tailwind CSS** with custom design tokens:
+The project uses **Tailwind CSS** with custom design tokens following an editorial, monochrome aesthetic:
 
-- **Primary Color**: Teal (#0D9488)
-- **Fonts**: Geist (headlines), Inter (body)
-- **Border Radius**: 8px default
-- **Shadows**: Soft shadows for cards
-- **Theme Modes**: `system`, `light`, and `dark`, stored per user and applied from `<html data-theme="...">`
-- **Forms**: Form controls use CSS variables so light/dark themes stay consistent
+- **Palette**: Snow base `#F2F2F2`, Sand secondary `#EAE4D5`, Taupe accent/borders `#B6B09F`, Black `#000000` for text and CTAs
+- **Fonts**: Libre Baskerville (serif, for headings H1–H3), Roboto (sans-serif, for body and UI labels)
+- **Self-hosted**: All fonts (`.woff2`) served locally, no external CDN dependency
+- **Border Radius**: 4px base, 8px large, 12px extra-large
+- **CTAs**: Black background (`#000000`) with snow text; hover changes to taupe (`#B6B09F`)
+- **Forms**: CSS variables via `forms.css`; auth inputs use `.auth-field` marker to opt out of global padding rules
 
 ## User Preferences & Account
 
-Theme (light/dark/system) and language (English/Español) controls are available to **all users**:
+Language (English/Español) control is available to **all users**. Theme is light-only (editorial palette).
 
-| User type | Theme persistence | Language persistence |
-|---|---|---|
-| Guest | `localStorage` key `ft_theme` + inline anti-flash script | Django language cookie via `/i18n/set_language/` |
-| Authenticated | `User.theme_preference` (DB) | `User.language_preference` (DB) + language cookie |
+| User type | Language persistence |
+|---|---|
+| Guest | Django language cookie via `/i18n/set_language/` |
+| Authenticated | `User.language_preference` (DB) + language cookie |
 
-Controls appear as icon-button pills in the navbar on all pages. Clicking cycles through states (theme: System → Light → Dark; language: EN ↔ ES).
+Language switcher appears as an icon-button pill in the navbar on all pages (EN ↔ ES).
 
 Authenticated users can also manage their account at:
 
-- `/accounts/profile/` - profile, avatar, theme, language, and password link
-- `/accounts/preferences/` - POST endpoint used by the topbar icon-buttons
+- `/accounts/profile/` - profile, avatar, language, and password link
+- `/accounts/preferences/` - POST endpoint used by the topbar language button
 - `/accounts/deactivate/` - password-confirmed account deactivation (`is_active=False`)
 
 Language switching uses Django i18n with English and Spanish catalogs.

@@ -1,6 +1,6 @@
 {% load static i18n %}
 <!DOCTYPE html>
-<html lang="{{ active_language|default:'en' }}" data-theme="{{ active_theme|default:'system' }}">
+<html lang="{{ active_language|default:'en' }}">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,9 +11,8 @@
             {% endblock %}
         </title>
         <meta name="description" content="{% block meta_description %}{% trans "PropoTrack — track freelance proposals, follow-ups, time entries, and revenue in one place." %}{% endblock %}">
-        {% if not user.is_authenticated %}<script>(function(){var t=localStorage.getItem('ft_theme');if(t)document.documentElement.dataset.theme=t;})();</script>{% endif %}
-        <link rel="preload" href="{% static 'fonts/geist/geist-v4-latin.woff2' %}" as="font" type="font/woff2" crossorigin>
-        <link rel="preload" href="{% static 'fonts/inter/inter-v20-latin.woff2' %}" as="font" type="font/woff2" crossorigin>
+        <link rel="preload" href="{% static 'fonts/libre-baskerville/libre-baskerville-latin-400.woff2' %}" as="font" type="font/woff2" crossorigin>
+        <link rel="preload" href="{% static 'fonts/roboto/roboto-v51-latin-regular.woff2' %}" as="font" type="font/woff2" crossorigin>
         <link rel="stylesheet" href="{% static 'css/app.css' %}">
         <link rel="stylesheet" href="{% static 'css/icons.css' %}">
         <link rel="stylesheet" href="{% static 'css/forms.css' %}">

@@ -33,3 +33,13 @@
 **Rule — CSS build**: `bin/build-css.sh` must invoke the Tailwind binary through `uv run` so the project-local dependency is available in clean shells and CI.
 
 **Rule — service calls**: When a service signature changes to explicit date ranges, update every caller. `MonthlySummaryGenerator.generate()` requires `start_date`, `end_date`, and `period_label`; management commands must compute those values instead of passing year/month fragments.
+
+## CSS specificity: global element selectors vs Tailwind utilities
+
+**Pattern**: `forms.css` applied `padding: 0.75rem 1rem` to bare element selectors (`input[type=email]`, `input[type=password]`). These selectors have specificity 0,0,1,1 (element + attribute), which beats Tailwind utility classes with specificity 0,0,1,0, silently overriding padding values and causing icon-overlap in auth inputs with `pl-11`.
+
+**Rule**: Global `forms.css` rules targeting bare element selectors are a specificity trap. Auth pages that hand-roll inputs with Tailwind must mark those inputs with a class (e.g. `.auth-field`) and exclude them via `:not(.auth-field)` in `forms.css`.
+
+**Rule**: When removing a feature (dark mode), update all its touch points in one pass: CSS `@theme` tokens, template `data-theme` attribute, JS preference logic, context processors, forms, and tests. Leaving any one untouched causes test failures or lingering dead code.
+
+**Rule**: When forms.py removes a field, audit all tests that POST that field and assert on it — they will fail silently or with confusing errors if not updated.

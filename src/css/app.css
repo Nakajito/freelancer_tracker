@@ -5,53 +5,54 @@
 @source "../../apps";
 
 @theme {
-  --color-primary: #00685f;
-  --color-on-primary: #ffffff;
-  --color-primary-container: #008378;
-  --color-on-primary-container: #f4fffc;
-  --color-primary-fixed: #89f5e7;
-  --color-primary-fixed-dim: #6bd8cb;
-  --color-on-primary-fixed: #00201d;
-  --color-on-primary-fixed-variant: #005049;
-  --color-inverse-primary: #6bd8cb;
-  --color-secondary: #505f76;
-  --color-on-secondary: #ffffff;
-  --color-secondary-container: #d0e1fb;
-  --color-on-secondary-container: #54647a;
-  --color-secondary-fixed: #d3e4fe;
-  --color-secondary-fixed-dim: #b7c8e1;
-  --color-on-secondary-fixed: #0b1c30;
-  --color-on-secondary-fixed-variant: #38485d;
-  --color-tertiary: #924628;
-  --color-on-tertiary: #ffffff;
-  --color-tertiary-container: #b05e3d;
-  --color-on-tertiary-container: #fffbff;
-  --color-tertiary-fixed: #ffdbce;
-  --color-tertiary-fixed-dim: #ffb59a;
-  --color-on-tertiary-fixed: #370e00;
-  --color-on-tertiary-fixed-variant: #773215;
+  /* ---- Paleta editorial DESIGN.md (snow/sand/taupe/negro) ---- */
+  --color-primary: #000000;
+  --color-on-primary: #F2F2F2;
+  --color-primary-container: #B6B09F;
+  --color-on-primary-container: #000000;
+  --color-primary-fixed: #EAE4D5;
+  --color-primary-fixed-dim: #B6B09F;
+  --color-on-primary-fixed: #000000;
+  --color-on-primary-fixed-variant: #000000;
+  --color-inverse-primary: #F2F2F2;
+  --color-secondary: #000000;
+  --color-on-secondary: #F2F2F2;
+  --color-secondary-container: #EAE4D5;
+  --color-on-secondary-container: #000000;
+  --color-secondary-fixed: #EAE4D5;
+  --color-secondary-fixed-dim: #B6B09F;
+  --color-on-secondary-fixed: #000000;
+  --color-on-secondary-fixed-variant: #000000;
+  --color-tertiary: #000000;
+  --color-on-tertiary: #F2F2F2;
+  --color-tertiary-container: #EAE4D5;
+  --color-on-tertiary-container: #000000;
+  --color-tertiary-fixed: #EAE4D5;
+  --color-tertiary-fixed-dim: #B6B09F;
+  --color-on-tertiary-fixed: #000000;
+  --color-on-tertiary-fixed-variant: #000000;
   --color-error: #ba1a1a;
   --color-on-error: #ffffff;
   --color-error-container: #ffdad6;
   --color-on-error-container: #93000a;
-  --color-background: #f5faf8;
-  --color-on-background: #171d1c;
-  --color-surface: #f5faf8;
-  --color-on-surface: #171d1c;
-  --color-surface-dim: #d6dbd9;
-  --color-surface-bright: #f5faf8;
-  --color-surface-variant: #dee4e1;
-  --color-on-surface-variant: #3d4947;
-  --color-surface-tint: #006a61;
-  --color-surface-container-lowest: #ffffff;
-  --color-surface-container-low: #f0f5f2;
-  --color-surface-container: #eaefed;
-  --color-surface-container-high: #e4e9e7;
-  --color-surface-container-highest: #dee4e1;
-  --color-inverse-surface: #2c3130;
-  --color-inverse-on-surface: #edf2f0;
-  --color-outline: #6d7a77;
-  --color-outline-variant: #bcc9c6;
+  --color-background: #F2F2F2;
+  --color-on-background: #000000;
+  --color-surface: #F2F2F2;
+  --color-on-surface: #000000;
+  --color-surface-dim: #D8D4CC;
+  --color-surface-bright: #FFFFFF;
+  --color-surface-variant: #EAE4D5;
+  --color-on-surface-variant: #000000;
+  --color-surface-tint: #000000;
+  --color-surface-container-lowest: #FFFFFF;
+  --color-surface-container-low: #F2F2F2;
+  --color-surface-container: #EAE4D5;
+  --color-surface-container-high: #E0DAC9;
+  --color-surface-container-highest: #D8D2BF;
+  --color-inverse-surface: #000000;
+  --color-inverse-on-surface: #F2F2F2;
+  --color-outline: #B6B09F;
+  --color-outline-variant: #B6B09F;
 
   --spacing-unit: 8px;
   --spacing-gutter: 16px;
@@ -60,32 +61,35 @@
   --spacing-stack-lg: 32px;
   --spacing-container-padding: 24px;
 
-  --font-display: "Geist", sans-serif;
-  --font-h1: "Geist", sans-serif;
-  --font-h2: "Geist", sans-serif;
-  --font-h3: "Geist", sans-serif;
-  --font-label-md: "Geist", sans-serif;
-  --font-label-sm: "Geist", sans-serif;
-  --font-body-lg: "Inter", sans-serif;
-  --font-body-md: "Inter", sans-serif;
-  --font-body-sm: "Inter", sans-serif;
+  /* ---- Tipografía DESIGN.md ---- */
+  /* Títulos: Libre Baskerville (serif) */
+  --font-display: "Libre Baskerville", serif;
+  --font-h1: "Libre Baskerville", serif;
+  --font-h2: "Libre Baskerville", serif;
+  --font-h3: "Libre Baskerville", serif;
+  /* UI/cuerpo: Roboto (sans-serif) */
+  --font-label-md: "Roboto", sans-serif;
+  --font-label-sm: "Roboto", sans-serif;
+  --font-body-lg: "Roboto", sans-serif;
+  --font-body-md: "Roboto", sans-serif;
+  --font-body-sm: "Roboto", sans-serif;
 
   --text-display: 36px;
   --text-display--line-height: 1.2;
   --text-display--letter-spacing: -0.02em;
   --text-display--font-weight: 700;
 
-  --text-h1: 30px;
-  --text-h1--line-height: 1.3;
-  --text-h1--font-weight: 600;
+  --text-h1: 36px;
+  --text-h1--line-height: 1.2;
+  --text-h1--font-weight: 700;
 
   --text-h2: 24px;
   --text-h2--line-height: 1.3;
-  --text-h2--font-weight: 600;
+  --text-h2--font-weight: 400;
 
   --text-h3: 20px;
-  --text-h3--line-height: 1.4;
-  --text-h3--font-weight: 600;
+  --text-h3--line-height: 1.3;
+  --text-h3--font-weight: 400;
 
   --text-body-lg: 18px;
   --text-body-lg--line-height: 1.6;
@@ -116,73 +120,6 @@
 }
 
 @layer base {
-  :root[data-theme="dark"],
-  :root[data-theme-resolved="dark"] {
-    --color-primary: #6bd8cb;
-    --color-on-primary: #00201d;
-    --color-primary-container: #004f48;
-    --color-on-primary-container: #d7fff7;
-    --color-on-primary-fixed-variant: #89f5e7;
-    --color-secondary: #b8c8e0;
-    --color-on-secondary: #203145;
-    --color-secondary-container: #38485d;
-    --color-on-secondary-container: #d8e6ff;
-    --color-tertiary: #ffb59a;
-    --color-tertiary-container: #773215;
-    --color-error: #ffb4ab;
-    --color-on-error: #690005;
-    --color-error-container: #93000a;
-    --color-on-error-container: #ffdad6;
-    --color-background: #101414;
-    --color-on-background: #e0e3e1;
-    --color-surface: #101414;
-    --color-on-surface: #e0e3e1;
-    --color-on-surface-variant: #c0c9c6;
-    --color-surface-container-lowest: #0b0f0e;
-    --color-surface-container-low: #191f1e;
-    --color-surface-container: #1d2322;
-    --color-surface-container-high: #27302e;
-    --color-surface-container-highest: #323b39;
-    --color-inverse-surface: #e0e3e1;
-    --color-inverse-on-surface: #2c3130;
-    --color-outline: #879390;
-    --color-outline-variant: #3f4b48;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    :root[data-theme="system"] {
-      --color-primary: #6bd8cb;
-      --color-on-primary: #00201d;
-      --color-primary-container: #004f48;
-      --color-on-primary-container: #d7fff7;
-      --color-on-primary-fixed-variant: #89f5e7;
-      --color-secondary: #b8c8e0;
-      --color-on-secondary: #203145;
-      --color-secondary-container: #38485d;
-      --color-on-secondary-container: #d8e6ff;
-      --color-tertiary: #ffb59a;
-      --color-tertiary-container: #773215;
-      --color-error: #ffb4ab;
-      --color-on-error: #690005;
-      --color-error-container: #93000a;
-      --color-on-error-container: #ffdad6;
-      --color-background: #101414;
-      --color-on-background: #e0e3e1;
-      --color-surface: #101414;
-      --color-on-surface: #e0e3e1;
-      --color-on-surface-variant: #c0c9c6;
-      --color-surface-container-lowest: #0b0f0e;
-      --color-surface-container-low: #191f1e;
-      --color-surface-container: #1d2322;
-      --color-surface-container-high: #27302e;
-      --color-surface-container-highest: #323b39;
-      --color-inverse-surface: #e0e3e1;
-      --color-inverse-on-surface: #2c3130;
-      --color-outline: #879390;
-      --color-outline-variant: #3f4b48;
-    }
-  }
-
   *, ::after, ::before, ::backdrop, ::file-selector-button {
     border-color: var(--color-outline-variant, currentColor);
   }

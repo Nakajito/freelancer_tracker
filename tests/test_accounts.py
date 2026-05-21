@@ -6,20 +6,18 @@ import pytest
 @pytest.mark.django_db
 class TestAccountPreferences:
     def test_user_has_profile_preferences(self, user):
-        assert user.theme_preference == "system"
         assert user.language_preference == "en"
         assert not user.avatar
 
-    def test_preferences_endpoint_updates_theme_and_language(self, authed_client, user):
+    def test_preferences_endpoint_updates_language(self, authed_client, user):
         response = authed_client.post(
             reverse("account-preferences"),
-            {"theme_preference": "dark", "language_preference": "es"},
+            {"language_preference": "es"},
             HTTP_REFERER=reverse("dashboard"),
         )
 
         assert response.status_code == 302
         user.refresh_from_db()
-        assert user.theme_preference == "dark"
         assert user.language_preference == "es"
         assert response.cookies[settings.LANGUAGE_COOKIE_NAME].value == "es"
 
@@ -40,7 +38,6 @@ class TestProfileView:
                 "first_name": "Ada",
                 "last_name": "Lovelace",
                 "email": "ada@example.com",
-                "theme_preference": "light",
                 "language_preference": "es",
             },
         )
@@ -50,7 +47,6 @@ class TestProfileView:
         assert user.first_name == "Ada"
         assert user.last_name == "Lovelace"
         assert user.email == "ada@example.com"
-        assert user.theme_preference == "light"
         assert user.language_preference == "es"
 
 
@@ -92,20 +88,20 @@ def test_i18n_settings_are_configured():
 
 @pytest.mark.django_db
 class TestPublicNavbarPreferenceToggles:
-    def test_login_page_has_theme_button(self, client):
+    def test_login_page_has_no_theme_button(self, client):
         response = client.get(reverse("account_login"))
         assert response.status_code == 200
-        assert b"data-theme-btn" in response.content
+        assert b"data-theme-btn" not in response.content
 
     def test_login_page_has_language_button(self, client):
         response = client.get(reverse("account_login"))
         assert response.status_code == 200
         assert b"data-lang-btn" in response.content
 
-    def test_signup_page_has_theme_button(self, client):
+    def test_signup_page_has_no_theme_button(self, client):
         response = client.get(reverse("account_signup"))
         assert response.status_code == 200
-        assert b"data-theme-btn" in response.content
+        assert b"data-theme-btn" not in response.content
 
     def test_signup_page_has_language_button(self, client):
         response = client.get(reverse("account_signup"))
@@ -118,7 +114,7 @@ class TestLangSwitchRedirect:
     def test_preferences_lang_switch_redirects_to_translated_url(self, authed_client):
         response = authed_client.post(
             "/en/accounts/preferences/",
-            {"theme_preference": "system", "language_preference": "es"},
+            {"language_preference": "es"},
             HTTP_REFERER="http://testserver/en/dashboard/",
         )
 
@@ -132,7 +128,6 @@ class TestLangSwitchRedirect:
                 "first_name": user.first_name,
                 "last_name": user.last_name,
                 "email": user.email,
-                "theme_preference": "system",
                 "language_preference": "es",
             },
         )
@@ -143,10 +138,10 @@ class TestLangSwitchRedirect:
 
 @pytest.mark.django_db
 class TestContextProcessorAnonymous:
-    def test_anonymous_user_gets_system_theme(self, client):
-        response = client.get(reverse("account_login"))
-        assert response.context["active_theme"] == "system"
-
     def test_anonymous_user_gets_default_language(self, client):
         response = client.get(reverse("account_login"))
         assert response.context["active_language"] in ("en", "es")
+
+    def test_active_theme_not_in_context(self, client):
+        response = client.get(reverse("account_login"))
+        assert "active_theme" not in response.context

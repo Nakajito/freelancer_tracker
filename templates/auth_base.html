@@ -21,20 +21,12 @@
                     <input type="hidden" name="next" value="{{ request.path }}">
                     <input type="hidden" id="lang-input-public" name="language" value="{{ active_language|default:'en' }}">
                 </form>
-                <div class="hidden sm:flex items-center gap-2">
-                    <button type="button" data-theme-btn data-value="{{ active_theme|default:'system' }}"
-                            class="flex items-center gap-1.5 border border-outline-variant rounded-full py-2 px-3 font-body-sm text-body-sm text-on-surface bg-surface-container-low hover:bg-surface-container transition-all cursor-pointer"
-                            aria-label="Toggle theme">
-                        <span class="material-symbols-outlined text-[18px]" data-theme-icon>display_settings</span>
-                        <span data-theme-label>{% trans "System" %}</span>
-                    </button>
-                    <button type="button" data-lang-btn data-value="{{ active_language|default:'en' }}"
-                            class="flex items-center gap-1.5 border border-outline-variant rounded-full py-2 px-3 font-body-sm text-body-sm text-on-surface bg-surface-container-low hover:bg-surface-container transition-all cursor-pointer"
-                            aria-label="Toggle language">
-                        <span class="material-symbols-outlined text-[18px]">translate</span>
-                        <span data-lang-label>EN</span>
-                    </button>
-                </div>
+                <button type="button" data-lang-btn data-value="{{ active_language|default:'en' }}"
+                        class="flex items-center gap-1.5 border border-outline-variant rounded-full py-2 px-3 font-body-sm text-body-sm text-on-surface bg-surface-container-low hover:bg-surface-container transition-all cursor-pointer"
+                        aria-label="Toggle language">
+                    <span class="material-symbols-outlined text-[18px]">translate</span>
+                    <span data-lang-label>EN</span>
+                </button>
                 {% endif %}
                 {% if user.is_authenticated %}
                 <a href="{% url 'dashboard' %}" class="px-4 py-2 font-label-md text-label-md bg-primary text-on-primary rounded hover:bg-primary-container transition-colors shadow-xs">{% trans "Dashboard" %}</a>
