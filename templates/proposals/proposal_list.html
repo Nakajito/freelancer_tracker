@@ -27,10 +27,10 @@
 </div>
 
 <!-- Filters -->
-<form method="get" class="bg-surface-container-lowest border border-outline-variant rounded-xl p-4 mb-stack-md flex flex-col md:flex-row gap-4 items-center justify-between shadow-xs">
-    <div class="flex flex-col sm:flex-row w-full md:w-auto gap-4">
-        <div class="relative min-w-[180px]">
-            <select name="status" class="w-full appearance-none bg-surface border border-outline-variant rounded-lg py-2 pl-4 pr-10 font-body-sm text-body-sm text-on-surface focus:outline-hidden focus:ring-2 focus:ring-primary cursor-pointer">
+<form method="get" id="filter-form" class="bg-surface-container-lowest border border-outline-variant rounded-xl p-4 mb-stack-md flex flex-col gap-4 shadow-xs">
+    <div class="flex flex-col sm:flex-row flex-wrap gap-4 items-center">
+        <div class="relative min-w-[160px]">
+            <select name="status" onchange="document.getElementById('filter-form').submit()" class="w-full appearance-none bg-surface border border-outline-variant rounded-lg py-2 pl-4 pr-10 font-body-sm text-body-sm text-on-surface focus:outline-hidden focus:ring-2 focus:ring-primary cursor-pointer">
                 <option value="">{% trans "All Statuses" %}</option>
                 {% for value,label in status_choices %}
                 <option value="{{ value }}" {% if request.GET.status == value %}selected{% endif %}>{{ label }}</option>
@@ -38,8 +38,8 @@
             </select>
             <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant">arrow_drop_down</span>
         </div>
-        <div class="relative min-w-[180px]">
-            <select name="platform" class="w-full appearance-none bg-surface border border-outline-variant rounded-lg py-2 pl-4 pr-10 font-body-sm text-body-sm text-on-surface focus:outline-hidden focus:ring-2 focus:ring-primary cursor-pointer">
+        <div class="relative min-w-[160px]">
+            <select name="platform" onchange="document.getElementById('filter-form').submit()" class="w-full appearance-none bg-surface border border-outline-variant rounded-lg py-2 pl-4 pr-10 font-body-sm text-body-sm text-on-surface focus:outline-hidden focus:ring-2 focus:ring-primary cursor-pointer">
                 <option value="">{% trans "All Platforms" %}</option>
                 {% for value,label in platform_choices %}
                 <option value="{{ value }}" {% if request.GET.platform == value %}selected{% endif %}>{{ label }}</option>
@@ -47,11 +47,38 @@
             </select>
             <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant">arrow_drop_down</span>
         </div>
+        <div class="relative min-w-[120px]">
+            <select name="year" onchange="document.getElementById('filter-form').submit()" class="w-full appearance-none bg-surface border border-outline-variant rounded-lg py-2 pl-4 pr-10 font-body-sm text-body-sm text-on-surface focus:outline-hidden focus:ring-2 focus:ring-primary cursor-pointer">
+                <option value="">{% trans "All Years" %}</option>
+                {% for y in year_choices %}
+                <option value="{{ y }}" {% if selected_year == y|stringformat:"s" %}selected{% endif %}>{{ y }}</option>
+                {% endfor %}
+            </select>
+            <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant">arrow_drop_down</span>
+        </div>
+        <div class="relative min-w-[140px]">
+            <select name="month" onchange="document.getElementById('filter-form').submit()" class="w-full appearance-none bg-surface border border-outline-variant rounded-lg py-2 pl-4 pr-10 font-body-sm text-body-sm text-on-surface focus:outline-hidden focus:ring-2 focus:ring-primary cursor-pointer">
+                <option value="">{% trans "All Months" %}</option>
+                {% for num,name in month_choices %}
+                <option value="{{ num }}" {% if selected_month == num|stringformat:"s" %}selected{% endif %}>{{ name }}</option>
+                {% endfor %}
+            </select>
+            <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant">arrow_drop_down</span>
+        </div>
+        <div class="relative min-w-[150px]">
+            <select name="date_field" onchange="document.getElementById('filter-form').submit()" class="w-full appearance-none bg-surface border border-outline-variant rounded-lg py-2 pl-4 pr-10 font-body-sm text-body-sm text-on-surface focus:outline-hidden focus:ring-2 focus:ring-primary cursor-pointer">
+                <option value="sent_date" {% if selected_date_field == "sent_date" %}selected{% endif %}>{% trans "Sent Date" %}</option>
+                <option value="created_at" {% if selected_date_field == "created_at" %}selected{% endif %}>{% trans "Created Date" %}</option>
+            </select>
+            <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant">arrow_drop_down</span>
+        </div>
+        {% if request.GET.status or request.GET.platform or request.GET.year or request.GET.month %}
+        <a href="{% url 'proposal-list' %}" class="px-4 py-2 border border-outline-variant text-on-surface-variant rounded-lg font-label-md text-label-md hover:bg-surface-container transition-colors flex items-center gap-2 whitespace-nowrap">
+            <span class="material-symbols-outlined text-[18px]">close</span>
+            {% trans "Clear" %}
+        </a>
+        {% endif %}
     </div>
-    <button type="submit" class="px-4 py-2 bg-primary text-on-primary rounded-lg font-label-md text-label-md hover:bg-primary-container transition-colors shadow-xs flex items-center gap-2">
-        <span class="material-symbols-outlined text-[18px]">filter_list</span>
-        {% trans "Filter" %}
-    </button>
 </form>
 
 <!-- Data Table -->
