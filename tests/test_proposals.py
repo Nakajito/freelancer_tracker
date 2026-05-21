@@ -160,3 +160,125 @@ class TestProposalListTemplateChoices:
         assert response.status_code == 200
         assert response.context["status_choices"] == list(ProposalStatus.choices)
         assert response.context["platform_choices"] == list(Platform.choices)
+
+
+@pytest.mark.django_db
+class TestSearchView:
+    def test_requires_login(self, client):
+        response = client.get(reverse("search"), {"q": "test"})
+        assert response.status_code == 302
+
+    def test_empty_query_returns_no_results(self, authed_client):
+        response = authed_client.get(reverse("search"), {"q": ""})
+        assert response.status_code == 200
+        assert response.context["proposals"] == []
+        assert response.context["clients"] == []
+
+    def test_short_query_returns_no_results(self, authed_client):
+        response = authed_client.get(reverse("search"), {"q": "a"})
+        assert response.status_code == 200
+        assert response.context["proposals"] == []
+
+    def test_finds_proposal_by_title(self, authed_client, proposal):
+        response = authed_client.get(reverse("search"), {"q": "Test Proposal"})
+        assert response.status_code == 200
+        assert proposal in response.context["proposals"]
+
+    def test_finds_proposal_by_client_name(self, authed_client, proposal, client_model):
+        response = authed_client.get(reverse("search"), {"q": client_model.name})
+        assert response.status_code == 200
+        assert proposal in response.context["proposals"]
+
+    def test_finds_client_by_name(self, authed_client, client_model):
+        response = authed_client.get(reverse("search"), {"q": "Test Client"})
+        assert response.status_code == 200
+        assert client_model in response.context["clients"]
+
+    def test_does_not_return_other_user_results(self, authed_client, other_user):
+        other_proposal = Proposal.objects.create(
+            owner=other_user,
+            title="Secret Proposal",
+            status=ProposalStatus.DRAFT,
+            amount=500,
+        )
+        response = authed_client.get(reverse("search"), {"q": "Secret"})
+        assert response.status_code == 200
+        assert other_proposal not in response.context["proposals"]
+
+    def test_case_insensitive_search(self, authed_client, proposal):
+        response = authed_client.get(reverse("search"), {"q": "test proposal"})
+        assert response.status_code == 200
+        assert proposal in response.context["proposals"]
+
+
+@pytest.mark.django_db
+class TestProposalQuerySetSearch:
+    def test_search_by_title(self, user, proposal):
+        results = Proposal.objects.for_user(user).search("Test Proposal")
+        assert proposal in results
+
+    def test_search_by_client_name(self, user, proposal, client_model):
+        results = Proposal.objects.for_user(user).search(client_model.name)
+        assert proposal in results
+
+    def test_search_no_match(self, user, proposal):
+        results = Proposal.objects.for_user(user).search("xyznonexistent")
+        assert proposal not in results
+
+
+@pytest.mark.django_db
+class TestProposalListPeriodFilter:
+    def _proposal(self, user, client_model, sent_date=None, **kwargs):
+        kwargs.setdefault("status", ProposalStatus.DRAFT)
+        return Proposal.objects.create(
+            owner=user,
+            title=f"P-{sent_date}",
+            client=client_model,
+            sent_date=sent_date,
+            **kwargs,
+        )
+
+    def test_year_month_filter_sent_date(self, authed_client, user, client_model):
+        self._proposal(user, client_model, sent_date=date(2026, 5, 10))
+        self._proposal(user, client_model, sent_date=date(2026, 3, 10))
+        url = reverse("proposal-list") + "?year=2026&month=5&date_field=sent_date"
+        response = authed_client.get(url)
+        assert response.status_code == 200
+        assert len(list(response.context["proposals"])) == 1
+
+    def test_year_month_filter_created_at(self, authed_client, user, client_model):
+        self._proposal(user, client_model)  # created now, no sent_date
+        today = date.today()
+        url = reverse("proposal-list") + f"?year={today.year}&month={today.month}&date_field=created_at"
+        response = authed_client.get(url)
+        assert len(list(response.context["proposals"])) >= 1
+
+    def test_sent_date_null_fallback(self, authed_client, user, client_model):
+        # proposal with no sent_date → should match via created_at
+        p = self._proposal(user, client_model)  # sent_date=None
+        today = date.today()
+        url = reverse("proposal-list") + f"?year={today.year}&month={today.month}&date_field=sent_date"
+        response = authed_client.get(url)
+        assert p in list(response.context["proposals"])
+
+    def test_no_period_params_returns_all(self, authed_client, user, client_model, proposal):
+        response = authed_client.get(reverse("proposal-list"))
+        assert response.status_code == 200
+        assert proposal in list(response.context["proposals"])
+
+    def test_context_has_year_and_month_choices(self, authed_client):
+        response = authed_client.get(reverse("proposal-list"))
+        ctx = response.context
+        assert "year_choices" in ctx
+        assert "month_choices" in ctx
+        assert len(ctx["month_choices"]) == 12
+        assert len(ctx["year_choices"]) == 5
+
+    def test_period_combines_with_status_filter(self, authed_client, user, client_model):
+        self._proposal(user, client_model, sent_date=date(2026, 5, 1), status=ProposalStatus.SENT)
+        self._proposal(user, client_model, sent_date=date(2026, 5, 2), status=ProposalStatus.DRAFT)
+        url = reverse("proposal-list") + "?year=2026&month=5&date_field=sent_date&status=sent"
+        response = authed_client.get(url)
+        proposals = list(response.context["proposals"])
+        assert len(proposals) == 1
+        assert proposals[0].status == ProposalStatus.SENT
