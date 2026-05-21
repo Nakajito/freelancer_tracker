@@ -1,3 +1,4 @@
+import calendar
 import json
 from datetime import date, timedelta
 
@@ -13,6 +14,12 @@ from django.views.generic import TemplateView
 
 from apps.dashboard.services import DashboardService
 from apps.exports.services import MonthlySummaryGenerator
+
+
+def _add_months(year: int, month: int, n: int) -> date:
+    """Return the first day of the month that is n months after (year, month)."""
+    m = month + n
+    return date(year + (m - 1) // 12, (m - 1) % 12 + 1, 1)
 
 
 class LandingView(TemplateView):
@@ -76,21 +83,34 @@ class MonthlySummaryView(LoginRequiredMixin, TemplateView):
         user = self.request.user
 
         today = date.today()
-        period = self.request.GET.get("period", "90")
+        period = self.request.GET.get("period", "quarterly")
         year = int(self.request.GET.get("year", today.year))
 
-        if period == "30":
-            start_date = today - timedelta(days=30)
-            end_date = today + timedelta(days=1)
-            period_label = "Last 30 Days"
-        elif period == "year":
+        default_quarter = (today.month - 1) // 3 + 1
+        default_half = 1 if today.month <= 6 else 2
+
+        month = int(self.request.GET.get("month", today.month))
+        quarter = int(self.request.GET.get("quarter", default_quarter))
+        half = int(self.request.GET.get("half", default_half))
+
+        if period == "monthly":
+            start_date = date(year, month, 1)
+            end_date = _add_months(year, month, 1)
+            period_label = f"{calendar.month_name[month]} {year}"
+        elif period == "quarterly":
+            start_month = (quarter - 1) * 3 + 1
+            start_date = date(year, start_month, 1)
+            end_date = _add_months(year, start_month, 3)
+            period_label = f"Q{quarter} {year}"
+        elif period == "semi-annual":
+            start_month = 1 if half == 1 else 7
+            start_date = date(year, start_month, 1)
+            end_date = _add_months(year, start_month, 6)
+            period_label = f"H{half} {year}"
+        else:  # "annual"
             start_date = date(year, 1, 1)
             end_date = date(year + 1, 1, 1)
             period_label = str(year)
-        else:  # "90" default
-            start_date = today - timedelta(days=90)
-            end_date = today + timedelta(days=1)
-            period_label = "Last 90 Days"
 
         summary = MonthlySummaryGenerator.generate(
             user, start_date, end_date, period_label
@@ -102,6 +122,11 @@ class MonthlySummaryView(LoginRequiredMixin, TemplateView):
         context["summary"] = summary
         context["year"] = year
         context["period"] = period
+        context["month"] = month
+        context["quarter"] = quarter
+        context["half"] = half
+        context["month_choices"] = [(i, calendar.month_name[i]) for i in range(1, 13)]
+        context["year_choices"] = list(range(today.year, today.year - 5, -1))
         context["chart_labels"] = json.dumps(chart["labels"])
         context["chart_data"] = json.dumps(chart["data"])
         context["platform_conversion"] = DashboardService.get_platform_conversion(

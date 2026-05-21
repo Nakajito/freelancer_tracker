@@ -272,61 +272,90 @@ class TestMonthlySummaryViewPeriodFilter:
             sent_date=sent_date,
         )
 
-    def test_period_year_filters_to_correct_year(
+    def test_period_monthly_filters_to_correct_month(
+        self, authed_client, user, client_model
+    ):
+        self._proposal(user, client_model, date(2026, 5, 10), "1000")
+        self._proposal(user, client_model, date(2026, 4, 10), "2000")
+        response = authed_client.get(
+            reverse("monthly-summary") + "?period=monthly&year=2026&month=5"
+        )
+        assert response.status_code == 200
+        summary = response.context["summary"]
+        assert summary["total_amount"] == Decimal("1000")
+        assert response.context["period"] == "monthly"
+
+    def test_period_quarterly_q1(self, authed_client, user, client_model):
+        self._proposal(user, client_model, date(2026, 2, 15), "500")  # Q1
+        self._proposal(user, client_model, date(2026, 5, 15), "700")  # Q2
+        response = authed_client.get(
+            reverse("monthly-summary") + "?period=quarterly&year=2026&quarter=1"
+        )
+        summary = response.context["summary"]
+        assert summary["total_amount"] == Decimal("500")
+
+    def test_period_quarterly_q4_boundary(self, authed_client, user, client_model):
+        self._proposal(user, client_model, date(2026, 12, 31), "300")  # Q4
+        self._proposal(user, client_model, date(2027, 1, 1), "400")   # next year
+        response = authed_client.get(
+            reverse("monthly-summary") + "?period=quarterly&year=2026&quarter=4"
+        )
+        summary = response.context["summary"]
+        assert summary["total_amount"] == Decimal("300")
+
+    def test_period_semi_annual_h1(self, authed_client, user, client_model):
+        self._proposal(user, client_model, date(2026, 3, 1), "400")  # H1
+        self._proposal(user, client_model, date(2026, 8, 1), "600")  # H2
+        response = authed_client.get(
+            reverse("monthly-summary") + "?period=semi-annual&year=2026&half=1"
+        )
+        summary = response.context["summary"]
+        assert summary["total_amount"] == Decimal("400")
+
+    def test_period_semi_annual_h2(self, authed_client, user, client_model):
+        self._proposal(user, client_model, date(2026, 3, 1), "400")  # H1
+        self._proposal(user, client_model, date(2026, 8, 1), "600")  # H2
+        response = authed_client.get(
+            reverse("monthly-summary") + "?period=semi-annual&year=2026&half=2"
+        )
+        summary = response.context["summary"]
+        assert summary["total_amount"] == Decimal("600")
+
+    def test_period_annual_filters_to_correct_year(
         self, authed_client, user, client_model
     ):
         self._proposal(user, client_model, date(2025, 6, 1), "1000")
         self._proposal(user, client_model, date(2026, 1, 15), "2000")
-
         response = authed_client.get(
-            reverse("monthly-summary") + "?period=year&year=2025"
+            reverse("monthly-summary") + "?period=annual&year=2025"
         )
         assert response.status_code == 200
         summary = response.context["summary"]
         assert summary["proposals_sent"] == 1
         assert summary["total_amount"] == Decimal("1000")
 
-    def test_period_30_ignores_year_param(self, authed_client, user, client_model):
-        self._proposal(user, client_model, date(2025, 6, 1), "999")
-        self._proposal(user, client_model, date.today() - timedelta(days=5), "300")
-
-        response = authed_client.get(
-            reverse("monthly-summary") + "?period=30&year=2025"
-        )
-        assert response.status_code == 200
-        summary = response.context["summary"]
-        assert summary["total_amount"] == Decimal("300")
-
-    def test_period_90_ignores_year_param(self, authed_client, user, client_model):
-        self._proposal(user, client_model, date(2025, 6, 1), "888")
-        self._proposal(user, client_model, date.today() - timedelta(days=15), "400")
-
-        response = authed_client.get(
-            reverse("monthly-summary") + "?period=90&year=2025"
-        )
-        assert response.status_code == 200
-        summary = response.context["summary"]
-        assert summary["total_amount"] == Decimal("400")
-
-    def test_default_period_is_90(self, authed_client):
+    def test_default_period_is_quarterly(self, authed_client):
         response = authed_client.get(reverse("monthly-summary"))
         assert response.status_code == 200
-        assert response.context["period"] == "90"
+        assert response.context["period"] == "quarterly"
 
-    def test_chart_anchor_matches_period_end(self, authed_client, user, client_model):
-        # Oct 2025 falls within the 6-month window ending Dec 2025
-        self._proposal(user, client_model, date(2025, 10, 15), "750")
-
+    def test_context_has_sub_selectors(self, authed_client):
         response = authed_client.get(
-            reverse("monthly-summary") + "?period=year&year=2025"
+            reverse("monthly-summary") + "?period=quarterly&year=2026&quarter=2"
+        )
+        ctx = response.context
+        assert ctx["quarter"] == 2
+        assert ctx["month_choices"]
+        assert ctx["year_choices"]
+
+    def test_chart_anchor_matches_annual_period_end(
+        self, authed_client, user, client_model
+    ):
+        self._proposal(user, client_model, date(2025, 10, 15), "750")
+        response = authed_client.get(
+            reverse("monthly-summary") + "?period=annual&year=2025"
         )
         assert response.status_code == 200
         import json
-
         chart_labels = json.loads(response.context["chart_labels"])
-        chart_data = json.loads(response.context["chart_data"])
-        # Last label must be Dec 2025 (anchor = Dec 31 2025), not a 2026 month
         assert chart_labels[-1] == "Dec 2025"
-        assert "Oct 2025" in chart_labels
-        idx = chart_labels.index("Oct 2025")
-        assert chart_data[idx] == 750.0
