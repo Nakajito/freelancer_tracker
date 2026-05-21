@@ -38,18 +38,35 @@ class ProposalListView(OwnerQuerysetMixin, ListView):
         month = self.request.GET.get("month")
         date_field = self.request.GET.get("date_field", "sent_date")
 
-        if year and month:
+        if year:
             try:
-                y, m = int(year), int(month)
+                y = int(year)
             except ValueError, TypeError:
                 return qs
-            if date_field == "sent_date":
-                qs = qs.filter(
-                    Q(sent_date__year=y, sent_date__month=m)
-                    | Q(sent_date__isnull=True, created_at__year=y, created_at__month=m)
-                )
+            if month:
+                try:
+                    m = int(month)
+                except ValueError, TypeError:
+                    return qs
+                if date_field == "sent_date":
+                    qs = qs.filter(
+                        Q(sent_date__year=y, sent_date__month=m)
+                        | Q(
+                            sent_date__isnull=True,
+                            created_at__year=y,
+                            created_at__month=m,
+                        )
+                    )
+                else:
+                    qs = qs.filter(created_at__year=y, created_at__month=m)
             else:
-                qs = qs.filter(created_at__year=y, created_at__month=m)
+                if date_field == "sent_date":
+                    qs = qs.filter(
+                        Q(sent_date__year=y)
+                        | Q(sent_date__isnull=True, created_at__year=y)
+                    )
+                else:
+                    qs = qs.filter(created_at__year=y)
 
         return qs
 

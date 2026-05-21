@@ -282,6 +282,15 @@ class TestProposalListPeriodFilter:
         assert len(ctx["month_choices"]) == 12
         assert len(ctx["year_choices"]) == 5
 
+    def test_year_only_filter_sent_date(self, authed_client, user, client_model):
+        self._proposal(user, client_model, sent_date=date(2026, 3, 10))
+        self._proposal(user, client_model, sent_date=date(2025, 3, 10))
+        url = reverse("proposal-list") + "?year=2026&month=&date_field=sent_date"
+        response = authed_client.get(url)
+        proposals = list(response.context["proposals"])
+        assert len(proposals) == 1
+        assert proposals[0].sent_date.year == 2026
+
     def test_period_combines_with_status_filter(
         self, authed_client, user, client_model
     ):
