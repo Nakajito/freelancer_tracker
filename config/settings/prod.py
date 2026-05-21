@@ -47,7 +47,7 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = "resend"
 EMAIL_HOST_PASSWORD = env("RESEND_API_KEY")  # noqa: F405
 DEFAULT_FROM_EMAIL = env(  # noqa: F405
-    "DEFAULT_FROM_EMAIL", default="noreply@freelancer-tracker.dabg.dev"
+    "DEFAULT_FROM_EMAIL", default="noreply@pipelancer.dabg.dev"
 )
 SERVER_EMAIL = DEFAULT_FROM_EMAIL
 

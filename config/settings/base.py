@@ -48,6 +48,7 @@ MIDDLEWARE = [
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
+    "apps.core.middleware.DemoReadOnlyMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "allauth.account.middleware.AccountMiddleware",
 ]
@@ -66,6 +67,7 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
                 "apps.accounts.context_processors.preferences",
+                "apps.core.context_processors.demo_mode",
             ],
         },
     },
@@ -119,6 +121,7 @@ ACCOUNT_SESSION_ENGINE = "django.contrib.sessions.backends.db"
 
 LOGIN_REDIRECT_URL = "dashboard"
 ACCOUNT_LOGOUT_REDIRECT_URL = "account_login"
+DEMO_USER_EMAIL = "demo@propotrack.test"
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [

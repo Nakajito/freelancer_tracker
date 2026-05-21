@@ -1,12 +1,16 @@
 {% extends "app_base.html" %}
 {% load i18n %}
 
-{% block title %}{% trans "Clients" %} - PropoTrack{% endblock %}
+{% block title %}{% trans "Clients" %} - Pipelancer{% endblock %}
 {% block active_nav %}clients{% endblock %}
 
 {% block app_content %}
 {% url 'client-create' as create_url %}
+{% if is_demo %}
+{% include "partials/_page_header.html" with title="Clients" subtitle="Manage your client relationships." badge=clients|length|stringformat:"d Total" %}
+{% else %}
 {% include "partials/_page_header.html" with title="Clients" subtitle="Manage your client relationships." badge=clients|length|stringformat:"d Total" action_url=create_url action_label="Add Client" %}
+{% endif %}
 
 <div class="bg-surface-container-lowest border border-outline-variant rounded-xl shadow-xs overflow-hidden">
     <div class="overflow-x-auto">
@@ -35,16 +39,22 @@
                     <td class="py-4 px-6 text-right">
                         <div class="flex items-center justify-end gap-2">
                             <span class="font-body-sm text-body-sm text-on-surface-variant">{% blocktrans with count=client.proposal_set.count|default:0 %}{{ count }} proposals{% endblocktrans %}</span>
-                            <a href="{% url 'client-delete' client.pk %}" class="opacity-0 group-hover:opacity-100 transition-opacity p-1.5 text-error hover:bg-error-container rounded-md" title="{% trans 'Delete' %}">
+                            {% if not is_demo %}
+                            <a href="{% url 'client-delete' client.pk %}" class="opacity-0 group-hover:opacity-100 transition-opacity p-1.5 text-error hover:bg-error-container rounded-md" title='{% trans "Delete" %}'>
                                 <span class="material-symbols-outlined text-[18px]">delete</span>
                             </a>
+                            {% endif %}
                         </div>
                     </td>
                 </tr>
                 {% empty %}
                 <tr>
                     <td colspan="4">
+                        {% if is_demo %}
+                        {% include "partials/_empty_state.html" with icon="groups" title="No clients yet" message="Add your first client to get started." %}
+                        {% else %}
                         {% include "partials/_empty_state.html" with icon="groups" title="No clients yet" message="Add your first client to get started." action_url=create_url action_label="Add Client" %}
+                        {% endif %}
                     </td>
                 </tr>
                 {% endfor %}

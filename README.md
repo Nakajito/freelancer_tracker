@@ -1,4 +1,4 @@
-# PropoTrack - Freelance Proposal Tracker
+# Pipelancer - Freelance Proposal Tracker
 
 A Django web application for freelancers to track proposals, clients, follow-ups, and hours with dashboards, templates, reminders, and analytics.
 

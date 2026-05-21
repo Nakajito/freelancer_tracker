@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% block title %}{% trans "Confirm Donation" %}{% endblock %}
-{% block meta_description %}{% trans "Complete your contribution to PropoTrack — secure and encrypted checkout." %}{% endblock %}
+{% block meta_description %}{% trans "Complete your contribution to Pipelancer — secure and encrypted checkout." %}{% endblock %}
 
 {% block content %}
 <nav class="bg-surface/80 backdrop-blur-md sticky top-0 z-50 border-b border-outline-variant/30">
     <div class="flex justify-between items-center px-container-padding py-4 max-w-[1440px] mx-auto w-full">
-        <a href="{% url 'landing' %}" class="font-display text-h2 font-bold text-primary tracking-tight">PropoTrack</a>
+        <a href="{% url 'landing' %}" class="font-display text-h2 font-bold text-primary tracking-tight">Pipelancer</a>
         <div class="hidden md:flex items-center gap-gutter">
             <a href="{% url 'landing' %}#features" class="text-on-secondary-fixed-variant hover:text-primary transition-colors font-label-md text-label-md">{% trans "Features" %}</a>
             <a href="{% url 'landing' %}#advantages" class="text-on-secondary-fixed-variant hover:text-primary transition-colors font-label-md text-label-md">{% trans "Advantages" %}</a>
@@ -31,7 +31,7 @@
             {% trans "Back" %}
         </a>
         <h1 class="font-h1 text-h1 text-on-surface mb-2">{% trans "Complete your contribution" %}</h1>
-        <p class="font-body-md text-body-md text-on-surface-variant">{% trans "Your support drives the continuous development of PropoTrack." %}</p>
+        <p class="font-body-md text-body-md text-on-surface-variant">{% trans "Your support drives the continuous development of Pipelancer." %}</p>
     </div>
 
     <form method="post" class="grid grid-cols-1 lg:grid-cols-12 gap-gutter lg:gap-stack-lg items-start">
@@ -157,14 +157,14 @@
 
 <footer class="bg-surface-container-low border-t border-outline-variant/50 mt-16">
     <div class="w-full px-container-padding py-stack-lg max-w-[1440px] mx-auto flex flex-col md:flex-row justify-between items-center gap-gutter">
-        <div class="font-h3 text-h3 font-bold text-on-surface">PropoTrack</div>
+        <div class="font-h3 text-h3 font-bold text-on-surface">Pipelancer</div>
         <div class="flex flex-wrap justify-center gap-6">
             <a href="{% url 'privacy_policy' %}" class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-all">{% trans "Privacy Policy" %}</a>
             <a href="{% url 'terms_of_service' %}" class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-all">{% trans "Terms of Service" %}</a>
             <a href="{% url 'security' %}" class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-all">{% trans "Security" %}</a>
             <a href="{% url 'donate' %}" class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-all">{% trans "Donate" %}</a>
         </div>
-        <div class="font-body-sm text-body-sm text-on-surface-variant">© {% now "Y" %} PropoTrack.</div>
+        <div class="font-body-sm text-body-sm text-on-surface-variant">© {% now "Y" %} Pipelancer.</div>
     </div>
 </footer>
 {% endblock %}

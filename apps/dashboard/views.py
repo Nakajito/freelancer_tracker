@@ -1,8 +1,14 @@
 import json
 from datetime import date, timedelta
 
+from django.conf import settings
+from django.contrib import messages
+from django.contrib.auth import get_user_model, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import redirect
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
+from django.views import View
 from django.views.generic import TemplateView
 
 from apps.dashboard.services import DashboardService
@@ -11,6 +17,38 @@ from apps.exports.services import MonthlySummaryGenerator
 
 class LandingView(TemplateView):
     template_name = "dashboard/landing.html"
+
+
+class DemoAutoLoginView(View):
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return redirect("dashboard")
+        User = get_user_model()
+        try:
+            user = User.objects.get(email=settings.DEMO_USER_EMAIL)
+        except User.DoesNotExist:
+            messages.error(request, _("Demo not available. Please sign up."))
+            return redirect("landing")
+        login(request, user, backend="django.contrib.auth.backends.ModelBackend")
+        return redirect("dashboard")
+
+
+class DemoSignupRedirectView(View):
+    """Log out demo user and redirect to signup so the form is reachable."""
+
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            logout(request)
+        return redirect("account_signup")
+
+
+class DemoExitView(View):
+    """Log out demo user and return to the landing page."""
+
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            logout(request)
+        return redirect("landing")
 
 
 class DashboardView(LoginRequiredMixin, TemplateView):

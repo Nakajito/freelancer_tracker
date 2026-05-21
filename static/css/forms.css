@@ -61,6 +61,6 @@ input[type=checkbox] {
     accent-color: var(--color-primary);
 }
 
-.currency-field .currency-input {
+.currency-field input.currency-input {
     padding-left: 2.25rem;
 }

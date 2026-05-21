@@ -1,156 +1,210 @@
 {% extends "base.html" %}
 {% load i18n %}
-
 {% block body %}
-<div class="h-screen flex overflow-hidden">
-    <!-- SideNavBar -->
-    <nav class="hidden md:flex flex-col h-full py-stack-lg fixed left-0 top-0 w-[280px] bg-surface border-r border-outline-variant shadow-xs z-50">
-        <div class="px-container-padding mb-stack-lg">
-            <a href="{% url 'dashboard' %}" class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-lg bg-primary flex items-center justify-center shrink-0">
-                    <span class="material-symbols-outlined text-on-primary text-[22px] fill">view_kanban</span>
-                </div>
-                <div class="flex flex-col">
-                    <span class="font-h2 text-h2 font-bold text-primary">PropoTrack</span>
-                    <span class="font-label-sm text-label-sm text-on-surface-variant">{% trans "Freelancer Pro" %}</span>
-                </div>
-            </a>
-        </div>
-
-        <div class="px-container-padding mb-stack-md">
-            <a href="{% url 'proposal-create' %}" class="w-full bg-primary text-on-primary font-label-md text-label-md py-3 px-4 rounded-lg flex items-center justify-center gap-2 hover:bg-on-primary-fixed-variant transition-colors shadow-xs active:scale-95 duration-150">
-                <span class="material-symbols-outlined text-[20px]">add</span>
-                {% trans "New Proposal" %}
-            </a>
-        </div>
-
-        <div class="flex-1 overflow-y-auto">
-            <ul class="flex flex-col gap-1 pr-4">
-                {% with active=active_nav|default:'' %}
-                <li>
-                    <a href="{% url 'dashboard' %}" class="flex items-center gap-3 px-4 py-3 rounded-r-lg transition-colors {% if active == 'dashboard' %}bg-secondary-container text-on-secondary-container border-l-4 border-primary{% else %}text-on-surface-variant hover:bg-surface-container-high{% endif %}">
-                        <span class="material-symbols-outlined text-[24px]{% if active == 'dashboard' %} fill text-primary{% endif %}">dashboard</span>
-                        <span class="font-label-md text-label-md{% if active == 'dashboard' %} font-bold{% endif %}">{% trans "Dashboard" %}</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{% url 'proposal-list' %}" class="flex items-center gap-3 px-4 py-3 rounded-r-lg transition-colors {% if active == 'proposals' %}bg-secondary-container text-on-secondary-container border-l-4 border-primary{% else %}text-on-surface-variant hover:bg-surface-container-high{% endif %}">
-                        <span class="material-symbols-outlined text-[24px]{% if active == 'proposals' %} fill text-primary{% endif %}">description</span>
-                        <span class="font-label-md text-label-md{% if active == 'proposals' %} font-bold{% endif %}">{% trans "Proposals" %}</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{% url 'client-list' %}" class="flex items-center gap-3 px-4 py-3 rounded-r-lg transition-colors {% if active == 'clients' %}bg-secondary-container text-on-secondary-container border-l-4 border-primary{% else %}text-on-surface-variant hover:bg-surface-container-high{% endif %}">
-                        <span class="material-symbols-outlined text-[24px]{% if active == 'clients' %} fill text-primary{% endif %}">groups</span>
-                        <span class="font-label-md text-label-md{% if active == 'clients' %} font-bold{% endif %}">{% trans "Clients" %}</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{% url 'followup-list' %}" class="flex items-center gap-3 px-4 py-3 rounded-r-lg transition-colors {% if active == 'followups' %}bg-secondary-container text-on-secondary-container border-l-4 border-primary{% else %}text-on-surface-variant hover:bg-surface-container-high{% endif %}">
-                        <span class="material-symbols-outlined text-[24px]{% if active == 'followups' %} fill text-primary{% endif %}">forward_to_inbox</span>
-                        <span class="font-label-md text-label-md{% if active == 'followups' %} font-bold{% endif %}">{% trans "Follow-ups" %}</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{% url 'timeentry-list' %}" class="flex items-center gap-3 px-4 py-3 rounded-r-lg transition-colors {% if active == 'time' %}bg-secondary-container text-on-secondary-container border-l-4 border-primary{% else %}text-on-surface-variant hover:bg-surface-container-high{% endif %}">
-                        <span class="material-symbols-outlined text-[24px]{% if active == 'time' %} fill text-primary{% endif %}">schedule</span>
-                        <span class="font-label-md text-label-md{% if active == 'time' %} font-bold{% endif %}">{% trans "Time Tracking" %}</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{% url 'template-list' %}" class="flex items-center gap-3 px-4 py-3 rounded-r-lg transition-colors {% if active == 'templates' %}bg-secondary-container text-on-secondary-container border-l-4 border-primary{% else %}text-on-surface-variant hover:bg-surface-container-high{% endif %}">
-                        <span class="material-symbols-outlined text-[24px]{% if active == 'templates' %} fill text-primary{% endif %}">article</span>
-                        <span class="font-label-md text-label-md{% if active == 'templates' %} font-bold{% endif %}">{% trans "Templates" %}</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{% url 'monthly-summary' %}" class="flex items-center gap-3 px-4 py-3 rounded-r-lg transition-colors {% if active == 'analytics' %}bg-secondary-container text-on-secondary-container border-l-4 border-primary{% else %}text-on-surface-variant hover:bg-surface-container-high{% endif %}">
-                        <span class="material-symbols-outlined text-[24px]{% if active == 'analytics' %} fill text-primary{% endif %}">analytics</span>
-                        <span class="font-label-md text-label-md{% if active == 'analytics' %} font-bold{% endif %}">{% trans "Analytics" %}</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{% url 'account-profile' %}" class="flex items-center gap-3 px-4 py-3 rounded-r-lg transition-colors {% if active == 'profile' %}bg-secondary-container text-on-secondary-container border-l-4 border-primary{% else %}text-on-surface-variant hover:bg-surface-container-high{% endif %}">
-                        <span class="material-symbols-outlined text-[24px]{% if active == 'profile' %} fill text-primary{% endif %}">account_circle</span>
-                        <span class="font-label-md text-label-md{% if active == 'profile' %} font-bold{% endif %}">{% trans "Profile" %}</span>
-                    </a>
-                </li>
-                {% endwith %}
-            </ul>
-        </div>
-
-        <div class="mt-auto px-4 pt-stack-md border-t border-outline-variant">
-            <ul class="flex flex-col gap-1">
-                <li>
-                    <form method="post" action="{% url 'account_logout' %}">
-                        {% csrf_token %}
-                        <button type="submit" class="w-full flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg">
-                            <span class="material-symbols-outlined text-[24px]">logout</span>
-                            <span class="font-label-md text-label-md">{% trans "Sign Out" %}</span>
-                        </button>
-                    </form>
-                </li>
-            </ul>
-        </div>
-    </nav>
-
-    <!-- Main Content Wrapper -->
-    <div class="flex-1 flex flex-col md:ml-[280px] h-full relative">
-        <!-- TopAppBar -->
-        <header class="bg-surface-container-lowest flex justify-between items-center px-container-padding h-16 z-40 fixed top-0 right-0 w-full md:w-[calc(100%-280px)] border-b border-outline-variant shadow-xs">
-            <div class="flex-1 max-w-md">
-                <div class="relative">
-                    <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
-                    <input class="w-full bg-surface-container-low border border-outline-variant rounded-full py-2 pl-10 pr-4 font-body-sm text-body-sm text-on-surface focus:outline-hidden focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all placeholder:text-outline" placeholder="{% trans 'Search proposals, clients...' %}" type="search">
-                </div>
-            </div>
-            <div class="flex items-center gap-gutter ml-auto">
-                {% block topbar_actions %}{% endblock %}
-                <form id="prefs-form" method="post" action="{% url 'account-preferences' %}" class="hidden">
-                    {% csrf_token %}
-                    <input type="hidden" id="lang-input" name="language_preference" value="{{ user.language_preference }}">
-                </form>
-                <div class="flex items-center gap-2">
-                    <button type="button" data-lang-btn data-value="{{ user.language_preference }}"
-                            class="flex items-center gap-1.5 border border-outline-variant rounded-full py-2 px-3 font-body-sm text-body-sm text-on-surface bg-surface-container-low hover:bg-surface-container transition-all cursor-pointer"
-                            aria-label="{% trans 'Toggle language' %}">
-                        <span class="material-symbols-outlined text-[18px]">translate</span>
-                        <span data-lang-label>EN</span>
-                    </button>
-                </div>
-                <button class="p-2 text-on-surface-variant hover:text-primary hover:bg-surface-container rounded-full transition-all">
-                    <span class="material-symbols-outlined">notifications</span>
-                </button>
-                <a href="{% url 'account-profile' %}" class="h-8 w-8 rounded-full bg-secondary-container overflow-hidden ml-2 flex-shrink-0 border border-outline-variant flex items-center justify-center" aria-label="{% trans 'Open profile' %}">
-                    {% if user.avatar %}
-                    <img src="{{ user.avatar.url }}" alt="" class="h-full w-full object-cover">
-                    {% else %}
-                    <span class="font-label-md text-label-md text-on-secondary-container uppercase">{{ user.email|slice:":1"|default:"?" }}</span>
-                    {% endif %}
+    <div class="h-screen flex overflow-hidden">
+        <!-- SideNavBar -->
+        <nav class="hidden md:flex flex-col h-full py-stack-lg fixed left-0 top-0 w-[280px] bg-surface border-r border-outline-variant shadow-xs z-50">
+            <div class="px-container-padding mb-stack-lg">
+                <a href="{% url 'dashboard' %}" class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-lg bg-primary flex items-center justify-center shrink-0">
+                        <span class="material-symbols-outlined text-on-primary text-[22px] fill">view_kanban</span>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-h2 text-h2 font-bold text-primary">Pipelancer</span>
+                        <span class="font-label-sm text-label-sm text-on-surface-variant">{% trans "Freelancer Pro" %}</span>
+                    </div>
                 </a>
             </div>
-        </header>
-
-        <!-- Main Canvas -->
-        <main class="flex-1 overflow-y-auto pt-24 pb-stack-lg px-container-padding bg-background">
-            <div class="max-w-[1440px] mx-auto">
-                {% include "partials/_messages.html" %}
-                {% block app_content %}{% endblock %}
+            <div class="px-container-padding mb-stack-md">
+                {% if is_demo %}
+                    <span class="w-full bg-surface-container-high text-on-surface-variant font-label-md text-label-md py-3 px-4 rounded-lg flex items-center justify-center gap-2 opacity-60 cursor-not-allowed"
+                          title='{% trans "Disabled in demo mode" %}'>
+                        <span class="material-symbols-outlined text-[20px]">add</span>
+                        {% trans "New Proposal" %}
+                    </span>
+                {% else %}
+                    <a href="{% url 'proposal-create' %}"
+                       class="w-full bg-primary text-on-primary font-label-md text-label-md py-3 px-4 rounded-lg flex items-center justify-center gap-2 hover:bg-on-primary-fixed-variant transition-colors shadow-xs active:scale-95 duration-150">
+                        <span class="material-symbols-outlined text-[20px]">add</span>
+                        {% trans "New Proposal" %}
+                    </a>
+                {% endif %}
             </div>
-        </main>
-
-        <footer class="bg-surface-container-low border-t border-outline-variant px-container-padding py-stack-md">
-            <div class="max-w-[1440px] mx-auto flex flex-wrap justify-between items-center gap-gutter text-center">
-                <span class="font-label-sm text-label-sm text-on-surface-variant">© {% now "Y" %} PropoTrack</span>
-                <div class="flex gap-6">
-                    <a href="{% url 'privacy_policy' %}" class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-all">{% trans "Privacy Policy" %}</a>
-                    <a href="{% url 'terms_of_service' %}" class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-all">{% trans "Terms of Service" %}</a>
-                    <a href="{% url 'security' %}" class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-all">{% trans "Security" %}</a>
+            <div class="flex-1 overflow-y-auto">
+                <ul class="flex flex-col gap-1 pr-4">
+                    {% with active=active_nav|default:'' %}
+                        <li>
+                            <a href="{% url 'dashboard' %}"
+                               class="flex items-center gap-3 px-4 py-3 rounded-r-lg transition-colors {% if active == 'dashboard' %}bg-secondary-container text-on-secondary-container border-l-4 border-primary{% else %}text-on-surface-variant hover:bg-surface-container-high{% endif %}">
+                                <span class="material-symbols-outlined text-[24px]{% if active == 'dashboard' %} fill text-primary{% endif %}">dashboard</span>
+                                <span class="font-label-md text-label-md{% if active == 'dashboard' %} font-bold{% endif %}">{% trans "Dashboard" %}</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'proposal-list' %}"
+                               class="flex items-center gap-3 px-4 py-3 rounded-r-lg transition-colors {% if active == 'proposals' %}bg-secondary-container text-on-secondary-container border-l-4 border-primary{% else %}text-on-surface-variant hover:bg-surface-container-high{% endif %}">
+                                <span class="material-symbols-outlined text-[24px]{% if active == 'proposals' %} fill text-primary{% endif %}">description</span>
+                                <span class="font-label-md text-label-md{% if active == 'proposals' %} font-bold{% endif %}">{% trans "Proposals" %}</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'client-list' %}"
+                               class="flex items-center gap-3 px-4 py-3 rounded-r-lg transition-colors {% if active == 'clients' %}bg-secondary-container text-on-secondary-container border-l-4 border-primary{% else %}text-on-surface-variant hover:bg-surface-container-high{% endif %}">
+                                <span class="material-symbols-outlined text-[24px]{% if active == 'clients' %} fill text-primary{% endif %}">groups</span>
+                                <span class="font-label-md text-label-md{% if active == 'clients' %} font-bold{% endif %}">{% trans "Clients" %}</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'followup-list' %}"
+                               class="flex items-center gap-3 px-4 py-3 rounded-r-lg transition-colors {% if active == 'followups' %}bg-secondary-container text-on-secondary-container border-l-4 border-primary{% else %}text-on-surface-variant hover:bg-surface-container-high{% endif %}">
+                                <span class="material-symbols-outlined text-[24px]{% if active == 'followups' %} fill text-primary{% endif %}">forward_to_inbox</span>
+                                <span class="font-label-md text-label-md{% if active == 'followups' %} font-bold{% endif %}">{% trans "Follow-ups" %}</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'timeentry-list' %}"
+                               class="flex items-center gap-3 px-4 py-3 rounded-r-lg transition-colors {% if active == 'time' %}bg-secondary-container text-on-secondary-container border-l-4 border-primary{% else %}text-on-surface-variant hover:bg-surface-container-high{% endif %}">
+                                <span class="material-symbols-outlined text-[24px]{% if active == 'time' %} fill text-primary{% endif %}">schedule</span>
+                                <span class="font-label-md text-label-md{% if active == 'time' %} font-bold{% endif %}">{% trans "Time Tracking" %}</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'template-list' %}"
+                               class="flex items-center gap-3 px-4 py-3 rounded-r-lg transition-colors {% if active == 'templates' %}bg-secondary-container text-on-secondary-container border-l-4 border-primary{% else %}text-on-surface-variant hover:bg-surface-container-high{% endif %}">
+                                <span class="material-symbols-outlined text-[24px]{% if active == 'templates' %} fill text-primary{% endif %}">article</span>
+                                <span class="font-label-md text-label-md{% if active == 'templates' %} font-bold{% endif %}">{% trans "Templates" %}</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'monthly-summary' %}"
+                               class="flex items-center gap-3 px-4 py-3 rounded-r-lg transition-colors {% if active == 'analytics' %}bg-secondary-container text-on-secondary-container border-l-4 border-primary{% else %}text-on-surface-variant hover:bg-surface-container-high{% endif %}">
+                                <span class="material-symbols-outlined text-[24px]{% if active == 'analytics' %} fill text-primary{% endif %}">analytics</span>
+                                <span class="font-label-md text-label-md{% if active == 'analytics' %} font-bold{% endif %}">{% trans "Analytics" %}</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'account-profile' %}"
+                               class="flex items-center gap-3 px-4 py-3 rounded-r-lg transition-colors {% if active == 'profile' %}bg-secondary-container text-on-secondary-container border-l-4 border-primary{% else %}text-on-surface-variant hover:bg-surface-container-high{% endif %}">
+                                <span class="material-symbols-outlined text-[24px]{% if active == 'profile' %} fill text-primary{% endif %}">account_circle</span>
+                                <span class="font-label-md text-label-md{% if active == 'profile' %} font-bold{% endif %}">{% trans "Profile" %}</span>
+                            </a>
+                        </li>
+                    {% endwith %}
+                </ul>
+            </div>
+            <div class="mt-auto px-4 pt-stack-md border-t border-outline-variant">
+                <ul class="flex flex-col gap-1">
+                    <li>
+                        <form method="post" action="{% url 'account_logout' %}">
+                            {% csrf_token %}
+                            <button type="submit"
+                                    class="w-full flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg">
+                                <span class="material-symbols-outlined text-[24px]">logout</span>
+                                <span class="font-label-md text-label-md">{% trans "Sign Out" %}</span>
+                            </button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <!-- Main Content Wrapper -->
+        <div class="flex-1 flex flex-col md:ml-[280px] h-full relative">
+            <!-- TopAppBar -->
+            <header class="bg-surface-container-lowest flex justify-between items-center px-container-padding h-16 z-40 fixed top-0 right-0 w-full md:w-[calc(100%-280px)] border-b border-outline-variant shadow-xs">
+                <div class="flex-1 max-w-md">
+                    <div class="relative">
+                        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+                        <input class="w-full bg-surface-container-low border border-outline-variant rounded-full py-2 pl-10 pr-4 font-body-sm text-body-sm text-on-surface focus:outline-hidden focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all placeholder:text-outline"
+                               placeholder="{% trans 'Search proposals, clients...' %}"
+                               type="search">
+                    </div>
                 </div>
-            </div>
-        </footer>
+                <div class="flex items-center gap-gutter ml-auto">
+                    {% block topbar_actions %}{% endblock %}
+                    {% if is_demo %}
+                        <form id="lang-form"
+                              method="post"
+                              action="{% url 'set_language' %}"
+                              class="hidden">
+                            {% csrf_token %}
+                            <input type="hidden" name="next" value="{{ request.path }}">
+                            <input type="hidden"
+                                   id="lang-input-public"
+                                   name="language"
+                                   value="{{ request.LANGUAGE_CODE }}">
+                        </form>
+                    {% else %}
+                        <form id="prefs-form"
+                              method="post"
+                              action="{% url 'account-preferences' %}"
+                              class="hidden">
+                            {% csrf_token %}
+                            <input type="hidden"
+                                   id="lang-input"
+                                   name="language_preference"
+                                   value="{{ user.language_preference }}">
+                        </form>
+                    {% endif %}
+                    <div class="flex items-center gap-2">
+                        <button type="button"
+                                data-lang-btn
+                                data-value="{{ user.language_preference }}"
+                                class="flex items-center gap-1.5 border border-outline-variant rounded-full py-2 px-3 font-body-sm text-body-sm text-on-surface bg-surface-container-low hover:bg-surface-container transition-all cursor-pointer"
+                                aria-label="{% trans 'Toggle language' %}">
+                            <span class="material-symbols-outlined text-[18px]">translate</span>
+                            <span data-lang-label>EN</span>
+                        </button>
+                    </div>
+                    <button class="p-2 text-on-surface-variant hover:text-primary hover:bg-surface-container rounded-full transition-all">
+                        <span class="material-symbols-outlined">notifications</span>
+                    </button>
+                    <a href="{% url 'account-profile' %}"
+                       class="h-8 w-8 rounded-full bg-secondary-container overflow-hidden ml-2 flex-shrink-0 border border-outline-variant flex items-center justify-center"
+                       aria-label="{% trans 'Open profile' %}">
+                        {% if user.avatar %}
+                            <img src="{{ user.avatar.url }}" alt="" class="h-full w-full object-cover">
+                        {% else %}
+                            <span class="font-label-md text-label-md text-on-secondary-container uppercase">{{ user.email|slice:":1"|default:"?" }}</span>
+                        {% endif %}
+                    </a>
+                </div>
+            </header>
+            <!-- Main Canvas -->
+            <main class="flex-1 overflow-y-auto pt-24 pb-stack-lg px-container-padding bg-background">
+                <div class="max-w-[1440px] mx-auto">
+                    {% if is_demo %}
+                        <div class="mb-6 bg-tertiary-container text-on-tertiary-container px-4 py-3 rounded-lg flex flex-wrap items-center justify-between gap-3">
+                            <div class="flex items-center gap-2">
+                                <span class="material-symbols-outlined text-[20px]">visibility</span>
+                                <span class="font-label-md text-label-md">{% trans "Demo Mode" %} — {% trans "You're viewing sample data. All edits are disabled." %}</span>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <a href="{% url 'demo-exit' %}"
+                                   class="flex items-center gap-1.5 font-label-md text-label-md hover:opacity-80 transition-opacity">
+                                    <span class="material-symbols-outlined text-[18px]">home</span>
+                                    {% trans "Exit Demo" %}
+                                </a>
+                                <a href="{% url 'demo-signup' %}"
+                                   class="font-label-md text-label-md font-semibold underline hover:no-underline">{% trans "Create your free account →" %}</a>
+                            </div>
+                        </div>
+                    {% endif %}
+                    {% include "partials/_messages.html" %}
+                    {% block app_content %}{% endblock %}
+                </div>
+            </main>
+            <footer class="bg-surface-container-low border-t border-outline-variant px-container-padding py-stack-md">
+                <div class="max-w-[1440px] mx-auto flex flex-wrap justify-between items-center gap-gutter text-center">
+                    <span class="font-label-sm text-label-sm text-on-surface-variant">© {% now "Y" %} Pipelancer</span>
+                    <div class="flex gap-6">
+                        <a href="{% url 'privacy_policy' %}"
+                           class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-all">{% trans "Privacy Policy" %}</a>
+                        <a href="{% url 'terms_of_service' %}"
+                           class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-all">{% trans "Terms of Service" %}</a>
+                    </div>
+                </div>
+            </footer>
+        </div>
     </div>
-</div>
 {% endblock %}
-
 {% block content %}{% endblock %}

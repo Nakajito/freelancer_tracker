@@ -1,7 +1,7 @@
 {% extends "app_base.html" %}
 {% load i18n %}
 
-{% block title %}{{ proposal.title }} - PropoTrack{% endblock %}
+{% block title %}{{ proposal.title }} - Pipelancer{% endblock %}
 {% block active_nav %}proposals{% endblock %}
 
 {% block app_content %}
@@ -29,6 +29,7 @@
                 {{ proposal.client.name|default:"No client" }} • {% trans "Sent" %} {{ proposal.sent_date|date:"M d, Y"|default:"—" }}
             </p>
         </div>
+        {% if not is_demo %}
         <div class="flex gap-3">
             <a href="{% url 'proposal-delete' proposal.pk %}" class="flex items-center gap-2 px-4 py-2 border border-outline-variant rounded-lg font-label-md text-label-md text-error hover:bg-error-container/30 transition-colors">
                 <span class="material-symbols-outlined text-[18px]">delete</span>
@@ -39,6 +40,7 @@
                 {% trans "Edit" %}
             </a>
         </div>
+        {% endif %}
     </div>
 </div>
 
@@ -141,10 +143,17 @@
         <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-container-padding shadow-xs bg-gradient-to-br from-surface-container-lowest to-surface-container-low">
             <h3 class="font-h3 text-h3 text-on-surface mb-unit">{% trans "Next Action" %}</h3>
             <p class="font-body-sm text-body-sm text-on-surface-variant mb-stack-md">{% trans "Schedule a follow-up to keep this proposal moving." %}</p>
+            {% if is_demo %}
+            <span class="w-full py-2 border border-outline-variant rounded-lg font-label-md text-label-md text-on-surface-variant flex items-center justify-center gap-2 opacity-50 cursor-not-allowed" title='{% trans "Disabled in demo mode" %}'>
+                <span class="material-symbols-outlined text-[18px]">mail</span>
+                {% trans "Draft Follow-up" %}
+            </span>
+            {% else %}
             <a href="{% url 'followup-create' %}?proposal={{ proposal.pk }}" class="w-full py-2 border border-outline-variant rounded-lg font-label-md text-label-md text-on-surface hover:bg-surface-container transition-colors flex items-center justify-center gap-2">
                 <span class="material-symbols-outlined text-[18px]">mail</span>
                 {% trans "Draft Follow-up" %}
             </a>
+            {% endif %}
         </div>
 
         {% if proposal.tags.all %}

@@ -1,4 +1,4 @@
-# Todo - Freelancer Tracker
+# Todo - Pipelancer
 
 ## Fase 1: Bootstrap - COMPLETED ✅
 - [x] Setup Django project with settings split

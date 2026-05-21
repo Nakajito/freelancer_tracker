@@ -1,5 +1,5 @@
 [project]
-name = "freelancer-tracker"
+name = "pipelancer"
 version = "0.1.0"
 description = "Django web app for freelancers to track proposals, clients, follow-ups, hours"
 readme = "README.md"

@@ -353,80 +353,6 @@ wheels = [
 ]
 
 [[package]]
-name = "freelancer-tracker"
-version = "0.1.0"
-source = { virtual = "." }
-dependencies = [
-    { name = "dj-database-url" },
-    { name = "django" },
-    { name = "django-allauth" },
-    { name = "django-csp" },
-    { name = "django-debug-toolbar" },
-    { name = "django-environ" },
-    { name = "djangorestframework" },
-    { name = "djlint" },
-    { name = "factory-boy" },
-    { name = "gunicorn" },
-    { name = "mypy" },
-    { name = "pillow" },
-    { name = "psycopg", extra = ["binary"] },
-    { name = "pydantic" },
-    { name = "pytailwindcss" },
-    { name = "pytest" },
-    { name = "pytest-cov" },
-    { name = "pytest-django" },
-    { name = "ruff" },
-    { name = "whitenoise" },
-]
-
-[package.optional-dependencies]
-dev = [
-    { name = "django-debug-toolbar" },
-    { name = "factory-boy" },
-    { name = "mypy" },
-    { name = "pytest" },
-    { name = "pytest-cov" },
-    { name = "pytest-django" },
-    { name = "ruff" },
-    { name = "sphinx" },
-    { name = "sphinx-rtd-theme" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "dj-database-url", specifier = ">=2.2.0" },
-    { name = "django", specifier = ">=6.0.5" },
-    { name = "django-allauth", specifier = ">=0.64.0" },
-    { name = "django-csp", specifier = ">=4.0" },
-    { name = "django-debug-toolbar", specifier = ">=5.0.0" },
-    { name = "django-debug-toolbar", marker = "extra == 'dev'", specifier = ">=5.0.0" },
-    { name = "django-environ", specifier = ">=0.12.0" },
-    { name = "djangorestframework", specifier = ">=3.15.0" },
-    { name = "djlint", specifier = ">=1.36.4" },
-    { name = "factory-boy", specifier = ">=3.3.0" },
-    { name = "factory-boy", marker = "extra == 'dev'", specifier = ">=3.3.0" },
-    { name = "gunicorn", specifier = ">=23.0.0" },
-    { name = "mypy", specifier = ">=1.14.0" },
-    { name = "mypy", marker = "extra == 'dev'", specifier = ">=1.14.0" },
-    { name = "pillow", specifier = ">=11.0.0" },
-    { name = "psycopg", extras = ["binary"], specifier = ">=3.1.0" },
-    { name = "pydantic", specifier = ">=2.0.0" },
-    { name = "pytailwindcss", specifier = ">=0.2.0" },
-    { name = "pytest", specifier = ">=8.3.0" },
-    { name = "pytest", marker = "extra == 'dev'", specifier = ">=8.3.0" },
-    { name = "pytest-cov", specifier = ">=6.0.0" },
-    { name = "pytest-cov", marker = "extra == 'dev'", specifier = ">=6.0.0" },
-    { name = "pytest-django", specifier = ">=4.9.0" },
-    { name = "pytest-django", marker = "extra == 'dev'", specifier = ">=4.9.0" },
-    { name = "ruff", specifier = ">=0.8.0" },
-    { name = "ruff", marker = "extra == 'dev'", specifier = ">=0.8.0" },
-    { name = "sphinx", marker = "extra == 'dev'", specifier = ">=8.1.0" },
-    { name = "sphinx-rtd-theme", marker = "extra == 'dev'", specifier = ">=3.0.0" },
-    { name = "whitenoise", specifier = ">=6.8.0" },
-]
-provides-extras = ["dev"]
-
-[[package]]
 name = "gunicorn"
 version = "26.0.0"
 source = { registry = "https://pypi.org/simple" }
@@ -652,6 +578,80 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/ba/13/306d275efd3a3453f72114b7431c877d10b1154014c1ebbedd067770d629/pillow-12.2.0-cp314-cp314t-win_amd64.whl", hash = "sha256:6562ace0d3fb5f20ed7290f1f929cae41b25ae29528f2af1722966a0a02e2aa1", size = 7225152, upload-time = "2026-04-01T14:45:50.032Z" },
     { url = "https://files.pythonhosted.org/packages/ff/6e/cf826fae916b8658848d7b9f38d88da6396895c676e8086fc0988073aaf8/pillow-12.2.0-cp314-cp314t-win_arm64.whl", hash = "sha256:aa88ccfe4e32d362816319ed727a004423aab09c5cea43c01a4b435643fa34eb", size = 2556579, upload-time = "2026-04-01T14:45:52.529Z" },
 ]
+
+[[package]]
+name = "pipelancer"
+version = "0.1.0"
+source = { virtual = "." }
+dependencies = [
+    { name = "dj-database-url" },
+    { name = "django" },
+    { name = "django-allauth" },
+    { name = "django-csp" },
+    { name = "django-debug-toolbar" },
+    { name = "django-environ" },
+    { name = "djangorestframework" },
+    { name = "djlint" },
+    { name = "factory-boy" },
+    { name = "gunicorn" },
+    { name = "mypy" },
+    { name = "pillow" },
+    { name = "psycopg", extra = ["binary"] },
+    { name = "pydantic" },
+    { name = "pytailwindcss" },
+    { name = "pytest" },
+    { name = "pytest-cov" },
+    { name = "pytest-django" },
+    { name = "ruff" },
+    { name = "whitenoise" },
+]
+
+[package.optional-dependencies]
+dev = [
+    { name = "django-debug-toolbar" },
+    { name = "factory-boy" },
+    { name = "mypy" },
+    { name = "pytest" },
+    { name = "pytest-cov" },
+    { name = "pytest-django" },
+    { name = "ruff" },
+    { name = "sphinx" },
+    { name = "sphinx-rtd-theme" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "dj-database-url", specifier = ">=2.2.0" },
+    { name = "django", specifier = ">=6.0.5" },
+    { name = "django-allauth", specifier = ">=0.64.0" },
+    { name = "django-csp", specifier = ">=4.0" },
+    { name = "django-debug-toolbar", specifier = ">=5.0.0" },
+    { name = "django-debug-toolbar", marker = "extra == 'dev'", specifier = ">=5.0.0" },
+    { name = "django-environ", specifier = ">=0.12.0" },
+    { name = "djangorestframework", specifier = ">=3.15.0" },
+    { name = "djlint", specifier = ">=1.36.4" },
+    { name = "factory-boy", specifier = ">=3.3.0" },
+    { name = "factory-boy", marker = "extra == 'dev'", specifier = ">=3.3.0" },
+    { name = "gunicorn", specifier = ">=23.0.0" },
+    { name = "mypy", specifier = ">=1.14.0" },
+    { name = "mypy", marker = "extra == 'dev'", specifier = ">=1.14.0" },
+    { name = "pillow", specifier = ">=11.0.0" },
+    { name = "psycopg", extras = ["binary"], specifier = ">=3.1.0" },
+    { name = "pydantic", specifier = ">=2.0.0" },
+    { name = "pytailwindcss", specifier = ">=0.2.0" },
+    { name = "pytest", specifier = ">=8.3.0" },
+    { name = "pytest", marker = "extra == 'dev'", specifier = ">=8.3.0" },
+    { name = "pytest-cov", specifier = ">=6.0.0" },
+    { name = "pytest-cov", marker = "extra == 'dev'", specifier = ">=6.0.0" },
+    { name = "pytest-django", specifier = ">=4.9.0" },
+    { name = "pytest-django", marker = "extra == 'dev'", specifier = ">=4.9.0" },
+    { name = "ruff", specifier = ">=0.8.0" },
+    { name = "ruff", marker = "extra == 'dev'", specifier = ">=0.8.0" },
+    { name = "sphinx", marker = "extra == 'dev'", specifier = ">=8.1.0" },
+    { name = "sphinx-rtd-theme", marker = "extra == 'dev'", specifier = ">=3.0.0" },
+    { name = "whitenoise", specifier = ">=6.8.0" },
+]
+provides-extras = ["dev"]
 
 [[package]]
 name = "pluggy"

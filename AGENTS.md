@@ -1,4 +1,4 @@
-# Freelancer Tracker — Agent Guide
+# Pipelancer — Agent Guide
 
 Django 6 web app for freelancers to track proposals, clients, follow-ups, hours, with dashboards, templates, reminders. Stack locked: Django 6 + DRF (narrow), Python 3.14, `uv`, ruff, mypy, pytest-django + factory-boy, django-allauth (session), Bootstrap 5 + HTMX, Chart.js, Sphinx, Docker, GitHub Actions CI.
 

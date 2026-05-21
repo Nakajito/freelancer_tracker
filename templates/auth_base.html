@@ -7,7 +7,7 @@
 
     <nav class="bg-surface/80 backdrop-blur-md sticky top-0 z-50 border-b border-outline-variant/30">
         <div class="flex justify-between items-center px-container-padding py-4 max-w-[1440px] mx-auto w-full">
-            <a href="{% url 'landing' %}" class="font-display text-h2 font-bold text-primary tracking-tight">PropoTrack</a>
+            <a href="{% url 'landing' %}" class="font-display text-h2 font-bold text-primary tracking-tight">Pipelancer</a>
             <div class="hidden md:flex items-center gap-gutter">
                 <a href="{% url 'landing' %}#features" class="text-on-secondary-fixed-variant hover:text-primary transition-colors font-label-md text-label-md">{% trans "Features" %}</a>
                 <a href="{% url 'landing' %}#advantages" class="text-on-secondary-fixed-variant hover:text-primary transition-colors font-label-md text-label-md">{% trans "Advantages" %}</a>
@@ -44,7 +44,7 @@
                 <div class="w-12 h-12 bg-primary rounded-lg flex items-center justify-center shadow-xs mb-1">
                     <span class="material-symbols-outlined text-on-primary text-[28px] fill">view_kanban</span>
                 </div>
-                <span class="font-h2 text-h2 font-black text-primary tracking-tight">PropoTrack</span>
+                <span class="font-h2 text-h2 font-black text-primary tracking-tight">Pipelancer</span>
                 <h1 class="font-h1 text-h1 text-on-surface mt-2">{% block auth_title %}{% trans "Welcome" %}{% endblock %}</h1>
                 <p class="font-body-sm text-body-sm text-on-surface-variant max-w-[85%] mx-auto">
                     {% block auth_subtitle %}{% endblock %}
@@ -57,15 +57,12 @@
 
     <footer class="bg-surface-container-low border-t border-outline-variant/50">
         <div class="w-full px-container-padding py-stack-lg max-w-[1440px] mx-auto flex flex-col md:flex-row justify-between items-center gap-gutter">
-            <div class="font-h3 text-h3 font-bold text-on-surface">PropoTrack</div>
+            <div class="font-h3 text-h3 font-bold text-on-surface">Pipelancer</div>
             <div class="flex flex-wrap justify-center gap-6">
                 <a href="{% url 'privacy_policy' %}" class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-all">{% trans "Privacy Policy" %}</a>
                 <a href="{% url 'terms_of_service' %}" class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-all">{% trans "Terms of Service" %}</a>
-                <a href="{% url 'security' %}" class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-all">{% trans "Security" %}</a>
-                <a href="#" class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-all">{% trans "Status" %}</a>
-                <a href="#" class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-all">{% trans "API Docs" %}</a>
             </div>
-            <div class="font-body-sm text-body-sm text-on-surface-variant">© {% now "Y" %} PropoTrack.</div>
+            <div class="font-body-sm text-body-sm text-on-surface-variant">© {% now "Y" %} Pipelancer.</div>
         </div>
     </footer>
 </div>

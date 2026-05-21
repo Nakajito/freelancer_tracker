@@ -94,12 +94,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Build Docker image
-        run: docker build -f deploy/Dockerfile -t freelancer-tracker:${{ github.sha }} .
+        run: docker build -f deploy/Dockerfile -t pipelancer:${{ github.sha }} .
       - name: Run Trivy scanner
         run: |
           docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \
             aquasec/trivy image --exit-code 1 --severity HIGH,CRITICAL \
-            freelancer-tracker:${{ github.sha }} || echo "Trivy scan not available"
+            pipelancer:${{ github.sha }} || echo "Trivy scan not available"
 
   docs:
     runs-on: ubuntu-latest

@@ -11,7 +11,7 @@ class UserFactory(DjangoModelFactory):
 
     username = factory.Sequence(lambda n: f"user{n}")
     email = factory.LazyAttribute(
-        lambda obj: f"{obj.username}@freelancer-tracker.dabg.dev"
+        lambda obj: f"{obj.username}@pipelancer.dabg.dev"
     )
     password = factory.PostGenerationMethodCall("set_password", "password123")
 

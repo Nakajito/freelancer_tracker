@@ -41,6 +41,7 @@ class ProposalForm(forms.ModelForm):
         self.fields["amount"].widget.attrs["class"] = (
             self.fields["amount"].widget.attrs.get("class", "") + " currency-input"
         ).strip()
+        self.fields["amount"].widget.attrs["style"] = "padding-left: 2.25rem;"
 
     class Meta:
         model = Proposal

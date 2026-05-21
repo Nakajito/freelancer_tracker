@@ -8,4 +8,7 @@ urlpatterns = [
     path(
         "monthly-summary/", views.MonthlySummaryView.as_view(), name="monthly-summary"
     ),
+    path("demo/", views.DemoAutoLoginView.as_view(), name="demo-login"),
+    path("demo/signup/", views.DemoSignupRedirectView.as_view(), name="demo-signup"),
+    path("demo/exit/", views.DemoExitView.as_view(), name="demo-exit"),
 ]

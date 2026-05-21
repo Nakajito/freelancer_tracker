@@ -1,7 +1,7 @@
 {% extends "app_base.html" %}
 {% load i18n %}
 
-{% block title %}{% trans "Time Tracking" %} - PropoTrack{% endblock %}
+{% block title %}{% trans "Time Tracking" %} - Pipelancer{% endblock %}
 {% block active_nav %}time{% endblock %}
 
 {% block app_content %}
@@ -15,10 +15,17 @@
             <span class="material-symbols-outlined text-[18px]">repeat</span>
             {% trans "Retainers" %}
         </a>
+        {% if is_demo %}
+        <span class="bg-surface-container-high text-on-surface-variant font-label-md text-label-md py-2.5 px-5 rounded-lg flex items-center gap-2 opacity-60 cursor-not-allowed" title='{% trans "Disabled in demo mode" %}'>
+            <span class="material-symbols-outlined text-[20px]">schedule</span>
+            {% trans "Log Hours" %}
+        </span>
+        {% else %}
         <a href="{% url 'timeentry-create' %}" class="bg-primary text-on-primary font-label-md text-label-md py-2.5 px-5 rounded-lg flex items-center gap-2 hover:bg-primary-container shadow-xs transition-all">
             <span class="material-symbols-outlined text-[20px]">schedule</span>
             {% trans "Log Hours" %}
         </a>
+        {% endif %}
     </div>
 </div>
 
@@ -71,12 +78,14 @@
                     </td>
                     <td class="py-4 px-6 text-right">
                         <div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                            <a href="{% url 'timeentry-update' entry.pk %}" class="p-1.5 text-on-surface-variant hover:text-primary hover:bg-surface-container rounded-md" title="{% trans 'Edit' %}">
+                            {% if not is_demo %}
+                            <a href="{% url 'timeentry-update' entry.pk %}" class="p-1.5 text-on-surface-variant hover:text-primary hover:bg-surface-container rounded-md" title='{% trans "Edit" %}'>
                                 <span class="material-symbols-outlined text-[18px]">edit</span>
                             </a>
-                            <a href="{% url 'timeentry-delete' entry.pk %}" class="p-1.5 text-on-surface-variant hover:text-error hover:bg-error-container rounded-md" title="{% trans 'Delete' %}">
+                            <a href="{% url 'timeentry-delete' entry.pk %}" class="p-1.5 text-on-surface-variant hover:text-error hover:bg-error-container rounded-md" title='{% trans "Delete" %}'>
                                 <span class="material-symbols-outlined text-[18px]">delete</span>
                             </a>
+                            {% endif %}
                         </div>
                     </td>
                 </tr>
@@ -86,10 +95,12 @@
                         <span class="material-symbols-outlined text-[48px] text-outline-variant mb-3 block">schedule</span>
                         <h3 class="font-h3 text-h3 text-on-surface mb-1">{% trans "No time entries yet" %}</h3>
                         <p class="font-body-md text-body-md text-on-surface-variant mb-4">{% trans "Start logging your hours to track productivity." %}</p>
+                        {% if not is_demo %}
                         <a href="{% url 'timeentry-create' %}" class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-on-primary rounded-lg font-label-md text-label-md hover:bg-primary-container">
                             <span class="material-symbols-outlined text-[18px]">add</span>
                             {% trans "Log Hours" %}
                         </a>
+                        {% endif %}
                     </td>
                 </tr>
                 {% endfor %}

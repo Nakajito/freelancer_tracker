@@ -1,7 +1,9 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% load static %}
-{% block title %}PropoTrack - {% trans "Professional Proposal Tracking" %}{% endblock %}
+{% block title %}
+    Pipelancer - {% trans "Professional Proposal Tracking" %}
+{% endblock %}
 {% block meta_description %}
     {% trans "Win more freelance work — proposal tracking, follow-up reminders, time entries, and revenue analytics for solo consultants." %}
 {% endblock %}
@@ -10,7 +12,7 @@
     <nav class="bg-surface/80 backdrop-blur-md sticky top-0 z-50 border-b border-outline-variant/30">
         <div class="flex justify-between items-center px-container-padding py-4 max-w-[1440px] mx-auto w-full">
             <a href="{% url 'landing' %}"
-               class="font-display text-h2 font-bold text-primary tracking-tight">PropoTrack</a>
+               class="font-display text-h2 font-bold text-primary tracking-tight">Pipelancer</a>
             <div class="hidden md:flex items-center gap-gutter">
                 <a href="#features"
                    class="text-on-secondary-fixed-variant hover:text-primary transition-colors font-label-md text-label-md">{% trans "Features" %}</a>
@@ -23,18 +25,32 @@
             </div>
             <div class="flex items-center gap-unit">
                 {% if user.is_authenticated %}
-                    <form id="prefs-form" method="post" action="{% url 'account-preferences' %}" class="hidden">
+                    <form id="prefs-form"
+                          method="post"
+                          action="{% url 'account-preferences' %}"
+                          class="hidden">
                         {% csrf_token %}
-                        <input type="hidden" id="lang-input" name="language_preference" value="{{ user.language_preference }}">
+                        <input type="hidden"
+                               id="lang-input"
+                               name="language_preference"
+                               value="{{ user.language_preference }}">
                     </form>
                 {% else %}
-                    <form id="lang-form" method="post" action="{% url 'set_language' %}" class="hidden">
+                    <form id="lang-form"
+                          method="post"
+                          action="{% url 'set_language' %}"
+                          class="hidden">
                         {% csrf_token %}
                         <input type="hidden" name="next" value="{{ request.path }}">
-                        <input type="hidden" id="lang-input-public" name="language" value="{{ active_language|default:'en' }}">
+                        <input type="hidden"
+                               id="lang-input-public"
+                               name="language"
+                               value="{{ active_language|default:'en' }}">
                     </form>
                 {% endif %}
-                <button type="button" data-lang-btn data-value="{{ active_language|default:'en' }}"
+                <button type="button"
+                        data-lang-btn
+                        data-value="{{ active_language|default:'en' }}"
                         class="flex items-center gap-1.5 border border-outline-variant rounded-full py-2 px-3 font-body-sm text-body-sm text-on-surface bg-surface-container-low hover:bg-surface-container transition-all cursor-pointer"
                         aria-label="{% trans 'Toggle language' %}">
                     <span class="material-symbols-outlined text-[18px]">translate</span>
@@ -62,18 +78,18 @@
                 {% trans "Win More Work with Professional Proposal Tracking." %}
             </h1>
             <p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl">
-                {% trans "PropoTrack helps freelancers manage pitches, log hours, and analyze performance in one sleek dashboard." %}
+                {% trans "Pipelancer helps freelancers manage pitches, log hours, and analyze performance in one sleek dashboard." %}
             </p>
             <div class="flex flex-col sm:flex-row gap-4 pt-4">
                 <a href="{% url 'account_signup' %}"
                    class="px-8 py-4 bg-primary text-on-primary rounded font-label-md text-label-md hover:bg-primary-container transition-colors shadow-xs text-center">{% trans "Get Started for Free" %}</a>
-                <a href="#features"
+                <a href="{% url 'demo-login' %}"
                    class="px-8 py-4 border border-outline-variant text-on-surface rounded font-label-md text-label-md hover:bg-surface-container-low transition-colors text-center">{% trans "View Demo" %}</a>
             </div>
         </div>
         <div class="relative h-[400px] md:h-[600px] w-full rounded-xl overflow-hidden border border-outline-variant shadow-[0_10px_20px_rgba(15,23,42,0.1)] bg-surface-container-low flex items-center justify-center">
             <img src="{% static 'images/hero-dashboard.png' %}"
-                 alt="{% trans 'PropoTrack dashboard preview' %}"
+                 alt="{% trans 'Pipelancer dashboard preview' %}"
                  class="w-full h-full object-cover">
         </div>
     </section>
@@ -83,7 +99,7 @@
         <div class="text-center mb-stack-lg">
             <h2 class="font-display text-display text-on-background mb-4">{% trans "Everything to manage your pipeline" %}</h2>
             <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">
-                {% trans "From sent proposal to won deal, PropoTrack keeps every step measurable." %}
+                {% trans "From sent proposal to won deal, Pipelancer keeps every step measurable." %}
             </p>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
@@ -188,7 +204,9 @@
                 </p>
                 <div class="bg-surface-container-lowest p-4 rounded-lg border border-outline-variant/50">
                     <div class="text-[24px] font-bold text-on-surface">$12,450.00</div>
-                    <div class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">{% trans "Projected Q4 Revenue" %}</div>
+                    <div class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">
+                        {% trans "Projected Q4 Revenue" %}
+                    </div>
                 </div>
             </div>
             <!-- Micro-Level Tracking -->
@@ -227,7 +245,7 @@
                 <span class="font-label-sm text-label-sm uppercase tracking-widest text-primary mb-4 inline-block">{% trans "Tailored Solutions" %}</span>
                 <h2 class="font-display text-display text-on-background mb-4">{% trans "Designed for the way you win business." %}</h2>
                 <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">
-                    {% trans "Whether you're a one-person powerhouse or a growing agency, PropoTrack streamlines your proposal funnel and maximizes billable growth." %}
+                    {% trans "Whether you're a one-person powerhouse or a growing agency, Pipelancer streamlines your proposal funnel and maximizes billable growth." %}
                 </p>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter mb-stack-lg">
@@ -300,7 +318,9 @@
                         <span class="font-label-sm text-label-sm text-on-surface-variant">{% trans "Growth Index" %}</span>
                     </div>
                     <div class="font-h1 text-h1 text-primary">+24%</div>
-                    <p class="font-body-sm text-body-sm text-on-surface-variant mt-2">{% trans "Conversion increase since last quarter." %}</p>
+                    <p class="font-body-sm text-body-sm text-on-surface-variant mt-2">
+                        {% trans "Conversion increase since last quarter." %}
+                    </p>
                 </div>
                 <div class="md:col-span-8 bg-surface-container-lowest border border-outline-variant/50 rounded-xl p-6 overflow-hidden">
                     <table class="w-full text-left">
@@ -334,13 +354,17 @@
             <div class="bg-inverse-surface text-inverse-on-surface rounded-xl p-stack-lg">
                 <div class="text-center max-w-3xl mx-auto mb-stack-lg">
                     <h3 class="font-h1 text-h1 mb-4">{% trans "Elevate the Creative Pitch" %}</h3>
-                    <p class="font-body-md text-body-md opacity-80">{% trans "Turn complex project scopes into clear, winning narratives." %}</p>
+                    <p class="font-body-md text-body-md opacity-80">
+                        {% trans "Turn complex project scopes into clear, winning narratives." %}
+                    </p>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter">
                     <div class="bg-white/5 p-6 rounded-xl border border-white/10">
                         <span class="material-symbols-outlined text-inverse-primary text-3xl mb-3">edit_note</span>
                         <h4 class="font-h3 text-h3 mb-2">{% trans "Narrative Proposals" %}</h4>
-                        <p class="font-body-sm text-body-sm opacity-70">{% trans "Rich text and visual embeds to tell the story behind your solution." %}</p>
+                        <p class="font-body-sm text-body-sm opacity-70">
+                            {% trans "Rich text and visual embeds to tell the story behind your solution." %}
+                        </p>
                     </div>
                     <div class="bg-white/5 p-6 rounded-xl border border-white/10">
                         <span class="material-symbols-outlined text-inverse-primary text-3xl mb-3">account_tree</span>
@@ -352,12 +376,16 @@
                     <div class="bg-white/5 p-6 rounded-xl border border-white/10">
                         <span class="material-symbols-outlined text-inverse-primary text-3xl mb-3">history_edu</span>
                         <h4 class="font-h3 text-h3 mb-2">{% trans "Version History" %}</h4>
-                        <p class="font-body-sm text-body-sm opacity-70">{% trans "Track every iteration from first draft to final signature." %}</p>
+                        <p class="font-body-sm text-body-sm opacity-70">
+                            {% trans "Track every iteration from first draft to final signature." %}
+                        </p>
                     </div>
                     <div class="bg-white/5 p-6 rounded-xl border border-white/10">
                         <span class="material-symbols-outlined text-inverse-primary text-3xl mb-3">notifications_active</span>
                         <h4 class="font-h3 text-h3 mb-2">{% trans "Smart Reminders" %}</h4>
-                        <p class="font-body-sm text-body-sm opacity-70">{% trans "Automated nudges for stakeholders who haven't reviewed yet." %}</p>
+                        <p class="font-body-sm text-body-sm opacity-70">
+                            {% trans "Automated nudges for stakeholders who haven't reviewed yet." %}
+                        </p>
                     </div>
                 </div>
             </div>
@@ -381,7 +409,9 @@
                         <span class="font-display text-[48px] leading-none">$0</span>
                         <span class="font-body-sm text-body-sm text-on-surface-variant ml-2">{% trans "/forever" %}</span>
                     </div>
-                    <p class="font-body-sm text-body-sm text-on-surface-variant mt-4">{% trans "Full access to every PropoTrack tool." %}</p>
+                    <p class="font-body-sm text-body-sm text-on-surface-variant mt-4">
+                        {% trans "Full access to every Pipelancer tool." %}
+                    </p>
                 </div>
                 <div class="space-y-4 mb-10 flex-grow">
                     <div class="flex items-center gap-3">
@@ -444,7 +474,9 @@
                         <th class="py-4 text-center font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest w-1/3">
                             {% trans "Free" %}
                         </th>
-                        <th class="py-4 text-center font-label-sm text-label-sm text-primary uppercase tracking-widest w-1/3">{% trans "Donation" %}</th>
+                        <th class="py-4 text-center font-label-sm text-label-sm text-primary uppercase tracking-widest w-1/3">
+                            {% trans "Donation" %}
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -461,15 +493,6 @@
                         <td class="py-6 font-body-md text-body-md text-on-surface">{% trans "Active proposals" %}</td>
                         <td class="py-6 text-center font-body-sm text-body-sm">{% trans "Unlimited" %}</td>
                         <td class="py-6 text-center font-body-sm text-body-sm">{% trans "Unlimited" %}</td>
-                    </tr>
-                    <tr class="border-b border-outline-variant/10">
-                        <td class="py-6 font-body-md text-body-md text-on-surface">{% trans "API access" %}</td>
-                        <td class="py-6 text-center text-primary">
-                            <span class="material-symbols-outlined">check</span>
-                        </td>
-                        <td class="py-6 text-center text-primary">
-                            <span class="material-symbols-outlined">check</span>
-                        </td>
                     </tr>
                     <tr class="border-b border-outline-variant/10">
                         <td class="py-6 font-body-md text-body-md text-on-surface">{% trans "Technical support" %}</td>
@@ -497,22 +520,16 @@
     <!-- Footer -->
     <footer class="bg-surface-container-low border-t border-outline-variant/50">
         <div class="w-full px-container-padding py-stack-lg max-w-[1440px] mx-auto flex flex-col md:flex-row justify-between items-center gap-gutter">
-            <div class="font-h3 text-h3 font-bold text-on-surface">PropoTrack</div>
+            <div class="font-h3 text-h3 font-bold text-on-surface">Pipelancer</div>
             <div class="flex flex-wrap justify-center gap-6">
                 <a href="{% url 'privacy_policy' %}"
                    class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-all">{% trans "Privacy Policy" %}</a>
                 <a href="{% url 'terms_of_service' %}"
                    class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-all">{% trans "Terms of Service" %}</a>
-                <a href="{% url 'security' %}"
-                   class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-all">{% trans "Security" %}</a>
                 <a href="{% url 'donate' %}"
                    class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-all">{% trans "Donate" %}</a>
-                <a href="#"
-                   class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-all">{% trans "Status" %}</a>
-                <a href="#"
-                   class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-all">{% trans "API Docs" %}</a>
             </div>
-            <div class="font-body-sm text-body-sm text-on-surface-variant">© {% now "Y" %} PropoTrack.</div>
+            <div class="font-body-sm text-body-sm text-on-surface-variant">© {% now "Y" %} Pipelancer.</div>
         </div>
     </footer>
 {% endblock %}

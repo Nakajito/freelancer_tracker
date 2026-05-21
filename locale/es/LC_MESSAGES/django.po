@@ -1,10 +1,10 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: PropoTrack 0.1\n"
+"Project-Id-Version: Pipelancer 0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-05-21 00:44+0000\n"
 "PO-Revision-Date: 2026-05-19 00:00+0000\n"
-"Last-Translator: PropoTrack\n"
+"Last-Translator: Pipelancer\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
@@ -226,8 +226,8 @@ msgstr ""
 "override_status_restriction=True para omitir esta verificación."
 
 #: templates/404.html:7
-msgid "404 - Page Not Found | PropoTrack"
-msgstr "404 - Página no encontrada | PropoTrack"
+msgid "404 - Page Not Found | Pipelancer"
+msgstr "404 - Página no encontrada | Pipelancer"
 
 #: templates/404.html:85
 msgid "ERROR 404"
@@ -263,8 +263,8 @@ msgid "Precision tracking for professional growth."
 msgstr "Seguimiento preciso para el crecimiento profesional."
 
 #: templates/500.html:7
-msgid "500 - Server Error | PropoTrack"
-msgstr "500 - Error del servidor | PropoTrack"
+msgid "500 - Server Error | Pipelancer"
+msgstr "500 - Error del servidor | Pipelancer"
 
 #: templates/500.html:82
 msgid "Error 500"
@@ -541,10 +541,10 @@ msgstr "Documentación API"
 
 #: templates/base.html:13
 msgid ""
-"PropoTrack — track freelance proposals, follow-ups, time entries, and "
+"Pipelancer — track freelance proposals, follow-ups, time entries, and "
 "revenue in one place."
 msgstr ""
-"PropoTrack — gestiona propuestas, seguimientos, entradas de tiempo e "
+"Pipelancer — gestiona propuestas, seguimientos, entradas de tiempo e "
 "ingresos en un solo lugar."
 
 #: templates/dashboard/dashboard.html:9
@@ -647,10 +647,10 @@ msgstr "Gana más proyectos con seguimiento profesional de propuestas."
 
 #: templates/dashboard/landing.html:65
 msgid ""
-"PropoTrack helps freelancers manage pitches, log hours, and analyze "
+"Pipelancer helps freelancers manage pitches, log hours, and analyze "
 "performance in one sleek dashboard."
 msgstr ""
-"PropoTrack ayuda a freelancers a gestionar propuestas, registrar horas y "
+"Pipelancer ayuda a freelancers a gestionar propuestas, registrar horas y "
 "analizar su rendimiento en un único y elegante panel."
 
 #: templates/dashboard/landing.html:69 templates/dashboard/landing.html:492
@@ -662,17 +662,17 @@ msgid "View Demo"
 msgstr "Ver demo"
 
 #: templates/dashboard/landing.html:76
-msgid "PropoTrack dashboard preview"
-msgstr "Vista previa del panel de PropoTrack"
+msgid "Pipelancer dashboard preview"
+msgstr "Vista previa del panel de Pipelancer"
 
 #: templates/dashboard/landing.html:84
 msgid "Everything to manage your pipeline"
 msgstr "Todo para gestionar tu pipeline"
 
 #: templates/dashboard/landing.html:86
-msgid "From sent proposal to won deal, PropoTrack keeps every step measurable."
-msgstr "Desde la propuesta enviada hasta el trato cerrado, PropoTrack mantiene cada paso medible."
-"Desde la propuesta enviada hasta el trato ganado, PropoTrack mantiene cada "
+msgid "From sent proposal to won deal, Pipelancer keeps every step measurable."
+msgstr "Desde la propuesta enviada hasta el trato cerrado, Pipelancer mantiene cada paso medible."
+"Desde la propuesta enviada hasta el trato ganado, Pipelancer mantiene cada "
 "paso medible."
 
 #: templates/dashboard/landing.html:94
@@ -817,11 +817,11 @@ msgstr "Diseñado para la forma en que ganas negocios."
 
 #: templates/dashboard/landing.html:230
 msgid ""
-"Whether you're a one-person powerhouse or a growing agency, PropoTrack "
+"Whether you're a one-person powerhouse or a growing agency, Pipelancer "
 "streamlines your proposal funnel and maximizes billable growth."
 msgstr ""
 "Ya seas un profesional independiente o una agencia en crecimiento, "
-"PropoTrack optimiza tu embudo de propuestas y maximiza el crecimiento "
+"Pipelancer optimiza tu embudo de propuestas y maximiza el crecimiento "
 "facturable."
 
 #: templates/dashboard/landing.html:236
@@ -954,8 +954,8 @@ msgid "/forever"
 msgstr "/para siempre"
 
 #: templates/dashboard/landing.html:384
-msgid "Full access to every PropoTrack tool."
-msgstr "Acceso completo a todas las herramientas de PropoTrack."
+msgid "Full access to every Pipelancer tool."
+msgstr "Acceso completo a todas las herramientas de Pipelancer."
 
 #: templates/dashboard/landing.html:389 templates/dashboard/landing.html:420
 #: templates/dashboard/landing.html:452
@@ -1142,15 +1142,15 @@ msgid "No platform statistics yet."
 msgstr "Aún no hay estadísticas de plataforma."
 
 #: templates/donate.html:3
-msgid "Support PropoTrack"
-msgstr "Apoya PropoTrack"
+msgid "Support Pipelancer"
+msgstr "Apoya Pipelancer"
 
 #: templates/donate.html:4
 msgid ""
-"Support the growth of PropoTrack — a community-driven project for "
+"Support the growth of Pipelancer — a community-driven project for "
 "freelancers."
 msgstr ""
-"Apoya el crecimiento de PropoTrack, un proyecto impulsado por la comunidad "
+"Apoya el crecimiento de Pipelancer, un proyecto impulsado por la comunidad "
 "para freelancers."
 
 #: templates/donate.html:29
@@ -1158,8 +1158,8 @@ msgid "Community"
 msgstr "Comunidad"
 
 #: templates/donate.html:30
-msgid "Support the growth of PropoTrack"
-msgstr "Apoya el crecimiento de PropoTrack"
+msgid "Support the growth of Pipelancer"
+msgstr "Apoya el crecimiento de Pipelancer"
 
 #: templates/donate.html:32
 msgid ""
@@ -1236,10 +1236,10 @@ msgstr "Soporte por correo rápido para resolver tus preguntas técnicas."
 
 #: templates/donate.html:136
 msgid ""
-"\"PropoTrack changed the way I work. Donating is my way of making sure it "
+"\"Pipelancer changed the way I work. Donating is my way of making sure it "
 "keeps growing.\" — Elena G."
 msgstr ""
-"\"PropoTrack cambió la forma en que trabajo. Donar es mi manera de "
+"\"Pipelancer cambió la forma en que trabajo. Donar es mi manera de "
 "asegurarme de que siga creciendo.\" — Elena G."
 
 #: templates/donate_confirm.html:3
@@ -1248,8 +1248,8 @@ msgstr "Confirmar donación"
 
 #: templates/donate_confirm.html:4
 msgid ""
-"Complete your contribution to PropoTrack — secure and encrypted checkout."
-msgstr "Completa tu contribución a PropoTrack — pago seguro y cifrado."
+"Complete your contribution to Pipelancer — secure and encrypted checkout."
+msgstr "Completa tu contribución a Pipelancer — pago seguro y cifrado."
 
 #: templates/donate_confirm.html:31 templates/partials/_page_header.html:13
 msgid "Back"
@@ -1260,8 +1260,8 @@ msgid "Complete your contribution"
 msgstr "Completa tu contribución"
 
 #: templates/donate_confirm.html:34
-msgid "Your support drives the continuous development of PropoTrack."
-msgstr "Tu apoyo impulsa el desarrollo continuo de PropoTrack."
+msgid "Your support drives the continuous development of Pipelancer."
+msgstr "Tu apoyo impulsa el desarrollo continuo de Pipelancer."
 
 #: templates/donate_confirm.html:65
 msgid "Cardholder name"
@@ -1494,8 +1494,8 @@ msgid "Hi"
 msgstr "Hola"
 
 #: templates/partials/digest_email.txt:3
-msgid "Here is your daily digest from PropoTrack."
-msgstr "Aquí está tu resumen diario de PropoTrack."
+msgid "Here is your daily digest from Pipelancer."
+msgstr "Aquí está tu resumen diario de Pipelancer."
 
 #: templates/partials/digest_email.txt:6
 msgid "Overdue Follow-ups"
@@ -1526,14 +1526,14 @@ msgid "Total earnings"
 msgstr "Ganancias totales"
 
 #: templates/partials/digest_email.txt:22
-msgid "Log in to PropoTrack to take action."
-msgstr "Ingresa a PropoTrack para tomar acción."
+msgid "Log in to Pipelancer to take action."
+msgstr "Ingresa a Pipelancer para tomar acción."
 
 #: templates/privacy.html:4
 msgid ""
-"PropoTrack Privacy Policy — learn how we collect, use, and protect your data."
+"Pipelancer Privacy Policy — learn how we collect, use, and protect your data."
 msgstr ""
-"Política de privacidad de PropoTrack — aprende cómo recopilamos, usamos y "
+"Política de privacidad de Pipelancer — aprende cómo recopilamos, usamos y "
 "protegemos tus datos."
 
 #: templates/privacy.html:10 templates/security.html:10 templates/terms.html:10
@@ -1546,16 +1546,16 @@ msgstr "1. Introducción"
 
 #: templates/privacy.html:16
 msgid ""
-"PropoTrack (\"we\", \"our\", or \"us\") is a proposal and client management "
+"Pipelancer (\"we\", \"our\", or \"us\") is a proposal and client management "
 "tool for freelancers. This Privacy Policy explains what personal data we "
 "collect, how we use it, and what rights you have regarding your information. "
-"This policy applies to all users of PropoTrack."
+"This policy applies to all users of Pipelancer."
 msgstr ""
-"PropoTrack (\"nosotros\", \"nuestro\" o \"nos\") es una herramienta de "
+"Pipelancer (\"nosotros\", \"nuestro\" o \"nos\") es una herramienta de "
 "gestión de propuestas y clientes para freelancers. Esta Política de "
 "privacidad explica qué datos personales recopilamos, cómo los usamos y qué "
 "derechos tienes sobre tu información. Esta política aplica a todos los "
-"usuarios de PropoTrack."
+"usuarios de Pipelancer."
 
 #: templates/privacy.html:21
 msgid "2. Data We Collect"
@@ -1564,10 +1564,10 @@ msgstr "2. Datos que recopilamos"
 #: templates/privacy.html:23
 msgid ""
 "We collect the following data, which you provide directly when using "
-"PropoTrack:"
+"Pipelancer:"
 msgstr ""
 "Recopilamos los siguientes datos, que tú proporcionas directamente al usar "
-"PropoTrack:"
+"Pipelancer:"
 
 #: templates/privacy.html:26 templates/terms.html:25
 msgid "Account"
@@ -1672,9 +1672,9 @@ msgid "4. Cookies"
 msgstr "4. Cookies"
 
 #: templates/privacy.html:55
-msgid "PropoTrack uses only the cookies necessary for platform functionality:"
-msgstr "PropoTrack usa únicamente las cookies necesarias para la funcionalidad de la plataforma:"
-"PropoTrack usa únicamente las cookies necesarias para el funcionamiento de "
+msgid "Pipelancer uses only the cookies necessary for platform functionality:"
+msgstr "Pipelancer usa únicamente las cookies necesarias para la funcionalidad de la plataforma:"
+"Pipelancer usa únicamente las cookies necesarias para el funcionamiento de "
 "la plataforma:"
 
 #: templates/privacy.html:59
@@ -1817,13 +1817,13 @@ msgstr "objetar actividades de procesamiento específicas"
 #: templates/privacy.html:115
 msgid ""
 "To exercise any of these rights, contact us at <a href=\"mailto:"
-"noreply@freelancer-tracker.dabg.dev\" class=\"text-link "
-"underline\">noreply@freelancer-tracker.dabg.dev</a>. We will respond within "
+"noreply@pipelancer.dabg.dev\" class=\"text-link "
+"underline\">noreply@pipelancer.dabg.dev</a>. We will respond within "
 "30 days."
 msgstr ""
 "Para ejercer cualquiera de estos derechos, contáctanos en <a href=\"mailto:"
-"noreply@freelancer-tracker.dabg.dev\" class=\"text-link "
-"underline\">noreply@freelancer-tracker.dabg.dev</a>. Responderemos en un "
+"noreply@pipelancer.dabg.dev\" class=\"text-link "
+"underline\">noreply@pipelancer.dabg.dev</a>. Responderemos en un "
 "plazo de 30 días."
 
 #: templates/privacy.html:120
@@ -2113,21 +2113,21 @@ msgstr "Siguiente"
 
 #: templates/security.html:4
 msgid ""
-"PropoTrack Security — how we protect your data, the controls we apply, and "
+"Pipelancer Security — how we protect your data, the controls we apply, and "
 "how to report vulnerabilities."
 msgstr ""
-"Seguridad de PropoTrack — cómo protegemos tus datos, los controles que "
+"Seguridad de Pipelancer — cómo protegemos tus datos, los controles que "
 "aplicamos y cómo reportar vulnerabilidades."
 
 #: templates/security.html:16
 msgid ""
-"PropoTrack is committed to protecting the data of freelancers who trust us "
+"Pipelancer is committed to protecting the data of freelancers who trust us "
 "with their proposals, clients, and time records. We apply layered defenses "
 "across the application, transport, and infrastructure layers. The practices "
 "described on this page reflect the current implementation and evolve "
 "continuously."
 msgstr ""
-"PropoTrack se compromete a proteger los datos de los freelancers que confían "
+"Pipelancer se compromete a proteger los datos de los freelancers que confían "
 "en nosotros con sus propuestas, clientes y registros de tiempo. Aplicamos "
 "defensas en capas a través de las capas de aplicación, transporte e "
 "infraestructura. Las prácticas descritas en esta página reflejan la "
@@ -2418,15 +2418,15 @@ msgid ""
 "For vulnerability reports: <a href=\"mailto:security@dabg.dev\" class=\"text-"
 "link underline\">security@dabg.dev</a><br>\n"
 "            For general privacy or data inquiries: <a href=\"mailto:"
-"noreply@freelancer-tracker.dabg.dev\" class=\"text-link "
-"underline\">noreply@freelancer-tracker.dabg.dev</a> (see the <a "
+"noreply@pipelancer.dabg.dev\" class=\"text-link "
+"underline\">noreply@pipelancer.dabg.dev</a> (see the <a "
 "href=\"%(privacy_url)s\" class=\"text-link underline\">Privacy Policy</a>)."
 msgstr ""
 "Para reportes de vulnerabilidades: <a href=\"mailto:security@dabg.dev\" "
 "class=\"text-link underline\">security@dabg.dev</a><br>\n"
 "            Para consultas generales de privacidad o datos: <a href=\"mailto:"
-"noreply@freelancer-tracker.dabg.dev\" class=\"text-link "
-"underline\">noreply@freelancer-tracker.dabg.dev</a> (ver la <a "
+"noreply@pipelancer.dabg.dev\" class=\"text-link "
+"underline\">noreply@pipelancer.dabg.dev</a> (ver la <a "
 "href=\"%(privacy_url)s\" class=\"text-link underline\">Política de "
 "privacidad</a>)."
 
@@ -2596,23 +2596,23 @@ msgstr "Crear cliente"
 
 #: templates/terms.html:4
 msgid ""
-"PropoTrack Terms of Service — rules and conditions for using the platform."
+"Pipelancer Terms of Service — rules and conditions for using the platform."
 msgstr ""
-"Términos de servicio de PropoTrack — reglas y condiciones para usar la "
+"Términos de servicio de Pipelancer — reglas y condiciones para usar la "
 "plataforma."
 
 #: templates/terms.html:16
 msgid ""
-"By accessing or using PropoTrack (\"the Service\"), you (\"you\" or \"the "
+"By accessing or using Pipelancer (\"the Service\"), you (\"you\" or \"the "
 "User\") agree to be bound by these Terms of Service (\"Terms\"). If you do "
-"not agree to these Terms, do not use the Service. PropoTrack is a proposal "
+"not agree to these Terms, do not use the Service. Pipelancer is a proposal "
 "and client management tool operated for freelancers. You must be 18 years of "
 "age or older (or have the legal capacity under your local law) to use the "
 "Service."
 msgstr ""
-"Al acceder o usar PropoTrack (\"el Servicio\"), usted (\"usted\" o \"el "
+"Al acceder o usar Pipelancer (\"el Servicio\"), usted (\"usted\" o \"el "
 "Usuario\") acepta estar sujeto a estos Términos de servicio (\"Términos\"). "
-"Si no acepta estos Términos, no use el Servicio. PropoTrack es una "
+"Si no acepta estos Términos, no use el Servicio. Pipelancer es una "
 "herramienta de gestión de propuestas y clientes operada para freelancers. "
 "Debe tener 18 años o más (o tener capacidad legal según su ley local) para "
 "usar el Servicio."
@@ -2626,8 +2626,8 @@ msgid "Service"
 msgstr "Servicio"
 
 #: templates/terms.html:23
-msgid "the PropoTrack web application and all related features."
-msgstr "la aplicación web PropoTrack y todas las funciones relacionadas."
+msgid "the Pipelancer web application and all related features."
+msgstr "la aplicación web Pipelancer y todas las funciones relacionadas."
 
 #: templates/terms.html:24
 msgid "User"
@@ -2721,15 +2721,15 @@ msgstr "5. Contenido del usuario y propiedad"
 
 #: templates/terms.html:55
 msgid ""
-"You retain full ownership of all Content you submit through PropoTrack. By "
-"submitting Content, you grant PropoTrack a limited, revocable, non-exclusive "
+"You retain full ownership of all Content you submit through Pipelancer. By "
+"submitting Content, you grant Pipelancer a limited, revocable, non-exclusive "
 "license to store, process, and display your Content solely for the purpose "
 "of operating the Service on your behalf. Your Content is never used to train "
 "machine learning models. Your Content is never shared with or sold to third "
 "parties."
 msgstr ""
 "Conservas la propiedad total de todo el Contenido que envíes a través de "
-"PropoTrack. Al enviar Contenido, otorgas a PropoTrack una licencia limitada, "
+"Pipelancer. Al enviar Contenido, otorgas a Pipelancer una licencia limitada, "
 "revocable y no exclusiva para almacenar, procesar y mostrar tu Contenido "
 "únicamente con el propósito de operar el Servicio en tu nombre. Tu Contenido "
 "nunca se usa para entrenar modelos de aprendizaje automático. Tu Contenido "
@@ -2741,13 +2741,13 @@ msgstr "6. Propiedad intelectual"
 
 #: templates/terms.html:62
 msgid ""
-"The name \"PropoTrack,\" the application's user interface, source code, "
+"The name \"Pipelancer,\" the application's user interface, source code, "
 "visual design, and branding are the intellectual property of the operator. "
 "You receive a limited, revocable, non-exclusive license to use the Service "
 "for your personal freelance management activities. No trademark rights are "
 "granted beyond this license."
 msgstr ""
-"El nombre \"PropoTrack\", la interfaz de usuario de la aplicación, el código "
+"El nombre \"Pipelancer\", la interfaz de usuario de la aplicación, el código "
 "fuente, el diseño visual y la marca son propiedad intelectual del operador. "
 "Recibes una licencia limitada, revocable y no exclusiva para usar el "
 "Servicio para tus actividades personales de gestión freelancer. No se "
@@ -2759,16 +2759,15 @@ msgstr "7. DMCA / Infracción de propiedad intelectual"
 
 #: templates/terms.html:69
 msgid ""
-"PropoTrack respects intellectual property rights and responds to valid "
+"Pipelancer respects intellectual property rights and responds to valid "
 "takedown notices under the DMCA framework. To report alleged infringement, "
-"contact us at <a href=\"mailto:noreply@freelancer-tracker.dabg.dev\" "
-"class=\"text-link underline\">noreply@freelancer-tracker.dabg.dev</a> with:"
+"contact us at <a href=\"mailto:noreply@pipelancer.dabg.dev\" "
+"class=\"text-link underline\">noreply@pipelancer.dabg.dev</a> with:"
 msgstr ""
-"PropoTrack respeta los derechos de propiedad intelectual y responde a "
+"Pipelancer respeta los derechos de propiedad intelectual y responde a "
 "notificaciones de eliminación válidas bajo el marco DMCA. Para reportar una "
-"infracción alegada, contáctanos en <a href=\"mailto:noreply@freelancer-"
-"tracker.dabg.dev\" class=\"text-link underline\">noreply@freelancer-tracker."
-"dabg.dev</a> con:"
+"infracción alegada, contáctanos en <a href=\"mailto:noreply@pipelancer.dabg.dev\" "
+"class=\"text-link underline\">noreply@pipelancer.dabg.dev</a> con:"
 
 #: templates/terms.html:72
 msgid ""
@@ -2837,7 +2836,7 @@ msgstr "9. Limitación de responsabilidad"
 
 #: templates/terms.html:93
 msgid ""
-"To the maximum extent permitted by applicable law, PropoTrack shall not be "
+"To the maximum extent permitted by applicable law, Pipelancer shall not be "
 "liable for any indirect, incidental, consequential, special, or punitive "
 "damages — including but not limited to loss of data, loss of revenue, loss "
 "of profits, or loss of business opportunities — arising out of or related to "
@@ -2845,7 +2844,7 @@ msgid ""
 "strong> (as this is a free service) or the amount, if any, paid by you in "
 "the 12 months preceding the claim, whichever is greater."
 msgstr ""
-"En la máxima medida permitida por la ley aplicable, PropoTrack no será "
+"En la máxima medida permitida por la ley aplicable, Pipelancer no será "
 "responsable de ningún daño indirecto, incidental, consecuente, especial o "
 "punitivo — incluyendo pero sin limitarse a pérdida de datos, pérdida de "
 "ingresos, pérdida de ganancias o pérdida de oportunidades de negocio — que "
@@ -2860,13 +2859,13 @@ msgstr "10. Indemnización"
 
 #: templates/terms.html:100
 msgid ""
-"You agree to indemnify, defend, and hold harmless PropoTrack, its operator, "
+"You agree to indemnify, defend, and hold harmless Pipelancer, its operator, "
 "and affiliates from and against any claims, liabilities, damages, losses, or "
 "expenses (including reasonable legal fees) arising out of or related to your "
 "Content, your violation of these Terms, or your violation of any applicable "
 "law."
 msgstr ""
-"Aceptas indemnizar, defender y eximir de responsabilidad a PropoTrack, su "
+"Aceptas indemnizar, defender y eximir de responsabilidad a Pipelancer, su "
 "operador y afiliados de y contra cualquier reclamación, responsabilidad, "
 "daño, pérdida o gasto (incluidos honorarios legales razonables) que surja de "
 "o esté relacionado con tu Contenido, tu violación de estos Términos o tu "
@@ -2879,22 +2878,22 @@ msgstr "11. Suspensión y cancelación de cuenta"
 #: templates/terms.html:108
 #, python-format
 msgid ""
-"PropoTrack may suspend or terminate your account for: violation of these "
+"Pipelancer may suspend or terminate your account for: violation of these "
 "Terms, violation of the Acceptable Use policy, suspected fraud, legal "
 "compliance requirements, or prolonged inactivity (longer than 24 months). "
 "You may delete your account at any time via your account settings or by "
-"contacting <a href=\"mailto:noreply@freelancer-tracker.dabg.dev\" "
-"class=\"text-link underline\">noreply@freelancer-tracker.dabg.dev</a>. Upon "
+"contacting <a href=\"mailto:noreply@pipelancer.dabg.dev\" "
+"class=\"text-link underline\">noreply@pipelancer.dabg.dev</a>. Upon "
 "termination, your data is deleted within 30 days as described in our <a "
 "href=\"%(privacy_url)s\" class=\"text-link underline\">Privacy Policy</a>."
 msgstr ""
-"PropoTrack puede suspender o cancelar tu cuenta por: violación de estos "
+"Pipelancer puede suspender o cancelar tu cuenta por: violación de estos "
 "Términos, violación de la política de Uso aceptable, sospecha de fraude, "
 "requisitos de cumplimiento legal, o inactividad prolongada (más de 24 "
 "meses). Puedes eliminar tu cuenta en cualquier momento a través de la "
 "configuración de tu cuenta o contactando a <a href=\"mailto:"
-"noreply@freelancer-tracker.dabg.dev\" class=\"text-link "
-"underline\">noreply@freelancer-tracker.dabg.dev</a>. Tras la cancelación, "
+"noreply@pipelancer.dabg.dev\" class=\"text-link "
+"underline\">noreply@pipelancer.dabg.dev</a>. Tras la cancelación, "
 "tus datos se eliminan en un plazo de 30 días, como se describe en nuestra <a "
 "href=\"%(privacy_url)s\" class=\"text-link underline\">Política de "
 "privacidad</a>."
@@ -2905,13 +2904,13 @@ msgstr "12. Disponibilidad del servicio y cambios"
 
 #: templates/terms.html:115
 msgid ""
-"PropoTrack aims to maintain service availability on a best-effort basis but "
+"Pipelancer aims to maintain service availability on a best-effort basis but "
 "does not guarantee any uptime SLA. Features, functionality, and user "
 "interface elements may be added, modified, or removed at any time. Material "
 "changes affecting your use of the Service will be communicated via in-app "
 "notice or email to your registered address."
 msgstr ""
-"PropoTrack busca mantener la disponibilidad del servicio con base en el "
+"Pipelancer busca mantener la disponibilidad del servicio con base en el "
 "mejor esfuerzo, pero no garantiza ningún SLA de tiempo de actividad. Las "
 "funciones, la funcionalidad y los elementos de la interfaz de usuario pueden "
 "agregarse, modificarse o eliminarse en cualquier momento. Los cambios "
@@ -2927,7 +2926,7 @@ msgstr "13. Servicios de terceros"
 msgid ""
 "The Service runs on infrastructure provided by third parties (Coolify "
 "hosting, PostgreSQL database, SMTP email delivery). Their respective terms "
-"of service and privacy policies may apply to the extent relevant. PropoTrack "
+"of service and privacy policies may apply to the extent relevant. Pipelancer "
 "does not embed third-party tracking scripts or advertising cookies, as "
 "documented in our <a href=\"%(privacy_url)s\" class=\"text-link "
 "underline\">Privacy Policy</a>."
@@ -2935,7 +2934,7 @@ msgstr ""
 "El Servicio se ejecuta en infraestructura proporcionada por terceros "
 "(alojamiento Coolify, base de datos PostgreSQL, entrega de correo SMTP). Sus "
 "respectivos términos de servicio y políticas de privacidad pueden aplicar en "
-"la medida en que sean relevantes. PropoTrack no incorpora scripts de "
+"la medida en que sean relevantes. Pipelancer no incorpora scripts de "
 "seguimiento de terceros ni cookies de publicidad, como se documenta en "
 "nuestra <a href=\"%(privacy_url)s\" class=\"text-link underline\">Política "
 "de privacidad</a>."
@@ -2948,12 +2947,12 @@ msgstr "14. Privacidad"
 #, python-format
 msgid ""
 "The collection, use, and protection of your personal data is governed by the "
-"<a href=\"%(privacy_url)s\" class=\"text-link underline\">PropoTrack Privacy "
+"<a href=\"%(privacy_url)s\" class=\"text-link underline\">Pipelancer Privacy "
 "Policy</a>, which is incorporated into these Terms by reference."
 msgstr ""
 "La recopilación, uso y protección de tus datos personales se rigen por la <a "
 "href=\"%(privacy_url)s\" class=\"text-link underline\">Política de "
-"privacidad de PropoTrack</a>, que se incorpora a estos Términos por "
+"privacidad de Pipelancer</a>, que se incorpora a estos Términos por "
 "referencia."
 
 #: templates/terms.html:136
@@ -2978,11 +2977,11 @@ msgstr "16. Cambios en los Términos"
 
 #: templates/terms.html:145
 msgid ""
-"PropoTrack may revise these Terms at any time. The revised version will be "
+"Pipelancer may revise these Terms at any time. The revised version will be "
 "posted on this page with an updated effective date. Your continued use of "
 "the Service after any revision constitutes acceptance of the updated Terms."
 msgstr ""
-"PropoTrack puede revisar estos Términos en cualquier momento. La versión "
+"Pipelancer puede revisar estos Términos en cualquier momento. La versión "
 "revisada se publicará en esta página con una fecha de vigencia actualizada. "
 "El uso continuado del Servicio después de cualquier revisión constituye la "
 "aceptación de los Términos actualizados."
@@ -3154,6 +3153,24 @@ msgstr "Aún no hay entradas de tiempo"
 msgid "Start logging your hours to track productivity."
 msgstr "Comienza a registrar tus horas para hacer seguimiento de la productividad."
 "Comienza a registrar tus horas para hacer seguimiento de tu productividad."
+
+msgid "This feature is disabled in demo mode. Create an account to use it."
+msgstr "Esta función está desactivada en el modo demo. Crea una cuenta para usarla."
+
+msgid "Demo Mode"
+msgstr "Modo Demo"
+
+msgid "You're viewing sample data. All edits are disabled."
+msgstr "Estás viendo datos de ejemplo. Todas las ediciones están desactivadas."
+
+msgid "Create your free account →"
+msgstr "Crea tu cuenta gratis →"
+
+msgid "Demo not available. Please sign up."
+msgstr "Demo no disponible. Por favor, regístrate."
+
+msgid "Disabled in demo mode"
+msgstr "Desactivado en modo demo"
 
 #~ msgid "Theme"
 #~ msgstr "Tema"

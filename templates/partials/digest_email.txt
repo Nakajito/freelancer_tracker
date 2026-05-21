@@ -1,6 +1,6 @@
 {% load i18n %}{% trans "Hi" %} {{ user.get_full_name|default:user.email }},
 
-{% trans "Here is your daily digest from PropoTrack." %}
+{% trans "Here is your daily digest from Pipelancer." %}
 
 {% if overdue %}
 === {% trans "Overdue Follow-ups" %} ===
@@ -19,4 +19,4 @@
 {% trans "Won" %}: {{ month_summary.won }}
 {% trans "Total earnings" %}: ${{ month_summary.total_earnings }}
 
-{% trans "Log in to PropoTrack to take action." %}
+{% trans "Log in to Pipelancer to take action." %}

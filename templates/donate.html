@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 {% load i18n %}
-{% block title %}{% trans "Support PropoTrack" %}{% endblock %}
-{% block meta_description %}{% trans "Support the growth of PropoTrack — a community-driven project for freelancers." %}{% endblock %}
+{% block title %}{% trans "Support Pipelancer" %}{% endblock %}
+{% block meta_description %}{% trans "Support the growth of Pipelancer — a community-driven project for freelancers." %}{% endblock %}
 
 {% block content %}
 <nav class="bg-surface/80 backdrop-blur-md sticky top-0 z-50 border-b border-outline-variant/30">
     <div class="flex justify-between items-center px-container-padding py-4 max-w-[1440px] mx-auto w-full">
-        <a href="{% url 'landing' %}" class="font-display text-h2 font-bold text-primary tracking-tight">PropoTrack</a>
+        <a href="{% url 'landing' %}" class="font-display text-h2 font-bold text-primary tracking-tight">Pipelancer</a>
         <div class="hidden md:flex items-center gap-gutter">
             <a href="{% url 'landing' %}#features" class="text-on-secondary-fixed-variant hover:text-primary transition-colors font-label-md text-label-md">{% trans "Features" %}</a>
             <a href="{% url 'landing' %}#advantages" class="text-on-secondary-fixed-variant hover:text-primary transition-colors font-label-md text-label-md">{% trans "Advantages" %}</a>
@@ -27,7 +27,7 @@
 <main class="max-w-[1200px] mx-auto px-container-padding py-stack-lg">
     <section class="text-center mb-16 max-w-3xl mx-auto">
         <span class="bg-secondary-container text-on-secondary-container px-4 py-1 rounded-full font-label-sm text-label-sm uppercase tracking-wider mb-6 inline-block">{% trans "Community" %}</span>
-        <h1 class="font-display text-display text-on-surface mb-6">{% trans "Support the growth of PropoTrack" %}</h1>
+        <h1 class="font-display text-display text-on-surface mb-6">{% trans "Support the growth of Pipelancer" %}</h1>
         <p class="font-body-lg text-body-lg text-on-surface-variant">
             {% blocktrans %}We are a community-driven project. Your donation helps us keep the servers running and continue developing new free features for everyone.{% endblocktrans %}
         </p>
@@ -133,7 +133,7 @@
                 </ul>
             </div>
             <div class="relative h-64 rounded-xl overflow-hidden bg-surface-container-low border border-outline-variant/30 flex items-end p-6">
-                <p class="text-on-surface font-label-md text-label-md italic">{% trans '"PropoTrack changed the way I work. Donating is my way of making sure it keeps growing." — Elena G.' %}</p>
+                <p class="text-on-surface font-label-md text-label-md italic">{% trans '"Pipelancer changed the way I work. Donating is my way of making sure it keeps growing." — Elena G.' %}</p>
             </div>
         </aside>
     </form>
@@ -141,14 +141,14 @@
 
 <footer class="bg-surface-container-low border-t border-outline-variant/50 mt-16">
     <div class="w-full px-container-padding py-stack-lg max-w-[1440px] mx-auto flex flex-col md:flex-row justify-between items-center gap-gutter">
-        <div class="font-h3 text-h3 font-bold text-on-surface">PropoTrack</div>
+        <div class="font-h3 text-h3 font-bold text-on-surface">Pipelancer</div>
         <div class="flex flex-wrap justify-center gap-6">
             <a href="{% url 'privacy_policy' %}" class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-all">{% trans "Privacy Policy" %}</a>
             <a href="{% url 'terms_of_service' %}" class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-all">{% trans "Terms of Service" %}</a>
             <a href="{% url 'security' %}" class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-all">{% trans "Security" %}</a>
             <a href="{% url 'donate' %}" class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-all">{% trans "Donate" %}</a>
         </div>
-        <div class="font-body-sm text-body-sm text-on-surface-variant">© {% now "Y" %} PropoTrack.</div>
+        <div class="font-body-sm text-body-sm text-on-surface-variant">© {% now "Y" %} Pipelancer.</div>
     </div>
 </footer>
 {% endblock %}
