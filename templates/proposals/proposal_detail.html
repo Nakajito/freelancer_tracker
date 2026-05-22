@@ -61,8 +61,18 @@
                 </p>
             </div>
             <div>
+                {% if proposal.pricing_type == 'hourly' %}
+                <p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-1">{% trans "Hourly Rate" %}</p>
+                <p class="font-h3 text-h3 text-on-surface">${{ proposal.hourly_rate|default:"—" }}<span class="font-body-sm text-body-sm text-on-surface-variant">/h</span></p>
+                {% if proposal.estimated_hours %}
+                <p class="font-body-sm text-body-sm text-on-surface-variant mt-1">
+                    {{ proposal.estimated_hours }}h &times; ${{ proposal.hourly_rate }} = <strong>${{ proposal.amount }}</strong>
+                </p>
+                {% endif %}
+                {% else %}
                 <p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-1">{% trans "Amount" %}</p>
                 <p class="font-h3 text-h3 text-on-surface">${{ proposal.amount|default:"—" }}</p>
+                {% endif %}
             </div>
         </div>
 

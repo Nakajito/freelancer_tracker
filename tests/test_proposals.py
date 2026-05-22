@@ -447,3 +447,39 @@ class TestProposalFormPricing:
         assert not form.is_valid()
         assert "hourly_rate" in form.errors
         assert "estimated_hours" in form.errors
+
+
+@pytest.mark.django_db
+class TestProposalDetailPricing:
+    def test_detail_shows_fixed_amount(self, authed_client, user, client_model):
+        from apps.proposals.models import Proposal, PricingType
+
+        p = Proposal.objects.create(
+            owner=user,
+            title="Fixed",
+            client=client_model,
+            pricing_type=PricingType.FIXED,
+            amount=Decimal("500.00"),
+        )
+        url = reverse("proposal-detail", kwargs={"pk": p.pk})
+        response = authed_client.get(url)
+        assert response.status_code == 200
+        assert b"500" in response.content
+
+    def test_detail_shows_hourly_breakdown(self, authed_client, user, client_model):
+        from apps.proposals.models import Proposal, PricingType
+
+        p = Proposal.objects.create(
+            owner=user,
+            title="Hourly",
+            client=client_model,
+            pricing_type=PricingType.HOURLY,
+            hourly_rate=Decimal("50.00"),
+            estimated_hours=Decimal("10.00"),
+        )
+        url = reverse("proposal-detail", kwargs={"pk": p.pk})
+        response = authed_client.get(url)
+        assert response.status_code == 200
+        assert b"50" in response.content   # hourly rate
+        assert b"10" in response.content   # estimated hours
+        assert b"500" in response.content  # total (50 * 10)
