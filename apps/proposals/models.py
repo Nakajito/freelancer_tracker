@@ -199,6 +199,7 @@ class Proposal(OwnedModel):
         ordering = ["-created_at"]
 
     def save(self, *args, **kwargs):
+        # If called with update_fields, include 'amount' to persist the recalculated value.
         if (
             self.pricing_type == PricingType.HOURLY
             and self.hourly_rate is not None
@@ -208,6 +209,10 @@ class Proposal(OwnedModel):
                 Decimal("0.01")
             )
         super().save(*args, **kwargs)
+
+    @property
+    def is_hourly(self) -> bool:
+        return self.pricing_type == PricingType.HOURLY
 
     def __str__(self):
         client_name = self.client.name if self.client_id else "—"
