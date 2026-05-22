@@ -4,7 +4,7 @@ from datetime import date
 from django.urls import reverse
 
 from apps.proposals.forms import ProposalForm
-from apps.proposals.models import Client, Platform, Proposal, Tag, ProposalStatus
+from apps.proposals.models import Client, Platform, Proposal, PricingType, Tag, ProposalStatus
 
 
 @pytest.mark.django_db
@@ -229,14 +229,10 @@ class TestProposalQuerySetSearch:
 @pytest.mark.django_db
 class TestProposalPricingType:
     def test_default_pricing_type_is_fixed(self, user, client_model):
-        from apps.proposals.models import Proposal, PricingType
-
         p = Proposal.objects.create(owner=user, title="Test", client=client_model)
         assert p.pricing_type == PricingType.FIXED
 
     def test_hourly_auto_calculates_amount(self, user, client_model):
-        from apps.proposals.models import Proposal, PricingType
-
         p = Proposal.objects.create(
             owner=user,
             title="Hourly Test",
@@ -248,8 +244,6 @@ class TestProposalPricingType:
         assert p.amount == Decimal("1000.00")
 
     def test_fixed_keeps_manual_amount(self, user, client_model):
-        from apps.proposals.models import Proposal, PricingType
-
         p = Proposal.objects.create(
             owner=user,
             title="Fixed Test",
@@ -260,8 +254,6 @@ class TestProposalPricingType:
         assert p.amount == Decimal("500.00")
 
     def test_hourly_without_rate_does_not_change_amount(self, user, client_model):
-        from apps.proposals.models import Proposal, PricingType
-
         p = Proposal.objects.create(
             owner=user,
             title="Incomplete Hourly",
@@ -274,8 +266,6 @@ class TestProposalPricingType:
         assert p.amount == Decimal("999.00")
 
     def test_hourly_recalculates_on_update(self, user, client_model):
-        from apps.proposals.models import Proposal, PricingType
-
         p = Proposal.objects.create(
             owner=user,
             title="Hourly Update",

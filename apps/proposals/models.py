@@ -92,6 +92,8 @@ class ProposalStatus(models.TextChoices):
 
 
 class PricingType(models.TextChoices):
+    """Billing model for a proposal."""
+
     FIXED = "fixed", _("Fixed Price")
     HOURLY = "hourly", _("Hourly Rate")
 
@@ -202,7 +204,7 @@ class Proposal(OwnedModel):
             and self.hourly_rate is not None
             and self.estimated_hours is not None
         ):
-            self.amount = self.hourly_rate * self.estimated_hours
+            self.amount = (self.hourly_rate * self.estimated_hours).quantize(Decimal("0.01"))
         super().save(*args, **kwargs)
 
     def __str__(self):
