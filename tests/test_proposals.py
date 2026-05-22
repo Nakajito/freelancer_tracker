@@ -452,8 +452,6 @@ class TestProposalFormPricing:
 @pytest.mark.django_db
 class TestProposalDetailPricing:
     def test_detail_shows_fixed_amount(self, authed_client, user, client_model):
-        from apps.proposals.models import Proposal, PricingType
-
         p = Proposal.objects.create(
             owner=user,
             title="Fixed",
@@ -465,10 +463,9 @@ class TestProposalDetailPricing:
         response = authed_client.get(url)
         assert response.status_code == 200
         assert b"500" in response.content
+        assert b">/h<" not in response.content  # hourly span absent for fixed
 
     def test_detail_shows_hourly_breakdown(self, authed_client, user, client_model):
-        from apps.proposals.models import Proposal, PricingType
-
         p = Proposal.objects.create(
             owner=user,
             title="Hourly",
@@ -480,6 +477,6 @@ class TestProposalDetailPricing:
         url = reverse("proposal-detail", kwargs={"pk": p.pk})
         response = authed_client.get(url)
         assert response.status_code == 200
-        assert b"50" in response.content   # hourly rate
-        assert b"10" in response.content   # estimated hours
-        assert b"500" in response.content  # total (50 * 10)
+        assert b">/h<" in response.content  # hourly rate span present
+        assert b"&times;" in response.content  # breakdown line rendered (locale-independent)
+        assert b"500" in response.content       # auto-calculated total
