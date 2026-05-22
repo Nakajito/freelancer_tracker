@@ -182,8 +182,7 @@
     const rate  = parseFloat(rateInput.value)  || 0;
     const hours = parseFloat(hoursInput.value) || 0;
     if (rate > 0 && hours > 0) {
-      const total = (rate * hours).toFixed(2);
-      totalPreview.textContent = '$' + parseFloat(total).toLocaleString('en-US', {minimumFractionDigits: 2});
+      totalPreview.textContent = '$' + (rate * hours).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
     } else {
       totalPreview.textContent = '—';
     }
