@@ -40,6 +40,7 @@ def test_demo_auto_login_logs_in_as_demo_user(client, demo_user):
     client.get(reverse("demo-login"))
     # Session should have _auth_user_id set
     from django.contrib.auth import SESSION_KEY
+
     assert SESSION_KEY in client.session
 
 

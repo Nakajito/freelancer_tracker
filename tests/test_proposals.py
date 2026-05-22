@@ -299,7 +299,10 @@ class TestProposalListPeriodFilter:
         self._proposal(
             user, client_model, sent_date=date(today.year - 1, today.month, 1)
         )
-        url = reverse("proposal-list") + f"?year=&month={today.month}&date_field=sent_date"
+        url = (
+            reverse("proposal-list")
+            + f"?year=&month={today.month}&date_field=sent_date"
+        )
         response = authed_client.get(url)
         proposals = list(response.context["proposals"])
         years = {p.sent_date.year for p in proposals if p.sent_date}

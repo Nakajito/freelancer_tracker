@@ -7,6 +7,7 @@ Usage:
     python bin/check-icons.py              # check only
     python bin/check-icons.py --patch      # check + patch missing icons (requires full font)
 """
+
 import re
 import subprocess
 import sys
@@ -19,8 +20,14 @@ TEMPLATES_DIR = ROOT / "templates"
 
 def get_icons_from_templates() -> set[str]:
     result = subprocess.run(
-        ["grep", "-roh", r'material-symbols-outlined[^"]*">\([^<]*\)<', str(TEMPLATES_DIR)],
-        capture_output=True, text=True
+        [
+            "grep",
+            "-roh",
+            r'material-symbols-outlined[^"]*">\([^<]*\)<',
+            str(TEMPLATES_DIR),
+        ],
+        capture_output=True,
+        text=True,
     )
     icons = set()
     for line in result.stdout.splitlines():
@@ -32,23 +39,28 @@ def get_icons_from_templates() -> set[str]:
 
 def get_icons_from_font(font_path: Path) -> set[str]:
     from fontTools.ttLib import TTFont
+
     f = TTFont(str(font_path))
-    gsub = f['GSUB'].table
+    gsub = f["GSUB"].table
     found = set()
     for lookup in gsub.LookupList.Lookup:
         for sub in lookup.SubTable:
-            if hasattr(sub, 'ExtSubTable'):
+            if hasattr(sub, "ExtSubTable"):
                 ext = sub.ExtSubTable
-                if ext.LookupType == 4 and hasattr(ext, 'ligatures'):
+                if ext.LookupType == 4 and hasattr(ext, "ligatures"):
                     for g, ligs in ext.ligatures.items():
                         for lig in ligs:
-                            name = g + ''.join(c if c != 'underscore' else '_' for c in lig.Component)
+                            name = g + "".join(
+                                c if c != "underscore" else "_" for c in lig.Component
+                            )
                             found.add(name)
     return found
 
 
 def find_current_font() -> Path | None:
-    fonts = sorted(FONT_PATH.glob("material-symbols-outlined-subset.v*.woff2"), reverse=True)
+    fonts = sorted(
+        FONT_PATH.glob("material-symbols-outlined-subset.v*.woff2"), reverse=True
+    )
     return fonts[0] if fonts else None
 
 
@@ -61,20 +73,25 @@ def patch_font(missing: set[str], current_font: Path, full_font_path: Path) -> P
     full = TTFont(str(full_font_path))
 
     # Find glyph names in full font for missing icons
-    full_gsub = full['GSUB'].table
+    full_gsub = full["GSUB"].table
     full_icon_to_glyph: dict[str, tuple[str, list[str]]] = {}
     for lookup in full_gsub.LookupList.Lookup:
         for sub in lookup.SubTable:
-            if hasattr(sub, 'ExtSubTable'):
+            if hasattr(sub, "ExtSubTable"):
                 ext = sub.ExtSubTable
-                if ext.LookupType == 4 and hasattr(ext, 'ligatures'):
+                if ext.LookupType == 4 and hasattr(ext, "ligatures"):
                     for g, ligs in ext.ligatures.items():
                         for lig in ligs:
-                            name = g + ''.join(c if c != 'underscore' else '_' for c in lig.Component)
+                            name = g + "".join(
+                                c if c != "underscore" else "_" for c in lig.Component
+                            )
                             if name in missing:
-                                full_icon_to_glyph[name] = (lig.LigGlyph, [g] + lig.Component)
+                                full_icon_to_glyph[name] = (
+                                    lig.LigGlyph,
+                                    [g] + lig.Component,
+                                )
 
-    gsub = existing['GSUB'].table
+    gsub = existing["GSUB"].table
     lookup = gsub.LookupList.Lookup[0]
     glyph_order = list(existing.getGlyphOrder())
 
@@ -85,15 +102,19 @@ def patch_font(missing: set[str], current_font: Path, full_font_path: Path) -> P
         # Add glyph to font
         glyph_order.append(glyph_name)
         existing.setGlyphOrder(glyph_order)
-        existing['glyf'][glyph_name] = copy.deepcopy(full['glyf'][glyph_name])
-        existing['hmtx'].metrics[glyph_name] = full['hmtx'].metrics[glyph_name]
-        existing['maxp'].numGlyphs = len(glyph_order)
+        existing["glyf"][glyph_name] = copy.deepcopy(full["glyf"][glyph_name])
+        existing["hmtx"].metrics[glyph_name] = full["hmtx"].metrics[glyph_name]
+        existing["maxp"].numGlyphs = len(glyph_order)
 
         # Add ligature - find a subtable with the right first char
         target_ext = None
         for sub in lookup.SubTable:
             ext = sub.ExtSubTable
-            if ext.LookupType == 4 and hasattr(ext, 'ligatures') and first_char in ext.ligatures:
+            if (
+                ext.LookupType == 4
+                and hasattr(ext, "ligatures")
+                and first_char in ext.ligatures
+            ):
                 target_ext = ext
                 break
         if target_ext is None:
@@ -109,10 +130,10 @@ def patch_font(missing: set[str], current_font: Path, full_font_path: Path) -> P
         print(f"  Patched: {icon_name} -> {glyph_name}")
 
     # Save as next version
-    current_version = int(current_font.stem.split('.v')[1])
+    current_version = int(current_font.stem.split(".v")[1])
     new_version = current_version + 1
     new_font_path = FONT_PATH / f"material-symbols-outlined-subset.v{new_version}.woff2"
-    existing.flavor = 'woff2'
+    existing.flavor = "woff2"
     existing.save(str(new_font_path))
     return new_font_path
 
@@ -158,7 +179,9 @@ def main():
     full_font = next((p for p in full_font_candidates if p.exists()), None)
     if not full_font:
         print("ERROR: Full font not found. Download from Google Fonts first:")
-        print("  curl -o /tmp/material-symbols-full.ttf '<ttf-url-from-fonts.googleapis.com>'")
+        print(
+            "  curl -o /tmp/material-symbols-full.ttf '<ttf-url-from-fonts.googleapis.com>'"
+        )
         sys.exit(1)
 
     new_font = patch_font(missing, current_font, full_font)

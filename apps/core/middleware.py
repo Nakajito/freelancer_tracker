@@ -22,7 +22,9 @@ class DemoReadOnlyMiddleware:
         ):
             messages.info(
                 request,
-                _("This feature is disabled in demo mode. Create an account to use it."),
+                _(
+                    "This feature is disabled in demo mode. Create an account to use it."
+                ),
             )
             referer = request.META.get("HTTP_REFERER", "")
             return redirect(referer or reverse("dashboard"))

@@ -64,9 +64,15 @@ CONTENT_SECURITY_POLICY = {
         "frame-ancestors": ["'none'"],
         "base-uri": ["'self'"],
         # MP uses redirect so no extra CSP needed; allow self + stripe hosted pages
-        "form-action": ["'self'", "https://www.mercadopago.com", "https://www.mercadopago.com.ar",
-                        "https://www.mercadopago.com.br", "https://www.mercadopago.com.mx",
-                        "https://www.mercadopago.cl", "https://www.mercadopago.com.co"],
+        "form-action": [
+            "'self'",
+            "https://www.mercadopago.com",
+            "https://www.mercadopago.com.ar",
+            "https://www.mercadopago.com.br",
+            "https://www.mercadopago.com.mx",
+            "https://www.mercadopago.cl",
+            "https://www.mercadopago.com.co",
+        ],
     },
 }
 

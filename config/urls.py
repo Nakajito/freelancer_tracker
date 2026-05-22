@@ -8,7 +8,10 @@ from django.views.generic import TemplateView
 
 from apps.core.views_health import healthz
 from apps.core.views_seo import robots_txt, security_txt, ChangePasswordRedirect
-from apps.donations.urls import i18n_urlpatterns as donations_i18n, webhook_urlpatterns as donations_webhooks
+from apps.donations.urls import (
+    i18n_urlpatterns as donations_i18n,
+    webhook_urlpatterns as donations_webhooks,
+)
 from apps.core.sitemaps import StaticViewSitemap
 
 sitemaps = {"static": StaticViewSitemap}

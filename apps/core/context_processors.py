@@ -1,7 +1,7 @@
 from django.conf import settings
 
 
-def demo_mode(request: object) -> dict:
+def demo_mode(request: object) -> dict[str, bool]:
     is_demo = (
         hasattr(request, "user")
         and request.user.is_authenticated

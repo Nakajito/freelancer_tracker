@@ -115,7 +115,12 @@ class MonthlySummaryView(LoginRequiredMixin, TemplateView):
         summary = MonthlySummaryGenerator.generate(
             user, start_date, end_date, period_label
         )
-        chart_months = {"monthly": 6, "quarterly": 3, "semi-annual": 6, "annual": 12}.get(period, 6)
+        chart_months = {
+            "monthly": 6,
+            "quarterly": 3,
+            "semi-annual": 6,
+            "annual": 12,
+        }.get(period, 6)
         chart = DashboardService.get_earnings_chart(
             user, months=chart_months, anchor_date=end_date - timedelta(days=1)
         )

@@ -111,7 +111,9 @@ def test_stripe_create_intent_success(client: Client, settings):
     mock_intent = MagicMock()
     mock_intent.client_secret = "pi_test_secret_xyz"
 
-    with patch("apps.donations.services.stripe.PaymentIntent.create", return_value=mock_intent):
+    with patch(
+        "apps.donations.services.stripe.PaymentIntent.create", return_value=mock_intent
+    ):
         url = reverse("donate_stripe_intent")
         resp = client.post(url, {"amount": "10", "frequency": "one_time"})
 
@@ -275,7 +277,9 @@ def test_mp_webhook_approved(client: Client, settings):
 
 @pytest.mark.django_db
 def test_donate_success_page(client: Client):
-    donation = Donation.objects.create(amount=Decimal("10"), provider=Donation.PROVIDER_STRIPE)
+    donation = Donation.objects.create(
+        amount=Decimal("10"), provider=Donation.PROVIDER_STRIPE
+    )
     resp = client.get(reverse("donate_success") + f"?donation_id={donation.pk}")
     assert resp.status_code == 200
     assert b"Thank you" in resp.content
@@ -283,7 +287,9 @@ def test_donate_success_page(client: Client):
 
 @pytest.mark.django_db
 def test_donate_failure_page(client: Client):
-    donation = Donation.objects.create(amount=Decimal("10"), provider=Donation.PROVIDER_MP)
+    donation = Donation.objects.create(
+        amount=Decimal("10"), provider=Donation.PROVIDER_MP
+    )
     resp = client.get(reverse("donate_failure") + f"?donation_id={donation.pk}")
     assert resp.status_code == 200
     assert b"not completed" in resp.content
