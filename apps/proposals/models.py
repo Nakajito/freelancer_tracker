@@ -172,6 +172,7 @@ class Proposal(OwnedModel):
         max_length=10,
         choices=PricingType.choices,
         default=PricingType.FIXED,
+        db_default=PricingType.FIXED,
     )
     hourly_rate = models.DecimalField(
         max_digits=10,
