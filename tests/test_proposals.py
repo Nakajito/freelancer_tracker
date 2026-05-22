@@ -103,6 +103,7 @@ class TestProposalForm:
                 "new_client_name": "Acme",
                 "new_client_email": "hello@acme.test",
                 "amount": "500.00",
+                "pricing_type": "fixed",
                 "status": ProposalStatus.DRAFT,
                 "proposal_text": "",
                 "sent_date": "",
@@ -133,6 +134,7 @@ class TestProposalForm:
                 "new_client_name": "Ignored Client",
                 "new_client_email": "ignored@example.com",
                 "amount": "500.00",
+                "pricing_type": "fixed",
                 "status": ProposalStatus.DRAFT,
                 "proposal_text": "",
                 "sent_date": "",
@@ -380,3 +382,59 @@ class TestProposalListPeriodFilter:
         proposals = list(response.context["proposals"])
         assert len(proposals) == 1
         assert proposals[0].status == ProposalStatus.SENT
+
+
+@pytest.mark.django_db
+class TestProposalFormPricing:
+    BASE_DATA = {
+        "title": "Test Proposal",
+        "status": "draft",
+        "platform": "other",
+        "amount": "0",
+        "proposal_text": "",
+        "job_url": "",
+        "proposal_url": "",
+        "new_client_name": "",
+        "new_client_email": "",
+    }
+
+    def _form(self, user, extra):
+        from apps.proposals.forms import ProposalForm
+
+        data = {**self.BASE_DATA, **extra}
+        return ProposalForm(data=data, user=user)
+
+    def test_hourly_requires_hourly_rate(self, user):
+        form = self._form(
+            user,
+            {"pricing_type": "hourly", "hourly_rate": "", "estimated_hours": "10"},
+        )
+        assert not form.is_valid()
+        assert "hourly_rate" in form.errors
+
+    def test_hourly_requires_estimated_hours(self, user):
+        form = self._form(
+            user,
+            {"pricing_type": "hourly", "hourly_rate": "50", "estimated_hours": ""},
+        )
+        assert not form.is_valid()
+        assert "estimated_hours" in form.errors
+
+    def test_hourly_valid_with_both_fields(self, user):
+        form = self._form(
+            user,
+            {"pricing_type": "hourly", "hourly_rate": "50", "estimated_hours": "20"},
+        )
+        assert form.is_valid(), form.errors
+
+    def test_fixed_valid_without_hourly_fields(self, user):
+        form = self._form(
+            user,
+            {
+                "pricing_type": "fixed",
+                "amount": "500",
+                "hourly_rate": "",
+                "estimated_hours": "",
+            },
+        )
+        assert form.is_valid(), form.errors

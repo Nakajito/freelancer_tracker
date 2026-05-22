@@ -3,7 +3,7 @@ from django.db import transaction
 from django.utils.translation import gettext_lazy as _
 
 from apps.core.forms import date_input_widget
-from apps.proposals.models import Client, Platform, Proposal, ProposalStatus
+from apps.proposals.models import Client, Platform, Proposal, ProposalStatus, PricingType
 
 
 class ProposalFilterForm(forms.Form):
@@ -42,6 +42,20 @@ class ProposalForm(forms.ModelForm):
             self.fields["amount"].widget.attrs.get("class", "") + " currency-input"
         ).strip()
         self.fields["amount"].widget.attrs["style"] = "padding-left: 2.25rem;"
+        self.fields["hourly_rate"].widget.attrs["class"] = (
+            self.fields["hourly_rate"].widget.attrs.get("class", "") + " currency-input"
+        ).strip()
+        self.fields["hourly_rate"].widget.attrs["style"] = "padding-left: 2.25rem;"
+
+    def clean(self):
+        cleaned_data = super().clean()
+        pricing_type = cleaned_data.get("pricing_type")
+        if pricing_type == PricingType.HOURLY:
+            if not cleaned_data.get("hourly_rate"):
+                self.add_error("hourly_rate", _("Required for hourly pricing."))
+            if not cleaned_data.get("estimated_hours"):
+                self.add_error("estimated_hours", _("Required for hourly pricing."))
+        return cleaned_data
 
     class Meta:
         model = Proposal
@@ -51,6 +65,9 @@ class ProposalForm(forms.ModelForm):
             "client",
             "proposal_text",
             "amount",
+            "pricing_type",
+            "hourly_rate",
+            "estimated_hours",
             "status",
             "sent_date",
             "expected_response_date",
