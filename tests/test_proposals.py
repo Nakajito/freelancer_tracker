@@ -438,3 +438,12 @@ class TestProposalFormPricing:
             },
         )
         assert form.is_valid(), form.errors
+
+    def test_hourly_both_fields_missing_shows_both_errors(self, user):
+        form = self._form(
+            user,
+            {"pricing_type": "hourly", "hourly_rate": "", "estimated_hours": ""},
+        )
+        assert not form.is_valid()
+        assert "hourly_rate" in form.errors
+        assert "estimated_hours" in form.errors

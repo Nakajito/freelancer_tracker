@@ -30,6 +30,11 @@ class ProposalForm(forms.ModelForm):
         label=_("New client email"),
     )
 
+    def _apply_currency_widget(self, field_name: str) -> None:
+        attrs = self.fields[field_name].widget.attrs
+        attrs["class"] = (attrs.get("class", "") + " currency-input").strip()
+        attrs["style"] = "padding-left: 2.25rem;"
+
     def __init__(self, *args, user=None, **kwargs):
         super().__init__(*args, **kwargs)
         self.user = user
@@ -38,22 +43,16 @@ class ProposalForm(forms.ModelForm):
             self.fields["tags"].queryset = self.fields["tags"].queryset.filter(
                 owner=user
             )
-        self.fields["amount"].widget.attrs["class"] = (
-            self.fields["amount"].widget.attrs.get("class", "") + " currency-input"
-        ).strip()
-        self.fields["amount"].widget.attrs["style"] = "padding-left: 2.25rem;"
-        self.fields["hourly_rate"].widget.attrs["class"] = (
-            self.fields["hourly_rate"].widget.attrs.get("class", "") + " currency-input"
-        ).strip()
-        self.fields["hourly_rate"].widget.attrs["style"] = "padding-left: 2.25rem;"
+        self._apply_currency_widget("amount")
+        self._apply_currency_widget("hourly_rate")
 
     def clean(self):
         cleaned_data = super().clean()
         pricing_type = cleaned_data.get("pricing_type")
         if pricing_type == PricingType.HOURLY:
-            if not cleaned_data.get("hourly_rate"):
+            if cleaned_data.get("hourly_rate") is None:
                 self.add_error("hourly_rate", _("Required for hourly pricing."))
-            if not cleaned_data.get("estimated_hours"):
+            if cleaned_data.get("estimated_hours") is None:
                 self.add_error("estimated_hours", _("Required for hourly pricing."))
         return cleaned_data
 
