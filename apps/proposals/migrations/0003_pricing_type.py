@@ -6,25 +6,40 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('proposals', '0002_alter_proposal_client'),
+        ("proposals", "0002_alter_proposal_client"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='proposal',
-            name='estimated_hours',
-            field=models.DecimalField(blank=True, decimal_places=2, max_digits=6, null=True, validators=[django.core.validators.MinValueValidator(Decimal('0.01'))]),
+            model_name="proposal",
+            name="estimated_hours",
+            field=models.DecimalField(
+                blank=True,
+                decimal_places=2,
+                max_digits=6,
+                null=True,
+                validators=[django.core.validators.MinValueValidator(Decimal("0.01"))],
+            ),
         ),
         migrations.AddField(
-            model_name='proposal',
-            name='hourly_rate',
-            field=models.DecimalField(blank=True, decimal_places=2, max_digits=10, null=True, validators=[django.core.validators.MinValueValidator(Decimal('0.01'))]),
+            model_name="proposal",
+            name="hourly_rate",
+            field=models.DecimalField(
+                blank=True,
+                decimal_places=2,
+                max_digits=10,
+                null=True,
+                validators=[django.core.validators.MinValueValidator(Decimal("0.01"))],
+            ),
         ),
         migrations.AddField(
-            model_name='proposal',
-            name='pricing_type',
-            field=models.CharField(choices=[('fixed', 'Fixed Price'), ('hourly', 'Hourly Rate')], default='fixed', max_length=10),
+            model_name="proposal",
+            name="pricing_type",
+            field=models.CharField(
+                choices=[("fixed", "Fixed Price"), ("hourly", "Hourly Rate")],
+                default="fixed",
+                max_length=10,
+            ),
         ),
     ]

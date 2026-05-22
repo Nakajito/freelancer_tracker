@@ -4,7 +4,14 @@ from datetime import date
 from django.urls import reverse
 
 from apps.proposals.forms import ProposalForm
-from apps.proposals.models import Client, Platform, Proposal, PricingType, Tag, ProposalStatus
+from apps.proposals.models import (
+    Client,
+    Platform,
+    Proposal,
+    PricingType,
+    Tag,
+    ProposalStatus,
+)
 
 
 @pytest.mark.django_db
@@ -478,5 +485,7 @@ class TestProposalDetailPricing:
         response = authed_client.get(url)
         assert response.status_code == 200
         assert b">/h<" in response.content  # hourly rate span present
-        assert b"&times;" in response.content  # breakdown line rendered (locale-independent)
-        assert b"500" in response.content       # auto-calculated total
+        assert (
+            b"&times;" in response.content
+        )  # breakdown line rendered (locale-independent)
+        assert b"500" in response.content  # auto-calculated total

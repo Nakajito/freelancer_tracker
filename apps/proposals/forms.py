@@ -3,7 +3,13 @@ from django.db import transaction
 from django.utils.translation import gettext_lazy as _
 
 from apps.core.forms import date_input_widget
-from apps.proposals.models import Client, Platform, Proposal, ProposalStatus, PricingType
+from apps.proposals.models import (
+    Client,
+    Platform,
+    Proposal,
+    ProposalStatus,
+    PricingType,
+)
 
 
 class ProposalFilterForm(forms.Form):
