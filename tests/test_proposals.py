@@ -390,6 +390,26 @@ class TestProposalListPeriodFilter:
         assert len(proposals) == 1
         assert proposals[0].status == ProposalStatus.SENT
 
+    def test_pagination_links_preserve_filter_params(
+        self, authed_client, user, client_model
+    ):
+        # Create 25 proposals (paginate_by=20) all with status=sent
+        for i in range(25):
+            Proposal.objects.create(
+                owner=user,
+                title=f"Proposal {i}",
+                client=client_model,
+                status=ProposalStatus.SENT,
+                sent_date=date(2026, 5, i % 28 + 1),
+            )
+        url = reverse("proposal-list") + "?status=sent&year=2026&month=5"
+        response = authed_client.get(url)
+        assert response.status_code == 200
+        content = response.content.decode()
+        # pagination links must carry filter params
+        assert "status=sent" in content
+        assert "year=2026" in content
+
 
 @pytest.mark.django_db
 class TestProposalFormPricing:
