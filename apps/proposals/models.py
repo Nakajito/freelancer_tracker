@@ -91,6 +91,11 @@ class ProposalStatus(models.TextChoices):
     ARCHIVED = "archived", _("Archived")
 
 
+class PricingType(models.TextChoices):
+    FIXED = "fixed", _("Fixed Price")
+    HOURLY = "hourly", _("Hourly Rate")
+
+
 class Client(OwnedModel):
     """A client (or prospect) the freelancer pitches to."""
 
@@ -161,6 +166,25 @@ class Proposal(OwnedModel):
     proposal_url = models.URLField(max_length=500, blank=True, default="")
     tags = models.ManyToManyField(Tag, blank=True, related_name="proposals")
     paid = models.BooleanField(default=False)
+    pricing_type = models.CharField(
+        max_length=10,
+        choices=PricingType.choices,
+        default=PricingType.FIXED,
+    )
+    hourly_rate = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        null=True,
+        blank=True,
+        validators=[MinValueValidator(Decimal("0.01"))],
+    )
+    estimated_hours = models.DecimalField(
+        max_digits=6,
+        decimal_places=2,
+        null=True,
+        blank=True,
+        validators=[MinValueValidator(Decimal("0.01"))],
+    )
 
     objects = ProposalManager()
 
@@ -171,6 +195,15 @@ class Proposal(OwnedModel):
             models.Index(fields=["client", "sent_date"]),
         ]
         ordering = ["-created_at"]
+
+    def save(self, *args, **kwargs):
+        if (
+            self.pricing_type == PricingType.HOURLY
+            and self.hourly_rate is not None
+            and self.estimated_hours is not None
+        ):
+            self.amount = self.hourly_rate * self.estimated_hours
+        super().save(*args, **kwargs)
 
     def __str__(self):
         client_name = self.client.name if self.client_id else "—"

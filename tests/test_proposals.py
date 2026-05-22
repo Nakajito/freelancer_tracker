@@ -227,6 +227,70 @@ class TestProposalQuerySetSearch:
 
 
 @pytest.mark.django_db
+class TestProposalPricingType:
+    def test_default_pricing_type_is_fixed(self, user, client_model):
+        from apps.proposals.models import Proposal, PricingType
+
+        p = Proposal.objects.create(owner=user, title="Test", client=client_model)
+        assert p.pricing_type == PricingType.FIXED
+
+    def test_hourly_auto_calculates_amount(self, user, client_model):
+        from apps.proposals.models import Proposal, PricingType
+
+        p = Proposal.objects.create(
+            owner=user,
+            title="Hourly Test",
+            client=client_model,
+            pricing_type=PricingType.HOURLY,
+            hourly_rate=Decimal("50.00"),
+            estimated_hours=Decimal("20.00"),
+        )
+        assert p.amount == Decimal("1000.00")
+
+    def test_fixed_keeps_manual_amount(self, user, client_model):
+        from apps.proposals.models import Proposal, PricingType
+
+        p = Proposal.objects.create(
+            owner=user,
+            title="Fixed Test",
+            client=client_model,
+            pricing_type=PricingType.FIXED,
+            amount=Decimal("500.00"),
+        )
+        assert p.amount == Decimal("500.00")
+
+    def test_hourly_without_rate_does_not_change_amount(self, user, client_model):
+        from apps.proposals.models import Proposal, PricingType
+
+        p = Proposal.objects.create(
+            owner=user,
+            title="Incomplete Hourly",
+            client=client_model,
+            pricing_type=PricingType.HOURLY,
+            amount=Decimal("999.00"),
+            hourly_rate=None,
+            estimated_hours=None,
+        )
+        assert p.amount == Decimal("999.00")
+
+    def test_hourly_recalculates_on_update(self, user, client_model):
+        from apps.proposals.models import Proposal, PricingType
+
+        p = Proposal.objects.create(
+            owner=user,
+            title="Hourly Update",
+            client=client_model,
+            pricing_type=PricingType.HOURLY,
+            hourly_rate=Decimal("50.00"),
+            estimated_hours=Decimal("10.00"),
+        )
+        p.estimated_hours = Decimal("20.00")
+        p.save()
+        p.refresh_from_db()
+        assert p.amount == Decimal("1000.00")
+
+
+@pytest.mark.django_db
 class TestProposalListPeriodFilter:
     def _proposal(self, user, client_model, sent_date=None, **kwargs):
         kwargs.setdefault("status", ProposalStatus.DRAFT)
