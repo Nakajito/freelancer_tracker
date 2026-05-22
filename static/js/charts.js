@@ -1,12 +1,18 @@
-// Chart.js initializers for PropoTrack dashboards.
-// Reads canvas data attributes (data-labels, data-data) that views populate
-// via JSON. Keeps chart logic out of templates.
-
 (function () {
     function initForecastChart(canvas) {
-        if (!canvas || typeof Chart === "undefined") return;
-        const labels = JSON.parse(canvas.dataset.labels || "[]");
-        const data = JSON.parse(canvas.dataset.data || "[]");
+        if (!canvas) return;
+        if (typeof Chart === "undefined") {
+            console.error("Chart.js not loaded — forecastChart will not render");
+            return;
+        }
+        let labels, data;
+        try {
+            labels = JSON.parse(canvas.dataset.labels || "[]");
+            data = JSON.parse(canvas.dataset.data || "[]");
+        } catch (e) {
+            console.error("forecastChart: bad JSON in data attributes", e);
+            return;
+        }
         new Chart(canvas.getContext("2d"), {
             type: "bar",
             data: {
@@ -15,11 +21,32 @@
                     label: "Earnings",
                     data: data,
                     backgroundColor: "#00685f",
+                    borderRadius: 4,
                 }],
             },
             options: {
                 responsive: true,
-                scales: { y: { beginAtZero: true } },
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function (value) {
+                                return "$" + value.toLocaleString();
+                            },
+                        },
+                    },
+                },
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function (ctx) {
+                                return "$" + ctx.parsed.y.toLocaleString();
+                            },
+                        },
+                    },
+                    legend: { display: false },
+                },
             },
         });
     }

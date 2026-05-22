@@ -528,10 +528,8 @@ msgid "You're viewing sample data. All edits are disabled."
 msgstr "Estás viendo datos de ejemplo. Todas las ediciones están desactivadas."
 
 #: templates/app_base.html:200
-#, fuzzy
-#| msgid "View Demo"
 msgid "Exit Demo"
-msgstr "Ver demo"
+msgstr "Salir del demo"
 
 #: templates/app_base.html:203
 msgid "Create your free account →"
@@ -1114,57 +1112,55 @@ msgstr "Mensual"
 
 #: templates/dashboard/monthly_summary.html:30
 msgid "Quarterly"
-msgstr ""
+msgstr "Trimestral"
 
 #: templates/dashboard/monthly_summary.html:31
 msgid "Semi-annual"
-msgstr ""
+msgstr "Semestral"
 
 #: templates/dashboard/monthly_summary.html:32
 msgid "Annual"
-msgstr ""
+msgstr "Anual"
 
 #: templates/dashboard/monthly_summary.html:39
 msgid "Year"
 msgstr "Año"
 
 #: templates/dashboard/monthly_summary.html:51
-#, fuzzy
-#| msgid "Monthly"
 msgid "Month"
-msgstr "Mensual"
+msgstr "Mes"
 
 #: templates/dashboard/monthly_summary.html:63
 msgid "Quarter"
-msgstr ""
+msgstr "Trimestre"
 
 #: templates/dashboard/monthly_summary.html:66
 msgid "Jan–Mar"
-msgstr ""
+msgstr "Ene–Mar"
 
 #: templates/dashboard/monthly_summary.html:67
 msgid "Apr–Jun"
-msgstr ""
+msgstr "Abr–Jun"
 
 #: templates/dashboard/monthly_summary.html:68
 msgid "Jul–Sep"
-msgstr ""
+msgstr "Jul–Sep"
 
 #: templates/dashboard/monthly_summary.html:69
 msgid "Oct–Dec"
-msgstr ""
+msgstr "Oct–Dic"
 
 #: templates/dashboard/monthly_summary.html:76
 msgid "Half"
-msgstr ""
+msgstr "Semestre"
 
 #: templates/dashboard/monthly_summary.html:79
 msgid "Jan–Jun"
-msgstr ""
+msgstr "Ene–Jun"
 
 #: templates/dashboard/monthly_summary.html:80
 msgid "Jul–Dec"
-msgstr ""
+msgstr "Jul–Dic"
 
 #: templates/dashboard/monthly_summary.html:86
 #: templates/proposals/proposal_list.html:138
@@ -2167,20 +2163,16 @@ msgid "Add Proposal"
 msgstr "Agregar propuesta"
 
 #: templates/proposals/proposal_list.html:52
-#, fuzzy
-#| msgid "All Platforms"
 msgid "All Years"
-msgstr "Todas las plataformas"
+msgstr "Todos los años"
 
 #: templates/proposals/proposal_list.html:61
 msgid "All Months"
 msgstr ""
 
 #: templates/proposals/proposal_list.html:71
-#, fuzzy
-#| msgid "Create Template"
 msgid "Created Date"
-msgstr "Crear plantilla"
+msgstr "Fecha de creación"
 
 #: templates/proposals/proposal_list.html:78
 msgid "Clear"
@@ -2226,10 +2218,8 @@ msgid "Next"
 msgstr "Siguiente"
 
 #: templates/proposals/search_results.html:52
-#, fuzzy
-#| msgid "No proposals found"
 msgid "No results for"
-msgstr "No se encontraron propuestas"
+msgstr "Sin resultados para"
 
 #: templates/templates_app/template_confirm_delete.html:4
 msgid "Delete Template"

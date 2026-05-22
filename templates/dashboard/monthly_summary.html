@@ -21,7 +21,7 @@
 </div>
 
 <!-- Filter Bar -->
-<form method="get" class="mb-stack-md flex flex-col sm:flex-row gap-4 items-end bg-surface-container-lowest p-4 rounded-xl border border-outline-variant shadow-xs">
+<form id="analytics-filter-form" method="get" class="mb-stack-md flex flex-col sm:flex-row gap-4 items-end bg-surface-container-lowest p-4 rounded-xl border border-outline-variant shadow-xs">
     <div class="flex flex-col gap-1 flex-1">
         <label for="period" class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">{% trans "Period" %}</label>
         <div class="relative">
@@ -116,7 +116,9 @@
         <div class="flex justify-between items-center mb-6">
             <h3 class="font-h3 text-h3 text-on-surface">{% trans "Earnings Forecast" %}</h3>
         </div>
-        <canvas id="forecastChart" class="min-h-[250px]" data-labels="{{ chart_labels }}" data-data="{{ chart_data }}"></canvas>
+        <div class="relative h-[250px] w-full">
+            <canvas id="forecastChart" data-labels="{{ chart_labels }}" data-data="{{ chart_data }}"></canvas>
+        </div>
     </div>
     <div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-xs p-container-padding flex flex-col">
         <h3 class="font-h3 text-h3 text-on-surface mb-stack-md">{% trans "Platform Conversion" %}</h3>
@@ -184,10 +186,11 @@
 {% endblock %}
 
 {% block extra_js %}
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{% static 'vendor/chart-4.4.7.min.js' %}"></script>
 <script src="{% static 'js/charts.js' %}"></script>
 <script>
 (function () {
+    var form = document.querySelector("#analytics-filter-form");
     var periodSelect = document.getElementById("period");
     var monthWrapper = document.getElementById("month-wrapper");
     var quarterWrapper = document.getElementById("quarter-wrapper");
@@ -200,7 +203,16 @@
         halfWrapper.style.display = v === "semi-annual" ? "" : "none";
     }
 
-    periodSelect.addEventListener("change", syncSecondary);
+    periodSelect.addEventListener("change", function () {
+        syncSecondary();
+        form.submit();
+    });
+
+    ["year", "month-select", "quarter-select", "half-select"].forEach(function (id) {
+        var el = document.getElementById(id);
+        if (el) el.addEventListener("change", function () { form.submit(); });
+    });
+
     syncSecondary();
 })();
 </script>

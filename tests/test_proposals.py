@@ -291,6 +291,21 @@ class TestProposalListPeriodFilter:
         assert len(proposals) == 1
         assert proposals[0].sent_date.year == 2026
 
+    def test_month_without_year_defaults_to_current_year(
+        self, authed_client, user, client_model
+    ):
+        today = date.today()
+        self._proposal(user, client_model, sent_date=today)
+        self._proposal(
+            user, client_model, sent_date=date(today.year - 1, today.month, 1)
+        )
+        url = reverse("proposal-list") + f"?year=&month={today.month}&date_field=sent_date"
+        response = authed_client.get(url)
+        proposals = list(response.context["proposals"])
+        years = {p.sent_date.year for p in proposals if p.sent_date}
+        assert today.year in years
+        assert today.year - 1 not in years
+
     def test_period_combines_with_status_filter(
         self, authed_client, user, client_model
     ):

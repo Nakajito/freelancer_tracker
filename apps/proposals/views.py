@@ -38,15 +38,19 @@ class ProposalListView(OwnerQuerysetMixin, ListView):
         month = self.request.GET.get("month")
         date_field = self.request.GET.get("date_field", "sent_date")
 
+        # month without year defaults to current year
+        if month and not year:
+            year = str(date.today().year)
+
         if year:
             try:
                 y = int(year)
-            except ValueError, TypeError:
+            except (ValueError, TypeError):
                 return qs
             if month:
                 try:
                     m = int(month)
-                except ValueError, TypeError:
+                except (ValueError, TypeError):
                     return qs
                 if date_field == "sent_date":
                     qs = qs.filter(
