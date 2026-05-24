@@ -188,32 +188,5 @@
 {% block extra_js %}
 <script src="{% static 'vendor/chart-4.4.7.min.js' %}"></script>
 <script src="{% static 'js/charts.js' %}"></script>
-<script>
-(function () {
-    var form = document.querySelector("#analytics-filter-form");
-    var periodSelect = document.getElementById("period");
-    var monthWrapper = document.getElementById("month-wrapper");
-    var quarterWrapper = document.getElementById("quarter-wrapper");
-    var halfWrapper = document.getElementById("half-wrapper");
-
-    function syncSecondary() {
-        var v = periodSelect.value;
-        monthWrapper.style.display = v === "monthly" ? "" : "none";
-        quarterWrapper.style.display = v === "quarterly" ? "" : "none";
-        halfWrapper.style.display = v === "semi-annual" ? "" : "none";
-    }
-
-    periodSelect.addEventListener("change", function () {
-        syncSecondary();
-        form.submit();
-    });
-
-    ["year", "month-select", "quarter-select", "half-select"].forEach(function (id) {
-        var el = document.getElementById(id);
-        if (el) el.addEventListener("change", function () { form.submit(); });
-    });
-
-    syncSecondary();
-})();
-</script>
+<script src="{% static 'js/analytics-filter.js' %}" defer></script>
 {% endblock %}

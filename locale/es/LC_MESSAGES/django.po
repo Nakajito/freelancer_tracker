@@ -210,6 +210,18 @@ msgstr "Rechazada"
 msgid "Archived"
 msgstr "Archivada"
 
+#: apps/proposals/models.py:97
+msgid "Fixed Price"
+msgstr "Precio fijo"
+
+#: apps/proposals/models.py:98
+msgid "Hourly Rate"
+msgstr "Tarifa por hora"
+
+#: templates/proposals/proposal_form.html:39
+msgid "Pricing Type"
+msgstr "Tipo de tarifa"
+
 #: apps/proposals/models.py:191
 msgid "Amount must be greater than or equal to 0"
 msgstr "El monto debe ser mayor o igual a 0"

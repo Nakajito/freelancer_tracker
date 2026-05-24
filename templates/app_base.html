@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n static %}
 {% block body %}
     <div class="h-screen flex overflow-hidden">
         <!-- SideNavBar -->
@@ -126,14 +126,7 @@
                         <div id="search-results"></div>
                     </div>
                 </div>
-                <script>
-                  document.addEventListener('click', function(e) {
-                    var wrapper = document.getElementById('search-wrapper');
-                    if (wrapper && !wrapper.contains(e.target)) {
-                      document.getElementById('search-results').innerHTML = '';
-                    }
-                  });
-                </script>
+                <script src="{% static 'js/search-dismiss.js' %}" defer></script>
                 <div class="flex items-center gap-gutter ml-auto">
                     {% block topbar_actions %}{% endblock %}
                     {% if is_demo %}

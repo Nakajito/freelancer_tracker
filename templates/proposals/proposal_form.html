@@ -1,5 +1,5 @@
 {% extends "app_base.html" %}
-{% load i18n %}
+{% load i18n static %}
 
 {% block title %}{% if object %}{% trans "Edit Proposal" %}{% else %}{% trans "Create New Proposal" %}{% endif %} - Pipelancer{% endblock %}
 {% block active_nav %}proposals{% endblock %}
@@ -163,38 +163,5 @@
 {% endblock %}
 
 {% block extra_js %}
-<script>
-(function () {
-  const pricingSelect = document.getElementById('id_pricing_type');
-  const fixedSection  = document.getElementById('pricing-fixed-section');
-  const hourlySection = document.getElementById('pricing-hourly-section');
-  const rateInput     = document.getElementById('id_hourly_rate');
-  const hoursInput    = document.getElementById('id_estimated_hours');
-  const totalPreview  = document.getElementById('hourly-total-preview');
-
-  function updateVisibility() {
-    const isHourly = pricingSelect.value === 'hourly';
-    fixedSection.classList.toggle('hidden', isHourly);
-    hourlySection.classList.toggle('hidden', !isHourly);
-  }
-
-  function updateTotal() {
-    const rate  = parseFloat(rateInput.value)  || 0;
-    const hours = parseFloat(hoursInput.value) || 0;
-    if (rate > 0 && hours > 0) {
-      totalPreview.textContent = '$' + (rate * hours).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-    } else {
-      totalPreview.textContent = '—';
-    }
-  }
-
-  pricingSelect.addEventListener('change', updateVisibility);
-  rateInput.addEventListener('input', updateTotal);
-  hoursInput.addEventListener('input', updateTotal);
-
-  // Init on load (handles edit mode where value may already be 'hourly')
-  updateVisibility();
-  updateTotal();
-})();
-</script>
+<script src="{% static 'js/proposal-pricing.js' %}" defer></script>
 {% endblock %}
