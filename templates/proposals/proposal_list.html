@@ -1,5 +1,5 @@
 {% extends "app_base.html" %}
-{% load i18n %}
+{% load i18n static %}
 
 {% block title %}{% trans "Proposals" %} - Pipelancer{% endblock %}
 {% block active_nav %}proposals{% endblock %}
@@ -30,7 +30,7 @@
 <form method="get" id="filter-form" class="bg-surface-container-lowest border border-outline-variant rounded-xl p-4 mb-stack-md flex flex-col gap-4 shadow-xs">
     <div class="flex flex-col sm:flex-row flex-wrap gap-4 items-center">
         <div class="relative min-w-[160px]">
-            <select name="status" onchange="document.getElementById('filter-form').submit()" class="w-full appearance-none bg-surface border border-outline-variant rounded-lg py-2 pl-4 pr-10 font-body-sm text-body-sm text-on-surface focus:outline-hidden focus:ring-2 focus:ring-primary cursor-pointer">
+            <select name="status" class="w-full appearance-none bg-surface border border-outline-variant rounded-lg py-2 pl-4 pr-10 font-body-sm text-body-sm text-on-surface focus:outline-hidden focus:ring-2 focus:ring-primary cursor-pointer">
                 <option value="">{% trans "All Statuses" %}</option>
                 {% for value,label in status_choices %}
                 <option value="{{ value }}" {% if request.GET.status == value %}selected{% endif %}>{{ label }}</option>
@@ -39,7 +39,7 @@
             <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant">arrow_drop_down</span>
         </div>
         <div class="relative min-w-[160px]">
-            <select name="platform" onchange="document.getElementById('filter-form').submit()" class="w-full appearance-none bg-surface border border-outline-variant rounded-lg py-2 pl-4 pr-10 font-body-sm text-body-sm text-on-surface focus:outline-hidden focus:ring-2 focus:ring-primary cursor-pointer">
+            <select name="platform" class="w-full appearance-none bg-surface border border-outline-variant rounded-lg py-2 pl-4 pr-10 font-body-sm text-body-sm text-on-surface focus:outline-hidden focus:ring-2 focus:ring-primary cursor-pointer">
                 <option value="">{% trans "All Platforms" %}</option>
                 {% for value,label in platform_choices %}
                 <option value="{{ value }}" {% if request.GET.platform == value %}selected{% endif %}>{{ label }}</option>
@@ -48,7 +48,7 @@
             <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant">arrow_drop_down</span>
         </div>
         <div class="relative min-w-[120px]">
-            <select name="year" onchange="document.getElementById('filter-form').submit()" class="w-full appearance-none bg-surface border border-outline-variant rounded-lg py-2 pl-4 pr-10 font-body-sm text-body-sm text-on-surface focus:outline-hidden focus:ring-2 focus:ring-primary cursor-pointer">
+            <select name="year" class="w-full appearance-none bg-surface border border-outline-variant rounded-lg py-2 pl-4 pr-10 font-body-sm text-body-sm text-on-surface focus:outline-hidden focus:ring-2 focus:ring-primary cursor-pointer">
                 <option value="">{% trans "All Years" %}</option>
                 {% for y in year_choices %}
                 <option value="{{ y }}" {% if selected_year == y|stringformat:"s" %}selected{% endif %}>{{ y }}</option>
@@ -57,7 +57,7 @@
             <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant">arrow_drop_down</span>
         </div>
         <div class="relative min-w-[140px]">
-            <select name="month" onchange="document.getElementById('filter-form').submit()" class="w-full appearance-none bg-surface border border-outline-variant rounded-lg py-2 pl-4 pr-10 font-body-sm text-body-sm text-on-surface focus:outline-hidden focus:ring-2 focus:ring-primary cursor-pointer">
+            <select name="month" class="w-full appearance-none bg-surface border border-outline-variant rounded-lg py-2 pl-4 pr-10 font-body-sm text-body-sm text-on-surface focus:outline-hidden focus:ring-2 focus:ring-primary cursor-pointer">
                 <option value="">{% trans "All Months" %}</option>
                 {% for num,name in month_choices %}
                 <option value="{{ num }}" {% if selected_month == num|stringformat:"s" %}selected{% endif %}>{{ name }}</option>
@@ -66,7 +66,7 @@
             <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant">arrow_drop_down</span>
         </div>
         <div class="relative min-w-[150px]">
-            <select name="date_field" onchange="document.getElementById('filter-form').submit()" class="w-full appearance-none bg-surface border border-outline-variant rounded-lg py-2 pl-4 pr-10 font-body-sm text-body-sm text-on-surface focus:outline-hidden focus:ring-2 focus:ring-primary cursor-pointer">
+            <select name="date_field" class="w-full appearance-none bg-surface border border-outline-variant rounded-lg py-2 pl-4 pr-10 font-body-sm text-body-sm text-on-surface focus:outline-hidden focus:ring-2 focus:ring-primary cursor-pointer">
                 <option value="sent_date" {% if selected_date_field == "sent_date" %}selected{% endif %}>{% trans "Sent Date" %}</option>
                 <option value="created_at" {% if selected_date_field == "created_at" %}selected{% endif %}>{% trans "Created Date" %}</option>
             </select>
@@ -190,4 +190,8 @@
     </div>
     {% endif %}
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/filter-autosubmit.js' %}" defer></script>
 {% endblock %}

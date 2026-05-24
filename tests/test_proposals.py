@@ -170,6 +170,13 @@ class TestProposalListTemplateChoices:
         assert response.context["status_choices"] == list(ProposalStatus.choices)
         assert response.context["platform_choices"] == list(Platform.choices)
 
+    def test_filter_form_has_no_inline_onchange_handlers(self, authed_client):
+        """Regression test: CSP-safe — no inline onchange= attributes on filter selects."""
+        response = authed_client.get(reverse("proposal-list"))
+
+        assert response.status_code == 200
+        assert b'onchange=' not in response.content
+
 
 @pytest.mark.django_db
 class TestSearchView:
