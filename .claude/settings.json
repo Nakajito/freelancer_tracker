@@ -128,7 +128,14 @@
       "Bash(DJANGO_SETTINGS_MODULE=config.settings.prod DJANGO_SECRET_KEY=test ALLOWED_HOSTS=localhost RESEND_API_KEY=test DATABASE_URL=sqlite:///test.db uv run python manage.py collectstatic --noinput --verbosity=2)",
       "Bash(DJANGO_SETTINGS_MODULE=config.settings.prod DJANGO_SECRET_KEY=test ALLOWED_HOSTS=localhost RESEND_API_KEY=test DATABASE_URL=sqlite:///test.db uv run python manage.py collectstatic --noinput --clear)",
       "Bash(DJANGO_SETTINGS_MODULE=config.settings.prod DJANGO_SECRET_KEY=test ALLOWED_HOSTS=localhost RESEND_API_KEY=test DATABASE_URL=sqlite:///test.db uv run python3 -c ' *)",
-      "Bash(grep -A 3 '^name = \"django\"$' uv.lock)"
+      "Bash(grep -A 3 '^name = \"django\"$' uv.lock)",
+      "mcp__codegraph__codegraph_search",
+      "mcp__codegraph__codegraph_context",
+      "mcp__codegraph__codegraph_callers",
+      "mcp__codegraph__codegraph_callees",
+      "mcp__codegraph__codegraph_impact",
+      "mcp__codegraph__codegraph_node",
+      "mcp__codegraph__codegraph_status"
     ],
     "additionalDirectories": [
       "/home/nakajito/proyectos/freelancer_tracker",
