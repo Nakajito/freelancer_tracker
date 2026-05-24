@@ -30,13 +30,14 @@ def create_mp_preference(
 
     sdk = mercadopago.SDK(settings.MERCADOPAGO_ACCESS_TOKEN)
 
+    currency = getattr(settings, "MERCADOPAGO_CURRENCY", donation.currency)
     preference_data: dict[str, Any] = {
         "items": [
             {
                 "title": "Donación única a Pipelancer",
                 "quantity": 1,
                 "unit_price": float(donation.amount),
-                "currency_id": donation.currency,
+                "currency_id": currency,
             }
         ],
         "external_reference": str(donation.pk),
@@ -68,13 +69,14 @@ def create_mp_preapproval(
 
     sdk = mercadopago.SDK(settings.MERCADOPAGO_ACCESS_TOKEN)
 
+    currency = getattr(settings, "MERCADOPAGO_CURRENCY", donation.currency)
     preapproval_data: dict[str, Any] = {
         "reason": "Donación mensual a Pipelancer",
         "auto_recurring": {
             "frequency": 1,
             "frequency_type": "months",
             "transaction_amount": float(donation.amount),
-            "currency_id": donation.currency,
+            "currency_id": currency,
         },
         "external_reference": str(donation.pk),
     }
