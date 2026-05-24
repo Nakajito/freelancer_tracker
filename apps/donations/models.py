@@ -4,10 +4,8 @@ from apps.core.models import TimeStampedModel
 
 
 class Donation(TimeStampedModel):
-    PROVIDER_STRIPE = "stripe"
     PROVIDER_MP = "mercadopago"
     PROVIDER_CHOICES = [
-        (PROVIDER_STRIPE, "Stripe"),
         (PROVIDER_MP, "Mercado Pago"),
     ]
 
@@ -38,7 +36,6 @@ class Donation(TimeStampedModel):
     status = models.CharField(
         max_length=20, choices=STATUS_CHOICES, default=STATUS_PENDING
     )
-    # Stripe payment_intent id or MP payment id (set after payment confirmed)
     provider_payment_id = models.CharField(max_length=255, blank=True)
     # MP preference id (set when preference is created)
     provider_pref_id = models.CharField(max_length=255, blank=True)

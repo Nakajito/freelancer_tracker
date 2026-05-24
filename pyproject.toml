@@ -25,7 +25,6 @@ dependencies = [
     "pytest-cov>=6.0.0",
     "factory-boy>=3.3.0",
     "djlint>=1.36.4",
-    "stripe>=15.1.0",
     "mercadopago>=2.4.0",
 ]
 

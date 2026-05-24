@@ -4,60 +4,11 @@ import logging
 from decimal import Decimal
 from typing import Any
 
-import stripe
 from django.conf import settings
 
 from .models import Donation
 
 logger = logging.getLogger(__name__)
-
-
-# ---------------------------------------------------------------------------
-# Stripe
-# ---------------------------------------------------------------------------
-
-
-def create_stripe_payment_intent(donation: Donation) -> stripe.PaymentIntent:
-    stripe.api_key = settings.STRIPE_SECRET_KEY
-    amount_cents = int(donation.amount * 100)
-    intent = stripe.PaymentIntent.create(
-        amount=amount_cents,
-        currency=donation.currency.lower(),
-        metadata={
-            "donation_id": str(donation.pk),
-            "frequency": donation.frequency,
-        },
-    )
-    return intent
-
-
-def handle_stripe_webhook(payload: bytes, sig_header: str) -> dict[str, Any]:
-    stripe.api_key = settings.STRIPE_SECRET_KEY
-    event = stripe.Webhook.construct_event(
-        payload, sig_header, settings.STRIPE_WEBHOOK_SECRET
-    )
-
-    if event["type"] == "payment_intent.succeeded":
-        pi = event["data"]["object"]
-        donation_id = pi.get("metadata", {}).get("donation_id")
-        if donation_id:
-            Donation.objects.filter(pk=donation_id).update(
-                status=Donation.STATUS_COMPLETED,
-                provider_payment_id=pi["id"],
-            )
-            logger.info("Stripe donation %s completed (pi=%s)", donation_id, pi["id"])
-
-    elif event["type"] == "payment_intent.payment_failed":
-        pi = event["data"]["object"]
-        donation_id = pi.get("metadata", {}).get("donation_id")
-        if donation_id:
-            Donation.objects.filter(pk=donation_id).update(
-                status=Donation.STATUS_FAILED,
-                provider_payment_id=pi["id"],
-            )
-            logger.warning("Stripe donation %s failed (pi=%s)", donation_id, pi["id"])
-
-    return {"type": event["type"]}
 
 
 # ---------------------------------------------------------------------------

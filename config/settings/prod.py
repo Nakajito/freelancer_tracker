@@ -55,15 +55,15 @@ CONTENT_SECURITY_POLICY = {
     "DIRECTIVES": {
         "default-src": ["'self'"],
         # Stripe.js required for donate/confirm page
-        "script-src": ["'self'", "https://js.stripe.com"],
+        "script-src": ["'self'"],
         "style-src": ["'self'", "'unsafe-inline'"],
         "font-src": ["'self'"],
-        "img-src": ["'self'", "data:", "https://*.stripe.com"],
-        "connect-src": ["'self'", "https://api.stripe.com"],
-        "frame-src": ["https://js.stripe.com", "https://hooks.stripe.com"],
+        "img-src": ["'self'", "data:"],
+        "connect-src": ["'self'"],
+        "frame-src": ["'none'"],
         "frame-ancestors": ["'none'"],
         "base-uri": ["'self'"],
-        # MP uses redirect so no extra CSP needed; allow self + stripe hosted pages
+        # MP uses redirect flow — no iframe or external JS needed
         "form-action": [
             "'self'",
             "https://www.mercadopago.com",

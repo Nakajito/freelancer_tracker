@@ -18,11 +18,6 @@ i18n_urlpatterns = [
 # Non-i18n routes (webhooks — no language prefix)
 webhook_urlpatterns = [
     path(
-        "donate/webhooks/stripe/",
-        views.StripeWebhookView.as_view(),
-        name="donate_webhook_stripe",
-    ),
-    path(
         "donate/webhooks/mercadopago/",
         views.MPWebhookView.as_view(),
         name="donate_webhook_mp",

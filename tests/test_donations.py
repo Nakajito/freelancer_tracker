@@ -20,10 +20,10 @@ def test_donation_str():
     d = Donation.objects.create(
         amount=Decimal("10.00"),
         currency="USD",
-        provider=Donation.PROVIDER_STRIPE,
+        provider=Donation.PROVIDER_MP,
     )
     assert "10.00" in str(d)
-    assert "stripe" in str(d)
+    assert "mercadopago" in str(d)
 
 
 @pytest.mark.django_db
@@ -80,7 +80,7 @@ def test_donate_confirm_page_renders(client: Client):
     resp = client.get(url)
     assert resp.status_code == 200
     assert b"Mercado Pago" in resp.content
-    assert b"stripe-payment-element" not in resp.content
+    assert b"donate_mp_preference" not in resp.content  # form action is URL-resolved
 
 
 # ---------------------------------------------------------------------------
@@ -123,68 +123,6 @@ def test_mp_create_preference_success(client: Client, settings):
     assert donation is not None
     assert donation.provider_pref_id == "pref_123"
     assert donation.amount == Decimal("25")
-
-
-# ---------------------------------------------------------------------------
-# Stripe webhook
-# ---------------------------------------------------------------------------
-
-
-@pytest.mark.django_db
-def test_stripe_webhook_invalid_signature(client: Client, settings):
-    settings.STRIPE_SECRET_KEY = "sk_test_fake"
-    settings.STRIPE_WEBHOOK_SECRET = "whsec_fake"
-
-    import stripe as stripe_lib
-
-    with patch(
-        "apps.donations.services.stripe.Webhook.construct_event",
-        side_effect=stripe_lib.SignatureVerificationError("bad sig", "sig_header"),
-    ):
-        resp = client.post(
-            reverse("donate_webhook_stripe"),
-            data=b'{"type":"payment_intent.succeeded"}',
-            content_type="application/json",
-            HTTP_STRIPE_SIGNATURE="bad",
-        )
-    assert resp.status_code == 400
-
-
-@pytest.mark.django_db
-def test_stripe_webhook_payment_succeeded(client: Client, settings):
-    settings.STRIPE_SECRET_KEY = "sk_test_fake"
-    settings.STRIPE_WEBHOOK_SECRET = "whsec_fake"
-
-    donation = Donation.objects.create(
-        amount=Decimal("10"),
-        provider=Donation.PROVIDER_STRIPE,
-    )
-
-    fake_event = {
-        "type": "payment_intent.succeeded",
-        "data": {
-            "object": {
-                "id": "pi_test_123",
-                "metadata": {"donation_id": str(donation.pk)},
-            }
-        },
-    }
-
-    with patch(
-        "apps.donations.services.stripe.Webhook.construct_event",
-        return_value=fake_event,
-    ):
-        resp = client.post(
-            reverse("donate_webhook_stripe"),
-            data=json.dumps(fake_event).encode(),
-            content_type="application/json",
-            HTTP_STRIPE_SIGNATURE="valid",
-        )
-
-    assert resp.status_code == 200
-    donation.refresh_from_db()
-    assert donation.status == Donation.STATUS_COMPLETED
-    assert donation.provider_payment_id == "pi_test_123"
 
 
 # ---------------------------------------------------------------------------
@@ -233,7 +171,7 @@ def test_mp_webhook_approved(client: Client, settings):
 @pytest.mark.django_db
 def test_donate_success_page(client: Client):
     donation = Donation.objects.create(
-        amount=Decimal("10"), provider=Donation.PROVIDER_STRIPE
+        amount=Decimal("10"), provider=Donation.PROVIDER_MP
     )
     resp = client.get(reverse("donate_success") + f"?donation_id={donation.pk}")
     assert resp.status_code == 200

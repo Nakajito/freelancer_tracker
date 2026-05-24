@@ -4,7 +4,6 @@ import json
 import logging
 from decimal import Decimal, InvalidOperation
 
-import stripe
 from django.conf import settings
 from django.http import HttpRequest, HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect
@@ -55,49 +54,6 @@ class DonateConfirmView(TemplateView):
         ctx["donation_amount"] = self.request.GET.get("amount", "10.00")
         ctx["donation_frequency"] = self.request.GET.get("frequency", "one_time")
         return ctx
-
-
-# ---------------------------------------------------------------------------
-# Stripe
-# ---------------------------------------------------------------------------
-
-
-class DonateStripeCreateView(View):
-    def post(self, request: HttpRequest) -> JsonResponse:
-        if not settings.STRIPE_SECRET_KEY:
-            return JsonResponse({"error": "Stripe not configured"}, status=503)
-
-        try:
-            amount = _parse_amount(request)
-        except ValueError:
-            return JsonResponse({"error": "Invalid amount"}, status=400)
-
-        frequency = request.POST.get("frequency", Donation.FREQUENCY_ONE_TIME)
-        email = request.POST.get("email", "")
-        currency = "USD"
-
-        donation = Donation.objects.create(
-            amount=amount,
-            currency=currency,
-            frequency=frequency,
-            provider=Donation.PROVIDER_STRIPE,
-            email=email,
-        )
-
-        try:
-            intent = services.create_stripe_payment_intent(donation)
-        except stripe.StripeError as exc:
-            logger.error("Stripe error creating intent: %s", exc)
-            donation.status = Donation.STATUS_FAILED
-            donation.save(update_fields=["status"])
-            return JsonResponse({"error": "Payment provider error"}, status=502)
-
-        return JsonResponse(
-            {
-                "client_secret": intent.client_secret,
-                "donation_id": donation.pk,
-            }
-        )
 
 
 # ---------------------------------------------------------------------------
@@ -193,23 +149,6 @@ class DonateFailureView(TemplateView):
 # ---------------------------------------------------------------------------
 # Webhooks (CSRF exempt — verified via provider signature)
 # ---------------------------------------------------------------------------
-
-
-@method_decorator(csrf_exempt, name="dispatch")
-class StripeWebhookView(View):
-    def post(self, request: HttpRequest) -> HttpResponse:
-        payload = request.body
-        sig_header = request.META.get("HTTP_STRIPE_SIGNATURE", "")
-
-        try:
-            services.handle_stripe_webhook(payload, sig_header)
-        except stripe.SignatureVerificationError:
-            return HttpResponse(status=400)
-        except Exception as exc:
-            logger.error("Stripe webhook error: %s", exc)
-            return HttpResponse(status=400)
-
-        return HttpResponse(status=200)
 
 
 @method_decorator(csrf_exempt, name="dispatch")
