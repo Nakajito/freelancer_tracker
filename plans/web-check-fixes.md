@@ -1,8 +1,8 @@
-# Plan: Solventar recomendaciones web-check.xyz para freelancer-tracker.dabg.dev
+# Plan: Solventar recomendaciones web-check.xyz para pipelancer.dabg.dev
 
 ## Context
 
-Auditoría de https://web-check.xyz/check/freelancer-tracker.dabg.dev arrojó:
+Auditoría de https://web-check.xyz/check/pipelancer.dabg.dev arrojó:
 
 - **Performance 0.57** — LCP/FCP en 8.9s. Causa raíz: render-blocking de Tailwind CDN (130 KiB JS que compila CSS en runtime), htmx CDN, Google Fonts. La fuente `Material Symbols Outlined` pesa 1.1 MiB (~82% del payload total de 1.3 MiB).
 - **Accesibilidad** — La página de aterrizaje (`templates/dashboard/landing.html`) extiende `base.html` directamente. `base.html` no envuelve `{% block content %}` en `<main>`. (`app_base.html:112` y `auth_base.html` sí tienen `<main>`).
@@ -212,9 +212,9 @@ Estos cambios se hacen en el dashboard de Cloudflare para `dabg.dev`, no tocan e
 6. **Tests:** `uv run pytest` — confirmar suite pasa (cambios no tocan lógica de negocio).
 7. **Lint/types:** `uv run ruff check . && uv run mypy apps config`.
 8. **Re-auditar tras deploy:**
-   - Lighthouse mobile en `https://freelancer-tracker.dabg.dev/` → LCP < 2.5s, a11y 100, SEO sin "missing meta description" ni "no main landmark".
-   - `curl -sI https://freelancer-tracker.dabg.dev/static/css/app.<hash>.css | grep -i cache-control` → `max-age=31536000, immutable`.
-   - `curl -s https://freelancer-tracker.dabg.dev/.well-known/security.txt` → contacto válido.
+   - Lighthouse mobile en `https://pipelancer.dabg.dev/` → LCP < 2.5s, a11y 100, SEO sin "missing meta description" ni "no main landmark".
+   - `curl -sI https://pipelancer.dabg.dev/static/css/app.<hash>.css | grep -i cache-control` → `max-age=31536000, immutable`.
+   - `curl -s https://pipelancer.dabg.dev/.well-known/security.txt` → contacto válido.
 
 ---
 

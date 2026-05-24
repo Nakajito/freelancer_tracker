@@ -83,7 +83,7 @@ Mismo esqueleto que `privacy.html`:
 | 4 | Acceptable Use | Prohibido: scraping/abuso automatizado, reverse-engineering, reventa de acceso, contenido ilegal/infractor/malicioso, suplantación, intentar acceder a datos de otros usuarios, eludir aislamiento per-user, sobrecargar infra. |
 | 5 | User Content & Ownership | Usuario retiene propiedad de propuestas, datos de clientes, templates, time entries. PropoTrack recibe solo licencia limitada para almacenar, procesar y mostrar Content para operar el Service. No training sobre datos del usuario. No compartir con terceros. |
 | 6 | Intellectual Property | Nombre PropoTrack, UI, código, diseño propiedad del operador. Licencia limitada, revocable, no-exclusiva para usar el Service para gestión personal freelance. Sin derechos de marca otorgados. |
-| 7 | DMCA / IP Infringement | Proceso notice-and-takedown; enviar notificaciones a `noreply@freelancer-tracker.dabg.dev` con: identificación de la obra, ubicación del material infractor, contacto, declaración de buena fe, firma. Counter-notice. Cuentas reincidentes terminadas. |
+| 7 | DMCA / IP Infringement | Proceso notice-and-takedown; enviar notificaciones a `noreply@pipelancer.dabg.dev` con: identificación de la obra, ubicación del material infractor, contacto, declaración de buena fe, firma. Counter-notice. Cuentas reincidentes terminadas. |
 | 8 | Beta / No-Warranty Disclaimer | Service "AS IS" y "AS AVAILABLE". Sin garantía de idoneidad, exactitud, uptime, operación libre de errores, ni entrega de follow-up reminders / digest emails. Analytics son informativas, no consejo financiero. |
 | 9 | Limitation of Liability | En la máxima medida permitida por ley aplicable: sin responsabilidad por daños indirectos, incidentales, consecuentes, especiales; lucro cesante; pérdida de datos; pérdida de oportunidades. Responsabilidad agregada limitada a USD $0 (servicio gratuito) o monto pagado en últimos 12 meses, lo que sea mayor. |
 | 10 | Indemnification | Usuario indemniza a PropoTrack contra reclamos derivados de su Content o violación de estos Terms o ley aplicable. |
@@ -94,7 +94,7 @@ Mismo esqueleto que `privacy.html`:
 | 15 | Governing Law | Estos Terms se rigen por las leyes del país de residencia habitual del usuario en Latinoamérica. Disputas se resuelven en cortes competentes de esa jurisdicción, salvo que normas imperativas de protección al consumidor dispongan otra cosa. |
 | 16 | Changes to Terms | Operador puede revisar; versión revisada publicada en esta página con fecha efectiva actualizada; uso continuado = aceptación. |
 | 17 | Severability | Si alguna cláusula es inejecutable, el resto permanece vigente. |
-| 18 | Contact | `noreply@freelancer-tracker.dabg.dev` |
+| 18 | Contact | `noreply@pipelancer.dabg.dev` |
 
 ## Archivos a crear/modificar
 

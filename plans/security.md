@@ -92,7 +92,7 @@ Mismo esqueleto que `privacy.html`:
 | 11 | Infrastructure | Contenedor Docker multi-stage minimalista; proceso de aplicación corre como usuario no-root (UID 1000) — superficie de escalación reducida. Health check expuesto en `/healthz`. Despliegue en Coolify con `DJANGO_SETTINGS_MODULE=config.settings.prod` forzado. Stack monitoreado y actualizado regularmente. |
 | 12 | Responsible Disclosure | Si descubre una vulnerabilidad, repórtela a [security@dabg.dev](mailto:security@dabg.dev). Información del canal disponible también en formato `security.txt` estándar: [`/.well-known/security.txt`](/.well-known/security.txt). Comprometidos a responder dentro de 5 días hábiles y a no perseguir legalmente investigación de seguridad de buena fe (no scanning destructivo, no acceso a datos de otros usuarios, no DoS). Idiomas: español, inglés. |
 | 13 | Continuous Improvement | Evaluamos y mejoramos continuamente nuestras prácticas de seguridad. Esta página se actualizará a medida que se incorporen nuevos controles. Las fechas efectivas indican la versión actual. |
-| 14 | Contact | Reportes de vulnerabilidades: [security@dabg.dev](mailto:security@dabg.dev). Consultas generales sobre privacidad o datos: [noreply@freelancer-tracker.dabg.dev](mailto:noreply@freelancer-tracker.dabg.dev) (ver [Privacy Policy](/privacy)). |
+| 14 | Contact | Reportes de vulnerabilidades: [security@dabg.dev](mailto:security@dabg.dev). Consultas generales sobre privacidad o datos: [noreply@pipelancer.dabg.dev](mailto:noreply@pipelancer.dabg.dev) (ver [Privacy Policy](/privacy)). |
 
 **Notas de redacción:**
 - Tono profesional, declarativo, sin marketing-speak ("military-grade", "bank-level" — evitar).
