@@ -38,7 +38,7 @@
         {% csrf_token %}
         <input type="hidden" name="amount" value="{{ donation_amount|default:'10.00' }}">
         <input type="hidden" name="frequency" value="{{ donation_frequency|default:'one_time' }}">
-        <input type="hidden" name="currency" value="ARS">
+        <input type="hidden" name="currency" value="MXN">
         <div class="lg:col-span-8 space-y-gutter">
             <section class="bg-surface-container-lowest rounded-xl border border-outline-variant p-stack-lg shadow-[0_2px_4px_rgba(15,23,42,0.05)]">
                 <div class="flex items-center gap-stack-sm mb-stack-md">
@@ -94,7 +94,7 @@
                 <div class="space-y-stack-md pb-stack-lg border-b border-outline-variant">
                     <div class="flex justify-between items-center">
                         <span class="font-body-md text-on-surface-variant">{% trans "Amount" %}</span>
-                        <span class="font-label-md text-label-md text-on-surface">${{ donation_amount|default:"10.00" }} USD ({{ donation_frequency|default:_("One-time") }})</span>
+                        <span class="font-label-md text-label-md text-on-surface">${{ donation_amount|default:"10.00" }} MXN ({{ donation_frequency|default:_("One-time") }})</span>
                     </div>
                     <div class="flex justify-between items-center">
                         <span class="font-body-md text-on-surface-variant">{% trans "Platform fee" %}</span>
@@ -110,7 +110,7 @@
                 <div class="py-stack-lg">
                     <div class="flex justify-between items-baseline">
                         <span class="font-h3 text-h3 text-on-surface">{% trans "Total to charge" %}</span>
-                        <span class="font-display text-h2 text-primary">${{ donation_amount|default:"10.00" }} <span class="font-label-sm text-label-sm">USD</span></span>
+                        <span class="font-display text-h2 text-primary">${{ donation_amount|default:"10.00" }} <span class="font-label-sm text-label-sm">MXN</span></span>
                     </div>
                 </div>
                 <button type="submit" id="donate-submit-btn" class="w-full bg-primary text-on-primary font-label-md text-label-md py-4 rounded-xl hover:opacity-95 active:scale-[0.98] transition-all flex items-center justify-center gap-stack-sm">

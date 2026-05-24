@@ -153,7 +153,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # Payment providers
 MERCADOPAGO_ACCESS_TOKEN = env("MERCADOPAGO_ACCESS_TOKEN", default="")
 # ISO currency matching your MP account's country (ARS, BRL, MXN, CLP, COP, PEN, UYU…)
-MERCADOPAGO_CURRENCY = env("MERCADOPAGO_CURRENCY", default="ARS")
+MERCADOPAGO_CURRENCY = env("MERCADOPAGO_CURRENCY", default="MXN")
 
 LOGGING = {
     "version": 1,
