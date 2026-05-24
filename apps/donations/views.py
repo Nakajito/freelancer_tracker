@@ -54,8 +54,6 @@ class DonateConfirmView(TemplateView):
         ctx = super().get_context_data(**kwargs)
         ctx["donation_amount"] = self.request.GET.get("amount", "10.00")
         ctx["donation_frequency"] = self.request.GET.get("frequency", "one_time")
-        ctx["donation_provider"] = self.request.GET.get("method", "stripe")
-        ctx["stripe_public_key"] = settings.STRIPE_PUBLIC_KEY
         return ctx
 
 

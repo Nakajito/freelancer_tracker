@@ -70,62 +70,17 @@ def test_donate_page_renders(client: Client):
     url = reverse("donate")
     resp = client.get(url)
     assert resp.status_code == 200
-    assert b"Stripe" in resp.content
     assert b"Mercado Pago" in resp.content
+    assert b"Stripe" not in resp.content
 
 
 @pytest.mark.django_db
 def test_donate_confirm_page_renders(client: Client):
-    url = reverse("donate_confirm") + "?amount=10&frequency=one_time&method=stripe"
+    url = reverse("donate_confirm") + "?amount=10&frequency=one_time"
     resp = client.get(url)
     assert resp.status_code == 200
-    assert b"stripe-payment-element" in resp.content
-
-
-# ---------------------------------------------------------------------------
-# Stripe create-intent view
-# ---------------------------------------------------------------------------
-
-
-@pytest.mark.django_db
-def test_stripe_create_intent_no_key(client: Client, settings):
-    settings.STRIPE_SECRET_KEY = ""
-    url = reverse("donate_stripe_intent")
-    resp = client.post(url, {"amount": "10", "frequency": "one_time"})
-    assert resp.status_code == 503
-
-
-@pytest.mark.django_db
-def test_stripe_create_intent_invalid_amount(client: Client, settings):
-    settings.STRIPE_SECRET_KEY = "sk_test_fake"
-    url = reverse("donate_stripe_intent")
-    resp = client.post(url, {"amount": "abc"})
-    assert resp.status_code == 400
-
-
-@pytest.mark.django_db
-def test_stripe_create_intent_success(client: Client, settings):
-    settings.STRIPE_SECRET_KEY = "sk_test_fake"
-    settings.STRIPE_PUBLIC_KEY = "pk_test_fake"
-
-    mock_intent = MagicMock()
-    mock_intent.client_secret = "pi_test_secret_xyz"
-
-    with patch(
-        "apps.donations.services.stripe.PaymentIntent.create", return_value=mock_intent
-    ):
-        url = reverse("donate_stripe_intent")
-        resp = client.post(url, {"amount": "10", "frequency": "one_time"})
-
-    assert resp.status_code == 200
-    data = resp.json()
-    assert data["client_secret"] == "pi_test_secret_xyz"
-    assert "donation_id" in data
-
-    donation = Donation.objects.get(pk=data["donation_id"])
-    assert donation.status == Donation.STATUS_PENDING
-    assert donation.provider == Donation.PROVIDER_STRIPE
-    assert donation.amount == Decimal("10")
+    assert b"Mercado Pago" in resp.content
+    assert b"stripe-payment-element" not in resp.content
 
 
 # ---------------------------------------------------------------------------

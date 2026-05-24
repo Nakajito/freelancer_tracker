@@ -62,19 +62,12 @@
             </div>
             <p class="text-center font-label-sm text-label-sm text-on-surface-variant mb-8">{% trans "All amounts in USD" %}</p>
 
+            <input type="hidden" name="method" value="mercadopago">
             <div class="mb-10">
                 <p class="font-label-md text-label-md text-on-surface-variant mb-4 uppercase tracking-widest">{% trans "Payment method" %}</p>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <label class="flex items-center justify-center gap-3 border border-outline-variant/50 p-4 rounded-lg cursor-pointer hover:bg-surface-container transition-colors has-[:checked]:border-primary has-[:checked]:bg-primary-container/5">
-                        <input type="radio" name="method" value="stripe" class="sr-only" checked>
-                        <span class="material-symbols-outlined text-primary">credit_card</span>
-                        <span class="font-label-md">{% trans "Card (Stripe)" %}</span>
-                    </label>
-                    <label class="flex items-center justify-center gap-3 border border-outline-variant/50 p-4 rounded-lg cursor-pointer hover:bg-surface-container transition-colors has-[:checked]:border-primary has-[:checked]:bg-primary-container/5">
-                        <input type="radio" name="method" value="mercadopago" class="sr-only">
-                        <span class="material-symbols-outlined text-primary">account_balance_wallet</span>
-                        <span class="font-label-md">Mercado Pago</span>
-                    </label>
+                <div class="flex items-center justify-center gap-3 border border-primary bg-primary-container/5 p-4 rounded-lg">
+                    <span class="material-symbols-outlined text-primary">account_balance_wallet</span>
+                    <span class="font-label-md">Mercado Pago</span>
                 </div>
             </div>
 

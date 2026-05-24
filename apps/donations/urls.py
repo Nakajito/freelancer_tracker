@@ -7,11 +7,6 @@ i18n_urlpatterns = [
     path("donate/", views.DonateView.as_view(), name="donate"),
     path("donate/confirm/", views.DonateConfirmView.as_view(), name="donate_confirm"),
     path(
-        "donate/stripe/create-intent/",
-        views.DonateStripeCreateView.as_view(),
-        name="donate_stripe_intent",
-    ),
-    path(
         "donate/mercadopago/create-preference/",
         views.DonateMPCreateView.as_view(),
         name="donate_mp_preference",
