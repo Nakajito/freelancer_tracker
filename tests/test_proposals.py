@@ -175,7 +175,7 @@ class TestProposalListTemplateChoices:
         response = authed_client.get(reverse("proposal-list"))
 
         assert response.status_code == 200
-        assert b'onchange=' not in response.content
+        assert b"onchange=" not in response.content
 
 
 @pytest.mark.django_db
