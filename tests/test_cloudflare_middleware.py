@@ -4,10 +4,12 @@ from django.test import RequestFactory
 from apps.core.middleware import CloudflareIPMiddleware
 
 
+from django.http import HttpResponse
+
+
 @pytest.fixture
 def get_response():
     def _get_response(request):
-        from django.http import HttpResponse
         return HttpResponse()
     return _get_response
 
@@ -46,6 +48,16 @@ def test_empty_cf_header_leaves_remote_addr_intact(middleware, factory):
     request = factory.get("/")
     request.META["REMOTE_ADDR"] = "192.168.1.1"
     request.META["HTTP_CF_CONNECTING_IP"] = ""
+
+    middleware(request)
+
+    assert request.META["REMOTE_ADDR"] == "192.168.1.1"
+
+
+def test_whitespace_only_cf_header_leaves_remote_addr_intact(middleware, factory):
+    request = factory.get("/")
+    request.META["REMOTE_ADDR"] = "192.168.1.1"
+    request.META["HTTP_CF_CONNECTING_IP"] = "   "
 
     middleware(request)
 
