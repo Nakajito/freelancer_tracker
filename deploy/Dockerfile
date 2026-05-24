@@ -39,7 +39,7 @@ RUN chmod +x entrypoint.sh \
     && chmod +x /usr/local/bin/tailwindcss \
     && bin/build-css.sh \
     && rm /usr/local/bin/tailwindcss \
-    && .venv/bin/python manage.py compilemessages --ignore=.venv
+    && .venv/bin/python manage.py compilemessages --ignore=.venv --settings=config.settings.base
 
 RUN chown -R app:app /app
 
