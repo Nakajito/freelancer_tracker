@@ -49,10 +49,10 @@
 
             <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-2">
                 {% for tier in donation_tiers %}
-                <label class="border-2 rounded-xl p-6 flex flex-col items-center cursor-pointer transition-all {% if tier.recommended %}border-primary bg-primary-container/5{% else %}border-outline-variant hover:border-primary{% endif %} has-[:checked]:border-primary has-[:checked]:bg-primary-container/5">
+                <label class="group border-2 border-outline-variant rounded-xl p-6 flex flex-col items-center cursor-pointer transition-all hover:border-primary has-[:checked]:border-primary has-[:checked]:bg-primary-container/5">
                     <input type="radio" name="amount" value="{{ tier.amount }}" class="sr-only" {% if tier.recommended %}checked{% endif %}>
-                    <span class="{% if tier.recommended %}text-primary{% else %}text-on-surface-variant{% endif %} font-label-sm text-label-sm mb-1">{{ tier.label }}</span>
-                    <span class="font-h1 text-h1 {% if tier.recommended %}text-primary{% endif %}">${{ tier.amount }}</span>
+                    <span class="text-on-surface-variant group-has-[:checked]:text-primary font-label-sm text-label-sm mb-1">{{ tier.label }}</span>
+                    <span class="font-h1 text-h1 text-on-surface group-has-[:checked]:text-primary">${{ tier.amount }}</span>
                 </label>
                 {% endfor %}
                 <div class="col-span-2 sm:col-span-2 border-2 border-outline-variant rounded-xl flex items-center px-6 focus-within:border-primary transition-all">
