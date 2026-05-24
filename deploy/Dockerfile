@@ -13,6 +13,7 @@ FROM python:3.14-slim
 RUN apt-get update && apt-get install -y --no-install-recommends \
     libpq5 \
     curl \
+    gettext \
     && rm -rf /var/lib/apt/lists/* \
     && groupadd -g 1000 app \
     && useradd -m -u 1000 -g app app
@@ -26,6 +27,7 @@ COPY apps/ ./apps/
 COPY config/ ./config/
 COPY templates/ ./templates/
 COPY static/ ./static/
+COPY locale/ ./locale/
 COPY src/ ./src/
 COPY manage.py ./
 COPY bin/ ./bin/
@@ -36,7 +38,8 @@ RUN chmod +x entrypoint.sh \
        -o /usr/local/bin/tailwindcss \
     && chmod +x /usr/local/bin/tailwindcss \
     && bin/build-css.sh \
-    && rm /usr/local/bin/tailwindcss
+    && rm /usr/local/bin/tailwindcss \
+    && .venv/bin/python manage.py compilemessages --ignore=.venv
 
 RUN chown -R app:app /app
 
