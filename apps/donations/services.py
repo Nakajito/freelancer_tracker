@@ -3,12 +3,19 @@ from __future__ import annotations
 import logging
 from decimal import Decimal
 from typing import Any
+from urllib.parse import urlparse
 
 from django.conf import settings
 
 from .models import Donation
 
 logger = logging.getLogger(__name__)
+
+
+def _is_public_url(url: str) -> bool:
+    """MP requires public HTTPS URLs for back_urls, notification_url, auto_return."""
+    parsed = urlparse(url)
+    return parsed.scheme == "https" and parsed.hostname not in ("localhost", "127.0.0.1")
 
 
 # ---------------------------------------------------------------------------
@@ -32,12 +39,14 @@ def create_mp_preference(
                 "currency_id": donation.currency,
             }
         ],
-        "back_urls": back_urls,
-        "auto_return": "approved",
-        "notification_url": notification_url,
         "external_reference": str(donation.pk),
         "statement_descriptor": "Pipelancer",
     }
+    if _is_public_url(back_urls.get("success", "")):
+        preference_data["back_urls"] = back_urls
+        preference_data["auto_return"] = "approved"
+    if _is_public_url(notification_url):
+        preference_data["notification_url"] = notification_url
     if donation.email:
         preference_data["payer"] = {"email": donation.email}
 
@@ -60,7 +69,6 @@ def create_mp_preapproval(
     sdk = mercadopago.SDK(settings.MERCADOPAGO_ACCESS_TOKEN)
 
     preapproval_data: dict[str, Any] = {
-        "back_url": back_url,
         "reason": "Donación mensual a Pipelancer",
         "auto_recurring": {
             "frequency": 1,
@@ -69,8 +77,11 @@ def create_mp_preapproval(
             "currency_id": donation.currency,
         },
         "external_reference": str(donation.pk),
-        "notification_url": notification_url,
     }
+    if _is_public_url(back_url):
+        preapproval_data["back_url"] = back_url
+    if _is_public_url(notification_url):
+        preapproval_data["notification_url"] = notification_url
     if donation.email:
         preapproval_data["payer_email"] = donation.email
 

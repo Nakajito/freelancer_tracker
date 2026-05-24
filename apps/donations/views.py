@@ -119,6 +119,7 @@ class DonateMPCreateView(View):
 
         init_point = result.get("init_point", "")
         if not init_point:
+            logger.error("MP response missing init_point: %s", result)
             return JsonResponse(
                 {"error": "No redirect URL from Mercado Pago"}, status=502
             )
