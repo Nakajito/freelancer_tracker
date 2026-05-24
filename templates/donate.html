@@ -53,6 +53,7 @@
                     <input type="radio" name="amount" value="{{ tier.amount }}" class="sr-only" {% if tier.recommended %}checked{% endif %}>
                     <span class="text-on-surface-variant group-has-[:checked]:text-primary font-label-sm text-label-sm mb-1">{{ tier.label }}</span>
                     <span class="font-h1 text-h1 text-on-surface group-has-[:checked]:text-primary">${{ tier.amount }}</span>
+                    <span class="font-body-sm text-body-sm text-on-surface-variant/60 mt-1">≈ ${{ tier.usd_ref }} USD</span>
                 </label>
                 {% endfor %}
                 <div class="col-span-2 sm:col-span-2 border-2 border-outline-variant rounded-xl flex items-center px-6 focus-within:border-primary transition-all">

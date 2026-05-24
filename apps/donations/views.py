@@ -19,10 +19,10 @@ from .models import Donation
 logger = logging.getLogger(__name__)
 
 DONATION_TIERS = [
-    {"label": "Mínimo", "amount": 100, "recommended": False},
-    {"label": "Recomendado", "amount": 200, "recommended": True},
-    {"label": "Apoyo", "amount": 500, "recommended": False},
-    {"label": "Socio", "amount": 1000, "recommended": False},
+    {"label": "Mínimo", "amount": 100, "usd_ref": 6, "recommended": False},
+    {"label": "Recomendado", "amount": 200, "usd_ref": 11, "recommended": True},
+    {"label": "Apoyo", "amount": 500, "usd_ref": 29, "recommended": False},
+    {"label": "Socio", "amount": 1000, "usd_ref": 58, "recommended": False},
 ]
 
 
