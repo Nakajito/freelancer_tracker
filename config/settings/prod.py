@@ -11,6 +11,8 @@ if not ALLOWED_HOSTS:
 
 ALLOWED_HOSTS += ["localhost", "127.0.0.1"]
 
+MIDDLEWARE = ["apps.core.middleware.CloudflareIPMiddleware"] + MIDDLEWARE  # noqa: F405
+
 CSRF_TRUSTED_ORIGINS = [
     o if "://" in o else f"https://{o}"
     for o in env.list("CSRF_TRUSTED_ORIGINS", default=[])  # noqa: F405
