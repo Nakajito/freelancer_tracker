@@ -84,7 +84,7 @@ def test_donate_confirm_page_renders(client: Client):
 
 
 # ---------------------------------------------------------------------------
-# Mercado Pago create-preference view
+# Mercado Pago create-preference / preapproval views
 # ---------------------------------------------------------------------------
 
 
@@ -115,7 +115,6 @@ def test_mp_create_preference_success(client: Client, settings):
             {"amount": "25", "frequency": "one_time", "currency": "ARS"},
         )
 
-    # Should redirect to MP init_point
     assert resp.status_code in (302, 301)
     assert "mercadopago.com" in resp["Location"]
 
@@ -123,6 +122,75 @@ def test_mp_create_preference_success(client: Client, settings):
     assert donation is not None
     assert donation.provider_pref_id == "pref_123"
     assert donation.amount == Decimal("25")
+    assert donation.frequency == Donation.FREQUENCY_ONE_TIME
+
+
+@pytest.mark.django_db
+def test_mp_create_preapproval_success(client: Client, settings):
+    settings.MERCADOPAGO_ACCESS_TOKEN = "TEST-fake-token"
+
+    mock_sdk = MagicMock()
+    mock_sdk.preapproval.return_value.create.return_value = {
+        "response": {
+            "id": "preapproval_456",
+            "init_point": "https://www.mercadopago.com/subscriptions/checkout?preapproval_id=preapproval_456",
+        }
+    }
+
+    with patch("mercadopago.SDK", return_value=mock_sdk):
+        url = reverse("donate_mp_preference")
+        resp = client.post(
+            url,
+            {
+                "amount": "10",
+                "frequency": "monthly",
+                "currency": "ARS",
+                "email": "donor@example.com",
+            },
+        )
+
+    assert resp.status_code in (302, 301)
+    assert "mercadopago.com" in resp["Location"]
+
+    donation = Donation.objects.filter(provider=Donation.PROVIDER_MP).first()
+    assert donation is not None
+    assert donation.provider_pref_id == "preapproval_456"
+    assert donation.frequency == Donation.FREQUENCY_MONTHLY
+    assert donation.email == "donor@example.com"
+
+
+@pytest.mark.django_db
+def test_mp_webhook_subscription_authorized(client: Client, settings):
+    settings.MERCADOPAGO_ACCESS_TOKEN = "TEST-fake"
+
+    donation = Donation.objects.create(
+        amount=Decimal("10"),
+        provider=Donation.PROVIDER_MP,
+        frequency=Donation.FREQUENCY_MONTHLY,
+    )
+
+    mock_sdk = MagicMock()
+    mock_sdk.preapproval.return_value.get.return_value = {
+        "response": {
+            "id": "preapproval_789",
+            "status": "authorized",
+            "external_reference": str(donation.pk),
+        }
+    }
+
+    payload = {"type": "subscription_preapproval", "data": {"id": "preapproval_789"}}
+
+    with patch("mercadopago.SDK", return_value=mock_sdk):
+        resp = client.post(
+            reverse("donate_webhook_mp"),
+            data=json.dumps(payload),
+            content_type="application/json",
+        )
+
+    assert resp.status_code == 200
+    donation.refresh_from_db()
+    assert donation.status == Donation.STATUS_COMPLETED
+    assert donation.provider_pref_id == "preapproval_789"
 
 
 # ---------------------------------------------------------------------------

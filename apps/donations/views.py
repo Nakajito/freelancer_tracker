@@ -92,25 +92,32 @@ class DonateMPCreateView(View):
         notification_url = request.build_absolute_uri(reverse("donate_webhook_mp"))
 
         try:
-            preference = services.create_mp_preference(
-                donation,
-                back_urls={
-                    "success": success_url,
-                    "failure": failure_url,
-                    "pending": success_url,
-                },
-                notification_url=notification_url,
-            )
+            if frequency == Donation.FREQUENCY_MONTHLY:
+                result = services.create_mp_preapproval(
+                    donation,
+                    back_url=success_url,
+                    notification_url=notification_url,
+                )
+            else:
+                result = services.create_mp_preference(
+                    donation,
+                    back_urls={
+                        "success": success_url,
+                        "failure": failure_url,
+                        "pending": success_url,
+                    },
+                    notification_url=notification_url,
+                )
         except Exception as exc:
-            logger.error("MP error creating preference: %s", exc)
+            logger.error("MP error creating payment: %s", exc)
             donation.status = Donation.STATUS_FAILED
             donation.save(update_fields=["status"])
             return JsonResponse({"error": "Payment provider error"}, status=502)
 
-        donation.provider_pref_id = preference.get("id", "")
+        donation.provider_pref_id = result.get("id", "")
         donation.save(update_fields=["provider_pref_id"])
 
-        init_point = preference.get("init_point", "")
+        init_point = result.get("init_point", "")
         if not init_point:
             return JsonResponse(
                 {"error": "No redirect URL from Mercado Pago"}, status=502

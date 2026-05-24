@@ -49,11 +49,31 @@
                     <span class="material-symbols-outlined text-primary">account_balance_wallet</span>
                     <span class="font-label-md text-primary font-bold">Mercado Pago</span>
                 </div>
-                <div class="flex items-start gap-3 bg-primary-container/10 border border-primary/20 rounded-xl p-stack-md">
+                <div class="flex items-start gap-3 bg-primary-container/10 border border-primary/20 rounded-xl p-stack-md mb-stack-lg">
                     <span class="material-symbols-outlined text-primary shrink-0">open_in_new</span>
                     <p class="font-body-md text-body-md text-on-surface-variant">
                         {% trans "You will be redirected to Mercado Pago to complete your payment securely. Your card and bank details are handled entirely by Mercado Pago." %}
                     </p>
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label class="font-label-md text-label-md text-on-surface-variant" for="id_email">
+                        {% trans "Email" %}
+                        {% if donation_frequency == "monthly" %}
+                        <span class="text-error ml-1">*</span>
+                        {% else %}
+                        <span class="font-body-sm text-body-sm text-on-surface-variant/70 ml-1">({% trans "optional" %})</span>
+                        {% endif %}
+                    </label>
+                    <input type="email" id="id_email" name="email"
+                           class="border border-outline-variant rounded-lg px-4 py-3 font-body-md text-on-surface bg-surface focus:outline-none focus:border-primary transition-colors"
+                           placeholder="email@ejemplo.com"
+                           {% if donation_frequency == "monthly" %}required{% endif %}>
+                    {% if donation_frequency == "monthly" %}
+                    <p class="font-body-sm text-body-sm text-on-surface-variant">
+                        <span class="material-symbols-outlined text-[14px] align-middle text-primary">info</span>
+                        {% trans "Required for monthly subscriptions — Mercado Pago uses it to manage your recurring payment." %}
+                    </p>
+                    {% endif %}
                 </div>
             </section>
 
