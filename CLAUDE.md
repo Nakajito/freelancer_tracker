@@ -102,6 +102,14 @@ Icons use a **local woff2 subset** (`static/fonts/material-symbols/material-symb
 - Deployed on Coolify via Docker. `SEED_DEMO=1` env var triggers seed on container start. See `deploy/COOLIFY.md`.
 
 
+## CodeGraph (obligatorio)
+
+- **Antes de tocar código**: usa `codegraph_context` o `codegraph_search` para entender el área. No grep primero.
+- **Para flows/trazas**: `codegraph_trace` (una llamada = path completo). No reconstruir con grep + read.
+- **Para impacto de cambio**: `codegraph_impact` antes de modificar cualquier función/clase.
+- **Después de cada cambio en código**: espera ~1s y ejecuta `codegraph_status` para confirmar que el índice reflejó los cambios. Si el conteo de nodos no creció, el watcher aún procesa — esperar y reintentar.
+- **Nunca** usar grep/read para buscar símbolos cuando codegraph puede responderlo en una llamada.
+
 ## Plan Mode (default)
 - Plan si tarea >3 pasos o decisión arquitectónica. Si falla → para y replanifica.
 - Usa plan también para verificación. Especifica requisitos upfront.
