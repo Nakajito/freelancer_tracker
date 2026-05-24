@@ -76,3 +76,52 @@ curl -I https://<dominio>/accounts/login/
 - Si el build falla: verificar DATABASE_URL y DJANGO_SECRET_KEY
 - Si 502: verificar que el puerto sea 8000 y health check funcione
 - Logs disponibles en Coolify → Deployments → View logs
+
+## Cloudflare Configuration
+
+This app is designed to run behind Cloudflare's proxy. The following settings must be configured in the Cloudflare dashboard.
+
+### SSL/TLS
+
+- **Mode:** Full (Strict)
+  - CF validates the origin's Let's Encrypt certificate (managed by Coolify).
+- **Always Use HTTPS:** On (Encryption → Edge Certificates → Always Use HTTPS)
+
+### DNS
+
+- A record pointing to your server IP with **Proxy status: Proxied** (orange cloud).
+- If you temporarily need to bypass CF (debugging), switch to DNS-only (grey cloud) — HTTPS will still work via Let's Encrypt.
+
+### Cache Rules
+
+Create a Cache Rule to cache static assets at the CF edge:
+
+| Field | Value |
+|-------|-------|
+| URL pattern | `yourdomain.com/static/*` |
+| Cache Level | Cache Everything |
+| Edge TTL | 1 month |
+| Browser TTL | 1 week |
+
+WhiteNoise already fingerprints static file names (content hash in filename), so cache invalidation is automatic on deploy.
+
+### Security Headers
+
+Django's `SecurityMiddleware` (prod settings) already sends all required security headers:
+- `Strict-Transport-Security` (HSTS, 1 year + preload)
+- `X-Content-Type-Options: nosniff`
+- `X-Frame-Options: DENY`
+- `Referrer-Policy: same-origin`
+
+**Do NOT enable Cloudflare Managed Headers for these** — enabling them alongside Django's headers sends duplicates, which some browsers reject.
+
+### WAF
+
+- **Security Level:** Medium (default)
+- **Bot Fight Mode:** On (free tier) — blocks known bots before they hit the origin
+
+### Real Visitor IPs
+
+`CloudflareIPMiddleware` (registered in Django's middleware stack) reads the `CF-Connecting-IP` header and sets it as `REMOTE_ADDR`. This means Django logs, rate limiting, and auth will see the real visitor IP instead of a Cloudflare datacenter IP.
+
+> **Security note:** If someone bypasses Cloudflare and hits the origin directly, they could spoof `CF-Connecting-IP`. To prevent this, configure your server firewall (UFW, iptables, or Coolify network rules) to only accept inbound traffic from [Cloudflare's published IP ranges](https://www.cloudflare.com/ips/).
