@@ -86,6 +86,7 @@ This app is designed to run behind Cloudflare's proxy. The following settings mu
 - **Mode:** Full (Strict)
   - CF validates the origin's Let's Encrypt certificate (managed by Coolify).
 - **Always Use HTTPS:** On (Encryption → Edge Certificates → Always Use HTTPS)
+  - This redirects at the CF edge, before traffic reaches Django. Django also has `SECURE_SSL_REDIRECT = True` as a second layer — if CF is bypassed, Django still enforces HTTPS.
 
 ### DNS
 
@@ -98,22 +99,26 @@ Create a Cache Rule to cache static assets at the CF edge:
 
 | Field | Value |
 |-------|-------|
-| URL pattern | `yourdomain.com/static/*` |
+| URL pattern | `<yourdomain>/static/*` |
 | Cache Level | Cache Everything |
-| Edge TTL | 1 month |
+| Edge TTL | 1 year |
 | Browser TTL | 1 week |
 
 WhiteNoise already fingerprints static file names (content hash in filename), so cache invalidation is automatic on deploy.
 
+Edge TTL matches WhiteNoise's `Cache-Control: max-age` (1 year). Safe because every static file has a content-hash in its filename — a new deploy produces new filenames, immediately bypassing the cache.
+
 ### Security Headers
 
-Django's `SecurityMiddleware` (prod settings) already sends all required security headers:
+Django's `SecurityMiddleware` and `django-csp` (prod settings) already send all required security headers:
 - `Strict-Transport-Security` (HSTS, 1 year + preload)
 - `X-Content-Type-Options: nosniff`
 - `X-Frame-Options: DENY`
 - `Referrer-Policy: same-origin`
+- `Cross-Origin-Opener-Policy: same-origin`
+- `Content-Security-Policy` (managed by `django-csp`)
 
-**Do NOT enable Cloudflare Managed Headers for these** — enabling them alongside Django's headers sends duplicates, which some browsers reject.
+**Do NOT enable Cloudflare Managed Headers for any of these** — enabling them alongside Django's headers sends duplicates, which some browsers reject.
 
 ### WAF
 
