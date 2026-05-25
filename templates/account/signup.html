@@ -50,6 +50,7 @@
     </div>
 
     {% if TURNSTILE_SITE_KEY %}
+    <!-- Turnstile managed mode: JS auto-injects cf-turnstile-response hidden input into this form -->
     <div class="cf-turnstile" data-sitekey="{{ TURNSTILE_SITE_KEY }}" data-theme="auto"></div>
     {% endif %}
 
