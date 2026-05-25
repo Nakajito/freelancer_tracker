@@ -29,7 +29,7 @@ class TestWeeklySummary:
         assert s["billable_ratio"] == Decimal("67")
 
     def test_last_week_separate_bucket(self, user, accepted_proposal):
-        last_week = date.today() - timedelta(days=8)
+        last_week = date.today() - timedelta(days=7)
         TimeEntry.objects.create(
             proposal=accepted_proposal,
             date=last_week,
