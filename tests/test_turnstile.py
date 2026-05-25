@@ -8,8 +8,6 @@ from django.test import override_settings
 
 from apps.accounts.turnstile import validate_turnstile
 
-SITEVERIFY_URL = "https://challenges.cloudflare.com/turnstile/v0/siteverify"
-
 
 @override_settings(TURNSTILE_ENABLED=False)
 def test_disabled_skips_validation():
@@ -47,10 +45,25 @@ def test_invalid_token_raises():
 
 
 @override_settings(TURNSTILE_ENABLED=True, TURNSTILE_SECRET_KEY="secret")
-def test_network_error_fails_open():
-    with patch("urllib.request.urlopen", side_effect=Exception("timeout")):
-        # Must not raise — fail open
-        validate_turnstile("any-token", "1.2.3.4")
+def test_url_error_fails_open():
+    """Transient network errors (URLError) fail open without raising."""
+    import urllib.error
+    with patch("urllib.request.urlopen", side_effect=urllib.error.URLError("timeout")):
+        validate_turnstile("any-token", "1.2.3.4")  # must not raise
+
+
+@override_settings(TURNSTILE_ENABLED=True, TURNSTILE_SECRET_KEY="secret")
+def test_unexpected_error_fails_open():
+    """Unexpected exceptions (bad JSON, etc.) fail open without raising."""
+    with patch("urllib.request.urlopen", side_effect=RuntimeError("unexpected")):
+        validate_turnstile("any-token", "1.2.3.4")  # must not raise
+
+
+@override_settings(TURNSTILE_ENABLED=True, TURNSTILE_SECRET_KEY="")
+def test_missing_secret_key_raises():
+    """Empty secret key raises ValidationError (fail closed, not fail open)."""
+    with pytest.raises(ValidationError):
+        validate_turnstile("valid-token", "1.2.3.4")
 
 
 @override_settings(TURNSTILE_ENABLED=True, TURNSTILE_SECRET_KEY="secret")
