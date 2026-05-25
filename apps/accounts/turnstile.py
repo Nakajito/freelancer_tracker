@@ -1,5 +1,6 @@
 import json
 import logging
+import urllib.error
 import urllib.parse
 import urllib.request
 from django.conf import settings
@@ -18,8 +19,12 @@ def validate_turnstile(token: str, remote_ip: str = "") -> None:
     if not token:
         raise ValidationError(_("Please complete the security check."))
 
+    secret = getattr(settings, "TURNSTILE_SECRET_KEY", "")
+    if not secret:
+        raise ValidationError(_("Security check unavailable. Please contact support."))
+
     payload: dict[str, str] = {
-        "secret": settings.TURNSTILE_SECRET_KEY,
+        "secret": secret,
         "response": token,
     }
     if remote_ip:
@@ -27,12 +32,21 @@ def validate_turnstile(token: str, remote_ip: str = "") -> None:
 
     try:
         data = urllib.parse.urlencode(payload).encode()
-        req = urllib.request.Request(SITEVERIFY_URL, data=data)
+        req = urllib.request.Request(
+            SITEVERIFY_URL,
+            data=data,
+            headers={"Content-Type": "application/x-www-form-urlencoded"},
+        )
         with urllib.request.urlopen(req, timeout=5) as resp:
-            result = json.loads(resp.read())
-    except Exception:
+            result = json.loads(resp.read(4096))
+    except urllib.error.URLError:
         logger.warning(
-            "Turnstile siteverify request failed — failing open", exc_info=True
+            "Turnstile siteverify network error — failing open", exc_info=True
+        )
+        return
+    except Exception:
+        logger.error(
+            "Turnstile siteverify unexpected error — failing open", exc_info=True
         )
         return
 

@@ -1,4 +1,5 @@
 import json
+import urllib.parse
 from unittest.mock import MagicMock, patch
 
 import pytest
@@ -64,6 +65,5 @@ def test_no_remote_ip_omits_remoteip_field():
         validate_turnstile("token", "")
         call_args = mock_urlopen.call_args
         req = call_args[0][0]
-        import urllib.parse
         body = urllib.parse.parse_qs(req.data.decode())
         assert "remoteip" not in body
