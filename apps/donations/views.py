@@ -19,10 +19,10 @@ from .models import Donation
 logger = logging.getLogger(__name__)
 
 DONATION_TIERS = [
-    {"label": "Mínimo", "amount": 100, "usd_ref": 6, "recommended": False},
-    {"label": "Recomendado", "amount": 200, "usd_ref": 11, "recommended": True},
-    {"label": "Apoyo", "amount": 500, "usd_ref": 29, "recommended": False},
-    {"label": "Socio", "amount": 1000, "usd_ref": 58, "recommended": False},
+    {"label": "Mínimo", "amount": 100, "usd_ref": 5, "recommended": False},
+    {"label": "Recomendado", "amount": 200, "usd_ref": 10, "recommended": True},
+    {"label": "Apoyo", "amount": 500, "usd_ref": 30, "recommended": False},
+    {"label": "Socio", "amount": 1000, "usd_ref": 50, "recommended": False},
 ]
 
 
@@ -121,7 +121,8 @@ class DonateMPCreateView(View):
         if not init_point:
             logger.error("MP response missing init_point: %s", result)
             return JsonResponse(
-                {"error": "No redirect URL from Mercado Pago", "detail": result}, status=502
+                {"error": "No redirect URL from Mercado Pago", "detail": result},
+                status=502,
             )
 
         return redirect(init_point)
