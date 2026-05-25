@@ -68,6 +68,7 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
                 "apps.accounts.context_processors.preferences",
+                "apps.accounts.context_processors.turnstile",
                 "apps.core.context_processors.demo_mode",
             ],
         },
@@ -119,6 +120,15 @@ AUTHENTICATION_BACKENDS = [
 ACCOUNT_LOGIN_METHODS = {"email"}
 ACCOUNT_SIGNUP_FIELDS = ["email*", "password1*", "password2*"]
 ACCOUNT_SESSION_ENGINE = "django.contrib.sessions.backends.db"
+
+ACCOUNT_FORMS = {
+    "login": "apps.accounts.forms.TurnstileLoginForm",
+    "signup": "apps.accounts.forms.TurnstileSignupForm",
+}
+
+TURNSTILE_SITE_KEY = env("TURNSTILE_SITE_KEY", default="")
+TURNSTILE_SECRET_KEY = env("TURNSTILE_SECRET_KEY", default="")
+TURNSTILE_ENABLED = env.bool("TURNSTILE_ENABLED", default=False)
 
 LOGIN_REDIRECT_URL = "dashboard"
 ACCOUNT_LOGOUT_REDIRECT_URL = "account_login"

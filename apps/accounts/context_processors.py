@@ -11,3 +11,10 @@ def preferences(request):
     return {
         "active_language": language,
     }
+
+
+def turnstile(request):
+    from django.conf import settings
+    return {
+        "TURNSTILE_SITE_KEY": getattr(settings, "TURNSTILE_SITE_KEY", ""),
+    }

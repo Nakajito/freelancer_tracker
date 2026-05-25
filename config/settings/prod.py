@@ -56,12 +56,13 @@ CONTENT_SECURITY_POLICY = {
     "DIRECTIVES": {
         "default-src": ["'self'"],
         # Stripe.js required for donate/confirm page
-        "script-src": ["'self'"],
+        # Cloudflare Turnstile CAPTCHA requires challenges.cloudflare.com
+        "script-src": ["'self'", "https://challenges.cloudflare.com"],
         "style-src": ["'self'", "'unsafe-inline'"],
         "font-src": ["'self'"],
         "img-src": ["'self'", "data:"],
-        "connect-src": ["'self'"],
-        "frame-src": ["'none'"],
+        "connect-src": ["'self'", "https://challenges.cloudflare.com"],
+        "frame-src": ["https://challenges.cloudflare.com"],
         "frame-ancestors": ["'none'"],
         "base-uri": ["'self'"],
         # MP uses redirect flow — no iframe or external JS needed
