@@ -37,6 +37,10 @@
         <a class="font-label-md text-label-md text-primary hover:text-primary-container transition-colors" href="{% url 'account_reset_password' %}">{% trans "Forgot password?" %}</a>
     </div>
 
+    {% if TURNSTILE_SITE_KEY %}
+    <div class="cf-turnstile" data-sitekey="{{ TURNSTILE_SITE_KEY }}" data-theme="auto"></div>
+    {% endif %}
+
     <button class="w-full py-3 px-4 rounded-lg bg-primary text-on-primary font-label-md text-label-md mt-stack-sm hover:opacity-90 active:scale-[0.98] transition-all flex items-center justify-center gap-2" type="submit">
         {% trans "Sign In" %}
         <span class="material-symbols-outlined text-[18px]">login</span>
