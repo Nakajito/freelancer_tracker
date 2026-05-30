@@ -5,6 +5,7 @@ We test the mixin in isolation — not through LoginForm/SignupForm — because
 allauth's LoginForm.clean() hits the DB to authenticate, which would mask
 whether validate_turnstile() is called at all.
 """
+
 from unittest.mock import patch
 
 import pytest
@@ -16,12 +17,14 @@ from apps.accounts.forms import TurnstileFormMixin
 
 class _StubForm(dj_forms.Form):
     """Minimal form whose clean() returns {} without side effects."""
+
     def clean(self):
         return {}
 
 
 class _MixinForm(TurnstileFormMixin, _StubForm):
     """Concrete form using the mixin with a neutral parent."""
+
     pass
 
 
@@ -80,6 +83,8 @@ def test_mixin_missing_token_calls_validate_with_empty(factory):
     form = _MixinForm(data=request.POST)
     form.request = request
 
-    with patch("apps.accounts.forms.validate_turnstile", side_effect=ValidationError("check")):
+    with patch(
+        "apps.accounts.forms.validate_turnstile", side_effect=ValidationError("check")
+    ):
         with pytest.raises(ValidationError):
             form.clean()

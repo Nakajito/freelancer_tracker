@@ -162,6 +162,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Payment providers
 MERCADOPAGO_ACCESS_TOKEN = env("MERCADOPAGO_ACCESS_TOKEN", default="")
+MERCADOPAGO_PUBLIC_KEY = env("MERCADOPAGO_PUBLIC_KEY", default="")
 # ISO currency matching your MP account's country (ARS, BRL, MXN, CLP, COP, PEN, UYU…)
 MERCADOPAGO_CURRENCY = env("MERCADOPAGO_CURRENCY", default="MXN")
 

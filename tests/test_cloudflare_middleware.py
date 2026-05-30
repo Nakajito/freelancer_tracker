@@ -11,6 +11,7 @@ from django.http import HttpResponse
 def get_response():
     def _get_response(request):
         return HttpResponse()
+
     return _get_response
 
 

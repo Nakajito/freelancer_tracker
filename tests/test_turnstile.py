@@ -48,6 +48,7 @@ def test_invalid_token_raises():
 def test_url_error_fails_open():
     """Transient network errors (URLError) fail open without raising."""
     import urllib.error
+
     with patch("urllib.request.urlopen", side_effect=urllib.error.URLError("timeout")):
         validate_turnstile("any-token", "1.2.3.4")  # must not raise
 

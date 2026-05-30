@@ -4,15 +4,16 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('donations', '0001_initial'),
+        ("donations", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='donation',
-            name='provider',
-            field=models.CharField(choices=[('mercadopago', 'Mercado Pago')], max_length=20),
+            model_name="donation",
+            name="provider",
+            field=models.CharField(
+                choices=[("mercadopago", "Mercado Pago")], max_length=20
+            ),
         ),
     ]

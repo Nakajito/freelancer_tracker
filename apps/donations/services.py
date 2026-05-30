@@ -15,7 +15,10 @@ logger = logging.getLogger(__name__)
 def _is_public_url(url: str) -> bool:
     """MP requires public HTTPS URLs for back_urls, notification_url, auto_return."""
     parsed = urlparse(url)
-    return parsed.scheme == "https" and parsed.hostname not in ("localhost", "127.0.0.1")
+    return parsed.scheme == "https" and parsed.hostname not in (
+        "localhost",
+        "127.0.0.1",
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -79,9 +82,8 @@ def create_mp_preapproval(
             "currency_id": currency,
         },
         "external_reference": str(donation.pk),
+        "back_url": back_url,
     }
-    if _is_public_url(back_url):
-        preapproval_data["back_url"] = back_url
     if _is_public_url(notification_url):
         preapproval_data["notification_url"] = notification_url
     if donation.email:
@@ -159,7 +161,9 @@ def handle_mp_webhook(data: dict[str, Any]) -> None:
             status=Donation.STATUS_COMPLETED,
             provider_payment_id=mp_payment_id,
         )
-        logger.info("MP payment %s approved for donation %s", mp_payment_id, donation_id)
+        logger.info(
+            "MP payment %s approved for donation %s", mp_payment_id, donation_id
+        )
     elif mp_status in ("rejected", "cancelled"):
         Donation.objects.filter(pk=donation_id).update(
             status=Donation.STATUS_FAILED,

@@ -15,6 +15,7 @@ def preferences(request):
 
 def turnstile(request):
     from django.conf import settings
+
     return {
         "TURNSTILE_SITE_KEY": getattr(settings, "TURNSTILE_SITE_KEY", ""),
     }

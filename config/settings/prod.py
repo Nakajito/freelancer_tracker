@@ -55,8 +55,8 @@ SERVER_EMAIL = DEFAULT_FROM_EMAIL
 CONTENT_SECURITY_POLICY = {
     "DIRECTIVES": {
         "default-src": ["'self'"],
-        # Stripe.js required for donate/confirm page
         # Cloudflare Turnstile CAPTCHA requires challenges.cloudflare.com
+        # MP uses redirect flow — no external JS needed on our pages
         "script-src": ["'self'", "https://challenges.cloudflare.com"],
         "style-src": ["'self'", "'unsafe-inline'"],
         "font-src": ["'self'"],

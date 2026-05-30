@@ -51,7 +51,8 @@ class DonateConfirmView(TemplateView):
 
     def get_context_data(self, **kwargs: object) -> dict:
         ctx = super().get_context_data(**kwargs)
-        ctx["donation_amount"] = self.request.GET.get("amount", "10.00")
+        custom = (self.request.GET.get("custom_amount") or "").strip()
+        ctx["donation_amount"] = custom or self.request.GET.get("amount", "10.00")
         ctx["donation_frequency"] = self.request.GET.get("frequency", "one_time")
         return ctx
 
@@ -117,6 +118,8 @@ class DonateMPCreateView(View):
         donation.provider_pref_id = result.get("id", "")
         donation.save(update_fields=["provider_pref_id"])
 
+        # sandbox.mercadopago.com.* is deprecated and causes ERR_TOO_MANY_REDIRECTS.
+        # Always use init_point; MP routes test tokens through the test environment.
         init_point = result.get("init_point", "")
         if not init_point:
             logger.error("MP response missing init_point: %s", result)
