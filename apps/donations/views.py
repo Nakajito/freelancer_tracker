@@ -26,6 +26,18 @@ DONATION_TIERS = [
 ]
 
 
+def _callback_url(request: HttpRequest, path: str) -> str:
+    """Build an absolute callback URL for MP.
+
+    Prefers MERCADOPAGO_PUBLIC_BASE_URL when set (local dev behind localhost,
+    where MP rejects non-public back_urls); falls back to the request host.
+    """
+    base = settings.MERCADOPAGO_PUBLIC_BASE_URL
+    if base:
+        return base.rstrip("/") + path
+    return request.build_absolute_uri(path)
+
+
 def _parse_amount(request: HttpRequest) -> Decimal:
     raw_custom = request.POST.get("custom_amount") or request.GET.get("custom_amount")
     raw_amount = request.POST.get("amount") or request.GET.get("amount")
@@ -84,13 +96,13 @@ class DonateMPCreateView(View):
             email=email,
         )
 
-        success_url = request.build_absolute_uri(
-            reverse("donate_success") + f"?donation_id={donation.pk}"
+        success_url = _callback_url(
+            request, reverse("donate_success") + f"?donation_id={donation.pk}"
         )
-        failure_url = request.build_absolute_uri(
-            reverse("donate_failure") + f"?donation_id={donation.pk}"
+        failure_url = _callback_url(
+            request, reverse("donate_failure") + f"?donation_id={donation.pk}"
         )
-        notification_url = request.build_absolute_uri(reverse("donate_webhook_mp"))
+        notification_url = _callback_url(request, reverse("donate_webhook_mp"))
 
         try:
             if frequency == Donation.FREQUENCY_MONTHLY:

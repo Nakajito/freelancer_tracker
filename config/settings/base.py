@@ -165,6 +165,10 @@ MERCADOPAGO_ACCESS_TOKEN = env("MERCADOPAGO_ACCESS_TOKEN", default="")
 MERCADOPAGO_PUBLIC_KEY = env("MERCADOPAGO_PUBLIC_KEY", default="")
 # ISO currency matching your MP account's country (ARS, BRL, MXN, CLP, COP, PEN, UYU…)
 MERCADOPAGO_CURRENCY = env("MERCADOPAGO_CURRENCY", default="MXN")
+# Public base URL (e.g. https://abc.ngrok.io) for MP callbacks when the request
+# host is not publicly reachable (local dev behind localhost). MP rejects
+# non-public back_urls; the monthly/preapproval flow requires a valid back_url.
+MERCADOPAGO_PUBLIC_BASE_URL = env("MERCADOPAGO_PUBLIC_BASE_URL", default="")
 
 LOGGING = {
     "version": 1,

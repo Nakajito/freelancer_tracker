@@ -160,6 +160,23 @@ def test_mp_create_preapproval_success(client: Client, settings):
 
 
 @pytest.mark.django_db
+def test_mp_preapproval_back_url_uses_public_base(client: Client, settings):
+    settings.MERCADOPAGO_ACCESS_TOKEN = "TEST-token"  # noqa: S105
+    settings.MERCADOPAGO_PUBLIC_BASE_URL = "https://pipelancer.example"
+    with patch("apps.donations.views.services.create_mp_preapproval") as mock_create:
+        mock_create.return_value = {"id": "pa-1", "init_point": "https://mp.test/sub"}
+        client.post(
+            reverse("donate_mp_preference"),
+            {"amount": "200", "frequency": "monthly", "currency": "ARS"},
+        )
+    back_url = mock_create.call_args.kwargs["back_url"]
+    notification_url = mock_create.call_args.kwargs["notification_url"]
+    assert back_url.startswith("https://pipelancer.example/")
+    assert "localhost" not in back_url
+    assert notification_url.startswith("https://pipelancer.example/")
+
+
+@pytest.mark.django_db
 def test_mp_webhook_subscription_authorized(client: Client, settings):
     settings.MERCADOPAGO_ACCESS_TOKEN = "TEST-fake"
 
