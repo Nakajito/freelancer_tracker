@@ -66,8 +66,15 @@ class TestFollowUpCreateView:
         assert response.status_code == 200
         assert response.context["locked_proposal"] == proposal
         assert response.context["form"].initial["proposal"] == proposal.pk
-        # Specific check: proposal field is present in rendered form (not generic type="hidden")
-        assert b'name="proposal"' in response.content
+        # Stronger check: confirm hidden input exists (locked mode) and dropdown is suppressed
+        content = response.content.decode()
+        assert (
+            'type="hidden" name="proposal"' in content
+            or 'name="proposal" type="hidden"' in content
+        ), "Hidden input for proposal must exist in locked mode"
+        assert (
+            'id="id_proposal"' not in content
+        ), "Proposal dropdown select must be absent in locked mode"
 
     def test_locked_proposal_other_user(self, authed_client, other_user, proposal):
         """GET ?proposal=<pk of other_user's proposal> → locked_proposal is None."""
