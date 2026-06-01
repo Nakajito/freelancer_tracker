@@ -5,24 +5,20 @@ document.addEventListener('DOMContentLoaded', () => {
   if (!dateStr) return;
 
   const [y, m, d] = dateStr.split('-').map(Number);
-  // Construct local midnight so diff reflects user's timezone
-  const sent = new Date(y, m - 1, d);
+
+  // Compare calendar dates only — sent_date has no time component, so comparing
+  // timestamps from local midnight introduces a spurious time-of-day offset.
   const now = new Date();
-  const diffMs = now - sent;
-  if (diffMs < 0) return;
+  const sentMs  = Date.UTC(y, m - 1, d);
+  const todayMs = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate());
+  const diffDays = Math.floor((todayMs - sentMs) / (24 * 60 * 60 * 1000));
 
-  const MINUTE = 60 * 1000;
-  const HOUR   = 60 * MINUTE;
-  const DAY    = 24 * HOUR;
+  if (diffDays < 0) return;
 
-  const days    = Math.floor(diffMs / DAY);
-  const hours   = Math.floor((diffMs % DAY) / HOUR);
-  const minutes = Math.floor((diffMs % HOUR) / MINUTE);
+  let text;
+  if (diffDays === 0)      text = 'Hoy';
+  else if (diffDays === 1) text = '1 día';
+  else                     text = diffDays + ' días';
 
-  const parts = [];
-  if (days > 0)    parts.push(days    + (days    === 1 ? ' day'    : ' days'));
-  if (hours > 0)   parts.push(hours   + (hours   === 1 ? ' hour'   : ' hours'));
-  if (minutes > 0 && days === 0) parts.push(minutes + (minutes === 1 ? ' minute' : ' minutes'));
-
-  el.textContent = parts.length ? parts.join(', ') : 'Just now';
+  el.textContent = text;
 });
