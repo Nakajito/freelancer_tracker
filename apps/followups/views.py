@@ -54,7 +54,7 @@ class FollowUpCreateView(LoginRequiredMixin, CreateView):
             else:
                 try:
                     pk = int(raw)
-                except ValueError, TypeError:
+                except (ValueError, TypeError):
                     self._cached_locked_proposal = None
                 else:
                     self._cached_locked_proposal = Proposal.objects.filter(
