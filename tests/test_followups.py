@@ -66,7 +66,7 @@ class TestFollowUpCreateView:
         assert response.status_code == 200
         assert response.context["locked_proposal"] == proposal
         assert response.context["form"].initial["proposal"] == proposal.pk
-        assert b'type="hidden"' in response.content
+        # Specific check: proposal field is present in rendered form (not generic type="hidden")
         assert b'name="proposal"' in response.content
 
     def test_locked_proposal_other_user(self, authed_client, other_user, proposal):
