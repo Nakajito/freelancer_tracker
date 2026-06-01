@@ -1,6 +1,6 @@
 import pytest
 from decimal import Decimal
-from datetime import date
+from datetime import date, timedelta
 from django.urls import reverse
 
 from apps.proposals.forms import ProposalForm
@@ -12,6 +12,7 @@ from apps.proposals.models import (
     Tag,
     ProposalStatus,
 )
+from apps.followups.models import FollowUp
 
 
 @pytest.mark.django_db
@@ -516,3 +517,62 @@ class TestProposalDetailPricing:
             b"&times;" in response.content
         )  # breakdown line rendered (locale-independent)
         assert b"500" in response.content  # auto-calculated total
+
+
+@pytest.mark.django_db
+class TestProposalCreateFollowUp:
+    BASE_DATA = {
+        "title": "Test Proposal",
+        "status": "draft",
+        "platform": "other",
+        "amount": "0",
+        "proposal_text": "",
+        "job_url": "",
+        "proposal_url": "",
+        "new_client_name": "",
+        "new_client_email": "",
+        "pricing_type": "fixed",
+    }
+
+    def test_create_followup_with_date(self, authed_client):
+        """create_followup=on + expected_response_date → FollowUp created with that due_date."""
+        due = (date.today() + timedelta(days=5)).isoformat()
+        data = {
+            **self.BASE_DATA,
+            "create_followup": "on",
+            "expected_response_date": due,
+        }
+        response = authed_client.post(reverse("proposal-create"), data)
+        assert response.status_code == 302
+        proposal = Proposal.objects.filter(title="Test Proposal").first()
+        assert proposal is not None
+        assert FollowUp.objects.filter(proposal=proposal).count() == 1
+        followup = FollowUp.objects.get(proposal=proposal)
+        assert followup.due_date.isoformat() == due
+
+    def test_create_followup_without_date(self, authed_client):
+        """create_followup=on + no expected_response_date → 0 follow-ups created."""
+        data = {
+            **self.BASE_DATA,
+            "create_followup": "on",
+            "expected_response_date": "",
+        }
+        response = authed_client.post(reverse("proposal-create"), data)
+        assert response.status_code == 302
+        proposal = Proposal.objects.filter(title="Test Proposal").first()
+        assert proposal is not None
+        assert FollowUp.objects.filter(proposal=proposal).count() == 0
+
+    def test_no_checkbox_no_followup(self, authed_client):
+        """No checkbox → 0 follow-ups created."""
+        due = (date.today() + timedelta(days=5)).isoformat()
+        data = {
+            **self.BASE_DATA,
+            "expected_response_date": due,
+            # create_followup NOT submitted
+        }
+        response = authed_client.post(reverse("proposal-create"), data)
+        assert response.status_code == 302
+        proposal = Proposal.objects.filter(title="Test Proposal").first()
+        assert proposal is not None
+        assert FollowUp.objects.filter(proposal=proposal).count() == 0
