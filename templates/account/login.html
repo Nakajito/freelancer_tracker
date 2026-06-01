@@ -55,3 +55,9 @@
     </p>
 </div>
 {% endblock %}
+
+{% block extra_js %}
+{% if TURNSTILE_SITE_KEY %}
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+{% endif %}
+{% endblock %}

@@ -27,6 +27,9 @@
 2. Añadir volumen persistente: `/app/media`
 3. Esto preserva archivos subidos (imágenes, adjuntos)
 
+> El entrypoint arranca como root, corrige permisos del volumen (`chown app:app /app/media`)
+> y luego baja a usuario `app` vía `gosu`. No se necesita configuración extra.
+
 ### 4. Environment Variables
 
 Añadir en Settings → Environment:

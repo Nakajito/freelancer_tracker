@@ -1,6 +1,15 @@
 #!/bin/bash
 set -e
 
+# Ensure the media directory is writable by the app user.
+# When Coolify mounts a volume over /app/media the mount point is owned
+# by root; this fixes ownership before we drop privileges.
+if [ "$(id -u)" = "0" ]; then
+    mkdir -p /app/media
+    chown -R app:app /app/media
+    exec gosu app "$0" "$@"
+fi
+
 export PATH="/app/.venv/bin:$PATH"
 
 python manage.py migrate --noinput
