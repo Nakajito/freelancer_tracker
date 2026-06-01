@@ -26,8 +26,15 @@
 
         <div class="flex flex-col gap-2">
             <label class="font-label-md text-label-md text-on-surface-variant" for="id_proposal">{% trans "Proposal" %} <span class="text-error">*</span></label>
+            {% if locked_proposal %}
+            <div class="border border-outline-variant bg-surface-container-low rounded-lg px-4 py-3 font-body-md text-body-md text-on-surface">
+                {{ locked_proposal.title }}{% if locked_proposal.client %} — {{ locked_proposal.client }}{% endif %}
+            </div>
+            <input type="hidden" name="proposal" value="{{ locked_proposal.pk }}">
+            {% else %}
             {{ form.proposal }}
             {% if form.proposal.errors %}<p class="font-body-sm text-body-sm text-error">{{ form.proposal.errors.0 }}</p>{% endif %}
+            {% endif %}
         </div>
 
         <div class="flex flex-col gap-2">

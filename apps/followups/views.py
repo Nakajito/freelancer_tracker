@@ -8,6 +8,7 @@ from apps.core.mixins import ProposalOwnerQuerysetMixin
 from apps.followups.forms import FollowUpForm
 from apps.followups.models import FollowUp
 from apps.followups.services import FollowUpQuerySet
+from apps.proposals.models import Proposal
 
 
 class FollowUpListView(ProposalOwnerQuerysetMixin, ListView):
@@ -37,10 +38,41 @@ class FollowUpListView(ProposalOwnerQuerysetMixin, ListView):
         return context
 
 
+_MISSING = object()
+
+
 class FollowUpCreateView(LoginRequiredMixin, CreateView):
     model = FollowUp
     form_class = FollowUpForm
     template_name = "followups/followup_form.html"
+
+    def _locked_proposal(self) -> Proposal | None:
+        if not hasattr(self, "_cached_locked_proposal"):
+            raw = self.request.GET.get("proposal")
+            if raw is None:
+                self._cached_locked_proposal = None
+            else:
+                try:
+                    pk = int(raw)
+                except ValueError, TypeError:
+                    self._cached_locked_proposal = None
+                else:
+                    self._cached_locked_proposal = Proposal.objects.filter(
+                        pk=pk, owner=self.request.user
+                    ).first()
+        return self._cached_locked_proposal  # type: ignore[return-value]
+
+    def get_initial(self) -> dict:
+        initial = super().get_initial()
+        locked = self._locked_proposal()
+        if locked is not None:
+            initial["proposal"] = locked.pk
+        return initial
+
+    def get_context_data(self, **kwargs: object) -> dict:
+        context = super().get_context_data(**kwargs)
+        context["locked_proposal"] = self._locked_proposal()
+        return context
 
     def get_form(self, form_class=None):
         form = super().get_form(form_class)
