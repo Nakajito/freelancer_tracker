@@ -5,6 +5,7 @@ from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.conf import settings
 from django.utils import translation
+from django.utils.formats import date_format
 
 from apps.accounts.models import User
 from apps.exports.services import MonthlySummaryGenerator
@@ -37,7 +38,7 @@ class Command(BaseCommand):
             end_date = today.replace(year=today.year + 1, month=1, day=1)
         else:
             end_date = today.replace(month=today.month + 1, day=1)
-        period_label = today.strftime("%B %Y")
+        period_label = date_format(today, "F Y")
         month_summary = MonthlySummaryGenerator.generate(
             user,
             start_date,

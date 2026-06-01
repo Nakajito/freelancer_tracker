@@ -5,6 +5,7 @@ from unittest.mock import MagicMock, patch
 import pytest
 from django.core.exceptions import ValidationError
 from django.test import override_settings
+from django.utils import translation
 
 from apps.accounts.turnstile import validate_turnstile
 
@@ -17,8 +18,9 @@ def test_disabled_skips_validation():
 
 @override_settings(TURNSTILE_ENABLED=True, TURNSTILE_SECRET_KEY="secret")
 def test_empty_token_raises():
-    with pytest.raises(ValidationError, match="complete the security check"):
-        validate_turnstile("", "1.2.3.4")
+    with translation.override("en"):
+        with pytest.raises(ValidationError, match="complete the security check"):
+            validate_turnstile("", "1.2.3.4")
 
 
 @override_settings(TURNSTILE_ENABLED=True, TURNSTILE_SECRET_KEY="secret")
@@ -40,8 +42,9 @@ def test_invalid_token_raises():
     mock_resp.__exit__ = MagicMock(return_value=False)
 
     with patch("urllib.request.urlopen", return_value=mock_resp):
-        with pytest.raises(ValidationError, match="Security check failed"):
-            validate_turnstile("bad-token", "1.2.3.4")
+        with translation.override("en"):
+            with pytest.raises(ValidationError, match="Security check failed"):
+                validate_turnstile("bad-token", "1.2.3.4")
 
 
 @override_settings(TURNSTILE_ENABLED=True, TURNSTILE_SECRET_KEY="secret")

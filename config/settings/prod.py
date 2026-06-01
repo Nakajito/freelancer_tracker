@@ -57,11 +57,19 @@ CONTENT_SECURITY_POLICY = {
         "default-src": ["'self'"],
         # Cloudflare Turnstile CAPTCHA requires challenges.cloudflare.com
         # MP uses redirect flow — no external JS needed on our pages
-        "script-src": ["'self'", "https://challenges.cloudflare.com", "https://static.cloudflareinsights.com"],
+        "script-src": [
+            "'self'",
+            "https://challenges.cloudflare.com",
+            "https://static.cloudflareinsights.com",
+        ],
         "style-src": ["'self'", "'unsafe-inline'"],
         "font-src": ["'self'"],
         "img-src": ["'self'", "data:"],
-        "connect-src": ["'self'", "https://challenges.cloudflare.com", "https://cloudflareinsights.com"],
+        "connect-src": [
+            "'self'",
+            "https://challenges.cloudflare.com",
+            "https://cloudflareinsights.com",
+        ],
         "frame-src": ["https://challenges.cloudflare.com"],
         "frame-ancestors": ["'none'"],
         "base-uri": ["'self'"],

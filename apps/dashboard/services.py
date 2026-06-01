@@ -7,6 +7,7 @@ from decimal import Decimal
 from django.db import models
 from django.db.models import Q
 from django.utils import timezone
+from django.utils.formats import date_format
 
 from apps.followups.models import FollowUp
 from apps.proposals.models import Platform, Proposal, ProposalStatus
@@ -246,7 +247,7 @@ class DashboardService:
                 or Decimal("0")
             )
 
-            labels.append(bucket_start.strftime("%b %Y"))
+            labels.append(date_format(bucket_start, "M Y"))
             data.append(float(total))
 
             next_month = bucket_start.month + 1

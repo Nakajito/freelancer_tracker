@@ -1,10 +1,10 @@
-import calendar
 from datetime import date
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 from django.shortcuts import render
 from django.urls import reverse_lazy
+from django.utils.formats import date_format
 from django.views import View
 from django.views.generic import (
     CreateView,
@@ -82,7 +82,9 @@ class ProposalListView(OwnerQuerysetMixin, ListView):
 
         today = date.today()
         context["year_choices"] = list(range(today.year, today.year - 5, -1))
-        context["month_choices"] = [(i, calendar.month_name[i]) for i in range(1, 13)]
+        context["month_choices"] = [
+            (i, date_format(date(2000, i, 1), "F")) for i in range(1, 13)
+        ]
         context["selected_year"] = self.request.GET.get("year", "")
         context["selected_month"] = self.request.GET.get("month", "")
         context["selected_date_field"] = self.request.GET.get("date_field", "sent_date")

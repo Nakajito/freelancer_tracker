@@ -1,4 +1,3 @@
-import calendar
 import json
 from datetime import date, timedelta
 
@@ -8,6 +7,7 @@ from django.contrib.auth import get_user_model, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
 from django.utils import timezone
+from django.utils.formats import date_format
 from django.utils.translation import gettext_lazy as _
 from django.views import View
 from django.views.generic import TemplateView
@@ -96,7 +96,7 @@ class MonthlySummaryView(LoginRequiredMixin, TemplateView):
         if period == "monthly":
             start_date = date(year, month, 1)
             end_date = _add_months(year, month, 1)
-            period_label = f"{calendar.month_name[month]} {year}"
+            period_label = f"{date_format(date(year, month, 1), 'F')} {year}"
         elif period == "quarterly":
             start_month = (quarter - 1) * 3 + 1
             start_date = date(year, start_month, 1)
@@ -131,7 +131,9 @@ class MonthlySummaryView(LoginRequiredMixin, TemplateView):
         context["month"] = month
         context["quarter"] = quarter
         context["half"] = half
-        context["month_choices"] = [(i, calendar.month_name[i]) for i in range(1, 13)]
+        context["month_choices"] = [
+            (i, date_format(date(2000, i, 1), "F")) for i in range(1, 13)
+        ]
         context["year_choices"] = list(range(today.year, today.year - 5, -1))
         context["chart_labels"] = json.dumps(chart["labels"])
         context["chart_data"] = json.dumps(chart["data"])

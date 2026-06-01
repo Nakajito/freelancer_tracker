@@ -4,7 +4,11 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
-CSRF_TRUSTED_ORIGINS = ["https://*.trycloudflare.com", "https://*.ngrok-free.app", "https://*.ngrok.io"]
+CSRF_TRUSTED_ORIGINS = [
+    "https://*.trycloudflare.com",
+    "https://*.ngrok-free.app",
+    "https://*.ngrok.io",
+]
 
 DATABASES = {
     "default": {
