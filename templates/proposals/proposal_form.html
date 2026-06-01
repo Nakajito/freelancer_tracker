@@ -123,6 +123,12 @@
             <div class="col-span-12 md:col-span-4 flex flex-col gap-2">
                 <label class="font-label-md text-label-md text-on-surface-variant" for="id_expected_response_date">{% trans "Expected Response" %}</label>
                 {{ form.expected_response_date }}
+                {% if not object %}
+                <label class="inline-flex items-center gap-2 mt-2 cursor-pointer">
+                    {{ form.create_followup }}
+                    <span class="font-body-sm text-body-sm text-on-surface-variant">{% trans "Schedule a follow-up on this date" %}</span>
+                </label>
+                {% endif %}
             </div>
 
             <!-- Job URL -->

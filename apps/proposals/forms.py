@@ -35,6 +35,10 @@ class ProposalForm(forms.ModelForm):
         required=False,
         label=_("New client email"),
     )
+    create_followup = forms.BooleanField(
+        required=False,
+        label=_("Schedule a follow-up on the expected response date"),
+    )
 
     def _apply_currency_widget(self, field_name: str) -> None:
         attrs = self.fields[field_name].widget.attrs
@@ -81,6 +85,7 @@ class ProposalForm(forms.ModelForm):
             "tags",
             "new_client_name",
             "new_client_email",
+            "create_followup",
         ]
         widgets = {
             "sent_date": date_input_widget(),

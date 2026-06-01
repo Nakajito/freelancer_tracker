@@ -1,9 +1,12 @@
 """Follow-up suggestion engine and queryset filters."""
 
+from __future__ import annotations
+
 from datetime import timedelta
 from typing import List
 
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 
 from apps.followups.models import FollowUp
 from apps.proposals.models import Proposal, ProposalStatus
@@ -79,4 +82,22 @@ class FollowUpQuerySet:
             )
             .select_related("proposal", "proposal__client")
             .order_by("due_date")
+        )
+
+
+class FollowUpScheduler:
+    """Creates follow-up entries tied to proposal lifecycle events."""
+
+    @staticmethod
+    def schedule_for_expected_response(proposal: Proposal) -> "FollowUp | None":
+        """Create a FollowUp with due_date = proposal.expected_response_date.
+
+        Returns None if expected_response_date is falsy.
+        """
+        if not proposal.expected_response_date:
+            return None
+        return FollowUp.objects.create(
+            proposal=proposal,
+            due_date=proposal.expected_response_date,
+            description=_("Check on expected response date"),
         )

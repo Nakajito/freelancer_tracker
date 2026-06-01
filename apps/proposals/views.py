@@ -15,6 +15,7 @@ from django.views.generic import (
 )
 
 from apps.core.mixins import OwnerQuerysetMixin
+from apps.followups.services import FollowUpScheduler
 from apps.proposals.forms import ProposalForm
 from apps.proposals.models import Client, Platform, Proposal, ProposalStatus
 
@@ -105,7 +106,10 @@ class ProposalCreateView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.owner = self.request.user
-        return super().form_valid(form)
+        response = super().form_valid(form)
+        if form.cleaned_data.get("create_followup"):
+            FollowUpScheduler.schedule_for_expected_response(self.object)
+        return response
 
     def get_success_url(self):
         return reverse_lazy("proposal-detail", kwargs={"pk": self.object.pk})
