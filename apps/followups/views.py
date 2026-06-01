@@ -38,9 +38,6 @@ class FollowUpListView(ProposalOwnerQuerysetMixin, ListView):
         return context
 
 
-_MISSING = object()
-
-
 class FollowUpCreateView(LoginRequiredMixin, CreateView):
     model = FollowUp
     form_class = FollowUpForm
