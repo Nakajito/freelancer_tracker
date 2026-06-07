@@ -18,6 +18,9 @@ PASSWORD_HASHERS = [
     "django.contrib.auth.hashers.MD5PasswordHasher",
 ]
 
+# Disable brute-force lockout so auth tests aren't throttled.
+AXES_ENABLED = False
+
 EMAIL_BACKEND = "django.core.mail.backends.locmem.EmailBackend"
 
 STORAGES["staticfiles"] = {  # noqa: F405

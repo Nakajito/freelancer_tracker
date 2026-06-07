@@ -42,10 +42,16 @@ ALLOWED_HOSTS=<tu-dominio.com>
 CSRF_TRUSTED_ORIGINS=https://<tu-dominio.com>
 DATABASE_URL=<del paso 1>
 SECURE_SSL_REDIRECT=True
+ADMIN_URL=<ruta-secreta>/   # ofusca /admin/, p.ej. panel-7f3a9c/ (incluir la barra final)
 GUNICORN_WORKERS=3
 GUNICORN_TIMEOUT=60
 SEED_DEMO=0
 ```
+
+> **Admin hardening:** `ADMIN_URL` mueve el panel a una ruta secreta; el admin
+> solo admite superusuarios (no staff). django-axes bloquea por IP tras 5
+> intentos fallidos (cooloff 1 h). Estos valores se configuran en
+> `config/settings/base.py` (`AXES_*`) si se quieren ajustar.
 
 ### 5. Configurar Dominio
 

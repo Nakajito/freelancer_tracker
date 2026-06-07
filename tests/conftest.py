@@ -19,6 +19,23 @@ def other_user(db):
 
 
 @pytest.fixture
+def superuser(db):
+    return User.objects.create_superuser(
+        username="admin", email="admin@example.com", password="adminpass123"
+    )
+
+
+@pytest.fixture
+def staff_user(db):
+    return User.objects.create_user(
+        username="staff",
+        email="staff@example.com",
+        password="staffpass123",
+        is_staff=True,
+    )
+
+
+@pytest.fixture
 def authed_client(client, user):
     client.force_login(user)
     return client

@@ -27,7 +27,7 @@ urlpatterns = [
         ChangePasswordRedirect.as_view(),
         name="change_password",
     ),
-    path("admin/", admin.site.urls),
+    path(settings.ADMIN_URL, admin.site.urls),
     path("i18n/", include("django.conf.urls.i18n")),
     *donations_webhooks,
 ]

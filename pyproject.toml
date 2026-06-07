@@ -26,6 +26,8 @@ dependencies = [
     "factory-boy>=3.3.0",
     "djlint>=1.36.4",
     "mercadopago>=2.4.0",
+    "django-axes>=7.0.0",
+    "argon2-cffi>=23.1.0",
 ]
 
 [project.optional-dependencies]
