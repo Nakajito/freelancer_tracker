@@ -42,11 +42,11 @@ SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_PRELOAD = True
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = "smtp.resend.com"
-EMAIL_PORT = 587
+EMAIL_HOST = env("EMAIL_HOST", default="smtp-relay.brevo.com")  # noqa: F405
+EMAIL_PORT = env.int("EMAIL_PORT", default=587)  # noqa: F405
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = "resend"
-EMAIL_HOST_PASSWORD = env("RESEND_API_KEY")  # noqa: F405
+EMAIL_HOST_USER = env("EMAIL_HOST_USER")  # noqa: F405
+EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")  # noqa: F405
 DEFAULT_FROM_EMAIL = env(  # noqa: F405
     "DEFAULT_FROM_EMAIL", default="noreply@pipelancer.dabg.dev"
 )
