@@ -1,3 +1,5 @@
+from pathlib import Path
+
 from django import forms
 from django.db import transaction
 from django.utils.translation import gettext_lazy as _
@@ -122,3 +124,29 @@ class ClientForm(forms.ModelForm):
     class Meta:
         model = Client
         fields = ["name", "email", "notes"]
+
+
+class ProposalImportForm(forms.Form):
+    """Upload a scraper-extracted file to bulk-create draft proposals."""
+
+    MAX_SIZE = 5 * 1024 * 1024  # 5 MB, matches DATA_UPLOAD_MAX_MEMORY_SIZE (prod)
+    ALLOWED_EXTENSIONS = {".json", ".csv", ".xlsx", ".md"}
+
+    file = forms.FileField(
+        label=_("Proposals file"),
+        help_text=_("Accepted formats: .json, .csv, .xlsx, .md (max 5 MB)."),
+        widget=forms.ClearableFileInput(
+            attrs={"accept": ".json,.csv,.xlsx,.md"},
+        ),
+    )
+
+    def clean_file(self):
+        uploaded = self.cleaned_data["file"]
+        suffix = Path(uploaded.name).suffix.lower()
+        if suffix not in self.ALLOWED_EXTENSIONS:
+            raise forms.ValidationError(
+                _("Unsupported file type. Use .json, .csv, .xlsx or .md.")
+            )
+        if uploaded.size > self.MAX_SIZE:
+            raise forms.ValidationError(_("File too large (maximum 5 MB)."))
+        return uploaded

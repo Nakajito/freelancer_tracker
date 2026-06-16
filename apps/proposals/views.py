@@ -1,23 +1,28 @@
 from datetime import date
 
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 from django.shortcuts import render
-from django.urls import reverse_lazy
+from django.urls import reverse, reverse_lazy
 from django.utils.formats import date_format
+from django.utils.translation import gettext as _
+from django.utils.translation import ngettext
 from django.views import View
 from django.views.generic import (
     CreateView,
     DeleteView,
     DetailView,
+    FormView,
     ListView,
     UpdateView,
 )
 
 from apps.core.mixins import OwnerQuerysetMixin
 from apps.followups.services import FollowUpScheduler
-from apps.proposals.forms import ProposalForm
+from apps.proposals.forms import ProposalForm, ProposalImportForm
 from apps.proposals.models import Client, Platform, Proposal, ProposalStatus
+from apps.proposals.services import ProposalImportService
 
 
 class ProposalListView(OwnerQuerysetMixin, ListView):
@@ -135,6 +140,60 @@ class ProposalDeleteView(OwnerQuerysetMixin, DeleteView):
     model = Proposal
     template_name = "proposals/proposal_confirm_delete.html"
     success_url = reverse_lazy("proposal-list")
+
+
+class ProposalImportView(LoginRequiredMixin, FormView):
+    """Upload a scraper-extracted file and create proposals as drafts."""
+
+    template_name = "proposals/proposal_import.html"
+    form_class = ProposalImportForm
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["active_nav"] = "import"
+        return context
+
+    def form_valid(self, form):
+        try:
+            result = ProposalImportService.import_file(
+                self.request.user, form.cleaned_data["file"]
+            )
+        except ValueError as exc:
+            messages.error(
+                self.request,
+                _("Could not read the file: %(error)s") % {"error": exc},
+            )
+            return self.form_invalid(form)
+
+        if result.created:
+            messages.success(
+                self.request,
+                ngettext(
+                    "%(count)d proposal imported as draft.",
+                    "%(count)d proposals imported as drafts.",
+                    result.created,
+                )
+                % {"count": result.created},
+            )
+        if result.skipped:
+            messages.info(
+                self.request,
+                ngettext(
+                    "%(count)d duplicate skipped.",
+                    "%(count)d duplicates skipped.",
+                    result.skipped,
+                )
+                % {"count": result.skipped},
+            )
+        for error in result.errors[:10]:
+            messages.warning(self.request, error)
+        if not (result.created or result.skipped or result.errors):
+            messages.info(self.request, _("No proposals found in the file."))
+
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return f"{reverse('proposal-list')}?status=draft"
 
 
 class ClientListView(OwnerQuerysetMixin, ListView):

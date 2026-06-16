@@ -48,6 +48,13 @@
                             </a>
                         </li>
                         <li>
+                            <a href="{% url 'proposal-import' %}"
+                               class="flex items-center gap-3 px-4 py-3 rounded-r-lg transition-colors {% if active == 'import' %}bg-secondary-container text-on-secondary-container border-l-4 border-primary{% else %}text-on-surface-variant hover:bg-surface-container-high{% endif %}">
+                                <span class="material-symbols-outlined text-[24px]{% if active == 'import' %} fill text-primary{% endif %}">upload_file</span>
+                                <span class="font-label-md text-label-md{% if active == 'import' %} font-bold{% endif %}">{% trans "Import" %}</span>
+                            </a>
+                        </li>
+                        <li>
                             <a href="{% url 'client-list' %}"
                                class="flex items-center gap-3 px-4 py-3 rounded-r-lg transition-colors {% if active == 'clients' %}bg-secondary-container text-on-secondary-container border-l-4 border-primary{% else %}text-on-surface-variant hover:bg-surface-container-high{% endif %}">
                                 <span class="material-symbols-outlined text-[24px]{% if active == 'clients' %} fill text-primary{% endif %}">groups</span>

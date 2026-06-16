@@ -1,0 +1,79 @@
+{% extends "app_base.html" %}
+{% load i18n static %}
+
+{% block title %}{% trans "Import Proposals" %} - Pipelancer{% endblock %}
+{% block active_nav %}import{% endblock %}
+
+{% block app_content %}
+<div class="max-w-[800px] mx-auto">
+    <div class="mb-stack-lg">
+        <a href="{% url 'proposal-list' %}" class="inline-flex items-center gap-1 text-on-surface-variant hover:text-primary transition-colors font-label-sm text-label-sm mb-2">
+            <span class="material-symbols-outlined text-[16px]">arrow_back</span>
+            {% trans "Back to Proposals" %}
+        </a>
+        <h1 class="font-h1 text-h1 text-on-surface">{% trans "Import Proposals" %}</h1>
+        <p class="font-body-md text-body-md text-on-surface-variant mt-1">
+            {% trans "Upload a scraper-extracted file. Proposals are saved as drafts for you to review and approve." %}
+        </p>
+    </div>
+
+    <div class="bg-surface-container-lowest border border-outline-variant shadow-xs rounded-xl p-container-padding md:p-stack-lg">
+        {% if is_demo %}
+        <div class="px-4 py-3 rounded-lg bg-surface-container-high text-on-surface-variant border border-outline-variant flex items-center gap-2">
+            <span class="material-symbols-outlined text-[20px]">lock</span>
+            <span class="font-body-sm text-body-sm">{% trans "Importing is disabled in demo mode." %}</span>
+        </div>
+        {% else %}
+        <form method="post" enctype="multipart/form-data" class="flex flex-col gap-stack-lg">
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+            <div class="px-4 py-3 rounded-lg bg-error-container text-on-error-container border border-error/30">
+                {% for e in form.non_field_errors %}<p class="font-body-sm text-body-sm">{{ e }}</p>{% endfor %}
+            </div>
+            {% endif %}
+
+            <div class="flex flex-col gap-2">
+                <label class="font-label-md text-label-md text-on-surface-variant" for="{{ form.file.id_for_label }}">
+                    {{ form.file.label }}
+                </label>
+                <input type="file"
+                       name="{{ form.file.html_name }}"
+                       id="{{ form.file.id_for_label }}"
+                       accept=".json,.csv,.xlsx,.md"
+                       class="block w-full font-body-sm text-body-sm text-on-surface file:mr-4 file:py-2.5 file:px-5 file:rounded-lg file:border-0 file:bg-primary file:text-on-primary file:font-label-md file:text-label-md file:cursor-pointer hover:file:bg-primary-container border border-outline-variant rounded-lg p-2 bg-surface">
+                <p class="font-body-sm text-body-sm text-on-surface-variant">{{ form.file.help_text }}</p>
+                {% for e in form.file.errors %}
+                <p class="font-body-sm text-body-sm text-error">{{ e }}</p>
+                {% endfor %}
+            </div>
+
+            <div class="flex justify-end">
+                <button type="submit" class="bg-primary text-on-primary font-label-md text-label-md py-2.5 px-6 rounded-lg flex items-center gap-2 hover:bg-primary-container shadow-xs transition-all active:scale-95 duration-150">
+                    <span class="material-symbols-outlined text-[20px]">upload_file</span>
+                    {% trans "Import as drafts" %}
+                </button>
+            </div>
+        </form>
+        {% endif %}
+    </div>
+
+    <!-- Format help -->
+    <div class="mt-stack-lg bg-surface-container-lowest border border-outline-variant rounded-xl p-container-padding md:p-stack-lg">
+        <h2 class="font-h3 text-h3 text-on-surface mb-2 flex items-center gap-2">
+            <span class="material-symbols-outlined text-[20px] text-on-surface-variant">info</span>
+            {% trans "Expected format" %}
+        </h2>
+        <p class="font-body-sm text-body-sm text-on-surface-variant mb-3">
+            {% trans "Files use the same field names produced by the export. Only \"Title\" is required; every other column is optional. The status is always set to Draft." %}
+        </p>
+        <ul class="list-disc pl-5 font-body-sm text-body-sm text-on-surface-variant flex flex-col gap-1">
+            <li>{% trans "Columns / keys" %}: <code>Title</code>, <code>Client</code>, <code>Platform</code>, <code>Amount</code>, <code>Sent Date</code>, <code>Expected Response</code>, <code>Paid</code>, <code>Tags</code>, <code>Job URL</code>, <code>Proposal URL</code>.</li>
+            <li>{% trans "JSON: a list of objects (or the export wrapper). Tags as a list." %}</li>
+            <li>{% trans "CSV / XLSX: first row is the header. Tags separated by ';'." %}</li>
+            <li>{% trans "Markdown: a GFM table with the columns above as the header row." %}</li>
+            <li>{% trans "Dates use YYYY-MM-DD. Duplicates (same title and client) are skipped." %}</li>
+        </ul>
+    </div>
+</div>
+{% endblock %}

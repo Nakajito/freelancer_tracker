@@ -1,0 +1,32 @@
+[
+  {
+    "title": "Landing page rediseño",
+    "client": "Acme Corp",
+    "platform": "upwork",
+    "amount": "1200.00",
+    "proposal_text": "Rediseño completo de la landing con enfoque en conversión.",
+    "sent_date": "2026-05-10",
+    "expected_response_date": "2026-05-17",
+    "paid": false,
+    "tags": ["diseño", "web"],
+    "job_url": "https://www.upwork.com/jobs/abc123",
+    "proposal_url": "https://www.upwork.com/proposals/abc123"
+  },
+  {
+    "title": "API de integración con Stripe",
+    "client": "Globex",
+    "platform": "freelancer",
+    "amount": "3500.00",
+    "proposal_text": "Integración de pagos recurrentes y webhooks.",
+    "sent_date": "2026-05-12",
+    "paid": false,
+    "tags": ["backend", "pagos"]
+  },
+  {
+    "title": "Auditoría de performance",
+    "client": "Initech",
+    "platform": "linkedin",
+    "amount": "800.00",
+    "tags": ["performance"]
+  }
+]

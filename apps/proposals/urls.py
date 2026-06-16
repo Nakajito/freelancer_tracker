@@ -10,6 +10,11 @@ urlpatterns = [
         "proposals/create/", views.ProposalCreateView.as_view(), name="proposal-create"
     ),
     path(
+        "proposals/import/",
+        views.ProposalImportView.as_view(),
+        name="proposal-import",
+    ),
+    path(
         "proposals/<int:pk>/",
         views.ProposalDetailView.as_view(),
         name="proposal-detail",

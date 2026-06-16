@@ -15,6 +15,7 @@ dependencies = [
     "django-csp>=4.0",
     "gunicorn>=23.0.0",
     "Pillow>=11.0.0",
+    "openpyxl>=3.1.0",
     "pydantic>=2.0.0",
     "django-debug-toolbar>=5.0.0",
     "pytailwindcss>=0.2.0",

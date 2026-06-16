@@ -1,0 +1,4 @@
+Title,Client,Platform,Amount,Sent Date,Expected Response,Paid,Tags,Job URL,Proposal URL
+Landing page rediseño,Acme Corp,Upwork,1200.00,2026-05-10,2026-05-17,No,diseño;web,https://www.upwork.com/jobs/abc123,https://www.upwork.com/proposals/abc123
+API de integración con Stripe,Globex,Freelancer,3500.00,2026-05-12,,No,backend;pagos,,
+Auditoría de performance,Initech,LinkedIn,800.00,,,No,performance,,
