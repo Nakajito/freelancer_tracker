@@ -272,6 +272,12 @@ MERCADOPAGO_CURRENCY = env("MERCADOPAGO_CURRENCY", default="MXN")
 # host is not publicly reachable (local dev behind localhost). MP rejects
 # non-public back_urls; the monthly/preapproval flow requires a valid back_url.
 MERCADOPAGO_PUBLIC_BASE_URL = env("MERCADOPAGO_PUBLIC_BASE_URL", default="")
+# HMAC secret from the MP dashboard (Webhooks -> signature). Without it the
+# webhook rejects every request rather than trusting unsigned callers.
+MERCADOPAGO_WEBHOOK_SECRET = env("MERCADOPAGO_WEBHOOK_SECRET", default="")
+MERCADOPAGO_WEBHOOK_TOLERANCE_SECONDS = env.int(
+    "MERCADOPAGO_WEBHOOK_TOLERANCE_SECONDS", default=15 * 60
+)
 
 LOGGING = {
     "version": 1,
