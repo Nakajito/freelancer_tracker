@@ -11,6 +11,29 @@ from apps.proposals.models import Proposal, ProposalStatus
 from apps.timetracking.models import TimeEntry
 
 
+# Spreadsheet applications evaluate a cell whose text begins with one of these
+# as a formula, so an exported value can execute in the reader's application
+# (DDE, WEBSERVICE() exfiltration).
+_FORMULA_TRIGGERS = ("=", "+", "-", "@")
+
+# Excel strips leading whitespace before deciding, so a payload can hide
+# behind it. Strip the same characters before testing the prefix.
+_LEADING_NOISE = "\t\r\n "
+
+
+def _neutralize(value) -> str:
+    """Prefix formula-triggering cells so they are read as text.
+
+    Matters more since the importer landed: an attacker who gets a crafted file
+    imported has their payload stored verbatim and re-emitted on export, where
+    it detonates in whichever spreadsheet the user or their accountant opens.
+    """
+    text = "" if value is None else str(value)
+    if text.lstrip(_LEADING_NOISE).startswith(_FORMULA_TRIGGERS):
+        return "'" + text
+    return text
+
+
 class CSVExporter:
     """Stream proposals or time entries as CSV rows."""
 
@@ -39,8 +62,8 @@ class CSVExporter:
             writer.writerow(
                 [
                     p.id,
-                    p.title,
-                    p.client.name if p.client else "",
+                    _neutralize(p.title),
+                    _neutralize(p.client.name if p.client else ""),
                     p.get_platform_display(),
                     p.get_status_display(),
                     str(p.amount),
@@ -66,9 +89,9 @@ class CSVExporter:
                 [
                     e.id,
                     e.date,
-                    e.proposal.title,
+                    _neutralize(e.proposal.title),
                     str(e.hours),
-                    e.description,
+                    _neutralize(e.description),
                     "Yes" if e.billable else "No",
                 ]
             )

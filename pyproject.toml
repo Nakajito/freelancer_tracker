@@ -29,6 +29,9 @@ dependencies = [
     "mercadopago>=2.4.0",
     "django-axes>=7.0.0",
     "argon2-cffi>=23.1.0",
+    # Not imported directly: openpyxl auto-detects it and swaps its XML parser,
+    # which is what protects the .xlsx importer from entity-expansion attacks.
+    "defusedxml>=0.7.1",
 ]
 
 [project.optional-dependencies]
