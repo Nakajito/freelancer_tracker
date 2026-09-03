@@ -48,18 +48,48 @@ def test_invalid_token_raises():
 
 
 @override_settings(TURNSTILE_ENABLED=True, TURNSTILE_SECRET_KEY="secret")
-def test_url_error_fails_open():
-    """Transient network errors (URLError) fail open without raising."""
+def test_url_error_fails_closed_by_default():
+    """A network error must not become a CAPTCHA bypass.
+
+    Failing open let anyone who could degrade egress to
+    challenges.cloudflare.com -- or simply wait for an outage -- turn the
+    protection off on login and signup.
+    """
     import urllib.error
 
     with patch("urllib.request.urlopen", side_effect=urllib.error.URLError("timeout")):
-        validate_turnstile("any-token", "1.2.3.4")  # must not raise
+        with pytest.raises(ValidationError, match="temporarily unavailable"):
+            validate_turnstile("any-token", "1.2.3.4")
 
 
 @override_settings(TURNSTILE_ENABLED=True, TURNSTILE_SECRET_KEY="secret")
-def test_unexpected_error_fails_open():
-    """Unexpected exceptions (bad JSON, etc.) fail open without raising."""
+def test_unexpected_error_fails_closed_by_default():
     with patch("urllib.request.urlopen", side_effect=RuntimeError("unexpected")):
+        with pytest.raises(ValidationError, match="temporarily unavailable"):
+            validate_turnstile("any-token", "1.2.3.4")
+
+
+@override_settings(TURNSTILE_ENABLED=True, TURNSTILE_SECRET_KEY="secret")
+def test_malformed_json_body_fails_closed():
+    """Reaching Cloudflare but getting garbage back is not a pass."""
+    mock_resp = MagicMock()
+    mock_resp.read.return_value = b"<html>502 Bad Gateway</html>"
+    mock_resp.__enter__ = lambda s: s
+    mock_resp.__exit__ = MagicMock(return_value=False)
+
+    with patch("urllib.request.urlopen", return_value=mock_resp):
+        with pytest.raises(ValidationError, match="temporarily unavailable"):
+            validate_turnstile("any-token", "1.2.3.4")
+
+
+@override_settings(
+    TURNSTILE_ENABLED=True, TURNSTILE_SECRET_KEY="secret", TURNSTILE_FAIL_OPEN=True
+)
+def test_fail_open_escape_hatch_is_honoured():
+    """Operators can still opt into availability over strictness, explicitly."""
+    import urllib.error
+
+    with patch("urllib.request.urlopen", side_effect=urllib.error.URLError("timeout")):
         validate_turnstile("any-token", "1.2.3.4")  # must not raise
 
 

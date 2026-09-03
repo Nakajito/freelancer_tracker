@@ -205,11 +205,16 @@ ACCOUNT_RATE_LIMITS = {
 ACCOUNT_FORMS = {
     "login": "apps.accounts.forms.TurnstileLoginForm",
     "signup": "apps.accounts.forms.TurnstileSignupForm",
+    "reset_password": "apps.accounts.forms.TurnstileResetPasswordForm",
 }
 
 TURNSTILE_SITE_KEY = env("TURNSTILE_SITE_KEY", default="")
 TURNSTILE_SECRET_KEY = env("TURNSTILE_SECRET_KEY", default="")
 TURNSTILE_ENABLED = env.bool("TURNSTILE_ENABLED", default=False)
+# When Cloudflare's siteverify endpoint is unreachable, reject the attempt
+# rather than waving it through. Set True only if blocking signups during a
+# Cloudflare outage is worse for you than admitting bots during one.
+TURNSTILE_FAIL_OPEN = env.bool("TURNSTILE_FAIL_OPEN", default=False)
 
 LOGIN_REDIRECT_URL = "dashboard"
 ACCOUNT_LOGOUT_REDIRECT_URL = "account_login"

@@ -40,15 +40,36 @@ def validate_turnstile(token: str, remote_ip: str = "") -> None:
         with urllib.request.urlopen(req, timeout=5) as resp:
             result = json.loads(resp.read(4096))
     except urllib.error.URLError:
-        logger.warning(
-            "Turnstile siteverify network error — failing open", exc_info=True
-        )
+        logger.warning("Turnstile siteverify network error", exc_info=True)
+        _handle_unavailable()
+        return
+    except ValueError, TypeError:
+        # Reached Cloudflare but the body was not the JSON object we expect.
+        # Treat as unavailable rather than as a pass.
+        logger.error("Turnstile siteverify returned an unparseable body")
+        _handle_unavailable()
         return
     except Exception:
-        logger.error(
-            "Turnstile siteverify unexpected error — failing open", exc_info=True
-        )
+        logger.error("Turnstile siteverify unexpected error", exc_info=True)
+        _handle_unavailable()
         return
 
-    if not result.get("success"):
+    if not isinstance(result, dict) or not result.get("success"):
         raise ValidationError(_("Security check failed. Please try again."))
+
+
+def _handle_unavailable() -> None:
+    """Decide what an unreachable siteverify endpoint means.
+
+    Failing open turns any degradation of egress to challenges.cloudflare.com --
+    or a plain Cloudflare outage -- into a full CAPTCHA bypass on login and
+    signup, which is exactly when bot protection matters most. Failing closed is
+    the safe default; TURNSTILE_FAIL_OPEN exists as a deliberate, documented
+    escape hatch for operators who would rather accept bots than block signups.
+    """
+    if getattr(settings, "TURNSTILE_FAIL_OPEN", False):
+        logger.warning("Turnstile unavailable — failing open per TURNSTILE_FAIL_OPEN")
+        return
+    raise ValidationError(
+        _("Security check is temporarily unavailable. Please try again shortly.")
+    )

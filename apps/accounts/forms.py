@@ -1,4 +1,4 @@
-from allauth.account.forms import LoginForm, SignupForm
+from allauth.account.forms import LoginForm, ResetPasswordForm, SignupForm
 from django import forms
 from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
@@ -68,3 +68,11 @@ class TurnstileLoginForm(TurnstileFormMixin, LoginForm):
 
 class TurnstileSignupForm(TurnstileFormMixin, SignupForm):
     pass
+
+
+class TurnstileResetPasswordForm(TurnstileFormMixin, ResetPasswordForm):
+    """Password reset sends mail to any address the caller names.
+
+    Unprotected, it is a free outbound-email amplifier and an easy way to
+    burn through the SMTP quota.
+    """
