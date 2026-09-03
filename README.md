@@ -138,7 +138,6 @@ Language switching uses Django i18n with English and Spanish catalogs.
 
 For the narrow DRF surface:
 
-- `POST /api/webhooks/proposal-events/` - Webhook for proposal events (HMAC stub)
 - `GET /api/proposals/duplicate-check/` - Check for duplicate proposals
 - `GET /api/proposals/export/json/` - Export proposals as JSON
 - `GET /api/proposals/export/csv/` - Export proposals as CSV

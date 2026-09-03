@@ -68,8 +68,7 @@ Proposals with `sent_date=None` use `created_at__date` as fallback (Q filter) in
 
 ### DRF surface (narrow)
 
-Only three endpoints use DRF:
-- `POST /api/webhooks/proposal-events/` — HMAC stub
+Only two endpoints use DRF:
 - `GET /api/proposals/duplicate-check/`
 - `GET /api/proposals/export/json/` and `/csv/`
 

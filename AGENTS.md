@@ -31,7 +31,7 @@ Full plan: [plans/freelance-proposal-tracker.md](plans/freelance-proposal-tracke
 - **Signals** registered in `apps.py:ready()`: auto-set `actual_response_date` on status transition; ActivityLog on status change + follow-up completion.
 - **Pydantic v2** for service-layer DTOs only (`DuplicateCheckResult`, `DashboardMetrics`). Not for ORM-shaped data.
 - **OwnerQuerysetMixin** + `LoginRequiredMixin` on every CBV. Per-user isolation tested explicitly.
-- **DRF surface narrow**: `POST /api/webhooks/proposal-events/` (HMAC stub), `GET /api/proposals/duplicate-check/`, CSV/JSON export. All other UX via Django Forms + HTMX.
+- **DRF surface narrow**: `GET /api/proposals/duplicate-check/`, CSV/JSON export. All other UX via Django Forms + HTMX.
 - **Settings split**: `config/settings/{base,dev,prod,test}.py` via django-environ.
 
 ## Project layout
