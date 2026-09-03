@@ -393,10 +393,11 @@ class TestFollowUpCompleteView:
         followup.refresh_from_db()
         assert followup.completed is True
 
-    def test_complete_nonexistent_followup_redirects(self, authed_client):
+    def test_complete_nonexistent_followup_returns_404(self, authed_client):
+        """Unknown pk and another user's pk are indistinguishable: both 404."""
         url = reverse("followup-complete", kwargs={"pk": 99999})
         response = authed_client.post(url)
-        assert response.status_code == 302
+        assert response.status_code == 404
 
 
 # ---------------------------------------------------------------------------
