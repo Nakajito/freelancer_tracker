@@ -28,3 +28,15 @@ build/
 *~
 .DS_Store
 Thumbs.db
+# Agent/tooling metadata — harmless today only because the Dockerfile uses
+# explicit COPY of named directories. A future `COPY . .` would ship all of it.
+.claude/
+.agents/
+.codegraph/
+.superpowers/
+.github/
+plans/
+samples/
+tasks/
+.mcp.json
+.pre-commit-config.yaml
