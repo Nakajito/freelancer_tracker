@@ -5,6 +5,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseNotAllowed
 from django.shortcuts import redirect, render
 from django.urls import reverse, reverse_lazy, translate_url
+from django.utils.http import url_has_allowed_host_and_scheme
 from django.utils.translation import gettext_lazy as _
 from django.views import View
 from django.views.generic import UpdateView
@@ -43,13 +44,31 @@ class ProfileView(LoginRequiredMixin, UpdateView):
         return response
 
 
+def _safe_referer(request) -> str:
+    """Return the Referer only when it points back at this site.
+
+    ``redirect()`` follows an absolute URL wherever it points, and
+    ``translate_url()`` hands back anything it cannot match unchanged, so an
+    unvalidated Referer is an open redirect -- a credible-looking link on our
+    own domain that lands the user somewhere else.
+    """
+    referer = request.headers.get("referer") or ""
+    if referer and url_has_allowed_host_and_scheme(
+        referer,
+        allowed_hosts={request.get_host()},
+        require_https=request.is_secure(),
+    ):
+        return referer
+    return ""
+
+
 class PreferencesView(LoginRequiredMixin, View):
     def post(self, request):
         form = PreferencesForm(request.POST, instance=request.user)
         if form.is_valid():
             user = form.save()
             new_lang = user.language_preference
-            referer = request.headers.get("referer") or ""
+            referer = _safe_referer(request)
             next_url = (
                 translate_url(referer, new_lang) if referer else reverse("dashboard")
             )
@@ -64,7 +83,7 @@ class PreferencesView(LoginRequiredMixin, View):
             return response
 
         messages.error(request, _("Could not update preferences."))
-        return redirect(request.headers.get("referer") or reverse("dashboard"))
+        return redirect(_safe_referer(request) or reverse("dashboard"))
 
     def get(self, request):
         return HttpResponseNotAllowed(["POST"])

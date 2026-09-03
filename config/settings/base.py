@@ -185,7 +185,6 @@ ACCOUNT_SESSION_ENGINE = "django.contrib.sessions.backends.db"
 ACCOUNT_EMAIL_VERIFICATION = env(  # noqa: F405
     "ACCOUNT_EMAIL_VERIFICATION", default="mandatory"
 )
-ACCOUNT_EMAIL_REQUIRED = True
 # allauth's default is already True; pin it so a future upgrade cannot silently
 # turn login/reset responses into an account-existence oracle.
 ACCOUNT_PREVENT_ENUMERATION = True

@@ -16,6 +16,15 @@ from apps.dashboard.services import DashboardService
 from apps.exports.services import MonthlySummaryGenerator
 
 
+def _bounded_int(raw, default: int, low: int, high: int) -> int:
+    """Parse a query-param integer, falling back to ``default`` when unusable."""
+    try:
+        value = int(raw)
+    except TypeError, ValueError:
+        return default
+    return value if low <= value <= high else default
+
+
 def _add_months(year: int, month: int, n: int) -> date:
     """Return the first day of the month that is n months after (year, month)."""
     m = month + n
@@ -84,14 +93,16 @@ class MonthlySummaryView(LoginRequiredMixin, TemplateView):
 
         today = date.today()
         period = self.request.GET.get("period", "quarterly")
-        year = int(self.request.GET.get("year", today.year))
 
         default_quarter = (today.month - 1) // 3 + 1
         default_half = 1 if today.month <= 6 else 2
 
-        month = int(self.request.GET.get("month", today.month))
-        quarter = int(self.request.GET.get("quarter", default_quarter))
-        half = int(self.request.GET.get("half", default_half))
+        # Raw int()/date() on query params turned ?year=abc, ?month=13 and
+        # ?year=9999 into unhandled 500s -- a trivial way to spam the error log.
+        year = _bounded_int(self.request.GET.get("year"), today.year, 1970, 9998)
+        month = _bounded_int(self.request.GET.get("month"), today.month, 1, 12)
+        quarter = _bounded_int(self.request.GET.get("quarter"), default_quarter, 1, 4)
+        half = _bounded_int(self.request.GET.get("half"), default_half, 1, 2)
 
         if period == "monthly":
             start_date = date(year, month, 1)

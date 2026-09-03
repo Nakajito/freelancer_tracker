@@ -5,6 +5,7 @@ from django.conf import settings
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.urls import reverse
+from django.utils.http import url_has_allowed_host_and_scheme
 from django.utils.translation import gettext_lazy as _
 
 _SAFE_METHODS = frozenset(["GET", "HEAD", "OPTIONS"])
@@ -30,6 +31,12 @@ class DemoReadOnlyMiddleware:
                 ),
             )
             referer = request.META.get("HTTP_REFERER", "")
+            if not url_has_allowed_host_and_scheme(
+                referer,
+                allowed_hosts={request.get_host()},
+                require_https=request.is_secure(),
+            ):
+                referer = ""
             return redirect(referer or reverse("dashboard"))
         return self.get_response(request)
 
