@@ -131,9 +131,49 @@ AUTHENTICATION_BACKENDS = [
 # django-axes — brute-force lockout
 AXES_FAILURE_LIMIT = 5
 AXES_COOLOFF_TIME = 1  # hours
-AXES_USERNAME_FORM_FIELD = "login"  # allauth uses "login" as the identifier field
-AXES_LOCKOUT_PARAMETERS = ["ip_address"]
+# The identifier field is 'login' in allauth POST data, but its failure
+# signal keys credentials by a LoginMethod enum member -- one form field
+# cannot cover both, so resolution is delegated to a callable.
+AXES_USERNAME_CALLABLE = "apps.accounts.axes_username.get_username"
+# Lock on the pair, not on the IP alone: IP-only lockout is defeated by anyone
+# with a handful of addresses and simultaneously lets one abuser lock out every
+# legitimate user behind a shared NAT. Locking the (ip, username) combination
+# still stops credential stuffing against a single account when the source IP
+# rotates. See CloudflareIPMiddleware for how REMOTE_ADDR is established.
+AXES_LOCKOUT_PARAMETERS = [["ip_address", "username"]]
 AXES_RESET_ON_SUCCESS = True
+
+# Cloudflare's published edge ranges (https://www.cloudflare.com/ips/).
+# Only requests whose peer address falls inside one of these may set
+# REMOTE_ADDR via the CF-Connecting-IP header. Override via env when fronted by
+# a different proxy; set empty to never trust the header.
+CLOUDFLARE_IP_RANGES = env.list(
+    "CLOUDFLARE_IP_RANGES",
+    default=[
+        "173.245.48.0/20",
+        "103.21.244.0/22",
+        "103.22.200.0/22",
+        "103.31.4.0/22",
+        "141.101.64.0/18",
+        "108.162.192.0/18",
+        "190.93.240.0/20",
+        "188.114.96.0/20",
+        "197.234.240.0/22",
+        "198.41.128.0/17",
+        "162.158.0.0/15",
+        "104.16.0.0/13",
+        "104.24.0.0/14",
+        "172.64.0.0/13",
+        "131.0.72.0/22",
+        "2400:cb00::/32",
+        "2606:4700::/32",
+        "2803:f800::/32",
+        "2405:b500::/32",
+        "2405:8100::/32",
+        "2a06:98c0::/29",
+        "2c0f:f248::/32",
+    ],
+)
 
 ACCOUNT_LOGIN_METHODS = {"email"}
 ACCOUNT_SIGNUP_FIELDS = ["email*", "password1*", "password2*"]
