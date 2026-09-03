@@ -22,6 +22,23 @@ OTHER_PASSWORD = "otherpass123"
 
 
 @pytest.fixture(autouse=True)
+def _verified_email(db, user, other_user):
+    """ACCOUNT_EMAIL_VERIFICATION is mandatory, so login needs a verified address.
+
+    The conftest fixtures build users straight through the model manager, which
+    never creates allauth's EmailAddress row.
+    """
+    from allauth.account.models import EmailAddress
+
+    for account in (user, other_user):
+        EmailAddress.objects.update_or_create(
+            user=account,
+            email=account.email,
+            defaults={"verified": True, "primary": True},
+        )
+
+
+@pytest.fixture(autouse=True)
 def _clean_attempts():
     """Reset both throttles between tests.
 

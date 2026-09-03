@@ -86,6 +86,28 @@ CONTENT_SECURITY_POLICY = {
     },
 }
 
+# Throttling state must be shared across gunicorn workers. Django's implicit
+# default is LocMemCache, which is per-process: with GUNICORN_WORKERS=3 the DRF
+# AnonRateThrottle allowed 3x its configured rate and reset on every worker
+# recycle. Redis when REDIS_URL is provided, otherwise a database-backed table
+# (created by `manage.py createcachetable` in the entrypoint).
+REDIS_URL = env("REDIS_URL", default="")  # noqa: F405
+
+if REDIS_URL:
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.redis.RedisCache",
+            "LOCATION": REDIS_URL,
+        }
+    }
+else:
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.db.DatabaseCache",
+            "LOCATION": "django_cache_table",
+        }
+    }
+
 WHITENOISE_MAX_AGE = 31_536_000  # 1 year — manifest hashes guarantee invalidation
 
 DATA_UPLOAD_MAX_MEMORY_SIZE = 5 * 1024 * 1024

@@ -179,6 +179,29 @@ ACCOUNT_LOGIN_METHODS = {"email"}
 ACCOUNT_SIGNUP_FIELDS = ["email*", "password1*", "password2*"]
 ACCOUNT_SESSION_ENGINE = "django.contrib.sessions.backends.db"
 
+# Email is the sole login identifier, so an unverified address is an unproven
+# identity. allauth defaults to "optional", which let anyone sign up under
+# somebody else's address and use the account.
+ACCOUNT_EMAIL_VERIFICATION = env(  # noqa: F405
+    "ACCOUNT_EMAIL_VERIFICATION", default="mandatory"
+)
+ACCOUNT_EMAIL_REQUIRED = True
+# allauth's default is already True; pin it so a future upgrade cannot silently
+# turn login/reset responses into an account-existence oracle.
+ACCOUNT_PREVENT_ENUMERATION = True
+
+# Declared explicitly rather than inherited: these throttle the flows that send
+# mail to arbitrary addresses. Backed by the shared cache (see prod CACHES).
+ACCOUNT_RATE_LIMITS = {
+    "login": "10/m/ip",
+    "login_failed": "5/5m/key",
+    "signup": "5/m/ip",
+    "reset_password": "3/m/ip,3/h/key",
+    "reset_password_from_key": "10/m/ip",
+    "confirm_email": "3/m/key",
+    "change_password": "5/m/user",
+}
+
 ACCOUNT_FORMS = {
     "login": "apps.accounts.forms.TurnstileLoginForm",
     "signup": "apps.accounts.forms.TurnstileSignupForm",

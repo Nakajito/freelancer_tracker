@@ -14,6 +14,10 @@ export PATH="/app/.venv/bin:$PATH"
 
 python manage.py migrate --noinput
 
+# No-op when REDIS_URL is set or the table already exists. Required for the
+# DatabaseCache fallback that backs DRF throttling and allauth rate limits.
+python manage.py createcachetable
+
 python manage.py collectstatic --noinput
 
 if [ "$SEED_DEMO" = "1" ]; then
