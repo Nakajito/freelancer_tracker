@@ -10,6 +10,10 @@ from django.conf import settings
 
 pytestmark = pytest.mark.django_db
 
+# Deliberately low-entropy: high-entropy literals here trip the secret
+# scanner, and suppressing that would blind it to a real leak in tests.
+TEST_PASSWORD = "not-a-secret"
+
 
 def test_verification_is_mandatory():
     assert settings.ACCOUNT_EMAIL_VERIFICATION == "mandatory"
@@ -69,12 +73,12 @@ def test_new_user_without_emailaddress_cannot_log_in(client, django_user_model):
     from django.urls import reverse
 
     django_user_model.objects.create_user(
-        username="fresh", email="fresh@example.com", password="freshpass123"
+        username="fresh", email="fresh@example.com", password=TEST_PASSWORD
     )
 
     response = client.post(
         reverse("account_login"),
-        {"login": "fresh@example.com", "password": "freshpass123"},
+        {"login": "fresh@example.com", "password": TEST_PASSWORD},
     )
 
     assert not response.wsgi_request.user.is_authenticated
@@ -85,7 +89,7 @@ def test_user_with_verified_address_can_log_in(client, django_user_model):
     from django.urls import reverse
 
     account = django_user_model.objects.create_user(
-        username="verified", email="verified@example.com", password="verifiedpass123"
+        username="verified", email="verified@example.com", password=TEST_PASSWORD
     )
     EmailAddress.objects.create(
         user=account, email=account.email, verified=True, primary=True
@@ -93,7 +97,7 @@ def test_user_with_verified_address_can_log_in(client, django_user_model):
 
     response = client.post(
         reverse("account_login"),
-        {"login": "verified@example.com", "password": "verifiedpass123"},
+        {"login": "verified@example.com", "password": TEST_PASSWORD},
     )
 
     assert response.wsgi_request.user.is_authenticated
