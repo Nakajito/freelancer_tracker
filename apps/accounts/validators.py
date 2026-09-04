@@ -9,6 +9,8 @@ expand to gigabytes of RAM when Pillow opens it.
 
 from __future__ import annotations
 
+from typing import Any
+
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
@@ -17,7 +19,7 @@ MAX_AVATAR_PIXELS = 8000 * 8000  # generous, but bounded
 ALLOWED_IMAGE_FORMATS = {"JPEG", "PNG", "WEBP", "GIF"}
 
 
-def validate_avatar(uploaded) -> None:
+def validate_avatar(uploaded: Any) -> None:
     """Reject oversized, over-large or non-image uploads."""
     size = getattr(uploaded, "size", None)
     if size is not None and size > MAX_AVATAR_BYTES:

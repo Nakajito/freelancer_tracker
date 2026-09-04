@@ -21,6 +21,7 @@ import logging
 import time
 
 from django.conf import settings
+from django.http import HttpRequest
 
 logger = logging.getLogger("django.security")
 
@@ -48,7 +49,7 @@ def _parse_signature_header(raw: str) -> tuple[str, str]:
     return ts, v1
 
 
-def verify_mp_webhook(request, data_id: str) -> None:
+def verify_mp_webhook(request: HttpRequest, data_id: str) -> None:
     """Raise ``WebhookVerificationError`` unless the request is authentic.
 
     ``data_id`` is the resource id the notification refers to; it is part of

@@ -23,7 +23,7 @@ _CREDENTIAL_KEYS = ("email", "login", "username")
 _FORM_FIELDS = ("login", "username", "email")
 
 
-def get_username(request: Any, credentials: dict | None = None) -> str | None:
+def get_username(request: Any, credentials: dict[Any, Any] | None = None) -> str | None:
     """Return a normalized login identifier, or ``None`` when absent."""
     if credentials:
         for key in _CREDENTIAL_KEYS:
