@@ -24,7 +24,13 @@ X_FRAME_OPTIONS = "DENY"
 SECURE_REFERRER_POLICY = "same-origin"
 SECURE_CROSS_ORIGIN_OPENER_POLICY = "same-origin"
 
-SECURE_SSL_REDIRECT = env.bool("SECURE_SSL_REDIRECT", default=True)  # noqa: F405
+# Not env-overridable: a stray SECURE_SSL_REDIRECT=False in the Coolify panel
+# would silently drop HTTPS enforcement while HSTS stayed on.
+SECURE_SSL_REDIRECT = True
+# The container healthcheck curls http://localhost:8000/healthz. Without this
+# exemption it receives a 301, which `curl -f` treats as success -- so the
+# probe passed even when the app was failing.
+SECURE_REDIRECT_EXEMPT = [r"^healthz$"]
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 SESSION_COOKIE_SECURE = True
@@ -45,6 +51,9 @@ EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = env("EMAIL_HOST", default="smtp-relay.brevo.com")  # noqa: F405
 EMAIL_PORT = env.int("EMAIL_PORT", default=587)  # noqa: F405
 EMAIL_USE_TLS = True
+# Without a timeout a hung SMTP connection holds a sync worker for the full
+# request timeout, and there are only three workers.
+EMAIL_TIMEOUT = env.int("EMAIL_TIMEOUT", default=10)  # noqa: F405
 EMAIL_HOST_USER = env("EMAIL_HOST_USER")  # noqa: F405
 EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")  # noqa: F405
 DEFAULT_FROM_EMAIL = env(  # noqa: F405
@@ -65,6 +74,8 @@ CONTENT_SECURITY_POLICY = {
         "style-src": ["'self'", "'unsafe-inline'"],
         "font-src": ["'self'"],
         "img-src": ["'self'", "data:"],
+        # No plugins are used; blocking them removes a legacy XSS vector.
+        "object-src": ["'none'"],
         "connect-src": [
             "'self'",
             "https://challenges.cloudflare.com",
@@ -85,6 +96,28 @@ CONTENT_SECURITY_POLICY = {
         ],
     },
 }
+
+# Throttling state must be shared across gunicorn workers. Django's implicit
+# default is LocMemCache, which is per-process: with GUNICORN_WORKERS=3 the DRF
+# AnonRateThrottle allowed 3x its configured rate and reset on every worker
+# recycle. Redis when REDIS_URL is provided, otherwise a database-backed table
+# (created by `manage.py createcachetable` in the entrypoint).
+REDIS_URL = env("REDIS_URL", default="")  # noqa: F405
+
+if REDIS_URL:
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.redis.RedisCache",
+            "LOCATION": REDIS_URL,
+        }
+    }
+else:
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.db.DatabaseCache",
+            "LOCATION": "django_cache_table",
+        }
+    }
 
 WHITENOISE_MAX_AGE = 31_536_000  # 1 year — manifest hashes guarantee invalidation
 

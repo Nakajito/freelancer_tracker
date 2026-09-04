@@ -38,6 +38,7 @@ class TemplateCreateView(LoginRequiredMixin, CreateView):
 class TemplateDetailView(OwnerQuerysetMixin, DetailView):
     model = ProposalTemplate
     template_name = "templates_app/template_detail.html"
+    context_object_name = "template"
 
 
 class TemplateUpdateView(OwnerQuerysetMixin, UpdateView):
@@ -54,9 +55,10 @@ class TemplateUpdateView(OwnerQuerysetMixin, UpdateView):
         return reverse("template-detail", kwargs={"pk": self.object.pk})
 
 
-class TemplatePreviewView(LoginRequiredMixin, DetailView):
+class TemplatePreviewView(OwnerQuerysetMixin, DetailView):
     model = ProposalTemplate
     template_name = "templates_app/template_preview.html"
+    context_object_name = "template"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -73,9 +75,10 @@ class TemplatePreviewView(LoginRequiredMixin, DetailView):
         return context
 
 
-class TemplateUseView(LoginRequiredMixin, DetailView):
+class TemplateUseView(OwnerQuerysetMixin, DetailView):
     model = ProposalTemplate
     template_name = "templates_app/template_use.html"
+    context_object_name = "template"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

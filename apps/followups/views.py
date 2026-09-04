@@ -1,5 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
+from django.shortcuts import get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.utils import timezone
 from django.views.generic import CreateView, DeleteView, ListView, View
@@ -84,9 +85,8 @@ class FollowUpCreateView(LoginRequiredMixin, CreateView):
 
 class FollowUpCompleteView(LoginRequiredMixin, View):
     def post(self, request, pk):
-        followup = FollowUp.objects.filter(pk=pk, proposal__owner=request.user).first()
-        if followup:
-            followup.mark_completed()
+        followup = get_object_or_404(FollowUp, pk=pk, proposal__owner=request.user)
+        followup.mark_completed()
         return HttpResponseRedirect(reverse("followup-list"))
 
 

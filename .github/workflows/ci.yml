@@ -1,5 +1,9 @@
 name: CI
 
+# Least privilege by default; no job here needs write access.
+permissions:
+  contents: read
+
 on:
   push:
     branches: [main, dev]
@@ -67,8 +71,13 @@ jobs:
 
   security:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # gitleaks needs history to scan past commits
       - uses: actions/setup-python@v5
         with:
           python-version: "3.14"
@@ -76,17 +85,34 @@ jobs:
         with:
           python-version: "3.14"
       - run: uv sync --frozen
-      - name: Install audit tools
-        run: pip install pip-audit bandit
-      - name: pip-audit
-        run: pip-audit -r <(uv pip freeze) || exit 0
-      - name: bandit
-        run: bandit -r apps config -ll || exit 0
-      - name: gitleaks
+
+      # These steps used to end in `|| exit 0`, so the job was green no matter
+      # what. That hid 38 known CVEs across django, DRF, pillow, idna and
+      # sqlparse, and a live API key committed in .claude/settings.json.
+      - name: pip-audit (known CVEs in locked dependencies)
         run: |
-          wget -q -O gitleaks.tar.gz https://github.com/gitleaks/gitleaks/releases/download/v8.18.2/gitleaks_8.18.2_linux_x64.tar.gz
-          tar -xzf gitleaks.tar.gz
-          ./gitleaks detect --source . --no-banner || exit 0
+          uv export --no-hashes --no-dev > requirements-audit.txt
+          uv run pip-audit -r requirements-audit.txt
+
+      - name: bandit (static analysis)
+        run: uv run bandit -r apps config -ll
+
+      - name: gitleaks (committed secrets)
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Django deployment checks
+        run: uv run python manage.py check --deploy --fail-level WARNING
+        env:
+          DJANGO_SETTINGS_MODULE: config.settings.prod
+          # Long enough to satisfy security.W009; never used outside this check.
+          DJANGO_SECRET_KEY: ci-placeholder-0123456789abcdefghijklmnopqrstuvwxyz-ci
+          ALLOWED_HOSTS: example.com
+          CSRF_TRUSTED_ORIGINS: https://example.com
+          EMAIL_HOST_USER: ci
+          EMAIL_HOST_PASSWORD: ci
+          DATABASE_URL: sqlite:///ci.db
 
   docker-build:
     needs: [lint, test, security]

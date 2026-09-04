@@ -7,31 +7,28 @@ requires-python = ">=3.14"
 dependencies = [
     "django>=6.0.5",
     "djangorestframework>=3.15.0",
-    "django-allauth>=0.64.0",
+    "django-allauth>=65.0.0",
     "django-environ>=0.12.0",
     "dj-database-url>=2.2.0",
     "psycopg[binary]>=3.1.0",
     "whitenoise>=6.8.0",
     "django-csp>=4.0",
     "gunicorn>=23.0.0",
-    "Pillow>=11.0.0",
+    "Pillow>=12.3.0",
     "openpyxl>=3.1.0",
     "pydantic>=2.0.0",
-    "django-debug-toolbar>=5.0.0",
-    "pytailwindcss>=0.2.0",
-    "ruff>=0.8.0",
-    "mypy>=1.14.0",
-    "pytest>=8.3.0",
-    "pytest-django>=4.9.0",
-    "pytest-cov>=6.0.0",
-    "factory-boy>=3.3.0",
-    "djlint>=1.36.4",
     "mercadopago>=2.4.0",
     "django-axes>=7.0.0",
     "argon2-cffi>=23.1.0",
+    # Not imported directly: openpyxl auto-detects it and swaps its XML parser,
+    # which is what protects the .xlsx importer from entity-expansion attacks.
+    "defusedxml>=0.7.1",
 ]
 
-[project.optional-dependencies]
+[dependency-groups]
+# Installed by default for local work and CI; excluded by `uv sync --no-dev`,
+# which is what deploy/Dockerfile runs. Keeping these out of [project]
+# dependencies stops test and debug tooling shipping in the production image.
 dev = [
     "ruff>=0.8.0",
     "mypy>=1.14.0",
@@ -39,9 +36,13 @@ dev = [
     "pytest-django>=4.9.0",
     "pytest-cov>=6.0.0",
     "factory-boy>=3.3.0",
+    "djlint>=1.36.4",
+    "django-debug-toolbar>=5.0.0",
+    "pytailwindcss>=0.2.0",
     "sphinx>=8.1.0",
     "sphinx-rtd-theme>=3.0.0",
-    "django-debug-toolbar>=5.0.0",
+    "bandit>=1.8.0",
+    "pip-audit>=2.7.0",
 ]
 
 [tool.ruff]

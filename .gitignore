@@ -65,3 +65,12 @@ temp/
 
 media/
 plans/
+
+# Claude Code local settings — machine-specific paths and, historically, a
+# credential embedded in a Bash permission rule. Never track these.
+.claude/settings.json
+.claude/settings.local.json
+
+# Environment files: ignore every variant, keep only the committed template.
+.env*
+!.env.example

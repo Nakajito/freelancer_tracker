@@ -1,7 +1,5 @@
 """Additional tests to push coverage above 85%."""
 
-import hashlib
-import hmac
 import json
 from datetime import date, timedelta
 from decimal import Decimal
@@ -170,51 +168,6 @@ class TestProposalApiViews:
         response = authed_client.get(url)
         assert response.status_code == 200
         assert "text/csv" in response["Content-Type"]
-
-
-# ---------------------------------------------------------------------------
-# Exports webhook (AllowAny)
-# ---------------------------------------------------------------------------
-
-
-@pytest.mark.django_db
-class TestWebhookProposalEvents:
-    def _make_sig(self, payload: bytes) -> str:
-        return hmac.new(
-            key=b"webhook-secret-key",
-            msg=payload,
-            digestmod=hashlib.sha256,
-        ).hexdigest()
-
-    def test_valid_event_no_signature(self, client):
-        url = reverse("webhook-proposal-events")
-        payload = json.dumps({"event_type": "proposal.created", "proposal_id": 1})
-        response = client.post(url, data=payload, content_type="application/json")
-        assert response.status_code == 200
-        assert response.json()["status"] == "received"
-
-    def test_valid_event_with_correct_signature(self, client):
-        url = reverse("webhook-proposal-events")
-        payload = json.dumps({"event_type": "proposal.updated", "proposal_id": 2})
-        sig = self._make_sig(payload.encode())
-        response = client.post(
-            url,
-            data=payload,
-            content_type="application/json",
-            HTTP_X_SIGNATURE=sig,
-        )
-        assert response.status_code == 200
-
-    def test_invalid_signature_rejected(self, client):
-        url = reverse("webhook-proposal-events")
-        payload = json.dumps({"event_type": "proposal.deleted", "proposal_id": 3})
-        response = client.post(
-            url,
-            data=payload,
-            content_type="application/json",
-            HTTP_X_SIGNATURE="badsignature",
-        )
-        assert response.status_code == 401
 
 
 # ---------------------------------------------------------------------------
@@ -393,10 +346,11 @@ class TestFollowUpCompleteView:
         followup.refresh_from_db()
         assert followup.completed is True
 
-    def test_complete_nonexistent_followup_redirects(self, authed_client):
+    def test_complete_nonexistent_followup_returns_404(self, authed_client):
+        """Unknown pk and another user's pk are indistinguishable: both 404."""
         url = reverse("followup-complete", kwargs={"pk": 99999})
         response = authed_client.post(url)
-        assert response.status_code == 302
+        assert response.status_code == 404
 
 
 # ---------------------------------------------------------------------------

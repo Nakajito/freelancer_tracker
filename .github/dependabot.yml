@@ -5,14 +5,17 @@ updates:
     schedule:
       interval: "weekly"
     open-pull-requests-limit: 10
-    auto-merge-method: "squash"
 
+  # The Dockerfile lives in deploy/, not the repo root -- pointed at "/" this
+  # ecosystem never detected a base image to update.
   - package-ecosystem: "docker"
-    directory: "/"
+    directory: "/deploy"
     schedule:
       interval: "weekly"
 
+  # This ecosystem requires the repository root, not the workflows directory.
+  # Pointed at "/.github/workflows" it silently produced no updates.
   - package-ecosystem: "github-actions"
-    directory: "/.github/workflows"
+    directory: "/"
     schedule:
       interval: "weekly"

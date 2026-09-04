@@ -198,6 +198,11 @@ class ProposalImportService:
 
     SUPPORTED_EXTENSIONS = _SUPPORTED_EXTENSIONS
 
+    # Every row costs a full_clean() plus an INSERT in the request thread, and
+    # a 5 MB .xlsx can expand to millions of rows. Cap the batch rather than
+    # let one upload hold a gunicorn worker (there are only three) indefinitely.
+    MAX_ROWS = 5_000
+
     # ----------------------------- parsing ----------------------------- #
     @classmethod
     def parse(cls, uploaded_file) -> list[dict]:
@@ -220,6 +225,12 @@ class ProposalImportService:
             raise ValueError(
                 f"Unsupported file type '{suffix}'. "
                 f"Use one of: {', '.join(sorted(_SUPPORTED_EXTENSIONS))}."
+            )
+
+        if len(rows) > cls.MAX_ROWS:
+            raise ValueError(
+                f"File contains {len(rows)} rows; the maximum is {cls.MAX_ROWS}. "
+                "Split it into smaller files."
             )
 
         return [_normalize_row(r) for r in rows]
@@ -263,6 +274,10 @@ class ProposalImportService:
         headers = [str(h).strip() if h is not None else "" for h in header]
         result: list[dict] = []
         for values in rows_iter:
+            if len(result) > ProposalImportService.MAX_ROWS:
+                # Stop reading rather than materialise an unbounded list; parse()
+                # rejects the file once it sees the count exceeded.
+                break
             if values is None or all(v is None for v in values):
                 continue
             row = {}

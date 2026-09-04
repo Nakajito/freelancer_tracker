@@ -176,6 +176,26 @@ def test_mp_preapproval_back_url_uses_public_base(client: Client, settings):
     assert notification_url.startswith("https://pipelancer.example/")
 
 
+WEBHOOK_SECRET = "test-webhook-secret"
+
+
+def _signed_headers(data_id: str, request_id: str = "req-1") -> dict:
+    """Build the x-signature/x-request-id pair MP sends, for `data_id`."""
+    import hashlib
+    import hmac
+    import time
+
+    ts = str(int(time.time()))
+    manifest = f"id:{data_id};request-id:{request_id};ts:{ts};"
+    v1 = hmac.new(
+        WEBHOOK_SECRET.encode(), manifest.encode(), hashlib.sha256
+    ).hexdigest()
+    return {
+        "HTTP_X_SIGNATURE": f"ts={ts},v1={v1}",
+        "HTTP_X_REQUEST_ID": request_id,
+    }
+
+
 @pytest.mark.django_db
 def test_mp_webhook_subscription_authorized(client: Client, settings):
     settings.MERCADOPAGO_ACCESS_TOKEN = "TEST-fake"
@@ -196,10 +216,12 @@ def test_mp_webhook_subscription_authorized(client: Client, settings):
     }
 
     payload = {"type": "subscription_preapproval", "data": {"id": "preapproval_789"}}
+    settings.MERCADOPAGO_WEBHOOK_SECRET = WEBHOOK_SECRET
 
     with patch("mercadopago.SDK", return_value=mock_sdk):
         resp = client.post(
             reverse("donate_webhook_mp"),
+            **_signed_headers("preapproval_789"),
             data=json.dumps(payload),
             content_type="application/json",
         )
@@ -234,10 +256,12 @@ def test_mp_webhook_approved(client: Client, settings):
     }
 
     payload = {"type": "payment", "data": {"id": "987"}}
+    settings.MERCADOPAGO_WEBHOOK_SECRET = WEBHOOK_SECRET
 
     with patch("mercadopago.SDK", return_value=mock_sdk):
         resp = client.post(
             reverse("donate_webhook_mp"),
+            **_signed_headers("987"),
             data=json.dumps(payload),
             content_type="application/json",
         )

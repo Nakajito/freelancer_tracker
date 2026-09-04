@@ -1,0 +1,11 @@
+# Confirmed false positives, pinned by exact fingerprint (commit:file:rule:line)
+# so that any *other* finding — including a new one in the same file — still
+# fails the build.
+#
+# Two fixture passwords in a test tripped gitleaks' generic-api-key entropy
+# rule. The literals were replaced with a low-entropy constant in a later
+# commit, but gitleaks scans history, so the original commit still matches.
+# They were never credentials: they are arguments to create_user() in a test
+# that logs in with them immediately afterwards.
+d74edecc572dfd637c8238824e5eeebd9bda1237:tests/test_email_verification_migration.py:generic-api-key:88
+d74edecc572dfd637c8238824e5eeebd9bda1237:tests/test_email_verification_migration.py:generic-api-key:96

@@ -189,8 +189,26 @@ def get_mp_donation_status(donation_id: int) -> str | None:
     return None
 
 
+# Donation.amount is numeric(10,2): anything larger overflows the column.
+MIN_DONATION_AMOUNT = Decimal("1")
+MAX_DONATION_AMOUNT = Decimal("1000000")
+
+
 def validate_donation_amount(amount: Decimal | None, custom: Decimal | None) -> Decimal:
+    """Return a clean, storable amount or raise ``ValueError``.
+
+    ``value <= 0`` alone was not enough: ``Decimal("Infinity")`` and
+    ``Decimal("1E+100")`` both pass it, then overflow the column and reach
+    ``float()`` on the way to Mercado Pago as a non-serializable ``inf``.
+    """
     value = custom if custom else amount
-    if not value or value <= 0:
+    if value is None:
         raise ValueError("Invalid donation amount")
-    return value
+    if not value.is_finite():
+        raise ValueError("Donation amount must be a finite number")
+    if value < MIN_DONATION_AMOUNT or value > MAX_DONATION_AMOUNT:
+        raise ValueError(
+            f"Donation amount must be between {MIN_DONATION_AMOUNT} "
+            f"and {MAX_DONATION_AMOUNT}"
+        )
+    return value.quantize(Decimal("0.01"))
