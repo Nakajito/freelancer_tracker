@@ -1,6 +1,6 @@
 FROM python:3.14-slim AS builder
 
-RUN pip install uv
+RUN pip install --no-cache-dir "uv==0.9.28"
 
 WORKDIR /app
 
@@ -34,13 +34,24 @@ COPY manage.py ./
 COPY bin/ ./bin/
 COPY deploy/entrypoint.sh ./
 
+# The Tailwind binary is downloaded and executed at build time. Pin the
+# version and verify its digest instead of trusting whatever the URL serves.
+ARG TAILWIND_VERSION=v4.3.0
+ARG TAILWIND_SHA256
 RUN chmod +x entrypoint.sh \
-    && curl -fsSL https://github.com/tailwindlabs/tailwindcss/releases/download/v4.3.0/tailwindcss-linux-x64 \
+    && curl -fsSL "https://github.com/tailwindlabs/tailwindcss/releases/download/${TAILWIND_VERSION}/tailwindcss-linux-x64" \
        -o /usr/local/bin/tailwindcss \
+    && if [ -n "${TAILWIND_SHA256}" ]; then \
+         echo "${TAILWIND_SHA256}  /usr/local/bin/tailwindcss" | sha256sum -c -; \
+       fi \
     && chmod +x /usr/local/bin/tailwindcss \
     && bin/build-css.sh \
     && rm /usr/local/bin/tailwindcss \
-    && .venv/bin/python manage.py compilemessages --ignore=.venv --settings=config.settings.base
+    && DJANGO_SETTINGS_MODULE=config.settings.prod \
+       DJANGO_SECRET_KEY=build-time-only-never-used-at-runtime-padding-0000 \
+       ALLOWED_HOSTS=localhost \
+       EMAIL_HOST_USER=build EMAIL_HOST_PASSWORD=build \
+       .venv/bin/python manage.py compilemessages --ignore=.venv
 
 RUN chown -R app:app /app
 
@@ -48,7 +59,11 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
     DJANGO_SETTINGS_MODULE=config.settings.prod
 
-# Entrypoint runs as root, fixes volume ownership, then drops to app via gosu.
+# The entrypoint re-execs via gosu after fixing a mounted volume's ownership.
+# Declaring USER here means `docker exec`, an overridden --entrypoint and the
+# HEALTHCHECK all run unprivileged rather than as root.
+USER app
+
 EXPOSE 8000
 
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
