@@ -1,0 +1,147 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Security" %}{% endblock %}
+{% block meta_description %}{% trans "Pipelancer Security — how we protect your data, the controls we apply, and how to report a vulnerability." %}{% endblock %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto px-4 py-12 space-y-8">
+    <header class="border-b border-outline pb-6">
+        <h1 class="font-headline-lg text-headline-lg font-display-md">{% trans "Security" %}</h1>
+        <p class="text-body-sm text-on-background-variant mt-2">{% trans "Effective: September 3, 2026" %}</p>
+    </header>
+
+    <section class="space-y-6">
+        <h2 class="font-title-lg text-title-lg">{% trans "1. Introduction" %}</h2>
+        <p class="text-body-md text-on-background-variant leading-relaxed">
+            {% blocktrans %}Pipelancer holds your pipeline: who you pitched, for how much, and what you earned. This page describes the controls that protect it, at the application, transport and infrastructure layers. It reflects what is actually implemented rather than what is aspirational, and it is updated as controls change.{% endblocktrans %}
+        </p>
+    </section>
+
+    <section class="space-y-6">
+        <h2 class="font-title-lg text-title-lg">{% trans "2. Authentication and sessions" %}</h2>
+        <ul class="list-disc list-inside text-body-md text-on-background-variant space-y-1">
+            <li>{% trans "Email and password sign-in via django-allauth. Email is the only login identifier and must be verified before the account can be used." %}</li>
+            <li>{% trans "Sessions are stored server-side in the database. No tokens are kept in localStorage." %}</li>
+            <li>{% trans "Session cookies are HttpOnly, Secure and SameSite=Lax, expire after 8 hours, and are cleared when the browser closes." %}</li>
+            <li>{% trans "Repeated failed sign-ins lock the account and source address combination for one hour." %}</li>
+            <li>{% trans "Sign-in, sign-up and password reset are protected by a CAPTCHA, which rejects attempts rather than letting them through if it cannot be reached." %}</li>
+            <li>{% trans "Changing your password is available at" %} <code>/.well-known/change-password</code>.</li>
+        </ul>
+    </section>
+
+    <section class="space-y-6">
+        <h2 class="font-title-lg text-title-lg">{% trans "3. Password storage" %}</h2>
+        <p class="text-body-md text-on-background-variant leading-relaxed">
+            {% blocktrans %}Passwords are hashed with Argon2, a memory-hard algorithm. Four validators apply: similarity to your account details, a minimum length of 8 characters, a common-password list, and a numeric-only check. Passwords are never stored or transmitted in the clear, and we cannot read them.{% endblocktrans %}
+        </p>
+    </section>
+
+    <section class="space-y-6">
+        <h2 class="font-title-lg text-title-lg">{% trans "4. Transport security" %}</h2>
+        <p class="text-body-md text-on-background-variant leading-relaxed">
+            {% trans "HTTPS is enforced in production. The following response headers are applied:" %}
+        </p>
+        <div class="overflow-x-auto">
+            <table class="w-full text-body-sm border border-outline rounded-lg overflow-hidden">
+                <thead>
+                    <tr class="bg-surface-container-low text-left">
+                        <th class="py-2 px-4 font-label-md">{% trans "Header" %}</th>
+                        <th class="py-2 px-4 font-label-md">{% trans "Value" %}</th>
+                    </tr>
+                </thead>
+                <tbody class="text-on-background-variant">
+                    <tr class="border-t border-outline"><td class="py-2 px-4"><code>Strict-Transport-Security</code></td><td class="py-2 px-4">{% trans "1 year, includeSubDomains, preload" %}</td></tr>
+                    <tr class="border-t border-outline"><td class="py-2 px-4"><code>Content-Security-Policy</code></td><td class="py-2 px-4">{% trans "self-only by default; frame-ancestors none" %}</td></tr>
+                    <tr class="border-t border-outline"><td class="py-2 px-4"><code>X-Content-Type-Options</code></td><td class="py-2 px-4"><code>nosniff</code></td></tr>
+                    <tr class="border-t border-outline"><td class="py-2 px-4"><code>X-Frame-Options</code></td><td class="py-2 px-4"><code>DENY</code></td></tr>
+                    <tr class="border-t border-outline"><td class="py-2 px-4"><code>Referrer-Policy</code></td><td class="py-2 px-4"><code>same-origin</code></td></tr>
+                    <tr class="border-t border-outline"><td class="py-2 px-4"><code>Cross-Origin-Opener-Policy</code></td><td class="py-2 px-4"><code>same-origin</code></td></tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="space-y-6">
+        <h2 class="font-title-lg text-title-lg">{% trans "5. Application-layer defences" %}</h2>
+        <ul class="list-disc list-inside text-body-md text-on-background-variant space-y-1">
+            <li>{% trans "CSRF tokens on every state-changing request, with Secure, HttpOnly, SameSite=Lax cookies." %}</li>
+            <li>{% trans "Templates escape output by default; no raw HTML injection points are used anywhere in the interface." %}</li>
+            <li>{% trans "All database access goes through the ORM with parameterised queries." %}</li>
+            <li>{% trans "Uploaded files are validated by type, size and dimensions, and stored under generated names." %}</li>
+            <li>{% trans "Exported spreadsheets neutralise cells that would otherwise be interpreted as formulas by Excel or Sheets." %}</li>
+            <li>{% trans "No third-party analytics or tracking scripts are loaded." %}</li>
+        </ul>
+    </section>
+
+    <section class="space-y-6">
+        <h2 class="font-title-lg text-title-lg">{% trans "6. Per-user data isolation" %}</h2>
+        <p class="text-body-md text-on-background-variant leading-relaxed">
+            {% blocktrans %}Every record belongs to exactly one account. Isolation is enforced at the query layer, so a request for another user's proposal, client, template, follow-up or time entry cannot return data regardless of how the identifier is supplied. This is covered by an automated test suite that asserts the behaviour for every such route, so a regression fails the build rather than reaching production.{% endblocktrans %}
+        </p>
+    </section>
+
+    <section class="space-y-6">
+        <h2 class="font-title-lg text-title-lg">{% trans "7. Data storage" %}</h2>
+        <p class="text-body-md text-on-background-variant leading-relaxed">
+            {% blocktrans %}Production data lives in PostgreSQL 16, with credentials supplied through environment variables and never committed. We do not store card numbers or bank details: donation payments are handled entirely by the payment provider, and we retain only an amount, a status and a provider reference.{% endblocktrans %}
+        </p>
+    </section>
+
+    <section class="space-y-6">
+        <h2 class="font-title-lg text-title-lg">{% trans "8. Secrets and configuration" %}</h2>
+        <p class="text-body-md text-on-background-variant leading-relaxed">
+            {% blocktrans %}All sensitive configuration is loaded from environment variables. Production requires an explicit secret key with no fallback, and runs with debug mode off. The repository is scanned on every change for committed credentials, known-vulnerable dependencies, and insecure code patterns; these checks block the build rather than merely reporting.{% endblocktrans %}
+        </p>
+    </section>
+
+    <section class="space-y-6">
+        <h2 class="font-title-lg text-title-lg">{% trans "9. Payment webhook integrity" %}</h2>
+        <p class="text-body-md text-on-background-variant leading-relaxed">
+            {% blocktrans %}Incoming payment notifications are authenticated with an HMAC signature over the resource identifier, request identifier and timestamp, compared in constant time. Signatures expire, so a captured notification cannot be replayed, and a signature issued for one resource cannot be used against another. Payment status is always re-read from the provider rather than taken from the notification body.{% endblocktrans %}
+        </p>
+    </section>
+
+    <section class="space-y-6">
+        <h2 class="font-title-lg text-title-lg">{% trans "10. Audit trail" %}</h2>
+        <p class="text-body-md text-on-background-variant leading-relaxed">
+            {% blocktrans %}Domain events such as proposal status changes are recorded with an actor and a timestamp. Security-relevant events are emitted to a dedicated log channel at warning level and above.{% endblocktrans %}
+        </p>
+    </section>
+
+    <section class="space-y-6">
+        <h2 class="font-title-lg text-title-lg">{% trans "11. Infrastructure" %}</h2>
+        <p class="text-body-md text-on-background-variant leading-relaxed">
+            {% blocktrans %}The application runs in a minimal multi-stage container as an unprivileged user, with development and test tooling excluded from the production image. Build inputs are version-pinned and verified. A health endpoint is exposed for monitoring, and the base image and dependencies are updated on a weekly schedule.{% endblocktrans %}
+        </p>
+    </section>
+
+    <section class="space-y-6">
+        <h2 class="font-title-lg text-title-lg">{% trans "12. Responsible disclosure" %}</h2>
+        <p class="text-body-md text-on-background-variant leading-relaxed">
+            {% blocktrans %}If you find a vulnerability, report it to{% endblocktrans %}
+            <a class="text-link underline" href="mailto:security@dabg.dev">security@dabg.dev</a>.
+            {% blocktrans %}The same channel is published in standard format at{% endblocktrans %}
+            <a class="text-link underline" href="/.well-known/security.txt"><code>/.well-known/security.txt</code></a>.
+        </p>
+        <p class="text-body-md text-on-background-variant leading-relaxed">
+            {% blocktrans %}We aim to respond within five business days, and we will not pursue legal action over good-faith security research. Please do not run destructive scans, access other users' data, or degrade the service for others while testing. We can correspond in Spanish or English.{% endblocktrans %}
+        </p>
+    </section>
+
+    <section class="space-y-6">
+        <h2 class="font-title-lg text-title-lg">{% trans "13. Continuous improvement" %}</h2>
+        <p class="text-body-md text-on-background-variant leading-relaxed">
+            {% blocktrans %}Security is not a fixed state. We review these controls regularly and strengthen them as the product grows; this page is updated when they change, and the effective date above indicates the current version.{% endblocktrans %}
+        </p>
+    </section>
+
+    <section class="space-y-6">
+        <h2 class="font-title-lg text-title-lg">{% trans "14. Contact" %}</h2>
+        <p class="text-body-md text-on-background-variant leading-relaxed">
+            {% trans "Vulnerability reports:" %} <a class="text-link underline" href="mailto:security@dabg.dev">security@dabg.dev</a>.
+            {% trans "General privacy or data questions are covered in the" %}
+            <a class="text-link underline" href="{% url 'privacy_policy' %}">{% trans "Privacy Policy" %}</a>.
+        </p>
+    </section>
+</div>
+{% endblock %}
