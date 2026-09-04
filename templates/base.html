@@ -20,10 +20,9 @@
         <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
         {% block extra_css %}{% endblock %}
     </head>
-    {# CSRF for every htmx request. Wired up-front: only hx-get is used today,
-       but the first hx-post would otherwise 403 and invite an @csrf_exempt fix. #}
+    {# CSRF for every htmx request, so the first hx-post doesn't 403. #}
     <body class="bg-background text-on-background font-body-md antialiased"
-          hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}">
+          hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
         {% block body %}
             {% include "partials/_messages.html" %}
             <main>
