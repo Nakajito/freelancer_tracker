@@ -5,6 +5,9 @@ would notice if {% csrf_token %} were dropped from a form or @csrf_exempt were
 added to a view. These use enforce_csrf_checks=True.
 """
 
+import json
+import re
+
 import pytest
 from django.test import Client
 from django.urls import reverse
@@ -49,11 +52,34 @@ def test_post_with_csrf_token_is_accepted(csrf_client, client_model):
 
 
 def test_htmx_requests_carry_a_csrf_header(authed_client):
-    """hx-headers on <body> means any future hx-post is protected by default."""
-    response = authed_client.get(reverse("dashboard"))
+    """hx-headers on <body> means any future hx-post is protected by default.
 
-    assert b"hx-headers" in response.content
-    assert b"X-CSRFToken" in response.content
+    Asserts the exact, well-formed attribute rather than bare substrings.
+    A prior version of this test only checked that "hx-headers" and
+    "X-CSRFToken" appeared *somewhere* in the response -- which would have
+    stayed green even with an unterminated hx-headers='...">  attribute that
+    swallows the rest of the page as its value, or a Django {# #} comment
+    directly above <body> that leaked as literal text because it spanned two
+    lines (Django's {# #} tokenizer cannot cross a newline). Both shipped to
+    production at once; neither would have failed this test as it was
+    originally written.
+    """
+    response = authed_client.get(reverse("dashboard"))
+    body = response.content.decode()
+
+    match = re.search(r'<body[^>]*\bhx-headers=([\'"])(.*?)\1[^>]*>', body)
+    assert match, f"no well-formed hx-headers attribute found on <body>: {body[:500]!r}"
+
+    hx_headers = json.loads(match.group(2))
+    token = hx_headers.get("X-CSRFToken", "")
+    # Django masks the token per-request, so comparing to a fixed value would
+    # be flaky; a real csrf_token render is a long non-empty string, whereas
+    # an unrendered {{ csrf_token }} (e.g. autoescape gone wrong) is not.
+    assert len(token) > 20, f"hx-headers X-CSRFToken looks unrendered: {token!r}"
+
+    # No unprocessed Django template syntax should ever reach the client.
+    assert "{#" not in body
+    assert "{%" not in body
 
 
 def test_no_view_is_csrf_exempt_except_the_signed_webhook():
