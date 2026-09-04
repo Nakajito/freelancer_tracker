@@ -18,8 +18,14 @@ def test_widget_rendered_when_configured(client):
     with override_settings(TURNSTILE_SITE_KEY="test-site-key"):
         response = client.get(reverse("account_reset_password"))
 
-    assert b"cf-turnstile" in response.content
-    assert b"challenges.cloudflare.com" in response.content
+    # Assert the exact script tag rather than a bare domain substring: the
+    # loose form also trips CodeQL's incomplete-url-sanitization rule, which
+    # cannot tell a test assertion from real URL validation.
+    assert b'class="cf-turnstile"' in response.content
+    assert (
+        b'src="https://challenges.cloudflare.com/turnstile/v0/api.js"'
+        in response.content
+    )
 
 
 def test_widget_absent_when_unconfigured(client):
