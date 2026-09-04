@@ -142,8 +142,17 @@ def handle_mp_webhook(data: dict[str, Any]) -> None:
             )
         return
 
-    # Individual payment (one-time or recurring charge)
-    if topic not in ("payment", "merchant_order"):
+    # Individual payment (one-time or recurring charge). "merchant_order" is a
+    # real, still-active legacy topic for Checkout Pro -- not handled here,
+    # deliberately: its resource lives at a different endpoint
+    # (GET /merchant_orders/{id}) with a different status vocabulary
+    # (order_status, not status), and the "payment" topic already carries the
+    # same external_reference for every donation this app creates. Calling
+    # sdk.payment().get() on a merchant-order id (the previous behavior) reads
+    # the wrong resource and silently no-ops, which is worse than not handling
+    # it. Extend this branch only against a real merchant_order payload, not a
+    # guessed schema.
+    if topic != "payment":
         return
 
     payment_info = sdk.payment().get(resource_id)
@@ -171,6 +180,20 @@ def handle_mp_webhook(data: dict[str, Any]) -> None:
         )
         logger.warning(
             "MP payment %s failed (status=%s) for donation %s",
+            mp_payment_id,
+            mp_status,
+            donation_id,
+        )
+    elif mp_status in ("refunded", "charged_back"):
+        # STATUS_REFUNDED existed on the model but was never reachable: no
+        # branch ever set it, so a refund or chargeback left the donation
+        # stuck at "completed" indefinitely.
+        Donation.objects.filter(pk=donation_id).update(
+            status=Donation.STATUS_REFUNDED,
+            provider_payment_id=mp_payment_id,
+        )
+        logger.warning(
+            "MP payment %s %s for donation %s",
             mp_payment_id,
             mp_status,
             donation_id,

@@ -238,6 +238,74 @@ def test_mp_webhook_subscription_authorized(client: Client, settings):
 
 
 @pytest.mark.django_db
+def test_mp_webhook_merchant_order_is_ignored(client: Client, settings):
+    """merchant_order lives at a different endpoint (GET /merchant_orders/{id})
+    with a different status vocabulary; calling sdk.payment().get() on its id
+    reads the wrong resource. The handler must not touch the donation or call
+    the payment API for this topic rather than silently misreading it."""
+    settings.MERCADOPAGO_ACCESS_TOKEN = "TEST-fake"
+
+    donation = Donation.objects.create(
+        amount=Decimal("25"),
+        provider=Donation.PROVIDER_MP,
+    )
+
+    mock_sdk = MagicMock()
+    payload = {"type": "merchant_order", "data": {"id": "mo-123"}}
+    settings.MERCADOPAGO_WEBHOOK_SECRET = WEBHOOK_SECRET
+
+    with patch("mercadopago.SDK", return_value=mock_sdk):
+        resp = client.post(
+            reverse("donate_webhook_mp"),
+            **_signed_headers("mo-123"),
+            data=json.dumps(payload),
+            content_type="application/json",
+        )
+
+    assert resp.status_code == 200
+    mock_sdk.payment.assert_not_called()
+    donation.refresh_from_db()
+    assert donation.status == Donation.STATUS_PENDING
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize("mp_status", ["refunded", "charged_back"])
+def test_mp_webhook_refund_and_chargeback(client: Client, settings, mp_status):
+    settings.MERCADOPAGO_ACCESS_TOKEN = "TEST-fake"
+
+    donation = Donation.objects.create(
+        amount=Decimal("25"),
+        provider=Donation.PROVIDER_MP,
+        status=Donation.STATUS_COMPLETED,
+        provider_payment_id="987",
+    )
+
+    mock_sdk = MagicMock()
+    mock_sdk.payment.return_value.get.return_value = {
+        "response": {
+            "id": 987,
+            "status": mp_status,
+            "external_reference": str(donation.pk),
+        }
+    }
+
+    payload = {"type": "payment", "data": {"id": "987"}}
+    settings.MERCADOPAGO_WEBHOOK_SECRET = WEBHOOK_SECRET
+
+    with patch("mercadopago.SDK", return_value=mock_sdk):
+        resp = client.post(
+            reverse("donate_webhook_mp"),
+            **_signed_headers("987"),
+            data=json.dumps(payload),
+            content_type="application/json",
+        )
+
+    assert resp.status_code == 200
+    donation.refresh_from_db()
+    assert donation.status == Donation.STATUS_REFUNDED
+
+
+@pytest.mark.django_db
 def test_mp_webhook_approved(client: Client, settings):
     settings.MERCADOPAGO_ACCESS_TOKEN = "TEST-fake"
 
