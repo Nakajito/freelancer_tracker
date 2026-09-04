@@ -43,3 +43,64 @@
 **Rule**: When removing a feature (dark mode), update all its touch points in one pass: CSS `@theme` tokens, template `data-theme` attribute, JS preference logic, context processors, forms, and tests. Leaving any one untouched causes test failures or lingering dead code.
 
 **Rule**: When forms.py removes a field, audit all tests that POST that field and assert on it — they will fail silently or with confusing errors if not updated.
+
+## Security hardening pass (2026-09-03)
+
+**Verify syntax with the project's interpreter, not the system one.** An audit
+flagged `except ValueError, TypeError:` as a Python 2 relic breaking the whole
+URLconf. It is valid Python 3.14 (PEP 758, unparenthesized `except` tuples) and
+catches both exceptions correctly; the system `python` here is 3.13, which
+rejects it. Rule: always `uv run python` when checking whether project code
+parses. `requires-python` is the authority, and a "this can't possibly work"
+finding deserves a second look before it drives action.
+
+**Test the observable outcome, not the intermediate state.** Every pre-existing
+ownership test asserted on a queryset or a context dict, so two views that had
+lost `OwnerQuerysetMixin` passed CI while leaking other users' template bodies.
+Rule: for access control, assert the HTTP status a foreign object returns.
+`tests/test_cross_user_access.py` is parametrized over every owner-scoped route;
+add a row when adding a route.
+
+**Always pair a deny test with an allow test.** The control case in that suite
+(the real owner still gets 200) caught an unrelated production bug: the
+templates render `{{ template.* }}` but `DetailView` names the object
+`proposaltemplate`, so `/templates/<pk>/` had been returning 500 for everyone.
+A deny-only test would have passed against a view that 404s unconditionally.
+
+**Assert the security property, not the status code.** Lockout tests that
+expected 403 were wrong twice over: django-axes returns 429, and allauth's own
+rate limiter re-renders the form as 200 without ever reaching `authenticate()`.
+Rule: assert that a locked-out attacker cannot authenticate with the *correct*
+password. Also clear the cache between such tests -- allauth's limiter lives in
+LocMemCache and persists across tests in the same process.
+
+**A test can pin a vulnerability in place.** `test_valid_event_no_signature`
+asserted 200 for an unsigned webhook, locking in a signature-check bypass and
+duplicating the hardcoded secret. When a test asserts insecure behaviour, the
+test is part of the defect.
+
+**`|| exit 0` on a scanner is worse than no scanner.** It reports green and
+buys false confidence. Removing it surfaced 38 known CVEs (9 in Django) and a
+live API key committed in `.claude/settings.json`.
+
+**Upgrade CVE-affected packages by name.** A blanket `uv lock --upgrade` also
+pulled a newer ruff whose new default rules buried the security diff in
+thousands of unrelated style errors. Use `--upgrade-package <name>` per finding.
+
+**Trailing-comment placement matters for `# nosec`.** Bandit only honours it on
+the flagged line, not the line above.
+
+**Heredocs mangle `\t` and `\r` in Python string literals.** Writing
+`_FORMULA_TRIGGERS = ("\t", "\r")` through `bash <<'EOF'` produced literal
+control bytes and an unterminated-string SyntaxError. Use the Write/Edit tools,
+or a script file, for content containing escape sequences.
+
+**Changing an auth default needs a data migration.** Setting
+`ACCOUNT_EMAIL_VERIFICATION = "mandatory"` would have locked out every account
+created via `create_user`/`createsuperuser`, none of which have an allauth
+`EmailAddress` row. `accounts/0003` back-fills them, skipping users who already
+have one so a deliberately unverified address is not promoted.
+
+**Timezone flakes hide until the clock crosses UTC midnight.** A test comparing
+a view's `timezone.now().date()` against the runner's `date.today()` passed all
+day and failed at 00:00 UTC. Compare against `timezone.localdate()`.
