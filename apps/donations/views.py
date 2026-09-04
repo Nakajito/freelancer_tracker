@@ -185,6 +185,32 @@ class _DonationCallbackView(TemplateView):
 class DonateSuccessView(_DonationCallbackView):
     template_name = "donations/success.html"
 
+    def get_context_data(self, **kwargs: object) -> dict:
+        ctx = super().get_context_data(**kwargs)
+        donation = ctx.get("donation")
+        # MP's webhook is async and can lag the browser redirect, so a donor
+        # can land here while the row is still "pending". Reconcile once by
+        # asking MP directly rather than leaving "Pending" on screen with no
+        # path to ever update -- get_mp_donation_status() existed for exactly
+        # this and was never called anywhere.
+        if donation is not None and donation.status == Donation.STATUS_PENDING:
+            try:
+                mp_status = services.get_mp_donation_status(donation.pk)
+            except Exception:
+                logger.warning(
+                    "MP status reconciliation failed for donation %s",
+                    donation.pk,
+                    exc_info=True,
+                )
+            else:
+                if mp_status == "approved":
+                    donation.status = Donation.STATUS_COMPLETED
+                    donation.save(update_fields=["status"])
+                elif mp_status in ("rejected", "cancelled"):
+                    donation.status = Donation.STATUS_FAILED
+                    donation.save(update_fields=["status"])
+        return ctx
+
 
 class DonateFailureView(_DonationCallbackView):
     template_name = "donations/failure.html"
