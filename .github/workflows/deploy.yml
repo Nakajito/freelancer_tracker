@@ -1,27 +1,38 @@
 name: Deploy
 
+permissions:
+  contents: read
+
 on:
   workflow_run:
     workflows: ["CI"]
     types: [completed]
     branches: [main]
-  push:
-    tags:
-      - 'v*'
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success' }}
+    # Only deploy a green CI run on main.
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
+      # A step-level `env` is not in scope in that same step's `if`, so the
+      # previous `if: env.COOLIFY_WEBHOOK_URL != ''` was always false and this
+      # step never ran -- silently, because of continue-on-error.
+      - name: Check deploy secret is configured
+        id: guard
+        run: |
+          if [ -z "${{ secrets.COOLIFY_WEBHOOK_URL }}" ]; then
+            echo "COOLIFY_WEBHOOK_URL is not set; skipping deploy." >&2
+            echo "configured=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "configured=true" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Trigger Coolify webhook
+        if: steps.guard.outputs.configured == 'true'
         env:
           COOLIFY_WEBHOOK_URL: ${{ secrets.COOLIFY_WEBHOOK_URL }}
           COOLIFY_TOKEN: ${{ secrets.COOLIFY_TOKEN }}
-        if: ${{ env.COOLIFY_WEBHOOK_URL != '' }}
+        # No continue-on-error: a failed deploy must be visible, not swallowed.
         run: |
-          curl -X POST "$COOLIFY_WEBHOOK_URL" \
-            -H "Authorization: Bearer $COOLIFY_TOKEN" \
-            -H "Content-Type: application/json" \
-            -d '{"ref": "main"}'
-        continue-on-error: true
+          curl --fail --silent --show-error -X POST "$COOLIFY_WEBHOOK_URL"             -H "Authorization: Bearer $COOLIFY_TOKEN"             -H "Content-Type: application/json"             -d '{"ref": "main"}'

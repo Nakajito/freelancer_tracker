@@ -37,7 +37,9 @@ def validate_turnstile(token: str, remote_ip: str = "") -> None:
             data=data,
             headers={"Content-Type": "application/x-www-form-urlencoded"},
         )
-        with urllib.request.urlopen(req, timeout=5) as resp:
+        # SITEVERIFY_URL is a fixed https:// module constant; no
+        # caller-supplied scheme can reach urlopen here.
+        with urllib.request.urlopen(req, timeout=5) as resp:  # nosec B310
             result = json.loads(resp.read(4096))
     except urllib.error.URLError:
         logger.warning("Turnstile siteverify network error", exc_info=True)

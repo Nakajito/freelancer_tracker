@@ -10,9 +10,18 @@ from apps.proposals.models import Client, Proposal, ProposalStatus
 @pytest.mark.django_db
 class TestFollowUpListView:
     def test_today_in_context(self, authed_client):
+        """Compare against the same clock the view uses.
+
+        The view derives "today" from timezone.now() (UTC under USE_TZ), while
+        date.today() is the runner's local date. Asserting against the latter
+        passes only while the two happen to agree, so the test failed as soon
+        as UTC crossed midnight ahead of local time.
+        """
+        from django.utils import timezone
+
         response = authed_client.get(reverse("followup-list"))
         assert response.status_code == 200
-        assert response.context["today"] == date.today()
+        assert response.context["today"] == timezone.localdate()
 
     def test_count_badges(self, authed_client, user, proposal):
         FollowUp.objects.create(
