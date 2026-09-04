@@ -42,7 +42,7 @@ def test_sitemap_includes_public_pages(client):
 def test_landing_footer_links_security(client, url):
     response = client.get(url, follow=True)
 
-    assert b'/security' in response.content
+    assert b"/security" in response.content
 
 
 def test_app_footer_links_security(authed_client):
@@ -50,4 +50,4 @@ def test_app_footer_links_security(authed_client):
 
     response = authed_client.get(_reverse("dashboard"))
 
-    assert b'/security' in response.content
+    assert b"/security" in response.content
